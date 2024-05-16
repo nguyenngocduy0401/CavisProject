@@ -7,10 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DataInitializer\" />
-    <Folder Include="Mappers\" />
+    <Compile Remove="DataInitializer\**" />
+    <Compile Remove="Mappers\**" />
+    <EmbeddedResource Remove="DataInitializer\**" />
+    <EmbeddedResource Remove="Mappers\**" />
+    <None Remove="DataInitializer\**" />
+    <None Remove="Mappers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CavisProject.Application\CavisProject.Application.csproj" />
     <ProjectReference Include="..\CavisProject.Domain\CavisProject.Domain.csproj" />
   </ItemGroup>
 
