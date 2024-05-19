@@ -13,9 +13,9 @@ namespace CavisProject.Application
         public IAppointmentDetailRepository AppointmentDetailRepository { get; }
         public ICalendarRepository CalendarRepository { get; }
         public IMethodDetailRepository MethodDetailRepository { get; }
-        public IMethodRepository    MethodRepository { get; }
+        public IMethodRepository MethodRepository { get; }
         public IPackageDetailRepository PackageDetailRepository { get; }
-        public IPackagePreniumRepository    PackagePreniumRepository { get; }
+        public IPackagePremiumRepository PackagePremiumRepository { get; }
         public IPersonalAnalystRepository PersonalAnalystRepository { get; }
         public IPersonalAnalystDetailRepository PersonalAnalystDetailRepository { get; }
         public IPersonalImageRepository PersonalImageRepository { get; }

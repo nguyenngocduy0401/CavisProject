@@ -52,12 +52,13 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IMethodDetailRepository, MethodDetailRepository>();
             services.AddScoped<IMethodRepository, MethodRepository>();
             services.AddScoped<IPackageDetailRepository, PackageDetailRepository>();
-            services.AddScoped<IPackagePreniumRepository, PackagePreniumRepository>();
+            services.AddScoped<IPackagePremiumRepository, PackagePremiumRepository>();
             services.AddScoped<IPersonalAnalystDetailRepository, PersonalAnalystDetailRepository>();
             services.AddScoped<IPersonalAnalystRepository, PersonalAnalystRepository>();
             services.AddScoped<IPersonalImageRepository, PersonalImageRepository>();
             services.AddScoped<IPersonalMethodDetailRepository, PersonalMethodDetailRepository>();
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddScoped<IProductDetailRepository, ProductDetailRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<ISkinTypeRepository, SkinTypeRepository>();

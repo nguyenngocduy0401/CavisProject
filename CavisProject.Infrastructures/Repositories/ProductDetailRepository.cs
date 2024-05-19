@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Infrastructures.Repositories
 {
-    public class ProductDetailRepository:IProductDetailRepository
+    public class ProductDetailRepository : IProductDetailRepository
     {
     }
 }

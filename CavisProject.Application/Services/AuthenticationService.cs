@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CavisProject.Infrastructures.Repositories
+namespace CavisProject.Application.Services
 {
-    internal class PackagePreniumRepository
+    public class AuthenticationService
     {
     }
 }

@@ -1,16 +1,20 @@
 ﻿using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using CavisProject.Domain.Entity;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CavisProject.Infrastructures.Repositories
 {
-    public class AppointmentRepository : GenericRepository<Appointment>, IAppointmentRepository
+    public class PackagePremiumRepository : GenericRepository<PackagePremium>, IPackagePremiumRepository
     {
         private readonly AppDbContext _dbContext;
         private readonly ICurrentTime _timeService;
         private readonly IClaimsService _claimsService;
-        public AppointmentRepository(
+        public PackagePremiumRepository(
             AppDbContext context,
             ICurrentTime timeService,
             IClaimsService claimsService

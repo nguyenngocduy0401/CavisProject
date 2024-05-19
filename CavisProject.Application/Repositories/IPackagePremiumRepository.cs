@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.Repositories
 {
-    public interface IPackagePreniumRepository :IGenericRepository<PackagePremium>
+    public interface IPackagePremiumRepository :IGenericRepository<PackagePremium>
     {
     }
 }

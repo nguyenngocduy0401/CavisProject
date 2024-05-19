@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Infrastructures.Repositories
 {
-    public class PersonalMethodDetailRepository:IPersonalMethodDetailRepository
+    public class PersonalMethodDetailRepository : IPersonalMethodDetailRepository
     {
+        private readonly AppDbContext _dbContext;
+        public PersonalMethodDetailRepository(AppDbContext context) 
+        {
+            _dbContext = context;
+        }
     }
 }

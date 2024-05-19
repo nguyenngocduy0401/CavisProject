@@ -19,7 +19,7 @@ namespace CavisProject.Infrastructures
         private readonly IMethodRepository _methodRepository;
         private readonly IMethodDetailRepository _methodDetailRepository;
         private readonly IPackageDetailRepository _packageDetailRepository;
-        private readonly IPackagePreniumRepository _packagePreniumRepository;
+        private readonly IPackagePremiumRepository _packagePremiumRepository;
         private readonly IPersonalAnalystRepository _personalAnalystRepository;
         private readonly IPersonalAnalystDetailRepository _personalAnalystDetailRepository;
         private readonly IPersonalImageRepository _personalImageRepository;
@@ -33,7 +33,17 @@ namespace CavisProject.Infrastructures
         private readonly IWishListRepository _wishListRepository;
         private readonly IRoleRepository _roleRepository;
 
-        public UnitOfWork(AppDbContext appDbContext, IAppointmentRepository appointmentRepository, IUserRepository userRepository, IAppointmentDetailRepository appointmentDetailRepository, ICalendarRepository calendarRepository, IMethodRepository methodRepository, IMethodDetailRepository methodDetailRepository, IPackageDetailRepository packageDetailRepository, IPackagePreniumRepository packagePreniumRepository, IPersonalAnalystRepository personalAnalystRepository, IPersonalAnalystDetailRepository personalAnalystDetailRepository, IPersonalImageRepository personalImageRepository, IPersonalMethodDetailRepository personalMethodDetailRepository, IProductRepository productRepository, IProductDetailRepository productDetailRepository, IProductCategoryRepository productCategoryRepository, ISkinTypeRepository skinTypeRepository, ISupplierRepository supplierRepository, ITransactionRepository transactionRepository, IWishListRepository wishListRepository, IRoleRepository roleRepository)
+        public UnitOfWork(AppDbContext appDbContext, IAppointmentRepository appointmentRepository, 
+            IUserRepository userRepository, IAppointmentDetailRepository appointmentDetailRepository, 
+            ICalendarRepository calendarRepository, IMethodRepository methodRepository, 
+            IMethodDetailRepository methodDetailRepository, IPackageDetailRepository packageDetailRepository, 
+            IPackagePremiumRepository packagePremiumRepository, IPersonalAnalystRepository personalAnalystRepository,
+            IPersonalAnalystDetailRepository personalAnalystDetailRepository, IPersonalImageRepository personalImageRepository,
+            IPersonalMethodDetailRepository personalMethodDetailRepository, IProductRepository productRepository, 
+            IProductDetailRepository productDetailRepository, IProductCategoryRepository productCategoryRepository,
+            ISkinTypeRepository skinTypeRepository, ISupplierRepository supplierRepository,
+            ITransactionRepository transactionRepository, IWishListRepository wishListRepository,
+            IRoleRepository roleRepository)
         {
             _dbContext = appDbContext;
             _appointmentRepository = appointmentRepository;
@@ -43,7 +53,7 @@ namespace CavisProject.Infrastructures
             _methodRepository = methodRepository;
             _methodDetailRepository = methodDetailRepository;
             _packageDetailRepository = packageDetailRepository;
-            _packagePreniumRepository = packagePreniumRepository;
+            _packagePremiumRepository = packagePremiumRepository;
             _personalAnalystRepository = personalAnalystRepository;
             _personalAnalystDetailRepository = personalAnalystDetailRepository;
             _personalImageRepository = personalImageRepository;
@@ -70,7 +80,7 @@ namespace CavisProject.Infrastructures
 
         public IPackageDetailRepository PackageDetailRepository => _packageDetailRepository;
 
-        public IPackagePreniumRepository PackagePreniumRepository => _packagePreniumRepository;
+        public IPackagePremiumRepository PackagePremiumRepository => _packagePremiumRepository;
 
         public IPersonalAnalystRepository PersonalAnalystRepository => _personalAnalystRepository;
 

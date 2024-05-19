@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Infrastructures.Repositories
 {
-    public class RoleRepository:IRoleRepository
+    public class RoleRepository : IRoleRepository
     {
     }
 }

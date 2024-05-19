@@ -11,8 +11,20 @@ namespace CavisProject.Infrastructures.Repositories
 {
     public class SupplierRepository : GenericRepository<Supplier>, ISupplierRepository
     {
-        public SupplierRepository(AppDbContext context, ICurrentTime timeService, IClaimsService claimsService) : base(context, timeService, claimsService)
+        private readonly AppDbContext _dbContext;
+        private readonly ICurrentTime _timeService;
+        private readonly IClaimsService _claimsService;
+        public SupplierRepository(
+            AppDbContext context,
+            ICurrentTime timeService,
+            IClaimsService claimsService
+        )
+            : base(context, timeService, claimsService)
         {
+            _dbContext = context;
+            _timeService = timeService;
+            _claimsService = claimsService;
         }
     }
 }
+
