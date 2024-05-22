@@ -10,6 +10,7 @@ namespace CavisProject.Domain.Entity
     {
         public string? SkinTypeName { get; set; }
         public string? Description { get; set; }
+        public bool ? Category { get; set; }
         public virtual ICollection<MethodDetail>? MethodDetails { get; set; }
         public virtual ICollection<ProductDetail>? ProductDetails { get; set; }
         public virtual ICollection<PersonalAnalystDetail>? PersonalAnalystDetails { get; set; } 

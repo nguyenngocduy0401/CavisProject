@@ -2,7 +2,7 @@
 using CavisProject.Application.Interfaces;
 using CavisProject.Application;
 using CavisProject.Infrastructures;
-using FluentValidation;
+//using FluentValidation;
 using Microsoft.OpenApi.Models;
 using System.Diagnostics;
 
