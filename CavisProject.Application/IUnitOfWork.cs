@@ -1,4 +1,5 @@
-﻿using CavisProject.Application.Repositories;
+﻿using CavisProject.Application.Interfaces;
+using CavisProject.Application.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace CavisProject.Application
         public ITransactionRepository TransactionRepository { get; }
         public IWishListRepository WishListRepository { get; }
         public IRoleRepository RoleRepository { get; }
+        public IRefreshTokenRepository RefreshTokenRepository { get; }
         public Task<int> SaveChangeAsync();
 
     }

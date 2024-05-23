@@ -5,6 +5,9 @@ using CavisProject.Infrastructures;
 using FluentValidation;
 using Microsoft.OpenApi.Models;
 using System.Diagnostics;
+using CavisProject.Infrastructures.DataInitializer;
+using CavisProject.API.Validator.AuthenticationValidator;
+using CavisProject.Application.ViewModels.UserViewModels;
 
 namespace CavisProject.API
 {
@@ -63,10 +66,12 @@ namespace CavisProject.API
             services.AddLogging();
 
             #region Seed
-            
+            /*services.AddHostedService<SetupIdentityDataSeeder>();*/
+            services.AddScoped<RoleInitializer>();
+            services.AddScoped<AccountInitializer>();
             #endregion
             #region Validator
-            
+            services.AddTransient<IValidator<UserRegisterModel>, UserRegisterValidation>();
             #endregion
 
             return services;
