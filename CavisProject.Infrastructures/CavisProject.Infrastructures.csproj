@@ -1,23 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="DataInitializer\**" />
-    <Compile Remove="Mappers\**" />
-    <EmbeddedResource Remove="DataInitializer\**" />
-    <EmbeddedResource Remove="Mappers\**" />
-    <None Remove="DataInitializer\**" />
-    <None Remove="Mappers\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />

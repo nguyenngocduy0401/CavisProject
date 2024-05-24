@@ -1,4 +1,5 @@
 ﻿using CavisProject.Application;
+using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -32,6 +33,7 @@ namespace CavisProject.Infrastructures
         private readonly ITransactionRepository _transactionRepository;
         private readonly IWishListRepository _wishListRepository;
         private readonly IRoleRepository _roleRepository;
+        private readonly IRefreshTokenRepository _refreshTokenRepository;
 
         public UnitOfWork(AppDbContext appDbContext, IAppointmentRepository appointmentRepository, 
             IUserRepository userRepository, IAppointmentDetailRepository appointmentDetailRepository, 
@@ -43,7 +45,7 @@ namespace CavisProject.Infrastructures
             IProductDetailRepository productDetailRepository, IProductCategoryRepository productCategoryRepository,
             ISkinTypeRepository skinTypeRepository, ISupplierRepository supplierRepository,
             ITransactionRepository transactionRepository, IWishListRepository wishListRepository,
-            IRoleRepository roleRepository)
+            IRoleRepository roleRepository, IRefreshTokenRepository refreshTokenRepository)
         {
             _dbContext = appDbContext;
             _appointmentRepository = appointmentRepository;
@@ -66,6 +68,7 @@ namespace CavisProject.Infrastructures
             _transactionRepository = transactionRepository;
             _wishListRepository = wishListRepository;
             _roleRepository = roleRepository;
+            _refreshTokenRepository = refreshTokenRepository;
         }
 
         public IAppointmentRepository AppointmentRepository => _appointmentRepository;
@@ -106,6 +109,8 @@ namespace CavisProject.Infrastructures
         public IWishListRepository WishListRepository => _wishListRepository;
 
         public IRoleRepository RoleRepository => _roleRepository;
+
+        public IRefreshTokenRepository RefreshTokenRepository => _refreshTokenRepository;
 
         public async Task<int> SaveChangeAsync()
         {

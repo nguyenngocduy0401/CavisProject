@@ -11,8 +11,8 @@ namespace CavisProject.Application.Interfaces
 {
     public interface IAuthenticationService
     {
-        Task<ApiResponse<UserRegisterModel>> RegisterAsync(UserRegisterModel userRegisterDTO);
-        Task<ApiResponse<RefreshTokenModel>> LoginAsync(UserLoginModel userLoginDTO);
+        Task<ApiResponse<UserRegisterModel>> RegisterAsync(UserRegisterModel userRegisterModel);
+        Task<ApiResponse<RefreshTokenModel>> LoginAsync(UserLoginModel userLoginModel);
         Task<ApiResponse<RefreshTokenModel>> RenewTokenAsync(RefreshTokenModel RefreshTokenModel);
         Task<ApiResponse<string>> LogoutAsync(string refreshToken);
     }

@@ -3,6 +3,7 @@ using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using CavisProject.Application.Services;
 using CavisProject.Domain.Entity;
+using CavisProject.Infrastructures.Mappers;
 using CavisProject.Infrastructures.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -41,7 +42,7 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IUserService,UserService>();
             services.AddScoped<IWishListService, WishListService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             #endregion
 
@@ -61,6 +62,7 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IProductDetailRepository, ProductDetailRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IRefreshTokenRepository , RefreshTokenRepository>();
             services.AddScoped<ISkinTypeRepository, SkinTypeRepository>();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
@@ -86,8 +88,8 @@ namespace CavisProject.Infrastructures
 
             // ATTENTION: if you do migration please check file README.md
             services.AddDbContext<AppDbContext>(option => option.UseSqlServer(databaseConnection));
-/*
-            services.AddAutoMapper(typeof(MapperConfigurationsProfile).Assembly);*/
+
+            services.AddAutoMapper(typeof(MapperConfigurationsProfile).Assembly);
 
 
             return services;
