@@ -28,7 +28,7 @@ namespace CavisProject.Application.Services
         }
 
         
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinType(CreateSkinTypeViewModel createSkinType, IValidator<CreateSkinTypeViewModel> _validatorCreateSkinType)
+        public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinType(CreateSkinTypeViewModel createSkinType)
         {
             var response = new ApiResponse<CreateSkinTypeViewModel>();
             try
@@ -43,16 +43,15 @@ namespace CavisProject.Application.Services
                 }
                 else
                 {
-                    var currentID = _claimsService.GetCurrentUserId;
-                    if (currentID == Guid.Empty)
+                    await _unitOfWork.SkinTypeRepository.AddAsync(skinType);
+                    var isSuccess = await _unitOfWork.SaveChangeAsync()>0;
+                    if (isSuccess is false)
                     {
-                        response.isSuccess = false;
-                        response.Message = "Register please";
+                        throw new Exception("Create Skintype is fail!");
                     }
-                    else
-                    {
-
-                    }
+                    response.Data= _mapper.Map<CreateSkinTypeViewModel>(createSkinType);
+                    response.Message = "Create Skintype is success";                
+                   
                 }
             }catch(DbException ex)
             {
@@ -68,14 +67,21 @@ namespace CavisProject.Application.Services
            
         }
 
+
         public Task<ApiResponse<bool>> DeleteSkinType(string skinTypeId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ApiResponse<SkinTypeViewModel>> GetSkinConditions(SkinTypeViewModel skinCondition)
+        public async Task<ApiResponse<IEnumerable< SkinTypeViewModel>>> GetSkinConditions(SkinTypeViewModel skinCondition)
         {
-            throw new NotImplementedException();
+            var skinType = await _unitOfWork.SkinTypeRepository.GetAllWithCategoryTrueAsync();
+            var result = _mapper.Map<IEnumerable<SkinTypeViewModel>>(skinCondition);
+            return new ApiResponse<IEnumerable<SkinTypeViewModel>>
+            {
+                isSuccess = true,
+                Data = result
+            };
         }
 
         public Task<ApiResponse<SkinTypeViewModel>> GetSkinType(SkinTypeViewModel skinType)

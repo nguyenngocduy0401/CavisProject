@@ -3,6 +3,7 @@ using CavisProject.Application.Repositories;
 using CavisProject.Domain.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,10 @@ namespace CavisProject.Infrastructures.Repositories
             _dbContext = context;
             _timeService = timeService;
             _claimsService = claimsService;
+        }
+        public async Task<IEnumerable<SkinType>> GetAllWithCategoryTrueAsync()
+        {
+            return await _dbContext.SkinTypes.Where(s => s.Category==true).ToListAsync();
         }
     }
 }
