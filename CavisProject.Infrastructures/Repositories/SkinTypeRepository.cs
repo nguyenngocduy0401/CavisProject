@@ -1,12 +1,10 @@
-﻿using CavisProject.Application.Interfaces;
-using CavisProject.Application.Repositories;
-using CavisProject.Domain.Entity;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using CavisProject.Application.Interfaces;
+using CavisProject.Application.Repositories;
+using CavisProject.Domain.Entity;
 
 namespace CavisProject.Infrastructures.Repositories
 {
@@ -26,9 +24,15 @@ namespace CavisProject.Infrastructures.Repositories
             _timeService = timeService;
             _claimsService = claimsService;
         }
-        public async Task<IEnumerable<SkinType>> GetAllWithCategoryTrueAsync()
+
+        public async Task<List<SkinType>> GetAllWithCategoryFalseAsync()
         {
-            return await _dbContext.SkinTypes.Where(s => s.Category==true).ToListAsync();
+            return await _dbContext.SkinTypes.Where(s => !s.Category).ToListAsync();
+        }
+
+        public async Task<List<SkinType>> GetAllWithCategoryTrueAsync()
+        {
+            return await _dbContext.SkinTypes.Where(s => s.Category).ToListAsync();
         }
     }
 }

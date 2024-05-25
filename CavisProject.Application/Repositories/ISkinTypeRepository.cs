@@ -9,6 +9,8 @@ namespace CavisProject.Application.Repositories
 {
     public interface ISkinTypeRepository:IGenericRepository<SkinType>
     {
-        Task<IEnumerable<SkinType>> GetAllWithCategoryTrueAsync();
+        Task<List<SkinType>> GetAllWithCategoryTrueAsync();
+        Task<List<SkinType>> GetAllWithCategoryFalseAsync();
+
     }
 }
