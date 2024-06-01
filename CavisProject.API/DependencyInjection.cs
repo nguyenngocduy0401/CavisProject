@@ -8,6 +8,8 @@ using System.Diagnostics;
 using CavisProject.Infrastructures.DataInitializer;
 using CavisProject.API.Validator.AuthenticationValidator;
 using CavisProject.Application.ViewModels.UserViewModels;
+using CavisProject.API.Validator.SkinTypeValdator;
+using CavisProject.Application.ViewModels.SkinTypeViewModel;
 
 namespace CavisProject.API
 {
@@ -72,6 +74,7 @@ namespace CavisProject.API
             #endregion
             #region Validator
             services.AddTransient<IValidator<UserRegisterModel>, UserRegisterValidation>();
+            services.AddTransient<IValidator<CreateSkinTypeViewModel>, CreateSkinTypeValidator>();
             #endregion
 
             return services;

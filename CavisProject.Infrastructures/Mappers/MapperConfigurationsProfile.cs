@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Application.ViewModels.UserViewModels;
 using CavisProject.Domain.Entity;
 using System;
@@ -15,6 +16,10 @@ namespace CavisProject.Infrastructures.Mappers
         {
             #region User
             CreateMap<UserLoginModel, User>();
+            #endregion
+            #region SkinType
+            CreateMap<CreateSkinTypeViewModel, SkinType>();
+            CreateMap<SkinTypeViewModel, SkinType>();
             #endregion
         }
     }
