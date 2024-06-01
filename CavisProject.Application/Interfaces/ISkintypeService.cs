@@ -14,6 +14,6 @@ namespace CavisProject.Application.Interfaces
         Task<ApiResponse<List<SkinTypeViewModel>>> GetSkinType();
         Task<ApiResponse<List<SkinTypeViewModel>>> GetSkinConditions();
         Task<ApiResponse<bool>> DeleteSkinType(string skinTypeId);
-        Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinType(CreateSkinTypeViewModel updateSkinType,string skinTypeId);
+        Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinType(CreateSkinTypeViewModel updateSkinType, string skinTypeId);
     }
 }

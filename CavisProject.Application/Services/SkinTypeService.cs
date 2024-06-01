@@ -6,13 +6,10 @@ using CavisProject.Domain.Entity;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FluentValidation.Results;
-using System.Diagnostics.Contracts;
 
 namespace CavisProject.Application.Services
 {
@@ -22,14 +19,14 @@ namespace CavisProject.Application.Services
         private readonly IClaimsService _claimsService;
         private readonly IMapper _mapper;
         private readonly IValidator<CreateSkinTypeViewModel> _validatorCreateSkinType;
-        public SkinTypeService( IUnitOfWork unitOfWork , IMapper mapper , IValidator<CreateSkinTypeViewModel> validatorCreateSkintype ,IClaimsService claimsService)
+        public SkinTypeService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateSkinTypeViewModel> validatorCreateSkintype, IClaimsService claimsService)
         {
-            _mapper= mapper;
-            _unitOfWork= unitOfWork;
-            _validatorCreateSkinType= validatorCreateSkintype;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
+            _validatorCreateSkinType = validatorCreateSkintype;
         }
 
-        
+
         public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinType(CreateSkinTypeViewModel createSkinType)
         {
             var response = new ApiResponse<CreateSkinTypeViewModel>();
@@ -37,7 +34,7 @@ namespace CavisProject.Application.Services
             {
                 var skinType = _mapper.Map<SkinType>(createSkinType);
                 FluentValidation.Results.ValidationResult validationResult = await _validatorCreateSkinType.ValidateAsync(createSkinType);
-                if(!validationResult.IsValid)
+                if (!validationResult.IsValid)
                 {
                     response.isSuccess = false;
                     response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
@@ -46,31 +43,33 @@ namespace CavisProject.Application.Services
                 else
                 {
                     await _unitOfWork.SkinTypeRepository.AddAsync(skinType);
-                    var isSuccess = await _unitOfWork.SaveChangeAsync()>0;
+                    var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
                     if (isSuccess is false)
                     {
                         throw new Exception("Create Skintype is fail!");
                     }
-                    response.Data= _mapper.Map<CreateSkinTypeViewModel>(createSkinType);
-                    response.Message = "Create Skintype is success";                
-                   
+                    response.Data = _mapper.Map<CreateSkinTypeViewModel>(createSkinType);
+                    response.Message = "Create Skintype is success";
+
                 }
-            }catch(DbException ex)
+            }
+            catch (DbException ex)
             {
                 response.isSuccess = false;
-                response.Message= ex.Message;
+                response.Message = ex.Message;
 
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 response.isSuccess = false;
-                response.Message= ex.Message;
+                response.Message = ex.Message;
             }
             return response;
-           
+
         }
 
 
-        public  async Task<ApiResponse<bool>> DeleteSkinType(string skinTypeId)
+        public async Task<ApiResponse<bool>> DeleteSkinType(string skinTypeId)
         {
             var response = new ApiResponse<bool>();
             try
@@ -82,12 +81,12 @@ namespace CavisProject.Application.Services
                 }
                 if (exist.IsDeleted)
                 {
-                
-                    throw new Exception( "SkinType is already deleted");
-                  
+
+                    throw new Exception("SkinType is already deleted");
+
                 }
                 _unitOfWork.SkinTypeRepository.SoftRemove(exist);
-                var isSuccess = await _unitOfWork.SaveChangeAsync()>0;
+                var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
                 if (isSuccess is false)
                 {
                     throw new Exception("Delete Skintype is fail");
@@ -110,7 +109,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-       
+
 
         public async Task<ApiResponse<List<SkinTypeViewModel>>> GetSkinConditions()
         {
@@ -163,13 +162,13 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinType (CreateSkinTypeViewModel updateSkinType ,string skinTypeId)
+        public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinType(CreateSkinTypeViewModel updateSkinType, string skinTypeId)
         {
             var response = new ApiResponse<CreateSkinTypeViewModel>();
             try
             {
                 var exist = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(skinTypeId));
-             
+
                 FluentValidation.Results.ValidationResult validationResult = await _validatorCreateSkinType.ValidateAsync(updateSkinType);
                 if (validationResult.IsValid)
                 {
@@ -179,7 +178,7 @@ namespace CavisProject.Application.Services
                 }
                 else
                 {
-                    if(exist is null)
+                    if (exist is null)
                     {
                         throw new Exception("Skintype not found");
 
@@ -188,7 +187,7 @@ namespace CavisProject.Application.Services
                     {
                         var update = _mapper.Map(updateSkinType, exist);
                         var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
-                      
+
                         if (isSuccess is false)
                         {
                             throw new Exception("Update Skintype is fail");
@@ -214,6 +213,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        
+
     }
 }
+

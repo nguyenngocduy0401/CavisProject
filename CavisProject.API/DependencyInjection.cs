@@ -2,15 +2,14 @@
 using CavisProject.Application.Interfaces;
 using CavisProject.Application;
 using CavisProject.Infrastructures;
-//using FluentValidation;
+using FluentValidation;
 using Microsoft.OpenApi.Models;
 using System.Diagnostics;
 using CavisProject.Infrastructures.DataInitializer;
 using CavisProject.API.Validator.AuthenticationValidator;
 using CavisProject.Application.ViewModels.UserViewModels;
-using FluentValidation;
-using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.API.Validator.SkinTypeValdator;
+using CavisProject.Application.ViewModels.SkinTypeViewModel;
 
 namespace CavisProject.API
 {

@@ -19,6 +19,10 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<CreateSkinTypeViewModel, SkinType>();
             CreateMap<SkinTypeViewModel, SkinType>();
             #endregion
+            #region SkinType
+            CreateMap<CreateSkinTypeViewModel, SkinType>();
+            CreateMap<SkinTypeViewModel, SkinType>();
+            #endregion
         }
     }
 }

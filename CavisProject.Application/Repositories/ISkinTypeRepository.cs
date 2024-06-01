@@ -11,6 +11,5 @@ namespace CavisProject.Application.Repositories
     {
         Task<List<SkinType>> GetAllWithCategoryTrueAsync();
         Task<List<SkinType>> GetAllWithCategoryFalseAsync();
-
     }
 }
