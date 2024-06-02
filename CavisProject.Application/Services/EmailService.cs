@@ -10,8 +10,11 @@ using System.Linq;
 using MailKit.Net.Smtp;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
 using CavisProject.Application.ViewModels.RefreshTokenViewModels;
+using CavisProject.Application.ViewModels.UserViewModels;
+using FluentValidation.Results;
+using FluentValidation;
+using System.Data.Common;
 
 namespace CavisProject.Application.Services
 {
@@ -19,28 +22,31 @@ namespace CavisProject.Application.Services
     {
         private EmailConfiguration _emailConfiguration;
         private readonly UserManager<User> _userManager;
-        public EmailService(EmailConfiguration emailConfiguration, UserManager<User> userManager)
+        private readonly IValidator<UserResetPasswordModel> _validatorResetPassword;
+        public EmailService(EmailConfiguration emailConfiguration, UserManager<User> userManager, IValidator<UserResetPasswordModel> validatorResetPassword)
         {
             _emailConfiguration = emailConfiguration;
             _userManager = userManager;
+            _validatorResetPassword = validatorResetPassword;
         }
 
-        public async Task<ApiResponse<bool>> SendOTPEmail(string email)
+        public async Task<ApiResponse<bool>> SendOTPEmailAsync(string email)
         {
             var response = new ApiResponse<bool>();
-            if (string.IsNullOrEmpty(email)) {
+            if (string.IsNullOrEmpty(email))
+            {
                 response.Data = false;
                 response.isSuccess = true;
                 response.Message = "Không được bỏ trống email!";
                 return response;
             }
-            
+
             string otp = new Random().Next(0, 1000000).ToString("D6");
             var emailMessage = new MimeMessage();
             emailMessage.From.Add(new MailboxAddress
                 ("CavisAppBeauty", _emailConfiguration.From));
             emailMessage.To.Add(new MailboxAddress
-                (email,email));
+                (email, email));
             emailMessage.Subject = "Your OTP Code";
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Plain)
             {
@@ -51,7 +57,8 @@ namespace CavisProject.Application.Services
             try
             {
                 var checkEmailExist = await _userManager.FindByEmailAsync(email);
-                if (checkEmailExist == null) {
+                if (checkEmailExist == null)
+                {
                     response.Data = false;
                     response.isSuccess = true;
                     response.Message = "Email không tồn tại!";
@@ -61,7 +68,8 @@ namespace CavisProject.Application.Services
                 checkEmailExist.OTPEmail = otp;
                 checkEmailExist.ExpireOTPEmail = DateTime.Now.AddSeconds(90);
                 var checkUpdate = await _userManager.UpdateAsync(checkEmailExist);
-                if (!checkUpdate.Succeeded) {
+                if (!checkUpdate.Succeeded)
+                {
                     response.Data = false;
                     response.isSuccess = false;
                     response.Message = "Cannot update OTP email!";
@@ -86,6 +94,76 @@ namespace CavisProject.Application.Services
             {
                 await client.DisconnectAsync(true);
                 client.Dispose();
+            }
+            return response;
+        }
+
+        public async Task<ApiResponse<bool>> ResetPasswordAsync(string email, UserResetPasswordModel userResetPasswordModel)
+        {
+            var response = new ApiResponse<bool>();
+            try
+            {
+                ValidationResult validationResult = await _validatorResetPassword.ValidateAsync(userResetPasswordModel);
+                if (!validationResult.IsValid)
+                {
+                    response.isSuccess = false;
+                    response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
+                    return response;
+                }
+                if (string.IsNullOrEmpty(email))
+                {
+                    response.Data = false;
+                    response.isSuccess = false;
+                    response.Message = "Email must not empty!";
+                    return response;
+                }
+                var user = await _userManager.FindByEmailAsync(email);
+                if (user == null)
+                {
+                    response.Data = false;
+                    response.isSuccess = false;
+                    response.Message = "Email is not exist!";
+                    return response;
+                }
+                if (user.OTPEmail != userResetPasswordModel.OTP)
+                {
+                    response.Data = false;
+                    response.isSuccess = true;
+                    response.Message = "OTP không tồn tại!";
+                    return response;
+                }
+                if (user.ExpireOTPEmail < DateTime.Now)
+                {
+                    response.Data = false;
+                    response.isSuccess = true;
+                    response.Message = "OTP đã hết hiệu lực!";
+                    return response;
+                }
+                var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var checkResetPassword = await _userManager.ResetPasswordAsync(user, resetToken, userResetPasswordModel.NewPassword);
+                if (!checkResetPassword.Succeeded) {
+                    response.Data = false;
+                    response.isSuccess = false;
+                    response.Message = "Reset password is fail!";
+                    return response;
+                }
+                user.ExpireOTPEmail = null;
+                user.OTPEmail = null;
+                var checkUpdateUser = await _userManager.UpdateAsync(user);
+                response.Data = true;
+                response.isSuccess = true;
+                response.Message = "Reset password is successful!";
+                return response;
+            }
+            catch (DbException ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
             }
             return response;
         }

@@ -30,10 +30,15 @@ namespace CavisProject.API.Controllers
         {
             return await _authenticationService.LoginAsync(userLoginModel);
         }
-        [HttpPut("OTP_Email")]
+        [HttpPost("otp-email")]
         public async Task<ApiResponse<bool>> OTPEmailAsync(string email)
         {
-            return await _emailService.SendOTPEmail(email);
+            return await _emailService.SendOTPEmailAsync(email);
+        }
+        [HttpPut("reset-password/{email}")]
+        public async Task<ApiResponse<bool>> ResetPasswordAsync(string email, UserResetPasswordModel userResetPasswordModel)
+        {
+            return await _emailService.ResetPasswordAsync(email, userResetPasswordModel);
         }
         [HttpPut("new-token")]
         public async Task<ApiResponse<RefreshTokenModel>> RenewTokenAsync(RefreshTokenModel refreshTokenModel)

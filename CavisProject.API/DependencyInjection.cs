@@ -72,6 +72,7 @@ namespace CavisProject.API
             #endregion
             #region Validator
             services.AddTransient<IValidator<UserRegisterModel>, UserRegisterValidation>();
+            services.AddTransient<IValidator<UserResetPasswordModel>, UserResetPasswordValidator>();
             #endregion
 
             return services;
