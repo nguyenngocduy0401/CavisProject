@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CavisProject.Application.ViewModels.ProductCategoryViewModel;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Application.ViewModels.UserViewModels;
 using CavisProject.Domain.Entity;
@@ -22,6 +23,9 @@ namespace CavisProject.Infrastructures.Mappers
             #region SkinType
             CreateMap<CreateSkinTypeViewModel, SkinType>();
             CreateMap<SkinTypeViewModel, SkinType>();
+            #endregion
+            #region ProductCategory
+            CreateMap<CreateProductCategoryViewModel, ProductCategory>();
             #endregion
         }
     }

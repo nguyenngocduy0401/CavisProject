@@ -9,23 +9,23 @@ namespace CavisProject.API.Controllers
     {
         private  readonly ISkintypeService _skintypeService;
         public SkinTypeController(ISkintypeService skintypeService) { _skintypeService=skintypeService; }
-        [HttpPost("skin-types")]
+        [HttpPost("create-skin-types")]
         public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinType([FromBody] CreateSkinTypeViewModel createSkinType) => await _skintypeService.CreateSkinType(createSkinType);
       
 
-        [HttpGet("skin-types")]
+        [HttpGet("get-skin-types")]
         public async Task<ApiResponse<List<SkinTypeViewModel>>> GetSkinTypes() => await _skintypeService.GetSkinType();
 
 
-        [HttpGet("skin-conditions")]
+        [HttpGet("get-skin-conditions")]
         public async Task<ApiResponse<List<SkinTypeViewModel>>> GetSkinConditions() => await _skintypeService.GetSkinConditions();
         
 
-        [HttpDelete("skin-types/{skinTypeId}")]
+        [HttpDelete("delete-skin-types/{skinTypeId}")]
         public async Task<ApiResponse<bool>> DeleteSkinType([FromRoute] string skinTypeId)=> await _skintypeService.DeleteSkinType(skinTypeId);
         
 
-        [HttpPut("skin-types/{skinTypeId}")]
+        [HttpPut("update-skin-types/{skinTypeId}")]
         public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinType([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string skinTypeId) => await _skintypeService.UpdateSkinType(updateSkinType, skinTypeId);
        
     }

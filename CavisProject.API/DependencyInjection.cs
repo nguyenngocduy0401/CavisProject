@@ -10,6 +10,9 @@ using CavisProject.API.Validator.AuthenticationValidator;
 using CavisProject.Application.ViewModels.UserViewModels;
 using CavisProject.API.Validator.SkinTypeValdator;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
+using CavisProject.Application.ViewModels.ProductCategoryViewModel;
+using CavisProject.Domain.Entity;
+using CavisProject.API.Validator.ProductValidator.ProductCategoryValidator;
 
 namespace CavisProject.API
 {
@@ -75,6 +78,7 @@ namespace CavisProject.API
             #region Validator
             services.AddTransient<IValidator<UserRegisterModel>, UserRegisterValidation>();
             services.AddTransient<IValidator<CreateSkinTypeViewModel>, CreateSkinTypeValidator>();
+            services.AddTransient<IValidator<CreateProductCategoryViewModel>, ProductCategoryValidator>();
             #endregion
 
             return services;
