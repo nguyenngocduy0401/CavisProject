@@ -15,6 +15,8 @@ namespace CavisProject.Infrastructures.Mappers
         {
             #region User
             CreateMap<UserLoginModel, User>();
+            CreateMap<UserRegisterModel, User>()
+                .ForMember(dest => dest.PasswordHash, src => src.MapFrom(x => x.Password)); 
             #endregion
         }
     }

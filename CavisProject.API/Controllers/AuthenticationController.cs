@@ -13,10 +13,11 @@ namespace CavisProject.API.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationService _authenticationService;
-
-        public AuthenticationController(IAuthenticationService authenticationService)
+        private readonly IEmailService _emailService;
+        public AuthenticationController(IAuthenticationService authenticationService, IEmailService emailService)
         {
             _authenticationService = authenticationService;
+            _emailService = emailService;
         }
         [HttpPost("register")]
         public async Task<ApiResponse<UserRegisterModel>> RegisterAsync(UserRegisterModel userRegisterModel)
@@ -28,6 +29,11 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<RefreshTokenModel>> LoginAsync(UserLoginModel userLoginModel)
         {
             return await _authenticationService.LoginAsync(userLoginModel);
+        }
+        [HttpPut("OTP_Email")]
+        public async Task<ApiResponse<bool>> OTPEmailAsync(string email)
+        {
+            return await _emailService.SendOTPEmail(email);
         }
         [HttpPut("new-token")]
         public async Task<ApiResponse<RefreshTokenModel>> RenewTokenAsync(RefreshTokenModel refreshTokenModel)

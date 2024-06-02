@@ -3,6 +3,7 @@ using CavisProject.Application.Commoms;
 using CavisProject.Infrastructures;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -12,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration.Get<AppConfiguration>();
 builder.Services.AddInfrastructuresService(configuration.DatabaseConnection);
+builder.Services.AddSingleton(configuration.EmailConfiguration);
 builder.Services.AddWebAPIService();
 builder.Services.AddAuthentication(options => {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
