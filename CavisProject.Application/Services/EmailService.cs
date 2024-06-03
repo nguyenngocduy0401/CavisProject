@@ -15,6 +15,7 @@ using CavisProject.Application.ViewModels.UserViewModels;
 using FluentValidation.Results;
 using FluentValidation;
 using System.Data.Common;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CavisProject.Application.Services
 {
@@ -30,10 +31,10 @@ namespace CavisProject.Application.Services
             _validatorResetPassword = validatorResetPassword;
         }
 
-        public async Task<ApiResponse<bool>> SendOTPEmailAsync(string email)
+        public async Task<ApiResponse<bool>> SendOTPEmailAsync(OTPEmailModel otpEmailModel)
         {
             var response = new ApiResponse<bool>();
-            if (string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(otpEmailModel.Email))
             {
                 response.Data = false;
                 response.isSuccess = true;
@@ -46,7 +47,7 @@ namespace CavisProject.Application.Services
             emailMessage.From.Add(new MailboxAddress
                 ("CavisAppBeauty", _emailConfiguration.From));
             emailMessage.To.Add(new MailboxAddress
-                (email, email));
+                (otpEmailModel.Email, otpEmailModel.Email));
             emailMessage.Subject = "Your OTP Code";
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Plain)
             {
@@ -56,7 +57,7 @@ namespace CavisProject.Application.Services
             using var client = new SmtpClient();
             try
             {
-                var checkEmailExist = await _userManager.FindByEmailAsync(email);
+                var checkEmailExist = await _userManager.FindByEmailAsync(otpEmailModel.Email);
                 if (checkEmailExist == null)
                 {
                     response.Data = false;

@@ -1,5 +1,6 @@
 ﻿using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
+using CavisProject.Application.ViewModels.EmailViewModels;
 using CavisProject.Application.ViewModels.RefreshTokenViewModels;
 using CavisProject.Application.ViewModels.UserViewModels;
 using CavisProject.Domain.Entity;
@@ -31,9 +32,9 @@ namespace CavisProject.API.Controllers
             return await _authenticationService.LoginAsync(userLoginModel);
         }
         [HttpPost("otp-email")]
-        public async Task<ApiResponse<bool>> OTPEmailAsync(string email)
+        public async Task<ApiResponse<bool>> OTPEmailAsync(OTPEmailModel otpEmailModel)
         {
-            return await _emailService.SendOTPEmailAsync(email);
+            return await _emailService.SendOTPEmailAsync(otpEmailModel);
         }
         [HttpPut("reset-password/{email}")]
         public async Task<ApiResponse<bool>> ResetPasswordAsync(string email, UserResetPasswordModel userResetPasswordModel)

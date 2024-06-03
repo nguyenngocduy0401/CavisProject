@@ -11,7 +11,7 @@ namespace CavisProject.Application.Interfaces
 {
     public interface IEmailService
     {
-        Task<ApiResponse<bool>> SendOTPEmailAsync(string email);
+        Task<ApiResponse<bool>> SendOTPEmailAsync(OTPEmailModel otpEmailModel);
         Task<ApiResponse<bool>> ResetPasswordAsync(string email, UserResetPasswordModel userResetPasswordModel);
     }
 }
