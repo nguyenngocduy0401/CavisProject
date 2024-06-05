@@ -39,7 +39,8 @@ namespace CavisProject.Application.Services
                 if (isNameExist)
                 {
                     throw new Exception("Skin type Name is exist!");
-                }else
+                }
+                else
                 {
                     FluentValidation.Results.ValidationResult validationResult = await _validatorCreateSkinType.ValidateAsync(createSkinType);
                     if (!validationResult.IsValid)
@@ -121,7 +122,7 @@ namespace CavisProject.Application.Services
 
 
 
-     
+
         public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinType(CreateSkinTypeViewModel updateSkinType, string skinTypeId)
         {
             var response = new ApiResponse<CreateSkinTypeViewModel>();
@@ -212,6 +213,40 @@ namespace CavisProject.Application.Services
             }
 
             return response;
+        }
+        public async Task<ApiResponse<CreateSkinTypeViewModel>> GetSkinTypeById(string skinTypeId)
+        {
+            var response = new ApiResponse<CreateSkinTypeViewModel>();
+
+            try
+            {
+                var skinType = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(skinTypeId));
+
+                if (skinType == null)
+                {
+                    throw new Exception( "Skin type not found.");
+                    
+                }
+
+                var skinTypeViewModel = _mapper.Map<CreateSkinTypeViewModel>(skinType);
+
+                response.Data = skinTypeViewModel;
+                response.isSuccess = true;
+                response.Message = "Skin type retrieved successfully.";
+            }
+            catch (DbException ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+
+            }
+            catch (Exception ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
+using CavisProject.Application.Services;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,7 @@ namespace CavisProject.API.Controllers
 
         [HttpPut("{skinTypeId}")]
         public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinType([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string skinTypeId) => await _skintypeService.UpdateSkinType(updateSkinType, skinTypeId);
-       
+        [HttpGet("{Id}")]
+        public async Task<ApiResponse<CreateSkinTypeViewModel>> GetbyId(string id) => await _skintypeService.GetSkinTypeById(id);
     }
 }
