@@ -15,6 +15,8 @@ using CavisProject.Domain.Entity;
 using CavisProject.API.Validator.ProductValidator.ProductCategoryValidator;
 using CavisProject.Application.ViewModels.SupplierViewModel;
 using CavisProject.API.Validator.ProductValidator.SupplierViewModel;
+using CavisProject.Application.ViewModels.ProductViewModel;
+using CavisProject.API.Validator.ProductValidator;
 
 namespace CavisProject.API
 {
@@ -82,6 +84,8 @@ namespace CavisProject.API
             services.AddTransient<IValidator<CreateSkinTypeViewModel>, CreateSkinTypeValidator>();
             services.AddTransient<IValidator<CreateProductCategoryViewModel>, ProductCategoryValidator>();
             services.AddTransient<IValidator<CreateSupplierViewModel>, SupplierValidator>();
+            services.AddTransient<IValidator<CreateProductViewModel>, CreateProductViewModelValidator>();
+
 
             #endregion
 

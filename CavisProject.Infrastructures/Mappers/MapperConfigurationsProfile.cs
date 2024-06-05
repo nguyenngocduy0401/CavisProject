@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CavisProject.Application.ViewModels.ProductCategoryViewModel;
+using CavisProject.Application.ViewModels.ProductViewModel;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Application.ViewModels.SupplierViewModel;
 using CavisProject.Application.ViewModels.UserViewModels;
@@ -33,6 +34,10 @@ namespace CavisProject.Infrastructures.Mappers
             #region Supplier
             CreateMap<CreateSupplierViewModel, Supplier>();
             CreateMap<Supplier, CreateSupplierViewModel>();
+            #endregion
+            #region Product
+            CreateMap<CreateProductViewModel, Product>();
+            CreateMap<Product, CreateProductViewModel>();
             #endregion
         }
     }

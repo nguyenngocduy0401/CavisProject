@@ -17,7 +17,7 @@ namespace CavisProject.API.Controllers
         }
 
         [HttpPost("")]
-        public async Task<ApiResponse<CreateProductCategoryViewModel>> CreateProductCategory(CreateProductCategoryViewModel createProductCategoryViewModel)
+        public async Task<ApiResponse<CreateProductCategoryViewModel>> CreateProductCategory([FromBody] CreateProductCategoryViewModel createProductCategoryViewModel)
         => await _productCategoryService.CreateProductCategory(createProductCategoryViewModel);
         
 
