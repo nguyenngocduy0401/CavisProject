@@ -6,6 +6,7 @@ using CavisProject.Application.ViewModels.UserViewModels;
 using CavisProject.Domain.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace CavisProject.API.Controllers
 {
@@ -26,6 +27,7 @@ namespace CavisProject.API.Controllers
             return await _authenticationService.RegisterAsync(userRegisterModel);
 
         }
+        [SwaggerOperation(Summary = "đăng nhập bằng UserName và Password")]
         [HttpPost("login")]
         public async Task<ApiResponse<RefreshTokenModel>> LoginAsync(UserLoginModel userLoginModel)
         {

@@ -27,6 +27,7 @@ namespace CavisProject.API
             services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "CavisAPI", Version = "v1" });
+                option.EnableAnnotations();
                 option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
