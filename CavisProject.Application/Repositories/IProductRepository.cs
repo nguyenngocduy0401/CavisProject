@@ -9,5 +9,6 @@ namespace CavisProject.Application.Repositories
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
+        Task<List<Product>> GetProductsBySkinIdAsync(Guid skinId);
     }
 }

@@ -84,12 +84,7 @@ namespace CavisProject.Infrastructures.Repositories
 
         public async Task<TEntity?> GetByIdAsync(Guid id)
         {
-            var result = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
-            if (result == null)
-            {
-                throw new Exception($"Not found any object with id: {id}");
-            }
-            return result;
+            return await _dbSet.FindAsync(id);
         }
 
         public async Task AddAsync(TEntity entity)

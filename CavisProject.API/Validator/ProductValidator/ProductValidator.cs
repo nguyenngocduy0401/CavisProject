@@ -1,16 +1,17 @@
 ﻿using CavisProject.Application;
 using CavisProject.Application.ViewModels.ProductViewModel;
 using FluentValidation;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CavisProject.API.Validator.ProductValidator
 {
     public class CreateProductViewModelValidator : AbstractValidator<CreateProductViewModel>
     {
-        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateProductViewModelValidator(IUnitOfWork unitOfWork)
+        public CreateProductViewModelValidator()
         {
-            _unitOfWork = unitOfWork;
+
 
             RuleFor(x => x.ProductName)
                 .NotEmpty().WithMessage("Product name is required.");
@@ -24,30 +25,7 @@ namespace CavisProject.API.Validator.ProductValidator
 
             RuleFor(x => x.URL)
                 .NotEmpty().WithMessage("URL is required.");
-
-            RuleFor(x => x.SupplierId)
-                .NotNull().WithMessage("Supplier is required.")
-                .MustAsync(BeValidSupplierId).WithMessage("Supplier does not exist.");
-
-            RuleFor(x => x.ProductCategoryId)
-                .NotNull().WithMessage("Product category is required.")
-                .MustAsync(BeValidProductCategoryId).WithMessage("Product category does not exist.");
         }
 
-        private async Task<bool> BeValidSupplierId(Guid? supplierId, CancellationToken cancellationToken)
-        {
-            if (supplierId == null)
-                return false;
-
-            return await _unitOfWork.SupplierRepository.GetByIdAsync(supplierId.Value) != null;
-        }
-
-        private async Task<bool> BeValidProductCategoryId(Guid? productCategoryId, CancellationToken cancellationToken)
-        {
-            if (productCategoryId == null)
-                return false;
-
-            return await _unitOfWork.ProductCategoryRepository.GetByIdAsync(productCategoryId.Value) != null;
-        }
     }
 }

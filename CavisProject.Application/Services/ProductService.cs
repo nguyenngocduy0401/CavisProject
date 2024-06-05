@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
 using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
-using CavisProject.Application.ViewModels.ProductCategoryViewModel;
 using CavisProject.Application.ViewModels.ProductViewModel;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Domain.Entity;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
@@ -42,47 +40,67 @@ namespace CavisProject.Application.Services
                     response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
                     return response;
                 }
-                else
+/*
+                var currentID = _claimsService.GetCurrentUserId;
+                if (currentID == Guid.Empty)
                 {
+                    response.isSuccess = false;
+                    response.Message = "Register please";
+                    return response;
+                }*/
 
+                // Kiểm tra sự tồn tại của SupplierId
+                var supplierExists = await _unitOfWork.SupplierRepository.GetByIdAsync(createProductViewModel.SupplierId.Value);
+                if (supplierExists == null)
+                {
+                    response.isSuccess = false;
+                    response.Message = "Supplier does not exist.";
+                    return response;
+                }
 
-                    var currentID = _claimsService.GetCurrentUserId;
-                   /* if (currentID == Guid.Empty)
+                // Kiểm tra sự tồn tại của ProductCategoryId
+                var productCategoryExists = await _unitOfWork.ProductCategoryRepository.GetByIdAsync(createProductViewModel.ProductCategoryId.Value);
+                if (productCategoryExists == null)
+                {
+                    response.isSuccess = false;
+                    response.Message = "Product category does not exist.";
+                    return response;
+                }
+
+                // Kiểm tra sự tồn tại của từng SkinId trong danh sách SkinIds
+                if (createProductViewModel.SkinIds != null && createProductViewModel.SkinIds.Any())
+                {
+                    foreach (var skinId in createProductViewModel.SkinIds)
                     {
-                        response.isSuccess = false;
-                        response.Message = "Register please";
-                    }*//*
-                    else*/
-                    {
-                     
-                        var productViewModel = _mapper.Map<CreateProductViewModel>(product);
-
-                        if (createProductViewModel.SkinIds != null && createProductViewModel.SkinIds.Any())
-                        {
-                            product.ProductDetails = createProductViewModel.SkinIds.Select(skinId => new ProductDetail
-                            {
-                                SkinId = skinId,
-                                Product = product
-                            }).ToList();
-                          
-                        }
-                        await _unitOfWork.ProductRepository.AddAsync(product);
-                       var issuccess =await _unitOfWork.SaveChangeAsync()>0;
-
-                        if (issuccess)
-                        {
-                            response.isSuccess = true;
-                            response.Message = "Create Successfully";
-                            return response;
-
-                        }
-                        else
+                        var skinExists = await _unitOfWork.SkinTypeRepository.GetByIdAsync(skinId);
+                        if (skinExists == null)
                         {
                             response.isSuccess = false;
-                            response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
+                            response.Message = "Skin with ID " + skinId + " does not exist.";
                             return response;
                         }
                     }
+
+                    // Nếu tất cả SkinIds tồn tại, thêm chúng vào ProductDetails
+                    product.ProductDetails = createProductViewModel.SkinIds.Select(skinId => new ProductDetail
+                    {
+                        SkinId = skinId,
+                        Product = product
+                    }).ToList();
+                }
+
+                await _unitOfWork.ProductRepository.AddAsync(product);
+                var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
+
+                if (isSuccess)
+                {
+                    response.isSuccess = true;
+                    response.Message = "Create Successfully";
+                }
+                else
+                {
+                    response.isSuccess = false;
+                    response.Message = "Failed to create product.";
                 }
             }
             catch (DbException ex)
