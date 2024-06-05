@@ -2,6 +2,7 @@
 using CavisProject.Infrastructures.FluentAPIs;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,23 @@ namespace CavisProject.Infrastructures
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonalMethodDetailConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductDetailConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(WishListConfiguration).Assembly);
+            modelBuilder.Entity<Skin>().HasData(
+                new Skin { SkinsName = "Da thường", 
+                    Description = "Da cân bằng với vẻ ngoài khỏe mạnh, không quá nhờn cũng không quá khô, và ít khuyết điểm.", 
+                    Category = true, CreationDate = DateTime.Now },
+                new Skin { SkinsName = "Da hỗn hợp", 
+                    Description = "Sự kết hợp của các loại da; thường thì vùng chữ T (trán, mũi, và cằm) là da nhờn trong khi má là da khô hoặc bình thường.", 
+                    Category = true, CreationDate = DateTime.Now },
+                new Skin { SkinsName = "Da nhạy cảm", 
+                    Description = "Da dễ phản ứng với các sản phẩm và yếu tố môi trường, thường dẫn đến đỏ, ngứa, hoặc kích ứng.", 
+                    Category = true, CreationDate = DateTime.Now },
+                new Skin { SkinsName = "Da khô", 
+                    Description = "Da thiếu độ ẩm, thường cảm thấy căng, thô ráp, hoặc bong tróc, và có thể trông xỉn màu.", 
+                    Category = true, CreationDate = DateTime.Now },
+                new Skin { SkinsName = "Da nhờn", 
+                    Description = "Da sản xuất quá nhiều bã nhờn, dẫn đến vẻ ngoài bóng và có khả năng cao bị mụn và lỗ chân lông to.",
+                    Category = true, CreationDate = DateTime.Now }
+                );
         }
     }
 }

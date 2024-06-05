@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CavisProject.API.Controllers
 {
-    [Route("api/v1/product-category")]
+    [Route("api/v1/product-categories")]
     public class ProductCategoryController : ControllerBase
     {
         private readonly IProductCategoryService _productCategoryService;
@@ -21,14 +21,14 @@ namespace CavisProject.API.Controllers
         => await _productCategoryService.CreateProductCategory(createProductCategoryViewModel);
         
 
-        [HttpDelete("{productcategoryId}")]
-        public async Task<ApiResponse<bool>> DeleteProductCategory(string productcategoryId)
-        => await _productCategoryService.DeleteProductCategory(productcategoryId);
+        [HttpDelete("{id}")]
+        public async Task<ApiResponse<bool>> DeleteProductCategory(string id)
+        => await _productCategoryService.DeleteProductCategory(id);
         
 
-        [HttpPut("{productcategoryId}")]
-        public async Task<ApiResponse<CreateProductCategoryViewModel>> UpdateProductCategory([FromBody] CreateProductCategoryViewModel createProductCategoryViewModel, [FromRoute] string productcategoryId)
-       =>  await _productCategoryService.UppdateProductCategory(createProductCategoryViewModel, productcategoryId);
+        [HttpPut("{id}")]
+        public async Task<ApiResponse<CreateProductCategoryViewModel>> UpdateProductCategory([FromBody] CreateProductCategoryViewModel createProductCategoryViewModel, [FromRoute] string id)
+       =>  await _productCategoryService.UppdateProductCategory(createProductCategoryViewModel, id);
         
 
         [HttpGet("")]

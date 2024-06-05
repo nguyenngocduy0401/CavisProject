@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CavisProject.API.Controllers
 {
-    [Route("api/v1/supplier")]
+    [Route("api/v1/suppliers")]
     public class SupplierController : ControllerBase
     {
         private readonly ISupplierService _supplierService;
@@ -26,15 +26,15 @@ namespace CavisProject.API.Controllers
         => await _supplierService.FilterSupplier(filterSupplierViewModel);
        
 
-        [HttpDelete("{supplierId}")]
+        [HttpDelete("{id}")]
         public async Task<ApiResponse<bool>> DeleteSupplier([FromRoute] string supplierId)
         
           =>  await _supplierService.DeleteSupplier(supplierId);
         
 
-        [HttpPut("{supplierId}")]
-        public async Task<ApiResponse<CreateSupplierViewModel>> UpdateSupplier([FromBody] CreateSupplierViewModel updateSupplierViewModel, [FromRoute] string supplierId)
-      =>   await _supplierService.UppdateSupplier(updateSupplierViewModel, supplierId);
+        [HttpPut("{id}")]
+        public async Task<ApiResponse<CreateSupplierViewModel>> UpdateSupplier([FromBody] CreateSupplierViewModel updateSupplierViewModel, [FromRoute] string id)
+      =>   await _supplierService.UppdateSupplier(updateSupplierViewModel, id);
         
     }
 }

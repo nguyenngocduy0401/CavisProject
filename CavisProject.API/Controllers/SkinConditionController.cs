@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CavisProject.API.Controllers
 {
-    [Route("api/v1/skin-condition")]
+    [Route("api/v1/skin-conditions")]
     public class SkinConditionController: ControllerBase
     {
         private readonly ISkinConditionService _skinConditionService;
@@ -17,12 +17,12 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinCondition([FromBody] CreateSkinTypeViewModel createSkinType) => await _skinConditionService.CreateSkinCondition(createSkinType);
         [HttpGet("")]
         public async Task<ApiResponse<Pagination<CreateSkinTypeViewModel>>> FilterSkinCondition(SkinFilterModel skinTypeFilterModel) => await _skinConditionService.FilterSkinCondition(skinTypeFilterModel);
-        [HttpDelete("{skinTypeId}")]
-        public async Task<ApiResponse<bool>> DeleteSkinCondition([FromRoute] string skinTypeId) => await _skinConditionService.DeleteSkinType(skinTypeId);
+        [HttpDelete("{id}")]
+        public async Task<ApiResponse<bool>> DeleteSkinCondition([FromRoute] string id) => await _skinConditionService.DeleteSkinType(id);
 
 
-        [HttpPut("{skinTypeId}")]
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinCondition([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string skinTypeId) => await _skinConditionService.UpdateSkinCondition(updateSkinType, skinTypeId);
+        [HttpPut("{id}")]
+        public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinCondition([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string id) => await _skinConditionService.UpdateSkinCondition(updateSkinType, id);
 
     }
 }
