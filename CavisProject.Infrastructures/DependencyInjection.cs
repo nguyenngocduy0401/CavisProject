@@ -43,7 +43,7 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IWishListService, WishListService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-
+            services.AddScoped<ISkinConditionService, SkinConditionService>();
             #endregion
 
             #region Repository DI
@@ -63,7 +63,7 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IRefreshTokenRepository , RefreshTokenRepository>();
-            services.AddScoped<ISkinTypeRepository, SkinTypeRepository>();
+            services.AddScoped<ISkinTypeRepository, SkinRepository>();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IUserRepository,UserRepository>();

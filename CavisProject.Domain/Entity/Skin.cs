@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Domain.Entity
 {
-    public class SkinType : BaseEntity
+    public class Skin : BaseEntity
     {
-        public string? SkinTypeName { get; set; }
+        public string? SkinsName { get; set; }
         public string? Description { get; set; }
         public bool Category {  get; set; }
         public virtual ICollection<MethodDetail>? MethodDetails { get; set; }

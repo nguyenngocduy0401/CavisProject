@@ -17,12 +17,13 @@ namespace CavisProject.Infrastructures.Mappers
         {
             #region User
             CreateMap<UserLoginModel, User>();
-            CreateMap<CreateSkinTypeViewModel, SkinType>();
-            CreateMap<SkinTypeViewModel, SkinType>();
+
             #endregion
             #region SkinType
-            CreateMap<CreateSkinTypeViewModel, SkinType>();
-            CreateMap<SkinTypeViewModel, SkinType>();
+            CreateMap<CreateSkinTypeViewModel, Skin>();
+            CreateMap<SkinTypeViewModel, Skin>();
+            CreateMap<Skin, CreateSkinTypeViewModel>();
+
             #endregion
             #region ProductCategory
             CreateMap<CreateProductCategoryViewModel, ProductCategory>();

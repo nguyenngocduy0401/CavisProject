@@ -32,7 +32,7 @@ namespace CavisProject.Infrastructures
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductDetail> ProductDetails { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<SkinType> SkinTypes { get; set; }
+        public DbSet<Skin> Skins { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<User> Users { get; set; }

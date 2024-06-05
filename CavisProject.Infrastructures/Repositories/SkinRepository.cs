@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Infrastructures.Repositories
 {
-    public class SkinTypeRepository : GenericRepository<SkinType>, ISkinTypeRepository
+    public class SkinRepository : GenericRepository<Skin>, ISkinTypeRepository
     {
         private readonly AppDbContext _dbContext;
         private readonly ICurrentTime _timeService;
         private readonly IClaimsService _claimsService;
-        public SkinTypeRepository(
+        public SkinRepository(
             AppDbContext context,
             ICurrentTime timeService,
             IClaimsService claimsService
@@ -26,14 +26,14 @@ namespace CavisProject.Infrastructures.Repositories
             _timeService = timeService;
             _claimsService = claimsService;
         }
-        public async Task<List<SkinType>> GetAllWithCategoryFalseAsync()
+        public async Task<List<Skin>> GetAllWithCategoryFalseAsync()
         {
-            return await _dbContext.SkinTypes.Where(s => !s.Category).ToListAsync();
+            return await _dbContext.Skins.Where(s => !s.Category).ToListAsync();
         }
 
-        public async Task<List<SkinType>> GetAllWithCategoryTrueAsync()
+        public async Task<List<Skin>> GetAllWithCategoryTrueAsync()
         {
-            return await _dbContext.SkinTypes.Where(s => s.Category).ToListAsync();
+            return await _dbContext.Skins.Where(s => s.Category).ToListAsync();
         }
     }
 }

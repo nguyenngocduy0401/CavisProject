@@ -13,13 +13,13 @@ namespace CavisProject.Infrastructures.FluentAPIs
     {
         public void Configure(EntityTypeBuilder<MethodDetail> builder)
         {
-            builder.HasKey(x => new { x.MethodId, x.SkinTypeId });
+            builder.HasKey(x => new { x.MethodId, x.SkinId });
             builder.HasOne(a => a.Method)
                 .WithMany(a => a.MethodDetails)
                 .HasForeignKey(a => a.MethodId);
-            builder.HasOne(a => a.SkinType)
+            builder.HasOne(a => a.Skins)
                 .WithMany(a => a.MethodDetails)
-                .HasForeignKey(a => a.SkinTypeId);
+                .HasForeignKey(a => a.SkinId);
         }
     }
 }

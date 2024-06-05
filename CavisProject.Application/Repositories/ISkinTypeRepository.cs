@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.Repositories
 {
-    public interface ISkinTypeRepository:IGenericRepository<SkinType>
+    public interface ISkinTypeRepository:IGenericRepository<Skin>
     {
-        Task<List<SkinType>> GetAllWithCategoryTrueAsync();
-        Task<List<SkinType>> GetAllWithCategoryFalseAsync();
+       
     }
 }

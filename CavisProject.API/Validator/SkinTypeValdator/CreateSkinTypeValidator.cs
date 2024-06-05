@@ -8,9 +8,9 @@ namespace CavisProject.API.Validator.SkinTypeValdator
     {
         public CreateSkinTypeValidator()
         {
-            RuleFor(x => x.SkinTypeName)
-              .NotEmpty().WithMessage("SkinTypeName cannot be empty")
-              .MaximumLength(50).WithMessage("SkinTypeName cannot exceed 50 characters");
+            RuleFor(x => x.SkinsName)
+              .NotEmpty().WithMessage("Name cannot be empty")
+              .MaximumLength(50).WithMessage("Name cannot exceed 50 characters");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Description cannot be empty")

@@ -8,38 +8,36 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CavisProject.Application.Services
 {
-    public class SkinTypeService : ISkintypeService
+    public class SkinConditionService : ISkinConditionService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IClaimsService _claimsService;
         private readonly IMapper _mapper;
         private readonly IValidator<CreateSkinTypeViewModel> _validatorCreateSkinType;
-        public SkinTypeService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateSkinTypeViewModel> validatorCreateSkintype, IClaimsService claimsService)
+        public SkinConditionService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateSkinTypeViewModel> validatorCreateSkintype, IClaimsService claimsService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _validatorCreateSkinType = validatorCreateSkintype;
         }
-
-
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinType(CreateSkinTypeViewModel createSkinType)
+        public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinCondition(CreateSkinTypeViewModel createSkinType)
         {
             var response = new ApiResponse<CreateSkinTypeViewModel>();
             try
             {
                 var skinType = _mapper.Map<Skin>(createSkinType);
-                var skinTypeList = _unitOfWork.SkinTypeRepository.Find(s => s.SkinsName == createSkinType.SkinsName);
+               var skinTypeList =  _unitOfWork.SkinTypeRepository.Find(s => s.SkinsName == createSkinType.SkinsName);
                 var isNameExist = skinTypeList.Any();
                 if (isNameExist)
                 {
-                    throw new Exception("Skin type Name is exist!");
-                }else
+                    throw new Exception("Skin Condition Name is exist!");
+                }
+                else
                 {
                     FluentValidation.Results.ValidationResult validationResult = await _validatorCreateSkinType.ValidateAsync(createSkinType);
                     if (!validationResult.IsValid)
@@ -50,15 +48,15 @@ namespace CavisProject.Application.Services
                     }
                     else
                     {
-                        skinType.Category = true;
+                        skinType.Category = false;
                         await _unitOfWork.SkinTypeRepository.AddAsync(skinType);
                         var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
                         if (isSuccess is false)
                         {
-                            throw new Exception("Create Skintype is fail!");
+                            throw new Exception("Create Skin Condition is fail!");
                         }
                         response.Data = _mapper.Map<CreateSkinTypeViewModel>(createSkinType);
-                        response.Message = "Create Skintype is success";
+                        response.Message = "Create Skin Condition is success";
 
                     }
                 }
@@ -75,9 +73,7 @@ namespace CavisProject.Application.Services
                 response.Message = ex.Message;
             }
             return response;
-
         }
-
 
         public async Task<ApiResponse<bool>> DeleteSkinType(string skinTypeId)
         {
@@ -87,23 +83,23 @@ namespace CavisProject.Application.Services
                 var exist = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(skinTypeId));
                 if (exist == null)
                 {
-                    throw new Exception("No SkinType Exit");
+                    throw new Exception("No Skin Condition Exit");
                 }
                 if (exist.IsDeleted)
                 {
 
-                    throw new Exception("SkinType is already deleted");
+                    throw new Exception("Skin Condition is already deleted");
 
                 }
                 _unitOfWork.SkinTypeRepository.SoftRemove(exist);
                 var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
                 if (isSuccess is false)
                 {
-                    throw new Exception("Delete Skintype is fail");
+                    throw new Exception("Delete Skin Condition is fail");
                 }
                 response.Data = _mapper.Map<bool>(skinTypeId);
 
-                response.Message = "Delete Skintype is success";
+                response.Message = "Delete Skin Condition is success";
             }
             catch (DbException ex)
             {
@@ -119,10 +115,43 @@ namespace CavisProject.Application.Services
             return response;
         }
 
+        public async Task<ApiResponse<Pagination<CreateSkinTypeViewModel>>> FilterSkinCondition(SkinFilterModel skinTypeFilterModel)
+        {
+            var response = new ApiResponse<Pagination<CreateSkinTypeViewModel>>();
 
+            try
+            {
+               
+                var paginationResult = _unitOfWork.SkinTypeRepository.GetFilter(
+                    filter: s =>
+                        (string.IsNullOrEmpty(skinTypeFilterModel.SkinTypeName) || s.SkinsName.Contains(skinTypeFilterModel.SkinTypeName)) &&
+                        (string.IsNullOrEmpty(skinTypeFilterModel.Description) || s.Description.Contains(skinTypeFilterModel.Description)) &&
+                        s.Category == false,
+                    pageIndex: skinTypeFilterModel.PageIndex,
+                    pageSize: skinTypeFilterModel.PageSize
+                ); ;
+                var skinTypeViewModels = _mapper.Map<List<CreateSkinTypeViewModel>>(paginationResult.Items);
+                var paginationViewModel = new Pagination<CreateSkinTypeViewModel>
+                {
+                    PageIndex = paginationResult.PageIndex,
+                    PageSize = paginationResult.PageSize,
+                    TotalItemsCount = paginationResult.TotalItemsCount,
+                    Items = skinTypeViewModels
+                };
+                response.Data = paginationViewModel;
+                response.isSuccess = true;
+                response.Message = "Filtered Skin Condition retrieved successfully";
+            }
+            catch (Exception ex)
+            {
+                response.isSuccess = false;
+                response.Message = "Error occurred while filtering Skin Condition: " + ex.Message;
+            }
 
-     
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinType(CreateSkinTypeViewModel updateSkinType, string skinTypeId)
+            return response;
+        }
+
+        public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinCondition(CreateSkinTypeViewModel updateSkinType, string skinTypeId)
         {
             var response = new ApiResponse<CreateSkinTypeViewModel>();
             try
@@ -140,7 +169,7 @@ namespace CavisProject.Application.Services
                 {
                     if (exist is null)
                     {
-                        throw new Exception("Skintype not found");
+                        throw new Exception("Skin Condition not found");
 
                     }
                     else
@@ -156,11 +185,11 @@ namespace CavisProject.Application.Services
 
                         if (isSuccess is false)
                         {
-                            throw new Exception("Update Skintype is fail");
+                            throw new Exception("Update Skin Condition is fail");
                         }
                         response.Data = _mapper.Map<CreateSkinTypeViewModel>(skinTypeId);
 
-                        response.Message = "Update Skintype is success";
+                        response.Message = "Update Skin Condition is success";
                     }
 
                 }
@@ -178,41 +207,5 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
-        public async Task<ApiResponse<Pagination<CreateSkinTypeViewModel>>> FilterSkinType(SkinFilterModel skinTypeFilterModel)
-        {
-            var response = new ApiResponse<Pagination<CreateSkinTypeViewModel>>();
-
-            try
-            {
-                var paginationResult = _unitOfWork.SkinTypeRepository.GetFilter(
-                    filter: s =>
-                        (string.IsNullOrEmpty(skinTypeFilterModel.SkinTypeName) || s.SkinsName.Contains(skinTypeFilterModel.SkinTypeName)) &&
-                        (string.IsNullOrEmpty(skinTypeFilterModel.Description) || s.Description.Contains(skinTypeFilterModel.Description)) &&
-                        s.Category == true,
-                    pageIndex: skinTypeFilterModel.PageIndex,
-                    pageSize: skinTypeFilterModel.PageSize
-                ); ;
-                var skinTypeViewModels = _mapper.Map<List<CreateSkinTypeViewModel>>(paginationResult.Items);
-                var paginationViewModel = new Pagination<CreateSkinTypeViewModel>
-                {
-                    PageIndex = paginationResult.PageIndex,
-                    PageSize = paginationResult.PageSize,
-                    TotalItemsCount = paginationResult.TotalItemsCount,
-                    Items = skinTypeViewModels
-                };
-                response.Data = paginationViewModel;
-                response.isSuccess = true;
-                response.Message = "Filtered skin types retrieved successfully";
-            }
-            catch (Exception ex)
-            {
-                response.isSuccess = false;
-                response.Message = "Error occurred while filtering skin types: " + ex.Message;
-            }
-
-            return response;
-        }
     }
 }
-

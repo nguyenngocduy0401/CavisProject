@@ -12,8 +12,8 @@ namespace CavisProject.Domain.Entity
         public Guid? PersonalAnalystId { get; set; }
         [ForeignKey("PersonalAnalystId")]
         public PersonalAnalyst? PersonalAnalyst { get; set; }
-        public Guid? SkinTypeId { get; set; }
+        public Guid? SkinId { get; set; }
         [ForeignKey("SkinTypeId")]
-        public SkinType? SkinType { get; set; }
+        public Skin? Skins { get; set; }
     }
 }

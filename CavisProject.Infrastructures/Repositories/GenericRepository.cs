@@ -4,13 +4,16 @@ using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using CavisProject.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Entity;
+using System.Linq.Expressions;
+using System.Linq;
 
 namespace CavisProject.Infrastructures.Repositories
 {
 
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
     {
-        protected DbSet<TEntity> _dbSet;
+        protected Microsoft.EntityFrameworkCore.DbSet<TEntity> _dbSet;
         private readonly ICurrentTime _timeService;
         private readonly IClaimsService _claimsService;
 
@@ -19,6 +22,63 @@ namespace CavisProject.Infrastructures.Repositories
             _dbSet = context.Set<TEntity>();
             _timeService = timeService;
             _claimsService = claimsService;
+        }
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression, string includeProperties = "")
+        {
+            IQueryable<TEntity> query = _dbSet.Where(expression);
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.Include(query, includeProperty); // Chỉ rõ với không gian tên
+            }
+            return query.ToList();
+        }
+
+        public virtual Pagination<TEntity> GetFilter(
+            Expression<Func<TEntity, bool>>? filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+            string includeProperties = "",
+            int? pageIndex = null,
+            int? pageSize = null,
+            string? foreignKey = null,
+            int? foreignKeyId = null)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.Include(query, includeProperty);
+            }
+            var itemCount = query.Count();
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+            if (!string.IsNullOrEmpty(foreignKey) && foreignKeyId.HasValue)
+            {
+                query = query.Where(e => EF.Property<int>(e, foreignKey) == foreignKeyId.Value);
+            }
+            if (pageIndex.HasValue && pageSize.HasValue)
+            {
+                int validPageIndex = pageIndex.Value > 0 ? pageIndex.Value - 1 : 0;
+                int validPageSize = pageSize.Value > 0 ? pageSize.Value : 10;
+
+                query = query.Skip(validPageIndex * validPageSize).Take(validPageSize);
+            }
+
+            var result = new Pagination<TEntity>()
+            {
+                PageIndex = pageIndex ?? 0,
+                PageSize = pageSize ?? 10, 
+                TotalItemsCount = itemCount,
+                Items = query.ToList(),
+            };
+
+            return result;
         }
         public Task<List<TEntity>> GetAllAsync() => _dbSet.ToListAsync();
 
@@ -74,27 +134,6 @@ namespace CavisProject.Infrastructures.Repositories
             }
             _dbSet.UpdateRange(entities);
         }
-
-        public async Task<Pagination<TEntity>> ToPagination(int pageIndex = 0, int pageSize = 10)
-        {
-            var itemCount = await _dbSet.CountAsync();
-            var items = await _dbSet.OrderByDescending(x => x.CreationDate)
-                                    .Skip(pageIndex * pageSize)
-                                    .Take(pageSize)
-                                    .AsNoTracking()
-                                    .ToListAsync();
-
-            var result = new Pagination<TEntity>()
-            {
-                PageIndex = pageIndex,
-                PageSize = pageSize,
-                TotalItemsCount = itemCount,
-                Items = items,
-            };
-
-            return result;
-        }
-
         public void UpdateRange(List<TEntity> entities)
         {
             foreach (var entity in entities)
@@ -104,32 +143,12 @@ namespace CavisProject.Infrastructures.Repositories
             }
             _dbSet.UpdateRange(entities);
         }
-
-        public async Task<List<TEntity>> GetAllIsNotDeleteAsync() => await _dbSet.Where(x => x.IsDeleted == null || x.IsDeleted == false).ToListAsync();
-
-        public async Task<Pagination<TEntity>> ToPaginationIsNotDelete(int pageIndex = 0, int pageSize = 10)
+        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            var itemCount = await _dbSet.Where(x => x.IsDeleted == null || x.IsDeleted == false).CountAsync();
-            var items = await _dbSet.Where(x => x.IsDeleted == null || x.IsDeleted == false)
-                                    .OrderByDescending(x => x.CreationDate)
-                                    .Skip(pageIndex * pageSize)
-                                    .Take(pageSize)
-                                    .AsNoTracking()
-                                    .ToListAsync();
-
-            var result = new Pagination<TEntity>()
-            {
-                PageIndex = pageIndex,
-                PageSize = pageSize,
-                TotalItemsCount = itemCount,
-                Items = items,
-            };
-
-            return result;
+            return await _dbSet.AnyAsync(predicate);
         }
 
-       
 
-        
+
     }
 }
