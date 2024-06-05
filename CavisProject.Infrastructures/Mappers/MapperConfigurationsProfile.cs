@@ -20,7 +20,7 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<UserLoginModel, User>();
 
             #endregion
-            #region SkinType
+            #region Skin
             CreateMap<CreateSkinTypeViewModel, Skin>();
             CreateMap<SkinTypeViewModel, Skin>();
             CreateMap<Skin, CreateSkinTypeViewModel>();
@@ -33,6 +33,8 @@ namespace CavisProject.Infrastructures.Mappers
             #region Supplier
             CreateMap<CreateSupplierViewModel, Supplier>();
             CreateMap<Supplier, CreateSupplierViewModel>();
+            CreateMap<UserRegisterModel, User>()
+                .ForMember(dest => dest.PasswordHash, src => src.MapFrom(x => x.Password)); 
             #endregion
         }
     }

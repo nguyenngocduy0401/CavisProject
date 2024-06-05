@@ -26,7 +26,7 @@ namespace CavisProject.API
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(option =>
             {
-                option.SwaggerDoc("v1", new OpenApiInfo { Title = "eFurnitureAPI", Version = "v1" });
+                option.SwaggerDoc("v1", new OpenApiInfo { Title = "CavisAPI", Version = "v1" });
                 option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -68,7 +68,7 @@ namespace CavisProject.API
             services.AddScoped<IClaimsService, ClaimsService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddHttpContextAccessor();
-           /* services.AddHostedService<SetupIdentityDataSeeder>();*/
+      /*      services.AddHostedService<SetupIdentityDataSeeder>();*/
             services.AddControllers();
             services.AddLogging();
 
@@ -82,7 +82,7 @@ namespace CavisProject.API
             services.AddTransient<IValidator<CreateSkinTypeViewModel>, CreateSkinTypeValidator>();
             services.AddTransient<IValidator<CreateProductCategoryViewModel>, ProductCategoryValidator>();
             services.AddTransient<IValidator<CreateSupplierViewModel>, SupplierValidator>();
-
+            services.AddTransient<IValidator<UserResetPasswordModel>, UserResetPasswordValidator>();
             #endregion
 
             return services;

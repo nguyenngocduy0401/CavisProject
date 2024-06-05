@@ -1,4 +1,5 @@
 ﻿using CavisProject.Application;
+using CavisProject.Application.Commoms;
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using CavisProject.Application.Services;
@@ -18,7 +19,7 @@ namespace CavisProject.Infrastructures
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructuresService(this IServiceCollection services, string databaseConnection)
+        public static IServiceCollection AddInfrastructuresService(this IServiceCollection services, string appConfiguration)
         {
             #region Service DI
             services.AddScoped<ICurrentTime, CurrentTime>();
@@ -41,9 +42,11 @@ namespace CavisProject.Infrastructures
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IUserService,UserService>();
             services.AddScoped<IWishListService, WishListService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ISkinConditionService, SkinConditionService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             #endregion
 
             #region Repository DI
@@ -87,8 +90,8 @@ namespace CavisProject.Infrastructures
             });
 
             // ATTENTION: if you do migration please check file README.md
-            services.AddDbContext<AppDbContext>(option => option.UseSqlServer(databaseConnection));
-
+            services.AddDbContext<AppDbContext>(option => option.UseSqlServer(appConfiguration));
+            /*services.AddSingleton(appConfiguration.EmailConfiguration);*/
             services.AddAutoMapper(typeof(MapperConfigurationsProfile).Assembly);
 
 
