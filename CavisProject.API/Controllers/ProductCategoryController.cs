@@ -6,18 +6,34 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CavisProject.API.Controllers
 {
-    public class ProductCategoryController
+    [Route("api/v1/product-category")]
+    public class ProductCategoryController : ControllerBase
     {
-        public readonly IProductCategoryService _productCategoryService;
+        private readonly IProductCategoryService _productCategoryService;
+
         public ProductCategoryController(IProductCategoryService productCategoryService)
         {
             _productCategoryService = productCategoryService;
         }
-        [HttpPost("create-product-category")]
-        public async Task<ApiResponse<CreateProductCategoryViewModel>> CreateProductCategory(CreateProductCategoryViewModel createProductCategoryViewModel) => await _productCategoryService.CreateProductCategory(createProductCategoryViewModel);
-        [HttpDelete("get-product-category")]
-        public async Task<ApiResponse<bool>> DeleteProductCategory(string id) => await _productCategoryService.DeleteProductCategory(id);
-        [HttpPut("update-product-category")]
-        public async Task<ApiResponse<CreateProductCategoryViewModel>> UpdateProductCategory(CreateProductCategoryViewModel createProductCategoryViewModel, string id) => await _productCategoryService.UppdateProductCategory(createProductCategoryViewModel, id);
+
+        [HttpPost("")]
+        public async Task<ApiResponse<CreateProductCategoryViewModel>> CreateProductCategory(CreateProductCategoryViewModel createProductCategoryViewModel)
+        => await _productCategoryService.CreateProductCategory(createProductCategoryViewModel);
+        
+
+        [HttpDelete("{productcategoryId}")]
+        public async Task<ApiResponse<bool>> DeleteProductCategory(string productcategoryId)
+        => await _productCategoryService.DeleteProductCategory(productcategoryId);
+        
+
+        [HttpPut("{productcategoryId}")]
+        public async Task<ApiResponse<CreateProductCategoryViewModel>> UpdateProductCategory([FromBody] CreateProductCategoryViewModel createProductCategoryViewModel, [FromRoute] string productcategoryId)
+       =>  await _productCategoryService.UppdateProductCategory(createProductCategoryViewModel, productcategoryId);
+        
+
+        [HttpGet("")]
+        public async Task<ApiResponse<Pagination<CreateProductCategoryViewModel>>> FilterProductCategory(FilterProductCategory filterProductCategory)
+       => await _productCategoryService.FilterProductCategory(filterProductCategory);
+        
     }
 }

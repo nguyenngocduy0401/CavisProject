@@ -158,6 +158,7 @@ namespace CavisProject.Application.Services
             {
                 var exist = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(skinTypeId));
 
+
                 FluentValidation.Results.ValidationResult validationResult = await _validatorCreateSkinType.ValidateAsync(updateSkinType);
                 if (validationResult.IsValid)
                 {

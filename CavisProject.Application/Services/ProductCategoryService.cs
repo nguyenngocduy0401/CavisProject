@@ -34,24 +34,33 @@ namespace CavisProject.Application.Services
             try
             {
                 var category = _mapper.Map<ProductCategory>(createProductCategoryViewModel);
-                FluentValidation.Results.ValidationResult validationResult = await _validatorCreate.ValidateAsync(createProductCategoryViewModel);
-                if (!validationResult.IsValid)
+                var scategoryList = _unitOfWork.SkinTypeRepository.Find(s => s.SkinsName == createProductCategoryViewModel.ProductCategoryName);
+                var isNameExist = scategoryList.Any();
+                if (isNameExist)
                 {
-                    response.isSuccess = false;
-                    response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
-                    return response;
+                    throw new Exception("Product Categoory Name is exist!");
                 }
                 else
                 {
-                    await _unitOfWork.ProductCategoryRepository.AddAsync(category);
-                    var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
-                    if(isSuccess is false)
+                    FluentValidation.Results.ValidationResult validationResult = await _validatorCreate.ValidateAsync(createProductCategoryViewModel);
+                    if (!validationResult.IsValid)
                     {
-                        throw new Exception("Create category fail");
+                        response.isSuccess = false;
+                        response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
+                        return response;
                     }
-                    response.Data = _mapper.Map<CreateProductCategoryViewModel>(createProductCategoryViewModel);
-                    response.Message = "Create category is success";
+                    else
+                    {
+                        await _unitOfWork.ProductCategoryRepository.AddAsync(category);
+                        var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
+                        if (isSuccess is false)
+                        {
+                            throw new Exception("Create category fail");
+                        }
+                        response.Data = _mapper.Map<CreateProductCategoryViewModel>(createProductCategoryViewModel);
+                        response.Message = "Create category is success";
 
+                    }
                 }
             }
             catch (DbException ex)
@@ -109,6 +118,36 @@ namespace CavisProject.Application.Services
             return response;
         }
 
+        public async Task<ApiResponse<Pagination<CreateProductCategoryViewModel>>> FilterProductCategory(FilterProductCategory filterProductCategory)
+        {
+            var response = new ApiResponse<Pagination<CreateProductCategoryViewModel>>();
+            try
+            {
+                var paginationResult = _unitOfWork.ProductCategoryRepository.GetFilter(
+                    filter: s =>
+                    (string.IsNullOrEmpty(filterProductCategory.ProductCategoryName) || s.ProductCategoryName.Contains(filterProductCategory.ProductCategoryName)),
+                    pageIndex: filterProductCategory.PageIndex,
+                    pageSize: filterProductCategory.PageSize); ;
+                var categoryViewModel= _mapper.Map<List<CreateProductCategoryViewModel>>(paginationResult.Items);
+                var paginationViewModel = new Pagination<CreateProductCategoryViewModel>
+                {
+                    PageIndex = paginationResult.PageIndex,
+                    PageSize = paginationResult.PageSize,
+                    TotalItemsCount = paginationResult.TotalItemsCount,
+                    Items = categoryViewModel
+                };
+                response.Data = paginationViewModel;
+                response.isSuccess = true;
+                response.Message = "Filter product category retrived successfully";
+            }
+            catch (Exception ex)
+            {
+                response.isSuccess = false;
+                response.Message = "Error occurred while filtering skin types: " + ex.Message;
+            }
+
+            return response;
+        }
 
         public async Task<ApiResponse<CreateProductCategoryViewModel>> UppdateProductCategory(CreateProductCategoryViewModel UpdateProductCategoryViewModel, string id)
         {
@@ -134,17 +173,26 @@ namespace CavisProject.Application.Services
                     else
                     {
                         var update = _mapper.Map(UpdateProductCategoryViewModel, exist);
-                        var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
-
-                        if (isSuccess is false)
+                        var scategoryList = _unitOfWork.SkinTypeRepository.Find(s => s.SkinsName == UpdateProductCategoryViewModel.ProductCategoryName);
+                        var isNameExist = scategoryList.Any();
+                        if (isNameExist)
                         {
-                            throw new Exception("Update Category is fail");
+                            throw new Exception("Product Categoory Name is exist!");
                         }
-                        response.Data = _mapper.Map<CreateProductCategoryViewModel>(id);
+                        else
+                        {
+                            var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
 
-                        response.Message = "Update Category is success";
+                            if (isSuccess is false)
+                            {
+                                throw new Exception("Update Category is fail");
+                            }
+                            response.Data = _mapper.Map<CreateProductCategoryViewModel>(id);
+
+                            response.Message = "Update Category is success";
+                        }
+
                     }
-
                 }
             }
             catch (DbException ex)

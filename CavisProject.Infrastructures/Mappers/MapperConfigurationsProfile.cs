@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CavisProject.Application.ViewModels.ProductCategoryViewModel;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
+using CavisProject.Application.ViewModels.SupplierViewModel;
 using CavisProject.Application.ViewModels.UserViewModels;
 using CavisProject.Domain.Entity;
 using System;
@@ -15,7 +16,7 @@ namespace CavisProject.Infrastructures.Mappers
     {
         public MapperConfigurationsProfile()
         {
-            #region User
+               #region User
             CreateMap<UserLoginModel, User>();
 
             #endregion
@@ -27,6 +28,11 @@ namespace CavisProject.Infrastructures.Mappers
             #endregion
             #region ProductCategory
             CreateMap<CreateProductCategoryViewModel, ProductCategory>();
+            CreateMap<ProductCategory, CreateProductCategoryViewModel>();
+            #endregion
+            #region Supplier
+            CreateMap<CreateSupplierViewModel, Supplier>();
+            CreateMap<Supplier, CreateSupplierViewModel>();
             #endregion
         }
     }
