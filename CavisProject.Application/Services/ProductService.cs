@@ -49,7 +49,6 @@ namespace CavisProject.Application.Services
                     return response;
                 }*/
 
-                // Kiểm tra sự tồn tại của SupplierId
                 var supplierExists = await _unitOfWork.SupplierRepository.GetByIdAsync(createProductViewModel.SupplierId.Value);
                 if (supplierExists == null)
                 {
@@ -58,7 +57,7 @@ namespace CavisProject.Application.Services
                     return response;
                 }
 
-                // Kiểm tra sự tồn tại của ProductCategoryId
+  
                 var productCategoryExists = await _unitOfWork.ProductCategoryRepository.GetByIdAsync(createProductViewModel.ProductCategoryId.Value);
                 if (productCategoryExists == null)
                 {
@@ -67,7 +66,6 @@ namespace CavisProject.Application.Services
                     return response;
                 }
 
-                // Kiểm tra sự tồn tại của từng SkinId trong danh sách SkinIds
                 if (createProductViewModel.SkinIds != null && createProductViewModel.SkinIds.Any())
                 {
                     foreach (var skinId in createProductViewModel.SkinIds)
@@ -81,7 +79,6 @@ namespace CavisProject.Application.Services
                         }
                     }
 
-                    // Nếu tất cả SkinIds tồn tại, thêm chúng vào ProductDetails
                     product.ProductDetails = createProductViewModel.SkinIds.Select(skinId => new ProductDetail
                     {
                         SkinId = skinId,

@@ -209,9 +209,9 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> GetSkinConditionById(string skinTypeId)
+        public async Task<ApiResponse<SkinViewModel>> GetSkinConditionById(string skinTypeId)
         {
-            var response = new ApiResponse<CreateSkinTypeViewModel>();
+            var response = new ApiResponse<SkinViewModel>();
 
             try
             {
@@ -224,7 +224,7 @@ namespace CavisProject.Application.Services
                     throw new Exception("Skin condition not found.");
                 }
 
-                var skinTypeViewModel = _mapper.Map<CreateSkinTypeViewModel>(skinType);
+                var skinTypeViewModel = _mapper.Map<SkinViewModel>(skinType);
 
                 response.Data = skinTypeViewModel;
                 response.isSuccess = true;
@@ -240,7 +240,7 @@ namespace CavisProject.Application.Services
                 response.isSuccess = false;
                 response.Message = ex.Message;
             }
-            return response; // Thêm "response" vào cuối dòng này
+            return response; 
         }
 
     }

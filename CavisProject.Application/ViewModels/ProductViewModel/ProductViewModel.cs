@@ -8,6 +8,7 @@ namespace CavisProject.Application.ViewModels.ProductViewModel
 {
     public class ProductViewModel
     {
+        public Guid Id { get; set; }
         public string? ProductName { get; set; }
 
         public string? Description { get; set; }
