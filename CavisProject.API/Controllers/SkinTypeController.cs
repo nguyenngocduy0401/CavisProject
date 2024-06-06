@@ -18,7 +18,7 @@ namespace CavisProject.API.Controllers
 
         [HttpGet("")]
      
-        public async Task<ApiResponse<Pagination<CreateSkinTypeViewModel>>> FilterSkinType(SkinFilterModel skinTypeFilterModel) => await _skintypeService.FilterSkinType(skinTypeFilterModel);
+        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinType(SkinFilterModel skinTypeFilterModel) => await _skintypeService.FilterSkinType(skinTypeFilterModel);
 
         [HttpDelete("{id}")]
         public async Task<ApiResponse<bool>> DeleteSkinType([FromRoute] string id) => await _skintypeService.DeleteSkinType(id);

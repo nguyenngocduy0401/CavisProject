@@ -16,7 +16,7 @@ namespace CavisProject.API.Controllers
         [HttpPost("")]
         public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinCondition([FromBody] CreateSkinTypeViewModel createSkinType) => await _skinConditionService.CreateSkinCondition(createSkinType);
         [HttpGet("")]
-        public async Task<ApiResponse<Pagination<CreateSkinTypeViewModel>>> FilterSkinCondition(SkinFilterModel skinTypeFilterModel) => await _skinConditionService.FilterSkinCondition(skinTypeFilterModel);
+        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinCondition(SkinFilterModel skinTypeFilterModel) => await _skinConditionService.FilterSkinCondition(skinTypeFilterModel);
         [HttpDelete("{id}")]
         public async Task<ApiResponse<bool>> DeleteSkinCondition([FromRoute] string id) => await _skinConditionService.DeleteSkinType(id);
 

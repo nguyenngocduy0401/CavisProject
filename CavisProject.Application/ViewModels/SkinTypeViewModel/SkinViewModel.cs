@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.ViewModels.SkinTypeViewModel
 {
-    public class SkinTypeViewModel
+    public class SkinViewModel
     {
-        public string? SkinTypeName { get; set; }
+        public Guid Id { get; set; }
+        public string? SkinsName { get; set; }
         public string? Description { get; set; }
-        public bool Category { get; set; }
     }
 }

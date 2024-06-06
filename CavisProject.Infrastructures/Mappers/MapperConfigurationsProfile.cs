@@ -16,13 +16,13 @@ namespace CavisProject.Infrastructures.Mappers
     {
         public MapperConfigurationsProfile()
         {
-               #region User
+            #region User
             CreateMap<UserLoginModel, User>();
 
             #endregion
             #region Skin
             CreateMap<CreateSkinTypeViewModel, Skin>();
-            CreateMap<SkinTypeViewModel, Skin>();
+            CreateMap<Skin, SkinViewModel>();
             CreateMap<Skin, CreateSkinTypeViewModel>();
 
             #endregion
