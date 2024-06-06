@@ -208,5 +208,39 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
+        public async Task<ApiResponse<CreateSkinTypeViewModel>> GetSkinConditionById(string skinTypeId)
+        {
+            var response = new ApiResponse<CreateSkinTypeViewModel>();
+
+            try
+            {
+
+
+                var skinType = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(skinTypeId));
+
+                if (skinType == null)
+                {
+                    throw new Exception("Skin condition not found.");
+                }
+
+                var skinTypeViewModel = _mapper.Map<CreateSkinTypeViewModel>(skinType);
+
+                response.Data = skinTypeViewModel;
+                response.isSuccess = true;
+                response.Message = "Skin type retrieved successfully.";
+            }
+            catch (DbException ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response; // Thêm "response" vào cuối dòng này
+        }
+
     }
 }

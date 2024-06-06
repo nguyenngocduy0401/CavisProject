@@ -23,6 +23,8 @@ namespace CavisProject.API.Controllers
 
         [HttpPut("{skinTypeId}")]
         public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinCondition([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string skinTypeId) => await _skinConditionService.UpdateSkinCondition(updateSkinType, skinTypeId);
+        [HttpGet("{skinTypeId}")]
+        public async Task<ApiResponse<CreateSkinTypeViewModel>> GetSkinConditionById(string skinTypeId) => await _skinConditionService.GetSkinConditionById(skinTypeId);
 
     }
 }
