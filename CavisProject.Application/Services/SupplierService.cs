@@ -119,7 +119,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<CreateSupplierViewModel>>> FilterSupplier(FilterSupplierViewModel filterSupplierViewModel)
+        public async Task<ApiResponse<Pagination<SupplierViewModel>>> FilterSupplier(FilterSupplierViewModel filterSupplierViewModel)
         {
             var response = new ApiResponse<Pagination<CreateSupplierViewModel>>();
 

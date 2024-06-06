@@ -118,7 +118,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<CreateProductCategoryViewModel>>> FilterProductCategory(FilterProductCategory filterProductCategory)
+        public async Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategory(FilterProductCategory filterProductCategory)
         {
             var response = new ApiResponse<Pagination<CreateProductCategoryViewModel>>();
             try

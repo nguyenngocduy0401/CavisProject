@@ -15,6 +15,6 @@ namespace CavisProject.Application.Interfaces
         Task<ApiResponse<CreateSupplierViewModel>> CreateSupplier(CreateSupplierViewModel  createSupplierViewModel);
         Task<ApiResponse<CreateSupplierViewModel>> UppdateSupplier(CreateSupplierViewModel updateSupplierViewModel, string id);
         Task<ApiResponse<bool>> DeleteSupplier(string id);
-        Task<ApiResponse<Pagination<CreateSupplierViewModel>>> FilterSupplier(FilterSupplierViewModel filterSupplierViewModel);
+        Task<ApiResponse<Pagination<SupplierViewModel>>> FilterSupplier(FilterSupplierViewModel filterSupplierViewModel);
     }
 }
