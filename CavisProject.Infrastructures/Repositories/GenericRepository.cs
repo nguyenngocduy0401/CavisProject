@@ -4,7 +4,6 @@ using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using CavisProject.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Entity;
 using System.Linq.Expressions;
 using System.Linq;
 
@@ -13,7 +12,7 @@ namespace CavisProject.Infrastructures.Repositories
 
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
     {
-        protected Microsoft.EntityFrameworkCore.DbSet<TEntity> _dbSet;
+        protected DbSet<TEntity> _dbSet;
         private readonly ICurrentTime _timeService;
         private readonly IClaimsService _claimsService;
 
@@ -28,7 +27,7 @@ namespace CavisProject.Infrastructures.Repositories
             IQueryable<TEntity> query = _dbSet.Where(expression);
             foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
-                query = Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.Include(query, includeProperty); // Chỉ rõ với không gian tên
+                query = query.Include(includeProperty);
             }
             return query.ToList();
         }
@@ -40,7 +39,7 @@ namespace CavisProject.Infrastructures.Repositories
             int? pageIndex = null,
             int? pageSize = null,
             string? foreignKey = null,
-            int? foreignKeyId = null)
+            object? foreignKeyId = null)
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -51,16 +50,27 @@ namespace CavisProject.Infrastructures.Repositories
 
             foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
-                query = Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.Include(query, includeProperty);
+                query = query.Include(includeProperty);
             }
             var itemCount = query.Count();
             if (orderBy != null)
             {
                 query = orderBy(query);
             }
-            if (!string.IsNullOrEmpty(foreignKey) && foreignKeyId.HasValue)
+            if (!string.IsNullOrEmpty(foreignKey) && foreignKeyId != null)
             {
-                query = query.Where(e => EF.Property<int>(e, foreignKey) == foreignKeyId.Value);
+                if (foreignKeyId is Guid guidValue)
+                {
+                    query = query.Where(e => EF.Property<Guid>(e, foreignKey) == guidValue);
+                }
+                else if (foreignKeyId is string stringValue)
+                {
+                    query = query.Where(e => EF.Property<string>(e, foreignKey) == stringValue);
+                }
+                else
+                {
+                    throw new ArgumentException("Unsupported foreign key type");
+                }
             }
             if (pageIndex.HasValue && pageSize.HasValue)
             {
@@ -82,7 +92,7 @@ namespace CavisProject.Infrastructures.Repositories
         }
         public Task<List<TEntity>> GetAllAsync() => _dbSet.ToListAsync();
 
-        public async Task<TEntity?> GetByIdAsync(Guid id)
+        public async Task<TEntity> GetByIdAsync(Guid id)
         {
             return await _dbSet.FindAsync(id);
         }

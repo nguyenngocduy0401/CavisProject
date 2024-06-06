@@ -21,6 +21,7 @@ namespace CavisProject.Application.Services
         private readonly IValidator<CreateSkinTypeViewModel> _validatorCreateSkinType;
         public SkinConditionService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateSkinTypeViewModel> validatorCreateSkintype, IClaimsService claimsService)
         {
+            _claimsService = claimsService;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _validatorCreateSkinType = validatorCreateSkintype;
@@ -115,9 +116,9 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<CreateSkinTypeViewModel>>> FilterSkinCondition(SkinFilterModel skinTypeFilterModel)
+        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinCondition(SkinFilterModel skinTypeFilterModel)
         {
-            var response = new ApiResponse<Pagination<CreateSkinTypeViewModel>>();
+            var response = new ApiResponse<Pagination<SkinViewModel>>();
 
             try
             {
@@ -130,8 +131,8 @@ namespace CavisProject.Application.Services
                     pageIndex: skinTypeFilterModel.PageIndex,
                     pageSize: skinTypeFilterModel.PageSize
                 ); ;
-                var skinTypeViewModels = _mapper.Map<List<CreateSkinTypeViewModel>>(paginationResult.Items);
-                var paginationViewModel = new Pagination<CreateSkinTypeViewModel>
+                var skinTypeViewModels = _mapper.Map<List<SkinViewModel>>(paginationResult.Items);
+                var paginationViewModel = new Pagination<SkinViewModel>
                 {
                     PageIndex = paginationResult.PageIndex,
                     PageSize = paginationResult.PageSize,

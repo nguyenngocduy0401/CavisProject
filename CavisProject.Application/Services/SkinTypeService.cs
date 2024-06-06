@@ -179,9 +179,9 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<CreateSkinTypeViewModel>>> FilterSkinType(SkinFilterModel skinTypeFilterModel)
+        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinType(SkinFilterModel skinTypeFilterModel)
         {
-            var response = new ApiResponse<Pagination<CreateSkinTypeViewModel>>();
+            var response = new ApiResponse<Pagination<SkinViewModel>>();
 
             try
             {
@@ -193,8 +193,8 @@ namespace CavisProject.Application.Services
                     pageIndex: skinTypeFilterModel.PageIndex,
                     pageSize: skinTypeFilterModel.PageSize
                 ); ;
-                var skinTypeViewModels = _mapper.Map<List<CreateSkinTypeViewModel>>(paginationResult.Items);
-                var paginationViewModel = new Pagination<CreateSkinTypeViewModel>
+                var skinTypeViewModels = _mapper.Map<List<SkinViewModel>>(paginationResult.Items);
+                var paginationViewModel = new Pagination<SkinViewModel>
                 {
                     PageIndex = paginationResult.PageIndex,
                     PageSize = paginationResult.PageSize,

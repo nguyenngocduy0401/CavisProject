@@ -10,6 +10,7 @@ namespace CavisProject.Application.Commoms
     public class AppConfiguration
     {
         public string DatabaseConnection { get; set; }
+        public EmailConfiguration EmailConfiguration { get; set; }
         public JwtOptions JwtOptions { get; set; }
     }
 }

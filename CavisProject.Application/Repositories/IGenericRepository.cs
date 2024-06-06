@@ -19,10 +19,10 @@ namespace CavisProject.Application.Repositories
            int? pageIndex = null,
            int? pageSize = null,
            string? foreignKey = null,
-           int? foreignKeyId = null);
+           object? foreignKeyId = null);
 
         Task<List<TEntity>> GetAllAsync();
-        Task<TEntity?> GetByIdAsync(Guid id);
+        Task<TEntity> GetByIdAsync(Guid id);
         Task AddAsync(TEntity entity);
         Task AddRangeAsync(List<TEntity> entities);
         void Update(TEntity entity);

@@ -17,6 +17,8 @@ namespace CavisProject.Domain.Entity
         public double? Wallet { get; set; }
         public bool Status { get; set; } = true;
         public double? RewardPoint { get; set; }
+        public string? OTPEmail { get; set; }
+        public DateTime? ExpireOTPEmail { get; set; }
         public virtual ICollection<Transaction>? Transactions { get; set; }
         public virtual ICollection<AppointmentDetail>? AppointmentDetails { get; set; }
         public virtual ICollection<WishList>? WishLists { get; set; } 
