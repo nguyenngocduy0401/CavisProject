@@ -22,7 +22,7 @@ namespace CavisProject.API.Controllers
         
 
         [HttpGet("")]
-        public async Task<ApiResponse<Pagination<CreateSupplierViewModel>>> FilterSupplier(FilterSupplierViewModel filterSupplierViewModel)
+        public async Task<ApiResponse<Pagination<SupplierViewModel>>> FilterSupplier(FilterSupplierViewModel filterSupplierViewModel)
         => await _supplierService.FilterSupplier(filterSupplierViewModel);
        
 

@@ -121,7 +121,7 @@ namespace CavisProject.Application.Services
 
         public async Task<ApiResponse<Pagination<SupplierViewModel>>> FilterSupplier(FilterSupplierViewModel filterSupplierViewModel)
         {
-            var response = new ApiResponse<Pagination<CreateSupplierViewModel>>();
+            var response = new ApiResponse<Pagination<SupplierViewModel>>();
 
             try
             {
@@ -135,8 +135,8 @@ namespace CavisProject.Application.Services
                     pageIndex: filterSupplierViewModel.PageIndex,
                     pageSize: filterSupplierViewModel.PageSize
                 );
-                var supplierViewModel = _mapper.Map<List<CreateSupplierViewModel>>(paginationResult.Items);
-                var paginationViewModel = new Pagination<CreateSupplierViewModel>
+                var supplierViewModel = _mapper.Map<List<SupplierViewModel>>(paginationResult.Items);
+                var paginationViewModel = new Pagination<SupplierViewModel>
                 {
                     PageIndex = paginationResult.PageIndex,
                     PageSize = paginationResult.PageSize,

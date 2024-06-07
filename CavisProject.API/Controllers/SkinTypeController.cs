@@ -7,18 +7,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace CavisProject.API.Controllers
 {
     [Route("api/v1/skin-types")]
-    public class SkinTypeController :ControllerBase
+    public class SkinTypeController : ControllerBase
     {
 
-        private  readonly ISkintypeService _skintypeService;
-        public SkinTypeController(ISkintypeService skintypeService) { _skintypeService=skintypeService; }
+        private readonly ISkintypeService _skintypeService;
+        public SkinTypeController(ISkintypeService skintypeService) { _skintypeService = skintypeService; }
         [HttpPost("")]
         public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinType([FromBody] CreateSkinTypeViewModel createSkinType) => await _skintypeService.CreateSkinType(createSkinType);
 
 
         [HttpGet("")]
-     
         public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinType(SkinFilterModel skinTypeFilterModel) => await _skintypeService.FilterSkinType(skinTypeFilterModel);
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<SkinViewModel>> GetSkinTypeById([FromRoute] string id) => await _skintypeService.GetSkinTypeById(id);
 
         [HttpDelete("{id}")]
         public async Task<ApiResponse<bool>> DeleteSkinType([FromRoute] string id) => await _skintypeService.DeleteSkinType(id);

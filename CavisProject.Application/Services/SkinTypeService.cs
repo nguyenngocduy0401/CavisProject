@@ -5,6 +5,7 @@ using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Domain.Entity;
 using FluentValidation;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -209,6 +210,28 @@ namespace CavisProject.Application.Services
             {
                 response.isSuccess = false;
                 response.Message = "Error occurred while filtering skin types: " + ex.Message;
+            }
+
+            return response;
+        }
+
+        public async Task<ApiResponse<SkinViewModel>> GetSkinTypeById(string id)
+        {
+            var response = new ApiResponse<SkinViewModel>();
+
+            try
+            {
+                var skinType= await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(id));
+                if (skinType == null || skinType.Category  == false) throw new Exception("Not find skintype!");
+                var skinTypeView = _mapper.Map<SkinViewModel>(skinType);
+                response.Data = skinTypeView;
+                response.isSuccess = true;
+                response.Message = "Filtered skin types retrieved successfully";
+            }
+            catch (Exception ex)
+            {
+                response.isSuccess = false;
+                response.Message =  ex.Message;
             }
 
             return response;

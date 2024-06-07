@@ -209,17 +209,15 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-        public async Task<ApiResponse<SkinViewModel>> GetSkinConditionById(string skinTypeId)
+        public async Task<ApiResponse<SkinViewModel>> GetSkinConditionById(string id)
         {
             var response = new ApiResponse<SkinViewModel>();
 
             try
             {
+                var skinType = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(id));
 
-
-                var skinType = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(skinTypeId));
-
-                if (skinType == null)
+                if (skinType == null || skinType.Category == true)
                 {
                     throw new Exception("Skin condition not found.");
                 }

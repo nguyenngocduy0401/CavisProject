@@ -30,8 +30,5 @@ namespace CavisProject.Application.Repositories
         void SoftRemove(TEntity entity);
         void SoftRemoveRange(List<TEntity> entities);
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
-  /*      Task<Pagination<TEntity>> ToPagination(int pageNumber = 0, int pageSize = 10);
-        Task<Pagination<TEntity>> ToPaginationIsNotDelete(int pageNumber = 0, int pageSize = 10);*/
-        /* Task<List<TEntity>> GetAllIsNotDeleteAsync();*/
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
+using CavisProject.Application.Services;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,8 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinCondition([FromBody] CreateSkinTypeViewModel createSkinType) => await _skinConditionService.CreateSkinCondition(createSkinType);
         [HttpGet("")]
         public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinCondition(SkinFilterModel skinTypeFilterModel) => await _skinConditionService.FilterSkinCondition(skinTypeFilterModel);
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<SkinViewModel>> GetSkinConditionById([FromRoute] string id) => await _skinConditionService.GetSkinConditionById(id);
         [HttpDelete("{id}")]
         public async Task<ApiResponse<bool>> DeleteSkinCondition([FromRoute] string id) => await _skinConditionService.DeleteSkinType(id);
 

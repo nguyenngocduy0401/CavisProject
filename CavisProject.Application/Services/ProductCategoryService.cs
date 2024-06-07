@@ -120,7 +120,7 @@ namespace CavisProject.Application.Services
 
         public async Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategory(FilterProductCategory filterProductCategory)
         {
-            var response = new ApiResponse<Pagination<CreateProductCategoryViewModel>>();
+            var response = new ApiResponse<Pagination<ProductCategoryViewModel>>();
             try
             {
                 var paginationResult = _unitOfWork.ProductCategoryRepository.GetFilter(
@@ -128,8 +128,8 @@ namespace CavisProject.Application.Services
                     (string.IsNullOrEmpty(filterProductCategory.ProductCategoryName) || s.ProductCategoryName.Contains(filterProductCategory.ProductCategoryName)),
                     pageIndex: filterProductCategory.PageIndex,
                     pageSize: filterProductCategory.PageSize); ;
-                var categoryViewModel= _mapper.Map<List<CreateProductCategoryViewModel>>(paginationResult.Items);
-                var paginationViewModel = new Pagination<CreateProductCategoryViewModel>
+                var categoryViewModel= _mapper.Map<List<ProductCategoryViewModel>>(paginationResult.Items);
+                var paginationViewModel = new Pagination<ProductCategoryViewModel>
                 {
                     PageIndex = paginationResult.PageIndex,
                     PageSize = paginationResult.PageSize,

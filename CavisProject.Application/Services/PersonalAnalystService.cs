@@ -23,6 +23,7 @@ namespace CavisProject.Application.Services
   
         public  PersonalAnalystService(IUnitOfWork unitOfWork, IMapper mapper, IClaimsService claimsService)
         {
+            _claimsService = claimsService;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
    
