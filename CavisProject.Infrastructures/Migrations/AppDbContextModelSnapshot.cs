@@ -72,7 +72,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.AppointmentDetail", b =>
@@ -92,7 +92,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("AppointmentId");
 
-                    b.ToTable("AppointmentDetails");
+                    b.ToTable("AppointmentDetails", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.Calendar", b =>
@@ -141,7 +141,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Calendars");
+                    b.ToTable("Calendars", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.Method", b =>
@@ -190,7 +190,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Methods");
+                    b.ToTable("Methods", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.MethodDetail", b =>
@@ -208,7 +208,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("SkinId");
 
-                    b.ToTable("MethodDetails");
+                    b.ToTable("MethodDetails", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.PackageDetail", b =>
@@ -232,7 +232,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("PackagePremiumId");
 
-                    b.ToTable("PackageDetails");
+                    b.ToTable("PackageDetails", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.PackagePremium", b =>
@@ -276,7 +276,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PackagePremiums");
+                    b.ToTable("PackagePremiums", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.PersonalAnalyst", b =>
@@ -316,7 +316,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PersonalAnalysts");
+                    b.ToTable("PersonalAnalysts", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.PersonalAnalystDetail", b =>
@@ -334,7 +334,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("PersonalAnalystId");
 
-                    b.ToTable("PersonalAnalystDetails");
+                    b.ToTable("PersonalAnalystDetails", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.PersonalImage", b =>
@@ -374,7 +374,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PersonalImages");
+                    b.ToTable("PersonalImages", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.PersonalMethodDetail", b =>
@@ -389,7 +389,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("MethodId");
 
-                    b.ToTable("PersonalMethodDetails");
+                    b.ToTable("PersonalMethodDetails", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.Product", b =>
@@ -449,7 +449,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.ProductCategory", b =>
@@ -484,7 +484,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductCategories");
+                    b.ToTable("ProductCategories", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.ProductDetail", b =>
@@ -502,7 +502,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("SkinId");
 
-                    b.ToTable("ProductDetails");
+                    b.ToTable("ProductDetails", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.RefreshToken", b =>
@@ -539,7 +539,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.Role", b =>
@@ -607,7 +607,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Skins");
+                    b.ToTable("Skins", (string)null);
 
                     b.HasData(
                         new
@@ -782,7 +782,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Suppliers");
+                    b.ToTable("Suppliers", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.Transaction", b =>
@@ -838,7 +838,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transactions", (string)null);
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.User", b =>
@@ -945,7 +945,7 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("WishLists");
+                    b.ToTable("WishLists", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

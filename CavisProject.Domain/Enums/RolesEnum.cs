@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CavisProject.Application.Utils
+namespace CavisProject.Domain.Enums
 {
-    internal class GetRole
+    public enum RolesEnum
     {
+        Administrator,
+        Customer,
+        Staff,
+        Expert,
     }
 }

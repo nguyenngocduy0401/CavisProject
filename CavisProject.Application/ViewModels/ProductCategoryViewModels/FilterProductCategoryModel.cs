@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.ViewModels.ProductCategoryViewModel
 {
-    public class FilterProductCategory
+    public class FilterProductCategoryModel
     {
         public string? ProductCategoryName { get; set; }
         public int PageIndex { get; set; } = 1;

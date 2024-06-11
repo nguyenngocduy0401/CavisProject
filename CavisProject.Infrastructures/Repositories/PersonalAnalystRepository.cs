@@ -27,6 +27,16 @@ namespace CavisProject.Infrastructures.Repositories
             _timeService = timeService;
             _claimsService = claimsService;
         }
+
+        public async Task<Guid> CreatePersonalAnalystAsync(PersonalAnalyst personalAnalyst)
+        {
+            personalAnalyst.CreationDate = _timeService.GetCurrentTime();
+            personalAnalyst.StartDate = _timeService.GetCurrentTime();
+            personalAnalyst.CreatedBy = _claimsService.GetCurrentUserId;
+            var result = await _dbSet.AddAsync(personalAnalyst);
+            return result.Entity.Id;
+        }
+
         public async Task<List<Guid?>> GetSkinIdsByPersonalAnalystIdAsync(string personalAnalystId)
         {
             // Thực hiện truy vấn để lấy các skinId của personalAnalystId từ cơ sở dữ liệu

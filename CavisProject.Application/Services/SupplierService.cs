@@ -125,7 +125,7 @@ namespace CavisProject.Application.Services
 
             try
             {
-                var paginationResult = _unitOfWork.SupplierRepository.GetFilter(
+                var paginationResult = await _unitOfWork.SupplierRepository.GetFilterAsync(
                       filter: s =>
                       (string.IsNullOrEmpty(filterSupplierViewModel.SupplierName) || s.SupplierName.Contains(filterSupplierViewModel.SupplierName)) &&
                     (string.IsNullOrEmpty(filterSupplierViewModel.PhoneNumber) || s.PhoneNumber.Contains(filterSupplierViewModel.PhoneNumber)) &&

@@ -4,6 +4,7 @@ using CavisProject.Application.Interfaces;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Domain.Entity;
 using FluentValidation;
+using FluentValidation.Results;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,11 +22,14 @@ namespace CavisProject.Application.Services
         private readonly IClaimsService _claimsService;
         private readonly IMapper _mapper;
         private readonly IValidator<CreateSkinTypeViewModel> _validatorCreateSkinType;
-        public SkinTypeService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateSkinTypeViewModel> validatorCreateSkintype, IClaimsService claimsService)
+        public SkinTypeService(IUnitOfWork unitOfWork,
+            IMapper mapper, IValidator<CreateSkinTypeViewModel> validatorCreateSkinType, 
+            IClaimsService claimsService)
         {
+            _claimsService = claimsService;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _validatorCreateSkinType = validatorCreateSkintype;
+            _validatorCreateSkinType = validatorCreateSkinType;
         }
 
 
@@ -42,7 +46,7 @@ namespace CavisProject.Application.Services
                     throw new Exception("Skin type Name is exist!");
                 }else
                 {
-                    FluentValidation.Results.ValidationResult validationResult = await _validatorCreateSkinType.ValidateAsync(createSkinType);
+                    ValidationResult validationResult = await _validatorCreateSkinType.ValidateAsync(createSkinType);
                     if (!validationResult.IsValid)
                     {
                         response.isSuccess = false;
@@ -56,10 +60,10 @@ namespace CavisProject.Application.Services
                         var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
                         if (isSuccess is false)
                         {
-                            throw new Exception("Create Skintype is fail!");
+                            throw new Exception("Create SkinType is fail!");
                         }
                         response.Data = _mapper.Map<CreateSkinTypeViewModel>(createSkinType);
-                        response.Message = "Create Skintype is success";
+                        response.Message = "Create SkinType is success";
 
                     }
                 }
@@ -130,7 +134,7 @@ namespace CavisProject.Application.Services
             {
                 var exist = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(skinTypeId));
 
-                FluentValidation.Results.ValidationResult validationResult = await _validatorCreateSkinType.ValidateAsync(updateSkinType);
+                ValidationResult validationResult = await _validatorCreateSkinType.ValidateAsync(updateSkinType);
                 if (validationResult.IsValid)
                 {
                     response.isSuccess = false;
@@ -186,7 +190,7 @@ namespace CavisProject.Application.Services
 
             try
             {
-                var paginationResult = _unitOfWork.SkinTypeRepository.GetFilter(
+                var paginationResult =await _unitOfWork.SkinTypeRepository.GetFilterAsync(
                     filter: s =>
                         (string.IsNullOrEmpty(skinTypeFilterModel.SkinTypeName) || s.SkinsName.Contains(skinTypeFilterModel.SkinTypeName)) &&
                         (string.IsNullOrEmpty(skinTypeFilterModel.Description) || s.Description.Contains(skinTypeFilterModel.Description)) &&

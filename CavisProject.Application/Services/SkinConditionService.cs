@@ -123,7 +123,7 @@ namespace CavisProject.Application.Services
             try
             {
                
-                var paginationResult = _unitOfWork.SkinTypeRepository.GetFilter(
+                var paginationResult = await _unitOfWork.SkinTypeRepository.GetFilterAsync(
                     filter: s =>
                         (string.IsNullOrEmpty(skinTypeFilterModel.SkinTypeName) || s.SkinsName.Contains(skinTypeFilterModel.SkinTypeName)) &&
                         (string.IsNullOrEmpty(skinTypeFilterModel.Description) || s.Description.Contains(skinTypeFilterModel.Description)) &&

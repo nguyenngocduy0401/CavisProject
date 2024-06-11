@@ -17,6 +17,8 @@ using CavisProject.Application.ViewModels.SupplierViewModel;
 using CavisProject.API.Validator.ProductValidator.SupplierViewModel;
 using CavisProject.API.Validator.ProductValidator;
 using CavisProject.Application.ViewModels.ProductViewModel;
+using System.Text.Json.Serialization;
+using CavisProject.API.Validator.UserValidator;
 
 namespace CavisProject.API
 {
@@ -24,7 +26,10 @@ namespace CavisProject.API
     {
         public static IServiceCollection AddWebAPIService(this IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(option =>
             {
@@ -40,19 +45,19 @@ namespace CavisProject.API
                     Scheme = "Bearer"
                 });
                 option.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
                 {
-                    Type=ReferenceType.SecurityScheme,
-                    Id="Bearer"
-                }
-            },
-            new string[]{}
-        }
-    });
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type=ReferenceType.SecurityScheme,
+                                Id="Bearer"
+                            }
+                        },
+                        new string[]{}
+                    }
+                });
             });
 
             services.AddCors(options =>
@@ -82,10 +87,13 @@ namespace CavisProject.API
             #endregion
             #region Validator
             services.AddTransient<IValidator<UserRegisterModel>, UserRegisterValidation>();
+            services.AddTransient<IValidator<UserResetPasswordModel>, UserResetPasswordValidator>();
+            services.AddTransient<IValidator<CreateUserModel>, CreateUserValidator>();
+            services.AddTransient<IValidator<UpdateUserModel>, UpdateUserValidator>();
+            services.AddTransient<IValidator<UpdatePasswordModel>, UpdatePasswordValidator>();
             services.AddTransient<IValidator<CreateSkinTypeViewModel>, CreateSkinTypeValidator>();
             services.AddTransient<IValidator<CreateProductCategoryViewModel>, ProductCategoryValidator>();
             services.AddTransient<IValidator<CreateSupplierViewModel>, SupplierValidator>();
-            services.AddTransient<IValidator<UserResetPasswordModel>, UserResetPasswordValidator>();
             services.AddTransient<IValidator<CreateProductViewModel>, CreateProductViewModelValidator>();
             #endregion
 

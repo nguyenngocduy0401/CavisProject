@@ -10,24 +10,25 @@ namespace CavisProject.API.Controllers
     public class SkinTypeController : ControllerBase
     {
 
-        private readonly ISkintypeService _skintypeService;
-        public SkinTypeController(ISkintypeService skintypeService) { _skintypeService = skintypeService; }
+        private readonly ISkintypeService _skinTypeService;
+        public SkinTypeController(ISkintypeService skinTypeService) { _skinTypeService = skinTypeService; }
         [HttpPost("")]
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinType([FromBody] CreateSkinTypeViewModel createSkinType) => await _skintypeService.CreateSkinType(createSkinType);
+        public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinType([FromBody] CreateSkinTypeViewModel createSkinType) => await _skinTypeService.CreateSkinType(createSkinType);
 
 
         [HttpGet("")]
-        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinType(SkinFilterModel skinTypeFilterModel) => await _skintypeService.FilterSkinType(skinTypeFilterModel);
+        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinType(SkinFilterModel skinTypeFilterModel) 
+            => await _skinTypeService.FilterSkinType(skinTypeFilterModel);
 
         [HttpGet("{id}")]
-        public async Task<ApiResponse<SkinViewModel>> GetSkinTypeById([FromRoute] string id) => await _skintypeService.GetSkinTypeById(id);
+        public async Task<ApiResponse<SkinViewModel>> GetSkinTypeById([FromRoute] string id) => await _skinTypeService.GetSkinTypeById(id);
 
         [HttpDelete("{id}")]
-        public async Task<ApiResponse<bool>> DeleteSkinType([FromRoute] string id) => await _skintypeService.DeleteSkinType(id);
+        public async Task<ApiResponse<bool>> DeleteSkinType([FromRoute] string id) => await _skinTypeService.DeleteSkinType(id);
         
 
         [HttpPut("{id}")]
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinType([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string id) => await _skintypeService.UpdateSkinType(updateSkinType, id);
+        public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinType([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string id) => await _skinTypeService.UpdateSkinType(updateSkinType, id);
        
     }
 }

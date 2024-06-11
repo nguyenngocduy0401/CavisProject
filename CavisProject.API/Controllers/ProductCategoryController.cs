@@ -32,7 +32,7 @@ namespace CavisProject.API.Controllers
         
 
         [HttpGet("")]
-        public async Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategory(FilterProductCategory filterProductCategory)
+        public async Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategory(FilterProductCategoryModel filterProductCategory)
        => await _productCategoryService.FilterProductCategory(filterProductCategory);
         
     }

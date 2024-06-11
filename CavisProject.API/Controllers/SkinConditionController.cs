@@ -23,7 +23,6 @@ namespace CavisProject.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ApiResponse<bool>> DeleteSkinCondition([FromRoute] string id) => await _skinConditionService.DeleteSkinType(id);
 
-
         [HttpPut("{id}")]
         public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinCondition([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string id) => await _skinConditionService.UpdateSkinCondition(updateSkinType, id);
 

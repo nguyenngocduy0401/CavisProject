@@ -10,5 +10,6 @@ namespace CavisProject.Application.Repositories
     public interface IPersonalAnalystRepository :IGenericRepository<PersonalAnalyst>
     {
         Task<List<Guid?>> GetSkinIdsByPersonalAnalystIdAsync(string personalAnalystId);
+        Task<Guid> CreatePersonalAnalystAsync(PersonalAnalyst personalAnalyst);
     }
 }
