@@ -32,5 +32,16 @@ namespace CavisProject.Infrastructures.Repositories
             return await _dbContext.PackageDetails
                 .FirstOrDefaultAsync(pd => pd.UserId == userId);
         }
+        public async Task<List<PackageDetail>> GetAllAsync()
+        {
+            return await _dbContext.PackageDetails.ToListAsync();
+        }
+        public async Task<int> GetTotalUsersByPackageIdAsync(Guid packageId)
+        {
+            var packageDetails = await _dbContext.PackageDetails
+                                                .Where(pd => pd.PackagePremiumId == packageId)
+                                                .ToListAsync();
+            return packageDetails.Count;
+        }
     }
 }

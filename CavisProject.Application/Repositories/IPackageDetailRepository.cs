@@ -1,4 +1,5 @@
 ﻿using CavisProject.Domain.Entity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,8 @@ namespace CavisProject.Application.Repositories
     {
         Task AddAsync(PackageDetail packageDetail);
         Task<PackageDetail> GetByUserIdAsync(string userId);
+        Task<List<PackageDetail>> GetAllAsync();
+        Task<int> GetTotalUsersByPackageIdAsync(Guid packageId);
+      
     }
 }

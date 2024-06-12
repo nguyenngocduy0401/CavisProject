@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using CavisProject.Application.Commons;
+using CavisProject.Application.ViewModels.PackagePremium;
 using CavisProject.Application.ViewModels.ProductCategoryViewModel;
 using CavisProject.Application.ViewModels.RegistPreniumViewModel;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
@@ -40,6 +42,12 @@ namespace CavisProject.Infrastructures.Mappers
             #region Prenium
             CreateMap<RegistPremiumViewModel,PackagePremium>();
             CreateMap<UpgradeToPremiumViewModel, User>();
+            CreateMap<Pagination<User>, Pagination<UserViewModel>>()
+           .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
+            CreateMap<User, UserViewModel>()
+           .ForMember(dest => dest.PackagePremiumName, opt => opt.Ignore());
+            CreateMap<Pagination<PackagePremium>, Pagination<PackagePreniumViewModel>>().ReverseMap();
+            CreateMap<PackagePremium, PackagePreniumViewModel>().ReverseMap();
             #endregion
         }
     }
