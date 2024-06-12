@@ -21,6 +21,7 @@ namespace CavisProject.API.Controllers
             _authenticationService = authenticationService;
             _emailService = emailService;
         }
+        [SwaggerOperation(Summary = "đăng kí tài khoản")]
         [HttpPost("register")]
         public async Task<ApiResponse<UserRegisterModel>> RegisterAsync(UserRegisterModel userRegisterModel)
         {

@@ -16,8 +16,8 @@ namespace CavisProject.API.Controllers
         {
             _productService = productService;
         }
-        [HttpPost("")]
+        /*[HttpPost("")]
         public async Task<ApiResponse<CreateProductViewModel>> CreateProductCategory([FromBody] CreateProductViewModel createProductViewModel)
-       => await _productService.CreateProduct(createProductViewModel);
+       => await _productService.CreateProduct(createProductViewModel);*/
     }
 }

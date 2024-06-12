@@ -68,7 +68,7 @@ namespace CavisProject.Infrastructures.Repositories
                 switch (isActivity)
                 {
                     case IsActivityEnum.Activity:
-                        query = query.Where(u => u.LockoutEnd <= DateTimeOffset.UtcNow);
+                        query = query.Where(u => (u.LockoutEnd <= DateTimeOffset.UtcNow) || (u.LockoutEnd == null));
                         break;
                     case IsActivityEnum.Inactivity:
                         query = query.Where(u => u.LockoutEnd > DateTimeOffset.UtcNow);

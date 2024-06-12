@@ -4,6 +4,7 @@ using CavisProject.Application.ViewModels.PersonalAnalystViewModels;
 using CavisProject.Application.ViewModels.ProductViewModel;
 using CavisProject.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace CavisProject.API.Controllers
 {
@@ -16,14 +17,16 @@ namespace CavisProject.API.Controllers
         {
             _personalAnalystService = personalAnalystService;
         }
-
-        /*[HttpGet("")]
-        public async Task<ApiResponse<Pagination<ProductViewModel>>> SuggestProduct(string personalAnalystId)=> await _personalAnalystService.SuggestProduct(personalAnalystId);*/
+        [SwaggerOperation(Summary = "Gợi ý sản phẩm")]
+        [HttpGet("mine/products")]
+        public async Task<ApiResponse<Pagination<ProductViewModel>>> SuggestProductAsync() => await _personalAnalystService.SuggestProductAsync();
+        [SwaggerOperation(Summary = "Tìm kiếm các phân tích da của cá nhân")]
         [HttpGet("mine")]
-        public async Task<ApiResponse<Pagination<PersonalAnalystViewModel>>> FilterPersonalAnalystAsync(FilterPersonalAnalystModel filterPersonalAnalystModel) =>
+        public async Task<ApiResponse<Pagination<PersonalAnalystViewModel>>> FilterPersonalAnalystAsync([FromQuery] FilterPersonalAnalystModel filterPersonalAnalystModel) =>
             await _personalAnalystService.FilterPersonalAnalystAsync(filterPersonalAnalystModel);
+        [SwaggerOperation(Summary = "Thêm các triệu chứng về da")]
         [HttpPost("mine")]
-        public async Task<ApiResponse<bool>> FilterPersonalAnalystAsync([FromQuery]ListSkinPersonalModel listSkinPersonalModel) =>
+        public async Task<ApiResponse<bool>> CreatePersonalAnalystByLoginAsync([FromBody]ListSkinPersonalModel listSkinPersonalModel) =>
             await _personalAnalystService.CreatePersonalAnalystByLoginAsync(listSkinPersonalModel);
 
     }

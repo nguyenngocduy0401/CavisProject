@@ -48,18 +48,12 @@ namespace CavisProject.Infrastructures.Mappers
             #region Product
             CreateMap<CreateProductViewModel, Product>();
             CreateMap<Product, CreateProductViewModel>();
+            CreateMap<Pagination<Product>, Pagination<ProductViewModel>>().ReverseMap();
+            CreateMap<Product, ProductViewModel>().ReverseMap();
             #endregion
             #region PersonalAnalyst
-            CreateMap<Pagination<PersonalAnalyst>, Pagination<PersonalAnalystViewModel>>()
-                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src =>
-        src.Items.Select(x =>
-            new PersonalAnalystViewModel
-            {
-                PersonalAnalystDetails = x.PersonalAnalystDetails,
-                
-            })));
-            CreateMap<PersonalAnalyst, PersonalAnalystViewModel>()
-                .ForMember(dest => dest.PersonalAnalystDetails, src => src.MapFrom(x => x.PersonalAnalystDetails));
+            CreateMap<Pagination<PersonalAnalyst>, Pagination<PersonalAnalystViewModel>>();
+            CreateMap<PersonalAnalyst, PersonalAnalystViewModel>();
             #endregion
         }
     }

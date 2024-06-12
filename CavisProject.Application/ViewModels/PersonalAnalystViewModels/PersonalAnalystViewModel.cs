@@ -13,6 +13,6 @@ namespace CavisProject.Application.ViewModels.PersonalAnalystViewModels
     {
         public Guid Id { get; set; }
         public DateTime StartDate { get; set; }
-        public virtual ICollection<PersonalAnalystDetailViewModel>? PersonalAnalystDetails { get; set; }
+        /*public virtual ICollection<PersonalAnalystDetailViewModel>? PersonalAnalystDetails { get; set; }*/
     }
 }
