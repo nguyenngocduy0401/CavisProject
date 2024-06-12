@@ -1,5 +1,6 @@
 ﻿using CavisProject.Application.Commons;
 using CavisProject.Application.ViewModels.PackagePremium;
+using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Application.ViewModels.UserViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,9 @@ namespace CavisProject.Application.Interfaces
     {
         Task<ApiResponse<Pagination<UserViewModel>>> GetPremiumUsersAsync(int pageIndex, int pageSize);
         Task<ApiResponse<Pagination<PackagePreniumViewModel>>> GetPackagePremiumsAsync(int pageIndex, int pageSize);
+        Task<ApiResponse<CreatePackagePremiumViewModel>> CreatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel);
+        Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackage(FilterPackagePremiumViewModel FilterModel);
+        Task<ApiResponse<bool>> DeletePackage(string Id);
+        Task<ApiResponse<CreatePackagePremiumViewModel>> UpdatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id);
     }
 }

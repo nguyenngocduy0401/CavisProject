@@ -48,6 +48,8 @@ namespace CavisProject.Infrastructures.Mappers
            .ForMember(dest => dest.PackagePremiumName, opt => opt.Ignore());
             CreateMap<Pagination<PackagePremium>, Pagination<PackagePreniumViewModel>>().ReverseMap();
             CreateMap<PackagePremium, PackagePreniumViewModel>().ReverseMap();
+            CreateMap<CreatePackagePremiumViewModel, PackagePremium>();
+            
             #endregion
         }
     }
