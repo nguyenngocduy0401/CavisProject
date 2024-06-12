@@ -18,11 +18,11 @@ namespace CavisProject.API.Controllers
             _userService = userService;
         }
         [HttpPost("register")]
-        [SwaggerOperation(Summary = "User Đăng Kí Premium")]
+        [SwaggerOperation(Summary = "User Đăng Kí Premium  {Authorize = Customer}")]
         public async Task<ApiResponse<RegistPremiumViewModel>> RegistPremium(RegistPremiumViewModel registPremiumViewModel) => await _userService.RegistPremium(registPremiumViewModel);
         [HttpPut("upgrade")]
         [Authorize(Roles = "Admin")]
-        [SwaggerOperation(Summary = "Upgrade user lên premium")]
+        [SwaggerOperation(Summary = "Upgrade user lên premium{Authorize = Admin}")]
         public async Task<ApiResponse<UpgradeToPremiumViewModel>> UpgradeToPremium(UpgradeToPremiumViewModel upgradeToPremiumViewModel)=> await _userService.UpgradeToPremium(upgradeToPremiumViewModel);
     }
 }

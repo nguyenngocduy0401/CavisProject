@@ -25,18 +25,20 @@ namespace CavisProject.API.Controllers
         [SwaggerOperation(Summary = "Get các gói Premium")]
         public async Task<ApiResponse<Pagination<PackagePreniumViewModel>>> GetPackagePremiumsAsync([FromQuery] int pageIndex, int pageSize) => await _packagePreniumService.GetPackagePremiumsAsync(pageIndex, pageSize);
         [HttpPost]
-        [SwaggerOperation(Summary = "tạo Package")]
+        [SwaggerOperation(Summary = "tạo Package{Authorize = Admin}")]
         public async Task<ApiResponse<CreatePackagePremiumViewModel>> CreatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel) => await _packagePreniumService.CreatePackage(createPackagePremiumViewModel);
 
         [HttpGet("filter")]
-        [SwaggerOperation(Summary = "filter")]
+        [SwaggerOperation(Summary = "filter Package")]
         public async Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackage([FromQuery] FilterPackagePremiumViewModel FilterModel) => await _packagePreniumService.FilterPackage(FilterModel);
         [HttpPut("{id}")]
-        [SwaggerOperation(Summary = "Update")]
+        [SwaggerOperation(Summary = "Update Package {Authorize = Admin}")]
         public async Task<ApiResponse<CreatePackagePremiumViewModel>> UpdatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id) => await _packagePreniumService.UpdatePackage(createPackagePremiumViewModel,Id);
         [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Delete Package {Authorize = Admin}")]
         public async Task<ApiResponse<bool>> DeletePackage(string Id)=> await _packagePreniumService.DeletePackage(Id);
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Get Package By Id")]
         public async Task<ApiResponse<PackagePreniumViewModel>> GetPackagePremiumByIdAsync(string id) => await _packagePreniumService.GetPackagePremiumByIdAsync(id);
     }
 }
