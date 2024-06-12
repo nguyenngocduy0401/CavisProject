@@ -109,7 +109,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<ProductViewModel>>> SuggestProductAsync()
+        public async Task<ApiResponse<Pagination<ProductViewModel>>> SuggestProductAsync(FilterSuggestProductModel filterSuggestProductModel)
         {
             var response = new ApiResponse<Pagination<ProductViewModel>>();
             try
@@ -127,15 +127,6 @@ namespace CavisProject.Application.Services
                     response.Message = "Không có sản phẩm phù hợp cho bạn!";
                 }
 
-
-                /*var skinTypeViewModels = _mapper.Map<List<ProductViewModel>>(products.Items);
-                var productViewModel = new Pagination<ProductViewModel>
-                {
-                    PageIndex = products.PageIndex,
-                    PageSize = products.PageSize,
-                    TotalItemsCount = products.TotalItemsCount,
-                    Items = skinTypeViewModels,
-                };*/
                 var productViewModel = _mapper.Map<Pagination<ProductViewModel>>(products);
                 response.Data = productViewModel;
                 response.isSuccess = true;

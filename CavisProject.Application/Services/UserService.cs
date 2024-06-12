@@ -197,7 +197,9 @@ namespace CavisProject.Application.Services
                 var userId = _claimsService.GetCurrentUserId.ToString();
                 var user = await _userManager.FindByIdAsync(userId);
                 if (user == null) throw new Exception("Not found!");
-                UserViewModel userViewModel = _mapper.Map<UserViewModel>(user);
+                var checkExist = await _unitOfWork.PersonalAnalystRepository.CheckExistPersonalAnalystAsync(userId);
+                var userViewModel = _mapper.Map<UserViewModel>(user);
+                userViewModel.CheckExistPersonal = checkExist;
                 response.Data = userViewModel;
                 response.isSuccess = true;
                 response.Message = "Successful!";

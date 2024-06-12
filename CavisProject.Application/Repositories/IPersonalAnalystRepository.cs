@@ -14,5 +14,6 @@ namespace CavisProject.Application.Repositories
         Task<Guid> CreatePersonalAnalystAsync(PersonalAnalyst personalAnalyst);
         Task<PersonalAnalyst> GetLastPersonalAnalystAsync();
         Task<Pagination<Product>> SuggestProductAsync(Guid personalAnalystId, int? pageIndex = null, int? pageSize = null);
+        Task<bool> CheckExistPersonalAnalystAsync(string userId);
     }
 }

@@ -19,7 +19,7 @@ namespace CavisProject.API.Controllers
         }
         [SwaggerOperation(Summary = "Gợi ý sản phẩm")]
         [HttpGet("mine/products")]
-        public async Task<ApiResponse<Pagination<ProductViewModel>>> SuggestProductAsync() => await _personalAnalystService.SuggestProductAsync();
+        public async Task<ApiResponse<Pagination<ProductViewModel>>> SuggestProductAsync([FromQuery]FilterSuggestProductModel filterSuggestProductModel) => await _personalAnalystService.SuggestProductAsync(filterSuggestProductModel);
         [SwaggerOperation(Summary = "Tìm kiếm các phân tích da của cá nhân")]
         [HttpGet("mine")]
         public async Task<ApiResponse<Pagination<PersonalAnalystViewModel>>> FilterPersonalAnalystAsync([FromQuery] FilterPersonalAnalystModel filterPersonalAnalystModel) =>

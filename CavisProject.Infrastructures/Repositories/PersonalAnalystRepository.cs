@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -98,6 +100,15 @@ namespace CavisProject.Infrastructures.Repositories
                                         .ToListAsync();
 
             return skinIds;
+        }
+
+        public async Task<bool> CheckExistPersonalAnalystAsync(string userId)
+        {
+            var personalAnalyst = await _dbContext.PersonalAnalysts
+            .Where(e => e.UserId == userId)
+            .FirstOrDefaultAsync();
+            if (personalAnalyst == null) return false;
+            return true;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace CavisProject.Application.Interfaces
 {
     public interface IPersonalAnalystService
     {
-        Task<ApiResponse<Pagination<ProductViewModel>>> SuggestProductAsync();
+        Task<ApiResponse<Pagination<ProductViewModel>>> SuggestProductAsync(FilterSuggestProductModel filterSuggestProductModel);
         Task<ApiResponse<bool>> CreatePersonalAnalystByLoginAsync(ListSkinPersonalModel listSkinPersonalModel);
         Task<ApiResponse<Pagination<PersonalAnalystViewModel>>> FilterPersonalAnalystAsync(
             FilterPersonalAnalystModel filterPersonalAnalystModel);

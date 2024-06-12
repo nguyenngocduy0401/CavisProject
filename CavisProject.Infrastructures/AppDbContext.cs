@@ -204,6 +204,7 @@ namespace CavisProject.Infrastructures
                  }
                 );
             #endregion
+            #region SeedProduct
             modelBuilder.Entity<Product>().HasData(
                  new Product
                  {
@@ -326,6 +327,7 @@ namespace CavisProject.Infrastructures
                      ProductCategoryId = Guid.Parse("30E2E877-861B-4AE5-8A6B-B2E93A79175E")
                  }
                 );
+            #endregion
             #region #region SeedProductDetail
             modelBuilder.Entity<ProductDetail>().HasData
                 (
