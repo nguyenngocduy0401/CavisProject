@@ -2,6 +2,7 @@
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 
 namespace CavisProject.API.Controllers
@@ -10,24 +11,24 @@ namespace CavisProject.API.Controllers
     public class SkinTypeController : ControllerBase
     {
 
-        private readonly ISkintypeService _skintypeService;
-        public SkinTypeController(ISkintypeService skintypeService) { _skintypeService = skintypeService; }
+        private readonly ISkintypeService _skinTypeService;
+        public SkinTypeController(ISkintypeService skinTypeService) { _skinTypeService = skinTypeService; }
+        [SwaggerOperation(Summary = "tạo thông tin loại da với (SkinCategory = 1 là loại da, = 2 triệu chứng về da) {Authorize = Admin, Staff}")]
         [HttpPost("")]
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinType([FromBody] CreateSkinTypeViewModel createSkinType) => await _skintypeService.CreateSkinType(createSkinType);
-
-
+        public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinType([FromBody] CreateSkinTypeViewModel createSkinType) => await _skinTypeService.CreateSkinType(createSkinType);
+        [SwaggerOperation(Summary = "tìm kiếm thông tin loại da {Authorize = Admin, Staff}")]
         [HttpGet("")]
-        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinType(SkinFilterModel skinTypeFilterModel) => await _skintypeService.FilterSkinType(skinTypeFilterModel);
-
+        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinType(SkinFilterModel skinTypeFilterModel) 
+            => await _skinTypeService.FilterSkinType(skinTypeFilterModel);
+        [SwaggerOperation(Summary = "tìm kiếm thông tin loại da với id {Authorize = Admin, Staff}")]
         [HttpGet("{id}")]
-        public async Task<ApiResponse<SkinViewModel>> GetSkinTypeById([FromRoute] string id) => await _skintypeService.GetSkinTypeById(id);
-
+        public async Task<ApiResponse<SkinViewModel>> GetSkinTypeById([FromRoute] string id) => await _skinTypeService.GetSkinTypeById(id);
+        [SwaggerOperation(Summary = "khóa thông tin loại da với id {Authorize = Admin, Staff}")]
         [HttpDelete("{id}")]
-        public async Task<ApiResponse<bool>> DeleteSkinType([FromRoute] string id) => await _skintypeService.DeleteSkinType(id);
-        
-
+        public async Task<ApiResponse<bool>> DeleteSkinType([FromRoute] string id) => await _skinTypeService.DeleteSkinType(id);
+        [SwaggerOperation(Summary = "cập nhật thông tin loại da với id {Authorize = Admin, Staff}")]
         [HttpPut("{id}")]
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinType([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string id) => await _skintypeService.UpdateSkinType(updateSkinType, id);
+        public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinType([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string id) => await _skinTypeService.UpdateSkinType(updateSkinType, id);
        
     }
 }

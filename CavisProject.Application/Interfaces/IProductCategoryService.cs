@@ -13,7 +13,7 @@ namespace CavisProject.Application.Interfaces
     {
         Task<ApiResponse<CreateProductCategoryViewModel>> CreateProductCategory(CreateProductCategoryViewModel createProductCategoryViewModel);
         Task<ApiResponse<CreateProductCategoryViewModel>> UppdateProductCategory(CreateProductCategoryViewModel UpdateProductCategoryViewModel,string id);
-        Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategory(FilterProductCategory filterProductCategory);
+        Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategory(FilterProductCategoryModel filterProductCategory);
         Task<ApiResponse<bool>> DeleteProductCategory(string id);
 
     }

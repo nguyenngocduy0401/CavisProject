@@ -12,7 +12,7 @@ namespace CavisProject.Application.Repositories
     public interface IGenericRepository<TEntity> where TEntity : BaseEntity
     {
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression, string includeProperties = "");
-        Pagination<TEntity> GetFilter(
+        Task<Pagination<TEntity>> GetFilterAsync(
            Expression<Func<TEntity, bool>>? filter = null,
            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
            string includeProperties = "",

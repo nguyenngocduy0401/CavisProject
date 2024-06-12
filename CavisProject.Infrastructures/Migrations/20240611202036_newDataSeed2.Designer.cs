@@ -4,6 +4,7 @@ using CavisProject.Infrastructures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CavisProject.Infrastructures.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240611202036_newDataSeed2")]
+    partial class newDataSeed2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -716,108 +719,6 @@ namespace CavisProject.Infrastructures.Migrations
                     b.HasIndex("SkinId");
 
                     b.ToTable("ProductDetails");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = new Guid("179f7f08-41a7-48c4-a389-0584aaa49ed9"),
-                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("179f7f08-41a7-48c4-a389-0584aaa49ed9"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("83aff4ac-c495-4582-8877-1d2fc83eb9cb"),
-                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("83aff4ac-c495-4582-8877-1d2fc83eb9cb"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("21653406-6211-4f18-b661-a360b581b397"),
-                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("21653406-6211-4f18-b661-a360b581b397"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("ef3342b3-e716-4028-b508-f29a1ec87865"),
-                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("ef3342b3-e716-4028-b508-f29a1ec87865"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("44231b57-5715-46e3-bf7b-8fb891b73ccb"),
-                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("44231b57-5715-46e3-bf7b-8fb891b73ccb"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("0e5cce09-cd4b-4681-a56f-56b4c2baec7c"),
-                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("0e5cce09-cd4b-4681-a56f-56b4c2baec7c"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("87092517-b5ca-4794-8a9f-33cb8ab2cbfe"),
-                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("87092517-b5ca-4794-8a9f-33cb8ab2cbfe"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("aaa3964a-2eb1-4e95-9fe2-ce972a357bd7"),
-                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("aaa3964a-2eb1-4e95-9fe2-ce972a357bd7"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("85af885a-abb5-454f-8ad8-d15147bba22e"),
-                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("85af885a-abb5-454f-8ad8-d15147bba22e"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("897ab50d-ebe3-4869-a1b4-d2d7f288fc45"),
-                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415")
-                        },
-                        new
-                        {
-                            ProductId = new Guid("897ab50d-ebe3-4869-a1b4-d2d7f288fc45"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
-                        });
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.RefreshToken", b =>
@@ -929,7 +830,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2566),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3884),
                             Description = "Da cân bằng với vẻ ngoài khỏe mạnh, không quá nhờn cũng không quá khô, và ít khuyết điểm.",
                             IsDeleted = false,
                             SkinsName = "Da thường"
@@ -938,7 +839,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2589),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3899),
                             Description = "Sự kết hợp của các loại da; thường thì vùng chữ T (trán, mũi, và cằm) là da nhờn trong khi má là da khô hoặc bình thường.",
                             IsDeleted = false,
                             SkinsName = "Da hỗn hợp"
@@ -947,7 +848,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2595),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3902),
                             Description = "Da dễ phản ứng với các sản phẩm và yếu tố môi trường, thường dẫn đến đỏ, ngứa, hoặc kích ứng.",
                             IsDeleted = false,
                             SkinsName = "Da nhạy cảm"
@@ -956,7 +857,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2598),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3904),
                             Description = "Da thiếu độ ẩm, thường cảm thấy căng, thô ráp, hoặc bong tróc, và có thể trông xỉn màu.",
                             IsDeleted = false,
                             SkinsName = "Da khô"
@@ -965,7 +866,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2600),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3906),
                             Description = "Da sản xuất quá nhiều bã nhờn, dẫn đến vẻ ngoài bóng và có khả năng cao bị mụn và lỗ chân lông to.",
                             IsDeleted = false,
                             SkinsName = "Da nhờn"
@@ -974,7 +875,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("e8685143-0f2e-42fa-8025-da53e1707461"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2604),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3908),
                             Description = "Mụn đầu đen là loại mụn mà lỗ chân lông bị tắc bởi bã nhờn và tế bào da chết. Chúng thường màu đen hoặc vàng nâu.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu đen"
@@ -983,7 +884,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("73766ff0-d528-4262-a1e8-656b33f58603"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2606),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3910),
                             Description = "Mụn đầu trắng cũng là lỗ chân lông bị tắc, nhưng bề mặt của chúng bị phủ bởi một lớp da sạch. Chúng thường xuất hiện màu trắng hoặc da, thường nhỏ hơn mụn đầu đen.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu trắng"
@@ -992,7 +893,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("5ab57d24-20ad-4b15-8427-c951419da3ba"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2609),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3913),
                             Description = "Mụn bọc là các nốt sưng và đỏ trên da mà không có đầu trắng hoặc đen ở phần trên. Chúng có thể gây đau và khó chịu.",
                             IsDeleted = false,
                             SkinsName = "Mụn bọc"
@@ -1001,7 +902,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("bd287628-2eb7-458a-b202-d89d63faaebf"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2612),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3916),
                             Description = "Mụn mủ là các nốt sưng và đỏ có chứa mủ ở phần trên. Chúng thường là dấu hiệu của một nhiễm trùng nặng hơn trong lỗ chân lông.",
                             IsDeleted = false,
                             SkinsName = "Mụn mủ"
@@ -1010,7 +911,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2614),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3918),
                             Description = "Mụn viêm đỏ là các nốt sưng lớn và đau nhức dưới da. Chúng thường không có mủ ở phần trên như mụn mủ.",
                             IsDeleted = false,
                             SkinsName = "Mụn viêm đỏ"
@@ -1019,7 +920,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("f49b6287-8f31-4fd5-9899-ed1eb6d0564a"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2616),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3921),
                             Description = "Mụn đầu đinh là các nốt sưng lớn và đau nhức có mủ ở phần trên. Chúng có thể gây ra tổn thương và vết sẹo nếu không được điều trị đúng cách.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu đinh"
@@ -1028,7 +929,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("a9035561-1399-464f-9f09-38c164a40a63"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2619),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3924),
                             Description = "Mụn thâm là các vết sẹo hoặc vết đỏ hoặc nâu trên da sau khi mụn đã lành. Chúng có thể gây ra tự ti và không tự tin về da mặt.",
                             IsDeleted = false,
                             SkinsName = "Mụn thâm"
@@ -1037,7 +938,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2621),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3926),
                             Description = "Nám da là sự xuất hiện của các vùng sạm màu trên da, thường là do tác động của tia UV từ ánh nắng mặt trời.",
                             IsDeleted = false,
                             SkinsName = "Nám da"
@@ -1046,7 +947,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("4678f8d2-5648-4521-9608-8e981dee9103"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 12, 3, 48, 6, 279, DateTimeKind.Local).AddTicks(2625),
+                            CreationDate = new DateTime(2024, 6, 12, 3, 20, 35, 740, DateTimeKind.Local).AddTicks(3929),
                             Description = "Sự xuất hiện của nếp nhăn trên da thường là kết quả của quá trình lão hóa tự nhiên, nhưng cũng có thể được tăng cường bởi tác động từ môi trường, chế độ ăn uống và lối sống.",
                             IsDeleted = false,
                             SkinsName = "Nếp nhăn"

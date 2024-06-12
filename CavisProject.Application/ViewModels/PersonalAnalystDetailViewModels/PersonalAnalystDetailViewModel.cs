@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CavisProject.Application.ViewModels.ProductViewModel
+namespace CavisProject.Application.ViewModels.PersonalAnalystDetailViewModels
 {
-    public class ProductViewModel
+    public class PersonalAnalystDetailViewModel
     {
         public Guid Id { get; set; }
-        public string? ProductName { get; set; }
-
+        public string? SkinsName { get; set; }
         public string? Description { get; set; }
-        public string? URL { get; set; }
+        public bool Category { get; set; }
     }
 }

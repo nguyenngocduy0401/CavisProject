@@ -119,15 +119,16 @@ namespace CavisProject.Application.Services
                 
                 var attributesToCheck = new List<(string AttributeValue, string AttributeType, string ErrorMessage)>
                 {
-                    (userRegisterModel.UserName, "UserName", "UserName is existed!"),
-                    (userRegisterModel.Email, "Email", "Email is existed!"),
-                    (userRegisterModel.PhoneNumber, "PhoneNumber", "PhoneNumber is existed!")
+                    (userRegisterModel.UserName!, "UserName", "Tài khoản đã tồn tại!"),
+                    (userRegisterModel.Email!, "Email", "Email đã tồn tại!"),
+                    (userRegisterModel.PhoneNumber!, "PhoneNumber", "Số điện thoại đã tồn tại!")
                 };
                 foreach (var (attributeValue, attributeType, errorMessage) in attributesToCheck)
                 {
                     if (await _unitOfWork.UserRepository.CheckUserAttributeExisted(attributeValue, attributeType))
                     {
-                        response.isSuccess = false;
+                        response.Data = null;
+                        response.isSuccess = true;
                         response.Message = errorMessage;
                         return response;
                     }
