@@ -36,6 +36,8 @@ namespace CavisProject.API.Controllers
         [HttpPut("{id}")]
         public async Task<ApiResponse<CreateSupplierViewModel>> UpdateSupplier([FromBody] CreateSupplierViewModel updateSupplierViewModel, [FromRoute] string id)
       =>   await _supplierService.UppdateSupplier(updateSupplierViewModel, id);
-        
+        [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "lấy thông tin nhà cung cấp sản phẩm  bằng id")]
+        public async Task<ApiResponse<CreateSupplierViewModel>> GetSupplierByIdAsync(string id)=> await _supplierService.GetSupplierByIdAsync(id);
     }
 }
