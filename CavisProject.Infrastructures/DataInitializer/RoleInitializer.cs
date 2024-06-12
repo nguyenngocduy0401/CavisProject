@@ -1,4 +1,5 @@
-﻿using CavisProject.Application.Commons;
+﻿using AutoMapper.Execution;
+using CavisProject.Application.Commons;
 using CavisProject.Domain.Entity;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -19,7 +20,7 @@ namespace CavisProject.Infrastructures.DataInitializer
         }
         public async Task RoleInitializeAsync()
         {
-            string[] roleNames = { AppRole.Admin, AppRole.Customer, AppRole.Staff, AppRole.Expert };
+            string[] roleNames = { AppRole.Admin, AppRole.Customer, AppRole.Staff, AppRole.Expert,AppRole.Premium };
 
 
             IdentityResult roleResult;

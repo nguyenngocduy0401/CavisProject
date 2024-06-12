@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CavisProject.Infrastructures.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240519084003_addRefreshToken")]
-    partial class addRefreshToken
+    [Migration("20240612020122_a")]
+    partial class a
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -201,12 +201,15 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Property<Guid?>("MethodId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("SkinId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("SkinTypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("MethodId", "SkinTypeId");
+                    b.HasKey("MethodId", "SkinId");
 
-                    b.HasIndex("SkinTypeId");
+                    b.HasIndex("SkinId");
 
                     b.ToTable("MethodDetails");
                 });
@@ -321,13 +324,16 @@ namespace CavisProject.Infrastructures.Migrations
 
             modelBuilder.Entity("CavisProject.Domain.Entity.PersonalAnalystDetail", b =>
                 {
-                    b.Property<Guid?>("SkinTypeId")
+                    b.Property<Guid?>("SkinId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("PersonalAnalystId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("SkinTypeId", "PersonalAnalystId");
+                    b.Property<Guid?>("SkinTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SkinId", "PersonalAnalystId");
 
                     b.HasIndex("PersonalAnalystId");
 
@@ -489,12 +495,15 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("SkinId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("SkinTypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("ProductId", "SkinTypeId");
+                    b.HasKey("ProductId", "SkinId");
 
-                    b.HasIndex("SkinTypeId");
+                    b.HasIndex("SkinId");
 
                     b.ToTable("ProductDetails");
                 });
@@ -563,11 +572,14 @@ namespace CavisProject.Infrastructures.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("CavisProject.Domain.Entity.SkinType", b =>
+            modelBuilder.Entity("CavisProject.Domain.Entity.Skin", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Category")
+                        .HasColumnType("bit");
 
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
@@ -593,12 +605,140 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("SkinTypeName")
+                    b.Property<string>("SkinsName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("SkinTypes");
+                    b.ToTable("Skins");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0bf98cb3-0b12-4b0d-8adb-fc33334ea897"),
+                            Category = true,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3906),
+                            Description = "Da cân bằng với vẻ ngoài khỏe mạnh, không quá nhờn cũng không quá khô, và ít khuyết điểm.",
+                            IsDeleted = false,
+                            SkinsName = "Da thường"
+                        },
+                        new
+                        {
+                            Id = new Guid("bb395cb3-f2a5-4f4c-95b7-b3fca430aa52"),
+                            Category = true,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3919),
+                            Description = "Sự kết hợp của các loại da; thường thì vùng chữ T (trán, mũi, và cằm) là da nhờn trong khi má là da khô hoặc bình thường.",
+                            IsDeleted = false,
+                            SkinsName = "Da hỗn hợp"
+                        },
+                        new
+                        {
+                            Id = new Guid("11cd4fde-5271-4236-9901-abe45403fa91"),
+                            Category = true,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3932),
+                            Description = "Da dễ phản ứng với các sản phẩm và yếu tố môi trường, thường dẫn đến đỏ, ngứa, hoặc kích ứng.",
+                            IsDeleted = false,
+                            SkinsName = "Da nhạy cảm"
+                        },
+                        new
+                        {
+                            Id = new Guid("30a3267b-e5d8-4ebe-afa8-7a739428d08e"),
+                            Category = true,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3934),
+                            Description = "Da thiếu độ ẩm, thường cảm thấy căng, thô ráp, hoặc bong tróc, và có thể trông xỉn màu.",
+                            IsDeleted = false,
+                            SkinsName = "Da khô"
+                        },
+                        new
+                        {
+                            Id = new Guid("910f3a9d-de2e-433b-a75c-03dd34e094f2"),
+                            Category = true,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3935),
+                            Description = "Da sản xuất quá nhiều bã nhờn, dẫn đến vẻ ngoài bóng và có khả năng cao bị mụn và lỗ chân lông to.",
+                            IsDeleted = false,
+                            SkinsName = "Da nhờn"
+                        },
+                        new
+                        {
+                            Id = new Guid("95009608-400b-4a05-9bfc-6ab1644dae2e"),
+                            Category = false,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3937),
+                            Description = "Mụn đầu đen là loại mụn mà lỗ chân lông bị tắc bởi bã nhờn và tế bào da chết. Chúng thường màu đen hoặc vàng nâu.",
+                            IsDeleted = false,
+                            SkinsName = "Mụn đầu đen"
+                        },
+                        new
+                        {
+                            Id = new Guid("7f462a0d-f19b-4b23-aeca-b9866a343a2d"),
+                            Category = false,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3939),
+                            Description = "Mụn đầu trắng cũng là lỗ chân lông bị tắc, nhưng bề mặt của chúng bị phủ bởi một lớp da sạch. Chúng thường xuất hiện màu trắng hoặc da, thường nhỏ hơn mụn đầu đen.",
+                            IsDeleted = false,
+                            SkinsName = "Mụn đầu trắng"
+                        },
+                        new
+                        {
+                            Id = new Guid("ae9334b7-ba5c-4fec-b7aa-f5415f2c79ec"),
+                            Category = false,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3941),
+                            Description = "Mụn bọc là các nốt sưng và đỏ trên da mà không có đầu trắng hoặc đen ở phần trên. Chúng có thể gây đau và khó chịu.",
+                            IsDeleted = false,
+                            SkinsName = "Mụn bọc"
+                        },
+                        new
+                        {
+                            Id = new Guid("de312d75-449e-4f77-8992-eb039edc846b"),
+                            Category = false,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3943),
+                            Description = "Mụn mủ là các nốt sưng và đỏ có chứa mủ ở phần trên. Chúng thường là dấu hiệu của một nhiễm trùng nặng hơn trong lỗ chân lông.",
+                            IsDeleted = false,
+                            SkinsName = "Mụn mủ"
+                        },
+                        new
+                        {
+                            Id = new Guid("4c4669ac-b3fa-4e34-8356-80f0ea44d6a2"),
+                            Category = false,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3945),
+                            Description = "Mụn viêm đỏ là các nốt sưng lớn và đau nhức dưới da. Chúng thường không có mủ ở phần trên như mụn mủ.",
+                            IsDeleted = false,
+                            SkinsName = "Mụn viêm đỏ"
+                        },
+                        new
+                        {
+                            Id = new Guid("b0ccc886-7863-437f-a301-603adcd4b4a3"),
+                            Category = false,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3949),
+                            Description = "Mụn đầu đinh là các nốt sưng lớn và đau nhức có mủ ở phần trên. Chúng có thể gây ra tổn thương và vết sẹo nếu không được điều trị đúng cách.",
+                            IsDeleted = false,
+                            SkinsName = "Mụn đầu đinh"
+                        },
+                        new
+                        {
+                            Id = new Guid("bc52cd75-9e6f-4e08-b6dd-3f921fd43678"),
+                            Category = false,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3951),
+                            Description = "Mụn thâm là các vết sẹo hoặc vết đỏ hoặc nâu trên da sau khi mụn đã lành. Chúng có thể gây ra tự ti và không tự tin về da mặt.",
+                            IsDeleted = false,
+                            SkinsName = "Mụn thâm"
+                        },
+                        new
+                        {
+                            Id = new Guid("4c314611-54ed-4c37-bbc0-fcaa173dfef6"),
+                            Category = false,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3953),
+                            Description = "Nám da là sự xuất hiện của các vùng sạm màu trên da, thường là do tác động của tia UV từ ánh nắng mặt trời.",
+                            IsDeleted = false,
+                            SkinsName = "Nám da"
+                        },
+                        new
+                        {
+                            Id = new Guid("d4488a6f-875f-44b7-b2f8-5d41f4d551c8"),
+                            Category = false,
+                            CreationDate = new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3954),
+                            Description = "Sự xuất hiện của nếp nhăn trên da thường là kết quả của quá trình lão hóa tự nhiên, nhưng cũng có thể được tăng cường bởi tác động từ môi trường, chế độ ăn uống và lối sống.",
+                            IsDeleted = false,
+                            SkinsName = "Nếp nhăn"
+                        });
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.Supplier", b =>
@@ -729,6 +869,9 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("ExpireOTPEmail")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
@@ -748,6 +891,9 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("OTPEmail")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -956,15 +1102,15 @@ namespace CavisProject.Infrastructures.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CavisProject.Domain.Entity.SkinType", "SkinType")
+                    b.HasOne("CavisProject.Domain.Entity.Skin", "Skins")
                         .WithMany("MethodDetails")
-                        .HasForeignKey("SkinTypeId")
+                        .HasForeignKey("SkinId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Method");
 
-                    b.Navigation("SkinType");
+                    b.Navigation("Skins");
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.PackageDetail", b =>
@@ -1003,15 +1149,15 @@ namespace CavisProject.Infrastructures.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CavisProject.Domain.Entity.SkinType", "SkinType")
+                    b.HasOne("CavisProject.Domain.Entity.Skin", "Skins")
                         .WithMany("PersonalAnalystDetails")
-                        .HasForeignKey("SkinTypeId")
+                        .HasForeignKey("SkinId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("PersonalAnalyst");
 
-                    b.Navigation("SkinType");
+                    b.Navigation("Skins");
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.PersonalImage", b =>
@@ -1065,15 +1211,15 @@ namespace CavisProject.Infrastructures.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CavisProject.Domain.Entity.SkinType", "SkinType")
+                    b.HasOne("CavisProject.Domain.Entity.Skin", "Skins")
                         .WithMany("ProductDetails")
-                        .HasForeignKey("SkinTypeId")
+                        .HasForeignKey("SkinId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
 
-                    b.Navigation("SkinType");
+                    b.Navigation("Skins");
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.RefreshToken", b =>
@@ -1222,7 +1368,7 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("CavisProject.Domain.Entity.SkinType", b =>
+            modelBuilder.Entity("CavisProject.Domain.Entity.Skin", b =>
                 {
                     b.Navigation("MethodDetails");
 

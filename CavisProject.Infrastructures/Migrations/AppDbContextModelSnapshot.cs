@@ -612,126 +612,126 @@ namespace CavisProject.Infrastructures.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
+                            Id = new Guid("1692afe4-f902-4c3c-8ab1-083f412c5fff"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4659),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5273),
                             Description = "Da cân bằng với vẻ ngoài khỏe mạnh, không quá nhờn cũng không quá khô, và ít khuyết điểm.",
                             IsDeleted = false,
                             SkinsName = "Da thường"
                         },
                         new
                         {
-                            Id = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
+                            Id = new Guid("97bda52c-9fef-4265-ba57-b06a1c4da003"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4690),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5286),
                             Description = "Sự kết hợp của các loại da; thường thì vùng chữ T (trán, mũi, và cằm) là da nhờn trong khi má là da khô hoặc bình thường.",
                             IsDeleted = false,
                             SkinsName = "Da hỗn hợp"
                         },
                         new
                         {
-                            Id = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
+                            Id = new Guid("b5ecbf94-32b6-4d89-895d-a43b5794f633"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4693),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5288),
                             Description = "Da dễ phản ứng với các sản phẩm và yếu tố môi trường, thường dẫn đến đỏ, ngứa, hoặc kích ứng.",
                             IsDeleted = false,
                             SkinsName = "Da nhạy cảm"
                         },
                         new
                         {
-                            Id = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
+                            Id = new Guid("36a08e8b-ae4d-4022-9080-92c5046d087d"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4697),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5290),
                             Description = "Da thiếu độ ẩm, thường cảm thấy căng, thô ráp, hoặc bong tróc, và có thể trông xỉn màu.",
                             IsDeleted = false,
                             SkinsName = "Da khô"
                         },
                         new
                         {
-                            Id = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
+                            Id = new Guid("6738a64d-86a4-4c3e-b926-9ec8ebaf9509"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4700),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5291),
                             Description = "Da sản xuất quá nhiều bã nhờn, dẫn đến vẻ ngoài bóng và có khả năng cao bị mụn và lỗ chân lông to.",
                             IsDeleted = false,
                             SkinsName = "Da nhờn"
                         },
                         new
                         {
-                            Id = new Guid("e8685143-0f2e-42fa-8025-da53e1707461"),
+                            Id = new Guid("7393b9ba-13ab-44db-b332-68e7feb1a1f9"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4702),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5293),
                             Description = "Mụn đầu đen là loại mụn mà lỗ chân lông bị tắc bởi bã nhờn và tế bào da chết. Chúng thường màu đen hoặc vàng nâu.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu đen"
                         },
                         new
                         {
-                            Id = new Guid("73766ff0-d528-4262-a1e8-656b33f58603"),
+                            Id = new Guid("c2cda58d-b617-4303-b3f1-16a9a509181e"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4724),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5306),
                             Description = "Mụn đầu trắng cũng là lỗ chân lông bị tắc, nhưng bề mặt của chúng bị phủ bởi một lớp da sạch. Chúng thường xuất hiện màu trắng hoặc da, thường nhỏ hơn mụn đầu đen.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu trắng"
                         },
                         new
                         {
-                            Id = new Guid("5ab57d24-20ad-4b15-8427-c951419da3ba"),
+                            Id = new Guid("ef58c5b2-6eda-415f-a83a-2a39756a054e"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4726),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5308),
                             Description = "Mụn bọc là các nốt sưng và đỏ trên da mà không có đầu trắng hoặc đen ở phần trên. Chúng có thể gây đau và khó chịu.",
                             IsDeleted = false,
                             SkinsName = "Mụn bọc"
                         },
                         new
                         {
-                            Id = new Guid("bd287628-2eb7-458a-b202-d89d63faaebf"),
+                            Id = new Guid("9acd9174-caa3-4f0e-8a54-d9b20e4a4afd"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4728),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5310),
                             Description = "Mụn mủ là các nốt sưng và đỏ có chứa mủ ở phần trên. Chúng thường là dấu hiệu của một nhiễm trùng nặng hơn trong lỗ chân lông.",
                             IsDeleted = false,
                             SkinsName = "Mụn mủ"
                         },
                         new
                         {
-                            Id = new Guid("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"),
+                            Id = new Guid("6e36e228-7948-4f78-a0c7-21198363a77d"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4730),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5311),
                             Description = "Mụn viêm đỏ là các nốt sưng lớn và đau nhức dưới da. Chúng thường không có mủ ở phần trên như mụn mủ.",
                             IsDeleted = false,
                             SkinsName = "Mụn viêm đỏ"
                         },
                         new
                         {
-                            Id = new Guid("f49b6287-8f31-4fd5-9899-ed1eb6d0564a"),
+                            Id = new Guid("2ac3cfef-4629-4932-adfa-e7d00435e258"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4732),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5313),
                             Description = "Mụn đầu đinh là các nốt sưng lớn và đau nhức có mủ ở phần trên. Chúng có thể gây ra tổn thương và vết sẹo nếu không được điều trị đúng cách.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu đinh"
                         },
                         new
                         {
-                            Id = new Guid("a9035561-1399-464f-9f09-38c164a40a63"),
+                            Id = new Guid("e33bdd74-610a-4e2a-be4b-9758e5c66ece"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4734),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5315),
                             Description = "Mụn thâm là các vết sẹo hoặc vết đỏ hoặc nâu trên da sau khi mụn đã lành. Chúng có thể gây ra tự ti và không tự tin về da mặt.",
                             IsDeleted = false,
                             SkinsName = "Mụn thâm"
                         },
                         new
                         {
-                            Id = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            Id = new Guid("eac270b3-7e52-4e04-b796-30ff53217a5b"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4735),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5318),
                             Description = "Nám da là sự xuất hiện của các vùng sạm màu trên da, thường là do tác động của tia UV từ ánh nắng mặt trời.",
                             IsDeleted = false,
                             SkinsName = "Nám da"
                         },
                         new
                         {
-                            Id = new Guid("4678f8d2-5648-4521-9608-8e981dee9103"),
+                            Id = new Guid("ba6e5545-c1af-45e2-a1b2-3d7c97be1438"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 5, 19, 38, 23, 481, DateTimeKind.Local).AddTicks(4737),
+                            CreationDate = new DateTime(2024, 6, 12, 10, 10, 29, 613, DateTimeKind.Local).AddTicks(5320),
                             Description = "Sự xuất hiện của nếp nhăn trên da thường là kết quả của quá trình lão hóa tự nhiên, nhưng cũng có thể được tăng cường bởi tác động từ môi trường, chế độ ăn uống và lối sống.",
                             IsDeleted = false,
                             SkinsName = "Nếp nhăn"
@@ -791,7 +791,7 @@ namespace CavisProject.Infrastructures.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AppointmentId")
+                    b.Property<Guid?>("AppointmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CreatedBy")
@@ -1234,9 +1234,7 @@ namespace CavisProject.Infrastructures.Migrations
                 {
                     b.HasOne("CavisProject.Domain.Entity.Appointment", "Appointment")
                         .WithMany("Transaction")
-                        .HasForeignKey("AppointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AppointmentId");
 
                     b.HasOne("CavisProject.Domain.Entity.PackagePremium", "PackagePremium")
                         .WithMany("Transactions")

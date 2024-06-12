@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace CavisProject.Infrastructures.Migrations
 {
     /// <inheritdoc />
-    public partial class Newdb : Migration
+    public partial class a : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,6 +64,8 @@ namespace CavisProject.Infrastructures.Migrations
                     Wallet = table.Column<double>(type: "float", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     RewardPoint = table.Column<double>(type: "float", nullable: true),
+                    OTPEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ExpireOTPEmail = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -124,12 +128,13 @@ namespace CavisProject.Infrastructures.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SkinTypes",
+                name: "Skins",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SkinTypeName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SkinsName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Category = table.Column<bool>(type: "bit", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ModificationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -140,7 +145,7 @@ namespace CavisProject.Infrastructures.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SkinTypes", x => x.Id);
+                    table.PrimaryKey("PK_Skins", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -404,6 +409,30 @@ namespace CavisProject.Infrastructures.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    JwtId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsUsed = table.Column<bool>(type: "bit", nullable: false),
+                    IsRevoked = table.Column<bool>(type: "bit", nullable: false),
+                    IssuedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExpiredAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PackageDetails",
                 columns: table => new
                 {
@@ -512,11 +541,12 @@ namespace CavisProject.Infrastructures.Migrations
                 columns: table => new
                 {
                     MethodId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SkinTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    SkinId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SkinTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MethodDetails", x => new { x.MethodId, x.SkinTypeId });
+                    table.PrimaryKey("PK_MethodDetails", x => new { x.MethodId, x.SkinId });
                     table.ForeignKey(
                         name: "FK_MethodDetails_Methods_MethodId",
                         column: x => x.MethodId,
@@ -524,9 +554,9 @@ namespace CavisProject.Infrastructures.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MethodDetails_SkinTypes_SkinTypeId",
-                        column: x => x.SkinTypeId,
-                        principalTable: "SkinTypes",
+                        name: "FK_MethodDetails_Skins_SkinId",
+                        column: x => x.SkinId,
+                        principalTable: "Skins",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -536,11 +566,12 @@ namespace CavisProject.Infrastructures.Migrations
                 columns: table => new
                 {
                     PersonalAnalystId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SkinTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    SkinId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SkinTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersonalAnalystDetails", x => new { x.SkinTypeId, x.PersonalAnalystId });
+                    table.PrimaryKey("PK_PersonalAnalystDetails", x => new { x.SkinId, x.PersonalAnalystId });
                     table.ForeignKey(
                         name: "FK_PersonalAnalystDetails_PersonalAnalysts_PersonalAnalystId",
                         column: x => x.PersonalAnalystId,
@@ -548,9 +579,9 @@ namespace CavisProject.Infrastructures.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PersonalAnalystDetails_SkinTypes_SkinTypeId",
-                        column: x => x.SkinTypeId,
-                        principalTable: "SkinTypes",
+                        name: "FK_PersonalAnalystDetails_Skins_SkinId",
+                        column: x => x.SkinId,
+                        principalTable: "Skins",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -584,11 +615,12 @@ namespace CavisProject.Infrastructures.Migrations
                 columns: table => new
                 {
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SkinTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    SkinId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SkinTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductDetails", x => new { x.ProductId, x.SkinTypeId });
+                    table.PrimaryKey("PK_ProductDetails", x => new { x.ProductId, x.SkinId });
                     table.ForeignKey(
                         name: "FK_ProductDetails_Products_ProductId",
                         column: x => x.ProductId,
@@ -596,9 +628,9 @@ namespace CavisProject.Infrastructures.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductDetails_SkinTypes_SkinTypeId",
-                        column: x => x.SkinTypeId,
-                        principalTable: "SkinTypes",
+                        name: "FK_ProductDetails_Skins_SkinId",
+                        column: x => x.SkinId,
+                        principalTable: "Skins",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -625,6 +657,27 @@ namespace CavisProject.Infrastructures.Migrations
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Skins",
+                columns: new[] { "Id", "Category", "CreatedBy", "CreationDate", "DeleteBy", "DeletionDate", "Description", "IsDeleted", "ModificationBy", "ModificationDate", "SkinsName" },
+                values: new object[,]
+                {
+                    { new Guid("0bf98cb3-0b12-4b0d-8adb-fc33334ea897"), true, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3906), null, null, "Da cân bằng với vẻ ngoài khỏe mạnh, không quá nhờn cũng không quá khô, và ít khuyết điểm.", false, null, null, "Da thường" },
+                    { new Guid("11cd4fde-5271-4236-9901-abe45403fa91"), true, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3932), null, null, "Da dễ phản ứng với các sản phẩm và yếu tố môi trường, thường dẫn đến đỏ, ngứa, hoặc kích ứng.", false, null, null, "Da nhạy cảm" },
+                    { new Guid("30a3267b-e5d8-4ebe-afa8-7a739428d08e"), true, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3934), null, null, "Da thiếu độ ẩm, thường cảm thấy căng, thô ráp, hoặc bong tróc, và có thể trông xỉn màu.", false, null, null, "Da khô" },
+                    { new Guid("4c314611-54ed-4c37-bbc0-fcaa173dfef6"), false, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3953), null, null, "Nám da là sự xuất hiện của các vùng sạm màu trên da, thường là do tác động của tia UV từ ánh nắng mặt trời.", false, null, null, "Nám da" },
+                    { new Guid("4c4669ac-b3fa-4e34-8356-80f0ea44d6a2"), false, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3945), null, null, "Mụn viêm đỏ là các nốt sưng lớn và đau nhức dưới da. Chúng thường không có mủ ở phần trên như mụn mủ.", false, null, null, "Mụn viêm đỏ" },
+                    { new Guid("7f462a0d-f19b-4b23-aeca-b9866a343a2d"), false, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3939), null, null, "Mụn đầu trắng cũng là lỗ chân lông bị tắc, nhưng bề mặt của chúng bị phủ bởi một lớp da sạch. Chúng thường xuất hiện màu trắng hoặc da, thường nhỏ hơn mụn đầu đen.", false, null, null, "Mụn đầu trắng" },
+                    { new Guid("910f3a9d-de2e-433b-a75c-03dd34e094f2"), true, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3935), null, null, "Da sản xuất quá nhiều bã nhờn, dẫn đến vẻ ngoài bóng và có khả năng cao bị mụn và lỗ chân lông to.", false, null, null, "Da nhờn" },
+                    { new Guid("95009608-400b-4a05-9bfc-6ab1644dae2e"), false, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3937), null, null, "Mụn đầu đen là loại mụn mà lỗ chân lông bị tắc bởi bã nhờn và tế bào da chết. Chúng thường màu đen hoặc vàng nâu.", false, null, null, "Mụn đầu đen" },
+                    { new Guid("ae9334b7-ba5c-4fec-b7aa-f5415f2c79ec"), false, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3941), null, null, "Mụn bọc là các nốt sưng và đỏ trên da mà không có đầu trắng hoặc đen ở phần trên. Chúng có thể gây đau và khó chịu.", false, null, null, "Mụn bọc" },
+                    { new Guid("b0ccc886-7863-437f-a301-603adcd4b4a3"), false, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3949), null, null, "Mụn đầu đinh là các nốt sưng lớn và đau nhức có mủ ở phần trên. Chúng có thể gây ra tổn thương và vết sẹo nếu không được điều trị đúng cách.", false, null, null, "Mụn đầu đinh" },
+                    { new Guid("bb395cb3-f2a5-4f4c-95b7-b3fca430aa52"), true, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3919), null, null, "Sự kết hợp của các loại da; thường thì vùng chữ T (trán, mũi, và cằm) là da nhờn trong khi má là da khô hoặc bình thường.", false, null, null, "Da hỗn hợp" },
+                    { new Guid("bc52cd75-9e6f-4e08-b6dd-3f921fd43678"), false, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3951), null, null, "Mụn thâm là các vết sẹo hoặc vết đỏ hoặc nâu trên da sau khi mụn đã lành. Chúng có thể gây ra tự ti và không tự tin về da mặt.", false, null, null, "Mụn thâm" },
+                    { new Guid("d4488a6f-875f-44b7-b2f8-5d41f4d551c8"), false, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3954), null, null, "Sự xuất hiện của nếp nhăn trên da thường là kết quả của quá trình lão hóa tự nhiên, nhưng cũng có thể được tăng cường bởi tác động từ môi trường, chế độ ăn uống và lối sống.", false, null, null, "Nếp nhăn" },
+                    { new Guid("de312d75-449e-4f77-8992-eb039edc846b"), false, null, new DateTime(2024, 6, 12, 9, 1, 21, 882, DateTimeKind.Local).AddTicks(3943), null, null, "Mụn mủ là các nốt sưng và đỏ có chứa mủ ở phần trên. Chúng thường là dấu hiệu của một nhiễm trùng nặng hơn trong lỗ chân lông.", false, null, null, "Mụn mủ" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -677,9 +730,9 @@ namespace CavisProject.Infrastructures.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MethodDetails_SkinTypeId",
+                name: "IX_MethodDetails_SkinId",
                 table: "MethodDetails",
-                column: "SkinTypeId");
+                column: "SkinId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Methods_UserId",
@@ -712,9 +765,9 @@ namespace CavisProject.Infrastructures.Migrations
                 column: "MethodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductDetails_SkinTypeId",
+                name: "IX_ProductDetails_SkinId",
                 table: "ProductDetails",
-                column: "SkinTypeId");
+                column: "SkinId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductCategoryId",
@@ -725,6 +778,11 @@ namespace CavisProject.Infrastructures.Migrations
                 name: "IX_Products_SupplierId",
                 table: "Products",
                 column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RefreshTokens_UserId",
+                table: "RefreshTokens",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_AppointmentId",
@@ -790,6 +848,9 @@ namespace CavisProject.Infrastructures.Migrations
                 name: "ProductDetails");
 
             migrationBuilder.DropTable(
+                name: "RefreshTokens");
+
+            migrationBuilder.DropTable(
                 name: "Transactions");
 
             migrationBuilder.DropTable(
@@ -805,7 +866,7 @@ namespace CavisProject.Infrastructures.Migrations
                 name: "PersonalAnalysts");
 
             migrationBuilder.DropTable(
-                name: "SkinTypes");
+                name: "Skins");
 
             migrationBuilder.DropTable(
                 name: "Appointments");

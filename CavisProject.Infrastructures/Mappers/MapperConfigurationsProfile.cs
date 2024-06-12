@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CavisProject.Application.ViewModels.ProductCategoryViewModel;
+using CavisProject.Application.ViewModels.RegistPreniumViewModel;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Application.ViewModels.SupplierViewModel;
 using CavisProject.Application.ViewModels.UserViewModels;
@@ -34,7 +35,11 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<CreateSupplierViewModel, Supplier>();
             CreateMap<Supplier, CreateSupplierViewModel>();
             CreateMap<UserRegisterModel, User>()
-                .ForMember(dest => dest.PasswordHash, src => src.MapFrom(x => x.Password)); 
+                .ForMember(dest => dest.PasswordHash, src => src.MapFrom(x => x.Password));
+            #endregion
+            #region Prenium
+            CreateMap<RegistPremiumViewModel,PackagePremium>();
+            CreateMap<UpgradeToPremiumViewModel, User>();
             #endregion
         }
     }

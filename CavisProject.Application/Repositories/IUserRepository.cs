@@ -17,5 +17,6 @@ namespace CavisProject.Application.Repositories
         Task<bool> CheckUserAttributeExisted(string attributeValue, string attributeType);
         Task<User> GetUserByUserNameAndPassword(string username, string password);
         Task AddAsync(User user);
+        Task<string> GetUserByUserId(string userId);
     }
 }

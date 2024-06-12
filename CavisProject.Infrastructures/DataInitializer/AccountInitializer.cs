@@ -21,7 +21,7 @@ namespace CavisProject.Infrastructures.DataInitializer
 
         public async Task AccountInitializeAsync()
         {
-            string[] roles = { AppRole.Admin, AppRole.Customer, AppRole.Staff, AppRole.Expert };
+            string[] roles = { AppRole.Admin, AppRole.Customer, AppRole.Staff, AppRole.Expert ,AppRole.Premium};
 
             foreach (var role in roles)
             {
