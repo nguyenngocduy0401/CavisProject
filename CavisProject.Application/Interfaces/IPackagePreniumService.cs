@@ -18,5 +18,6 @@ namespace CavisProject.Application.Interfaces
         Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackage(FilterPackagePremiumViewModel FilterModel);
         Task<ApiResponse<bool>> DeletePackage(string Id);
         Task<ApiResponse<CreatePackagePremiumViewModel>> UpdatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id);
+        Task<ApiResponse<PackagePreniumViewModel>> GetPackagePremiumByIdAsync(string id)
     }
 }

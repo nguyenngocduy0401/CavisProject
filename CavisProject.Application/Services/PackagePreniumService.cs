@@ -309,5 +309,34 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
+        public async Task<ApiResponse<PackagePreniumViewModel>> GetPackagePremiumByIdAsync(string id)
+        {
+            var response = new ApiResponse<PackagePreniumViewModel>();
+            try
+            {
+                var packagePremium = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
+                if (packagePremium == null)
+                {
+                    throw new Exception("Không tìm thấy !");
+                }
+
+                var packagePremiumViewModel = _mapper.Map<PackagePreniumViewModel>(packagePremium);
+
+                response.isSuccess = true;
+                response.Data = packagePremiumViewModel;
+            }
+            catch (DbException ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+
+            }
+            catch (Exception ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
     }
 }

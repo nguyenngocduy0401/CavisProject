@@ -36,5 +36,7 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<CreatePackagePremiumViewModel>> UpdatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id) => await _packagePreniumService.UpdatePackage(createPackagePremiumViewModel,Id);
         [HttpDelete("{id}")]
         public async Task<ApiResponse<bool>> DeletePackage(string Id)=> await _packagePreniumService.DeletePackage(Id);
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<PackagePreniumViewModel>> GetPackagePremiumByIdAsync(string id) => await _packagePreniumService.GetPackagePremiumByIdAsync(id);
     }
 }
