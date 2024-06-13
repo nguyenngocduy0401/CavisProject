@@ -132,13 +132,13 @@ namespace CavisProject.Application.Services
                     var lockoutEndDate = DateTimeOffset.MaxValue;
                     await _userManager.SetLockoutEndDateAsync(user, lockoutEndDate);
                     response.Data = true;
-                    response.Message = "User has been banned.";
+                    response.Message = "Người dùng đã bị cấm.";
                 }
                 else
                 {
                     await _userManager.SetLockoutEndDateAsync(user, null);
                     response.Data = true;
-                    response.Message = "User has been unbanned.";
+                    response.Message = "Hủy bỏ lệnh cấm người dùng thành công.";
                 }
                 response.isSuccess = true;
             }
@@ -293,16 +293,16 @@ namespace CavisProject.Application.Services
                 if (!string.IsNullOrEmpty(updateUserModel.Gender)) user.Gender = updateUserModel.Gender;
                 if (!string.IsNullOrEmpty(updateUserModel.PhoneNumber)) user.PhoneNumber = updateUserModel.PhoneNumber;
                 if (!string.IsNullOrEmpty(updateUserModel.Email)) user.Email = updateUserModel.Email;
-                if(updateUserModel.DateOfBird != null) user.DateOfBird = updateUserModel.DateOfBird;
+                if(updateUserModel.DateOfBirth != null) user.DateOfBirth = updateUserModel.DateOfBirth;
                 var newUser = await _userManager.UpdateAsync(user);
                 if (!newUser.Succeeded)
                 {
                     response.isSuccess = true;
-                    response.Message = "Thay đổi mật khẩu thất bại!";
+                    response.Message = "Thay đổi thông tin thất bại!";
                     return response;
                 }
                 response.isSuccess = true;
-                response.Message = "Thay đổi mật khẩu thành công!";
+                response.Message = "Thay đổi thông tin thành công!";
             }
             catch (DbException ex)
             {
