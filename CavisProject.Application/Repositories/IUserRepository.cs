@@ -28,5 +28,6 @@ namespace CavisProject.Application.Repositories
         Task<User> GetUserByUserNameAndPassword(string username, string password);
         Task AddAsync(User user);
         Task<string> GetUserByUserId(string userId);
+        Task<string> GetCurrentUserRoleAsync(string userId);
     }
 }

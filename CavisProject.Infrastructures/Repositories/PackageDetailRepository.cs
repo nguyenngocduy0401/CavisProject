@@ -39,7 +39,7 @@ namespace CavisProject.Infrastructures.Repositories
         public async Task<int> GetTotalUsersByPackageIdAsync(Guid packageId)
         {
             var packageDetails = await _dbContext.PackageDetails
-                                                .Where(pd => pd.PackagePremiumId == packageId)
+                                                .Where(pd => pd.PackagePremiumId == packageId && pd.Status==1)
                                                 .ToListAsync();
             return packageDetails.Count;
         }

@@ -167,5 +167,25 @@ namespace CavisProject.Infrastructures.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public async Task<string> GetCurrentUserRoleAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles == null || roles.Count == 0)
+            {
+                throw new Exception("User does not have any roles");
+            }
+
+            // Assuming the user has only one role, if the user has multiple roles, you may need to handle it differently
+            var currentRole = roles.First();
+
+            return currentRole;
+        }
     }
 }
