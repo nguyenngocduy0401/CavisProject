@@ -11,7 +11,7 @@ namespace CavisProject.Domain.Entity
     public class User : IdentityUser
     {
         public string? FullName { get; set; }
-        public DateTime? DateOfBird { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public string? Gender { get; set; }
         public string? Address { get; set; }
         public double? Wallet { get; set; }

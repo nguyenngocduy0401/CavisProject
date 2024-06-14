@@ -118,18 +118,18 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<CreateProductCategoryViewModel>>> FilterProductCategory(FilterProductCategory filterProductCategory)
+        public async Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategory(FilterProductCategoryModel filterProductCategory)
         {
-            var response = new ApiResponse<Pagination<CreateProductCategoryViewModel>>();
+            var response = new ApiResponse<Pagination<ProductCategoryViewModel>>();
             try
             {
-                var paginationResult = _unitOfWork.ProductCategoryRepository.GetFilter(
+                var paginationResult = await _unitOfWork.ProductCategoryRepository.GetFilterAsync(
                     filter: s =>
                     (string.IsNullOrEmpty(filterProductCategory.ProductCategoryName) || s.ProductCategoryName.Contains(filterProductCategory.ProductCategoryName)),
                     pageIndex: filterProductCategory.PageIndex,
                     pageSize: filterProductCategory.PageSize); ;
-                var categoryViewModel= _mapper.Map<List<CreateProductCategoryViewModel>>(paginationResult.Items);
-                var paginationViewModel = new Pagination<CreateProductCategoryViewModel>
+                var categoryViewModel= _mapper.Map<List<ProductCategoryViewModel>>(paginationResult.Items);
+                var paginationViewModel = new Pagination<ProductCategoryViewModel>
                 {
                     PageIndex = paginationResult.PageIndex,
                     PageSize = paginationResult.PageSize,

@@ -32,7 +32,7 @@ namespace CavisProject.Infrastructures.Repositories
             return query.ToList();
         }
 
-        public virtual Pagination<TEntity> GetFilter(
+        public virtual async Task<Pagination<TEntity>> GetFilterAsync(
             Expression<Func<TEntity, bool>>? filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             string includeProperties = "",
@@ -52,7 +52,7 @@ namespace CavisProject.Infrastructures.Repositories
             {
                 query = query.Include(includeProperty);
             }
-            var itemCount = query.Count();
+            var itemCount = await query.CountAsync();
             if (orderBy != null)
             {
                 query = orderBy(query);
@@ -85,7 +85,7 @@ namespace CavisProject.Infrastructures.Repositories
                 PageIndex = pageIndex ?? 0,
                 PageSize = pageSize ?? 10, 
                 TotalItemsCount = itemCount,
-                Items = query.ToList(),
+                Items = await query.ToListAsync(),
             };
 
             return result;
@@ -94,12 +94,7 @@ namespace CavisProject.Infrastructures.Repositories
 
         public async Task<TEntity> GetByIdAsync(Guid id)
         {
-            var result = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
-            if (result == null)
-            {
-                throw new Exception($"Not found any object with id: {id}");
-            }
-            return result;
+            return await _dbSet.FindAsync(id);
         }
 
         public async Task AddAsync(TEntity entity)
@@ -158,7 +153,7 @@ namespace CavisProject.Infrastructures.Repositories
             return await _dbSet.AnyAsync(predicate);
         }
 
-
+       
 
     }
 }

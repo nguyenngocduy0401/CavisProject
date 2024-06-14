@@ -2,11 +2,15 @@
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using CavisProject.Domain.Entity;
+using CavisProject.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,38 +38,93 @@ namespace CavisProject.Infrastructures.Repositories
 
         public async Task<User> GetByPhoneNumberAsync(string phoneNumber) =>
             await _dbContext.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
-        public async Task<Pagination<User>> GetUsersByFilter
-            (string search, string role, int pageIndex = 1, int pageSize = 10)
+
+        public virtual async Task<Pagination<User>> GetFilterAsync(
+        Expression<Func<User, bool>>? filter = null,
+        Func<IQueryable<User>, IOrderedQueryable<User>>? orderBy = null,
+        string includeProperties = "",
+        int? pageIndex = null,
+        int? pageSize = null,
+        string? role=null,
+        IsActivityEnum? isActivity= null,
+        string? foreignKey = null,
+        object? foreignKeyId = null)
         {
-            var userList = _dbContext.Users
-            .Where(u =>
-            string.IsNullOrEmpty(search) ||
-            u.FullName.Contains(search) ||
-            u.PhoneNumber.Contains(search) ||
-            u.Email.Contains(search));
+            IQueryable<User> query = _dbContext.Users;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
             if (!string.IsNullOrEmpty(role))
             {
                 var usersInRole = await _userManager.GetUsersInRoleAsync(role);
                 var userIdsInRole = usersInRole.Select(u => u.Id);
-                userList = userList.Where(u => userIdsInRole.Contains(u.Id));
+                query = query.Where(u => userIdsInRole.Contains(u.Id));
+            }
+            if (isActivity.HasValue)
+            {
+                switch (isActivity)
+                {
+                    case IsActivityEnum.Activity:
+                        query = query.Where(u => (u.LockoutEnd <= DateTimeOffset.UtcNow) || (u.LockoutEnd == null));
+                        break;
+                    case IsActivityEnum.Inactivity:
+                        query = query.Where(u => u.LockoutEnd > DateTimeOffset.UtcNow);
+                        break;
+                }
+                    
+            }
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
             }
 
-            var itemCount = await userList.CountAsync();
-            var items = await userList
-            .Skip((pageIndex - 1) * pageSize)
-            .Take(pageSize)
-            .AsNoTracking()
-            .ToListAsync();
+            var itemCountTask = query.CountAsync();
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            if (!string.IsNullOrEmpty(foreignKey) && foreignKeyId != null)
+            {
+                if (foreignKeyId is Guid guidValue)
+                {
+                    query = query.Where(e => EF.Property<Guid>(e, foreignKey) == guidValue);
+                }
+                else if (foreignKeyId is string stringValue)
+                {
+                    query = query.Where(e => EF.Property<string>(e, foreignKey) == stringValue);
+                }
+                else
+                {
+                    throw new ArgumentException("Unsupported foreign key type");
+                }
+            }
+
+            if (pageIndex.HasValue && pageSize.HasValue)
+            {
+                int validPageIndex = pageIndex.Value > 0 ? pageIndex.Value - 1 : 0;
+                int validPageSize = pageSize.Value > 0 ? pageSize.Value : 10;
+
+                query = query.Skip(validPageIndex * validPageSize).Take(validPageSize);
+            }
+
+            var itemCount = await itemCountTask;
 
             var result = new Pagination<User>()
             {
-                PageIndex = pageIndex,
-                PageSize = pageSize,
+                PageIndex = pageIndex ?? 0,
+                PageSize = pageSize ?? 10,
                 TotalItemsCount = itemCount,
-                Items = items,
+                Items = await query.ToListAsync(),
             };
+
             return result;
         }
+
 
         public async Task AddAsync(User user)
         {
