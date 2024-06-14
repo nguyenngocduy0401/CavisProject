@@ -1,4 +1,4 @@
-﻿using CavisProject.Application.Commons;
+using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.ViewModels.PackagePremium;
 using CavisProject.Application.ViewModels.RegistPreniumViewModel;
