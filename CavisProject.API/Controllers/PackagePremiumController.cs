@@ -17,7 +17,7 @@ namespace CavisProject.API.Controllers
         {
             _packagePreniumService = packagePreniumService;
         }
-        [HttpGet("premiumUsers")]
+        [HttpGet("premium-users")]
       //  [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Get các user đăng kí Premium")]
         public async Task<ApiResponse<Pagination<UserViewModel>>> GetPremiumUsersAsync([FromQuery] int pageIndex, int pageSize) => await _packagePreniumService.GetPremiumUsersAsync(pageIndex, pageSize);
@@ -38,7 +38,7 @@ namespace CavisProject.API.Controllers
         [SwaggerOperation(Summary = "Delete Package {Authorize = Admin}")]
         public async Task<ApiResponse<bool>> DeletePackage(string Id)=> await _packagePreniumService.DeletePackage(Id);
         [HttpGet("{id}")]
-        [SwaggerOperation(Summary = "Get Package By Id")]
+        [SwaggerOperation(Summary = "lấy thông tin gói bằng Id")]
         public async Task<ApiResponse<PackagePreniumViewModel>> GetPackagePremiumByIdAsync(string id) => await _packagePreniumService.GetPackagePremiumByIdAsync(id);
     }
 }
