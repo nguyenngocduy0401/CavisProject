@@ -13,14 +13,16 @@ namespace CavisProject.Domain.Entity
         public int ClicksAmount { get; set; }
         public double ClickMoney { get; set; }
         public double TotalMoney { get; set; }
+        public double Price { get; set; }
         public string? Description { get; set; }
+        public string? URLImage { get; set; }
         public string? URL { get; set; }
         public Guid? SupplierId { get; set; }
         [ForeignKey("SupplierId")]
         public Supplier? Supplier { get; set; }
         public Guid? ProductCategoryId { get; set; }
         [ForeignKey("ProductCategoryId")]
-        public ProductCategory? productCategory { get; set; }
+        public ProductCategory? ProductCategory { get; set; }
         public virtual ICollection<WishList>? WishLists { get; set; }
         public virtual ICollection<ProductDetail>? ProductDetails { get; set; }
     }

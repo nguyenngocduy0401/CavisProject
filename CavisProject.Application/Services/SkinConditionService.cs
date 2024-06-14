@@ -123,7 +123,7 @@ namespace CavisProject.Application.Services
             try
             {
                
-                var paginationResult = _unitOfWork.SkinTypeRepository.GetFilter(
+                var paginationResult = await _unitOfWork.SkinTypeRepository.GetFilterAsync(
                     filter: s =>
                         (string.IsNullOrEmpty(skinTypeFilterModel.SkinTypeName) || s.SkinsName.Contains(skinTypeFilterModel.SkinTypeName)) &&
                         (string.IsNullOrEmpty(skinTypeFilterModel.Description) || s.Description.Contains(skinTypeFilterModel.Description)) &&
@@ -209,5 +209,37 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
+        public async Task<ApiResponse<SkinViewModel>> GetSkinConditionById(string id)
+        {
+            var response = new ApiResponse<SkinViewModel>();
+
+            try
+            {
+                var skinType = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(id));
+
+                if (skinType == null || skinType.Category == true)
+                {
+                    throw new Exception("Skin condition not found.");
+                }
+
+                var skinTypeViewModel = _mapper.Map<SkinViewModel>(skinType);
+
+                response.Data = skinTypeViewModel;
+                response.isSuccess = true;
+                response.Message = "Skin type retrieved successfully.";
+            }
+            catch (DbException ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response; 
+        }
+
     }
 }

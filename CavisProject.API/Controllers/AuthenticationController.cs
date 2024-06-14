@@ -4,6 +4,7 @@ using CavisProject.Application.ViewModels.EmailViewModels;
 using CavisProject.Application.ViewModels.RefreshTokenViewModels;
 using CavisProject.Application.ViewModels.UserViewModels;
 using CavisProject.Domain.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -21,6 +22,7 @@ namespace CavisProject.API.Controllers
             _authenticationService = authenticationService;
             _emailService = emailService;
         }
+        [SwaggerOperation(Summary = "đăng kí tài khoản")]
         [HttpPost("register")]
         public async Task<ApiResponse<UserRegisterModel>> RegisterAsync(UserRegisterModel userRegisterModel)
         {
@@ -43,11 +45,13 @@ namespace CavisProject.API.Controllers
         {
             return await _emailService.ResetPasswordAsync(email, userResetPasswordModel);
         }
+        [Authorize]
         [HttpPut("new-token")]
         public async Task<ApiResponse<RefreshTokenModel>> RenewTokenAsync(RefreshTokenModel refreshTokenModel)
         {
             return await _authenticationService.RenewTokenAsync(refreshTokenModel);
         }
+        [Authorize]
         [HttpDelete("logout")]
         public async Task<ApiResponse<string>> LogoutAsync(string refreshToken)
         {

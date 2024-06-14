@@ -12,7 +12,7 @@ namespace CavisProject.Application.Repositories
     public interface IGenericRepository<TEntity> where TEntity : BaseEntity
     {
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> expression, string includeProperties = "");
-        Pagination<TEntity> GetFilter(
+        Task<Pagination<TEntity>> GetFilterAsync(
            Expression<Func<TEntity, bool>>? filter = null,
            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
            string includeProperties = "",
@@ -30,8 +30,5 @@ namespace CavisProject.Application.Repositories
         void SoftRemove(TEntity entity);
         void SoftRemoveRange(List<TEntity> entities);
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
-  /*      Task<Pagination<TEntity>> ToPagination(int pageNumber = 0, int pageSize = 10);
-        Task<Pagination<TEntity>> ToPaginationIsNotDelete(int pageNumber = 0, int pageSize = 10);*/
-        /* Task<List<TEntity>> GetAllIsNotDeleteAsync();*/
     }
 }

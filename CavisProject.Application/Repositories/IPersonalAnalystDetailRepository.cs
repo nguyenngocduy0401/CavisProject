@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CavisProject.Domain.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace CavisProject.Application.Repositories
 {
     public interface IPersonalAnalystDetailRepository
     {
+        Task AddRangeAsync(List<PersonalAnalystDetail> personalAnalystDetails);
     }
 }
