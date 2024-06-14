@@ -19,9 +19,9 @@ namespace CavisProject.API.Controllers
         {
             _userService = userService;
         }
-        [HttpPost("register")]
+        [HttpPost("user/mine/premium-packages/{id}")]
         [SwaggerOperation(Summary = "User Đăng Kí Premium  {Authorize = Customer}")]
-        public async Task<ApiResponse<RegistPremiumViewModel>> RegistPremium(RegistPremiumViewModel registPremiumViewModel) => await _userService.RegistPremium(registPremiumViewModel);
+        public async Task<ApiResponse<RegistPremiumViewModel>> RegisterPremium(RegistPremiumViewModel registerPremiumViewModel) => await _userService.RegistPremium(registerPremiumViewModel);
         [HttpPut("upgrade")]
         [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Upgrade user lên premium{Authorize = Admin}")]
