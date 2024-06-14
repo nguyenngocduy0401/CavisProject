@@ -1,4 +1,4 @@
-﻿using CavisProject.Application.Commons;
+using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.ViewModels.RegistPreniumViewModel;
 using CavisProject.Application.ViewModels.UserViewModels;
@@ -24,7 +24,7 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<RegistPremiumViewModel>> RegisterPremium(RegistPremiumViewModel registerPremiumViewModel) => await _userService.RegistPremium(registerPremiumViewModel);
         [HttpPut("upgrade")]
         [Authorize(Roles = "Admin")]
-        [SwaggerOperation(Summary = "Upgrade user lên premium{Authorize = Admin}")]
+        [SwaggerOperation(Summary = "admin Upgrade người dùng  lên premium{Authorize = Admin}")]
         public async Task<ApiResponse<UpgradeToPremiumViewModel>> UpgradeToPremium(UpgradeToPremiumViewModel upgradeToPremiumViewModel)=> await _userService.UpgradeToPremium(upgradeToPremiumViewModel);
         [SwaggerOperation(Summary = "tìm kiếm User {Authorize = Admin}")]
         [HttpGet("")]
