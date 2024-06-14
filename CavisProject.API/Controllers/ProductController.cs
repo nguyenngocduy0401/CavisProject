@@ -1,4 +1,4 @@
-﻿using CavisProject.Application.Commons;
+using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.Services;
 using CavisProject.Application.ViewModels.ProductCategoryViewModel;
@@ -16,6 +16,9 @@ namespace CavisProject.API.Controllers
         {
             _productService = productService;
         }
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<ProductViewModel>> GetProductDetailById(string id) =>
+            await _productService.GetProductDetailByIdAsync(id);
         /*[HttpPost("")]
         public async Task<ApiResponse<CreateProductViewModel>> CreateProductCategory([FromBody] CreateProductViewModel createProductViewModel)
        => await _productService.CreateProduct(createProductViewModel);*/

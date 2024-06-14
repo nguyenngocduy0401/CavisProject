@@ -2,6 +2,7 @@
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using CavisProject.Application.ViewModels.ProductCategoryViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -18,15 +19,18 @@ namespace CavisProject.API.Controllers
         }
         [SwaggerOperation(Summary = "tạo thông tin loại sản phẩm {Authorize = Admin, Staff}")]
         [HttpPost("")]
+        [Authorize]
         public async Task<ApiResponse<CreateProductCategoryViewModel>> CreateProductCategory([FromBody] CreateProductCategoryViewModel createProductCategoryViewModel)
         => await _productCategoryService.CreateProductCategory(createProductCategoryViewModel);
 
         [SwaggerOperation(Summary = "xóa thông tin loại sản phẩm bằng id {Authorize = Admin, Staff}")]
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ApiResponse<bool>> DeleteProductCategory(string id)
         => await _productCategoryService.DeleteProductCategory(id);
         [SwaggerOperation(Summary = "cập nhật thông tin loại sản phẩm bằng id {Authorize = Admin, Staff}")]
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ApiResponse<CreateProductCategoryViewModel>> UpdateProductCategory([FromBody] CreateProductCategoryViewModel createProductCategoryViewModel, [FromRoute] string id)
        =>  await _productCategoryService.UppdateProductCategory(createProductCategoryViewModel, id);
         [SwaggerOperation(Summary = "tìm kiếm thông tin loại sản phẩm {Authorize = Admin, Staff}")]

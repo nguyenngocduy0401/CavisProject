@@ -22,6 +22,7 @@ namespace CavisProject.Application.Services
         private readonly IValidator<CreateProductViewModel> _validator;
         public ProductService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateProductViewModel> validator, IClaimsService claimsService)
         {
+            _claimsService = claimsService;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _validator = validator;
@@ -126,6 +127,33 @@ namespace CavisProject.Application.Services
         public Task<ApiResponse<CreateProductViewModel>> GetProductDetail(string id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<ApiResponse<ProductViewModel>> GetProductDetailByIdAsync(string productId)
+        {
+            var response = new ApiResponse<ProductViewModel>();
+            try 
+            {
+                var product = await _unitOfWork.ProductRepository.GetByIdAsync(Guid.Parse(productId));
+                if (product == null) throw new Exception("Not found product!");
+                var productViewModel = _mapper.Map<ProductViewModel>(product);
+                response.Data = productViewModel;
+                response.isSuccess = true;
+                response.Message = "Successful!";
+            }
+            catch (DbException ex)
+            {
+                response.Data = null;
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response.Data = null;
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
     }
 }
