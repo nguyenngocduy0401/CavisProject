@@ -1,4 +1,5 @@
 ﻿using CavisProject.Application.Commons;
+using CavisProject.Application.ViewModels.PackagePremium;
 using CavisProject.Application.ViewModels.RegistPreniumViewModel;
 using CavisProject.Application.ViewModels.UserViewModels;
 using System;
@@ -11,8 +12,8 @@ namespace CavisProject.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<ApiResponse<RegistPremiumViewModel>> RegistPremium(RegistPremiumViewModel registPremiumViewModel);
-        Task<ApiResponse<UpgradeToPremiumViewModel>> UpgradeToPremium(UpgradeToPremiumViewModel upgradeToPremiumViewModel);
+        Task<ApiResponse<PackagePreniumViewModel>> RegistPremium(string id);
+        Task<ApiResponse<UserPackageViewModel>> UpgradeToPremium(string id);
         Task<ApiResponse<UserViewModel>> GetUserByIdAsync(string id);
         Task<ApiResponse<UserViewModel>> GetInfoByLoginAsync();
         Task<ApiResponse<Pagination<UserViewModel>>> FilterUserAsync(FilterUserModel filterUserModel);

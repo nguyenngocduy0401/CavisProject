@@ -121,7 +121,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<CreatePackagePremiumViewModel>> CreatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel)
+        public async Task<ApiResponse<CreatePackagePremiumViewModel>> CreatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel)
         {
             var response = new ApiResponse<CreatePackagePremiumViewModel>();
             try
@@ -174,13 +174,13 @@ namespace CavisProject.Application.Services
 
     
 
-    public async Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackage(FilterPackagePremiumViewModel filterModel)
+    public async Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackageAsync(FilterPackagePremiumViewModel filterModel)
         {
             var response = new ApiResponse<Pagination<PackagePreniumViewModel>>();
 
             try
             {
-                var paginationResult = _unitOfWork.PackagePremiumRepository.GetFilter(
+                var paginationResult = await _unitOfWork.PackagePremiumRepository.GetFilterAsync(
                     filter: s =>
                         (string.IsNullOrEmpty(filterModel.PackagePremiumName) || s.PackagePremiumName.Contains(filterModel.PackagePremiumName)) &&
                         (filterModel.Price == 0 || s.Price == filterModel.Price) &&
@@ -196,7 +196,7 @@ namespace CavisProject.Application.Services
                     var totalUsers = await _unitOfWork.PackageDetailRepository.GetTotalUsersByPackageIdAsync(packagePreniumViewModel.Id);
                     packagePreniumViewModel.TotalUsers = totalUsers;
                 }
-                var totalItemsCount = packageViewModels.Count;
+            /*    //  var totalItemsCount = packageViewModels.Count;*/
                 var paginationViewModel = new Pagination<PackagePreniumViewModel>
                 {
                     PageIndex = paginationResult.PageIndex,
@@ -216,7 +216,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<bool>> DeletePackage(string Id)
+        public async Task<ApiResponse<bool>> DeletePackageAsync(string Id)
         {
             var response = new ApiResponse<bool>();
             try
@@ -256,7 +256,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<CreatePackagePremiumViewModel>> UpdatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id)
+        public async Task<ApiResponse<CreatePackagePremiumViewModel>> UpdatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id)
         {
             var response = new ApiResponse<CreatePackagePremiumViewModel>();
             try

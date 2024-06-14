@@ -29,6 +29,7 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<Pagination<User>, Pagination<UserViewModel>>();
             CreateMap<CreateUserModel, User>()
                 .ForMember(dest => dest.PasswordHash, src => src.MapFrom(x => x.Password));
+            CreateMap<UserPackageViewModel, User>();
             #endregion
             #region Skin
             CreateMap<CreateSkinTypeViewModel, Skin>();

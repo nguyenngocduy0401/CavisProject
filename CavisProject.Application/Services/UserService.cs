@@ -18,6 +18,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using CavisProject.Application.ViewModels.PackagePremium;
 
 namespace CavisProject.Application.Services
 {
@@ -46,12 +47,12 @@ namespace CavisProject.Application.Services
             _createUserValidator = createUserValidator;
             _updateUserValidator = updateUserValidator;
         }
-        public async Task<ApiResponse<RegistPremiumViewModel>> RegistPremium(RegistPremiumViewModel registPremiumViewModel)
+        public async Task<ApiResponse<PackagePreniumViewModel>> RegistPremium(string id)
         {
-            var response = new ApiResponse<RegistPremiumViewModel>();
+            var response = new ApiResponse<PackagePreniumViewModel>();
             try
             {
-                var packagePremium =await _unitOfWork.PackagePremiumRepository.GetByIdAsync(registPremiumViewModel.Id);
+                var packagePremium =await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
                 if (packagePremium == null)
                 {
                     throw new Exception("Package not found");
@@ -65,7 +66,7 @@ namespace CavisProject.Application.Services
                 }
                 var packageDetail = new PackageDetail
                 {
-                    PackagePremiumId = registPremiumViewModel.Id,
+                    PackagePremiumId = Guid.Parse(id),
                     UserId = userId.ToString(),
                     Status = 0, 
                     StartTime = DateTime.UtcNow,
@@ -80,7 +81,7 @@ namespace CavisProject.Application.Services
                     TotalPaid = packagePremium.Price,
                  //   AppointmentId = Guid.NewGuid(),
                     UserId = userId.ToString(),
-                    PackagePremiumId = registPremiumViewModel.Id,
+                    PackagePremiumId = Guid.Parse(id),
                     CreationDate = DateTime.UtcNow,
                     IsDeleted = false
                 };
@@ -91,7 +92,7 @@ namespace CavisProject.Application.Services
                     response.isSuccess = false;
                     response.Message = "Premium package registered fail";
                 }
-                response.Data = registPremiumViewModel;
+               
                 response.isSuccess = true;
                 response.Message = "Premium package registered successfully.";
             }
@@ -109,18 +110,18 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<UpgradeToPremiumViewModel>> UpgradeToPremium(UpgradeToPremiumViewModel upgradeToPremiumViewModel)
+        public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremium(string id)
         {
-            var response = new ApiResponse<UpgradeToPremiumViewModel>();
+            var response = new ApiResponse<UserPackageViewModel>();
             try
             {
-                var user=await _userManager.FindByIdAsync(upgradeToPremiumViewModel.UserId);
+                var user=await _userManager.FindByIdAsync(id);
                 if (user == null)
                 {
                     throw new Exception("User not found");
                 }
                
-                var package =await _unitOfWork.PackageDetailRepository.GetByUserIdAsync(user.Id);
+                var package =await _unitOfWork.PackageDetailRepository.GetByUserIdAsync(id);
                 if(package == null)
                 {
                     throw new Exception("Not found");

@@ -1,5 +1,6 @@
 ﻿using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
+using CavisProject.Application.ViewModels.PackagePremium;
 using CavisProject.Application.ViewModels.RegistPreniumViewModel;
 using CavisProject.Application.ViewModels.UserViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -19,13 +20,13 @@ namespace CavisProject.API.Controllers
         {
             _userService = userService;
         }
-        [HttpPost("register")]
+        [HttpPost("mine/package-premium/{id}")]
         [SwaggerOperation(Summary = "người dùng Đăng Kí Premium  {Authorize = Customer}")]
-        public async Task<ApiResponse<RegistPremiumViewModel>> RegistPremium(RegistPremiumViewModel registPremiumViewModel) => await _userService.RegistPremium(registPremiumViewModel);
+        public async Task<ApiResponse<PackagePreniumViewModel>> RegistPremium(string id) => await _userService.RegistPremium(id);
         [HttpPut("upgrade")]
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "admin Upgrade người dùng  lên premium{Authorize = Admin}")]
-        public async Task<ApiResponse<UpgradeToPremiumViewModel>> UpgradeToPremium(UpgradeToPremiumViewModel upgradeToPremiumViewModel)=> await _userService.UpgradeToPremium(upgradeToPremiumViewModel);
+        public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremium(string id) => await _userService.UpgradeToPremium(id);
         [SwaggerOperation(Summary = "tìm kiếm User {Authorize = Admin}")]
         [HttpGet("")]
         [Authorize]

@@ -20,6 +20,7 @@ using CavisProject.API.Validator.PackageValidator;
 using CavisProject.Application.ViewModels.ProductViewModel;
 using System.Text.Json.Serialization;
 using CavisProject.API.Validator.UserValidator;
+using CavisProject.API.Validator.ProductValidator;
 
 namespace CavisProject.API
 {

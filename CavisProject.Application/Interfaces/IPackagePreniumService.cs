@@ -14,10 +14,10 @@ namespace CavisProject.Application.Interfaces
     {
         Task<ApiResponse<Pagination<UserViewModel>>> GetPremiumUsersAsync(int pageIndex, int pageSize);
         Task<ApiResponse<Pagination<PackagePreniumViewModel>>> GetPackagePremiumsAsync(int pageIndex, int pageSize);
-        Task<ApiResponse<CreatePackagePremiumViewModel>> CreatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel);
-        Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackage(FilterPackagePremiumViewModel FilterModel);
-        Task<ApiResponse<bool>> DeletePackage(string Id);
-        Task<ApiResponse<CreatePackagePremiumViewModel>> UpdatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id);
+        Task<ApiResponse<CreatePackagePremiumViewModel>> CreatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel);
+        Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackageAsync(FilterPackagePremiumViewModel FilterModel);
+        Task<ApiResponse<bool>> DeletePackageAsync(string Id);
+        Task<ApiResponse<CreatePackagePremiumViewModel>> UpdatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id);
         Task<ApiResponse<PackagePreniumViewModel>> GetPackagePremiumByIdAsync(string id);
     }
 }
