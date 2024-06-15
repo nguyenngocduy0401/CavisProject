@@ -12,6 +12,5 @@ namespace CavisProject.Application.Commons
         public const string Customer = "Customer";
         public const string Staff = "Staff";
         public const string Expert = "Expert";
-        public const string Premium = "Premium";
     }
 }

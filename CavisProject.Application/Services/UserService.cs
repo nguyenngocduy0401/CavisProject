@@ -127,9 +127,9 @@ namespace CavisProject.Application.Services
                     throw new Exception("Not found");
                 }
                 package.Status = 1;
-                var roles = await _unitOfWork.UserRepository.GetCurrentUserRoleAsync(user.Id);
+              /*  var roles = await _unitOfWork.UserRepository.GetCurrentUserRoleAsync(user.Id);
                 await _userManager.RemoveFromRoleAsync(user, roles);
-                await _userManager.AddToRoleAsync(user, "Premium");
+                await _userManager.AddToRoleAsync(user, "Premium");*/
                 var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
                 if(isSuccess==false)
                 {
