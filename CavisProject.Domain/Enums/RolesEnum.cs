@@ -11,7 +11,6 @@ namespace CavisProject.Domain.Enums
         Administrator,
         Customer,
         Staff,
-        Expert,
-        Premium
+        Expert
     }
 }
