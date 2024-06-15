@@ -45,7 +45,6 @@ namespace CavisProject.API.Controllers
         {
             return await _emailService.ResetPasswordAsync(email, userResetPasswordModel);
         }
-        [Authorize]
         [HttpPut("new-token")]
         public async Task<ApiResponse<RefreshTokenModel>> RenewTokenAsync(RefreshTokenModel refreshTokenModel)
         {
