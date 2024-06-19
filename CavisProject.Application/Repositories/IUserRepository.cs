@@ -22,6 +22,7 @@ namespace CavisProject.Application.Repositories
            int? pageSize = null,
            string? role = null,
            IsActivityEnum? isActivity = null,
+            UserPremiumStatusEnum? status = null,
            string? foreignKey = null,
            object? foreignKeyId = null);
         Task<bool> CheckUserAttributeExisted(string attributeValue, string attributeType);
@@ -29,5 +30,6 @@ namespace CavisProject.Application.Repositories
         Task AddAsync(User user);
         Task<string> GetUserByUserId(string userId);
         Task<string> GetCurrentUserRoleAsync(string userId);
+        Task<string?> GetPackagePremiumNameAsync(string userId);
     }
 }

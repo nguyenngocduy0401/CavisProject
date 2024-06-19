@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,6 +43,14 @@ namespace CavisProject.Infrastructures.Repositories
                                                 .Where(pd => pd.PackagePremiumId == packageId && pd.Status==1)
                                                 .ToListAsync();
             return packageDetails.Count;
+        }
+        public async Task<PackageDetail?> FindAsync(Expression<Func<PackageDetail, bool>> predicate)
+        {
+            return await _dbContext.Set<PackageDetail>().FirstOrDefaultAsync(predicate);
+        }
+        public void Update(PackageDetail packageDetail)
+        {
+            _dbContext.Entry(packageDetail).State = EntityState.Modified;
         }
     }
 }

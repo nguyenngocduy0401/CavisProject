@@ -19,6 +19,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using CavisProject.Application.ViewModels.PackagePremium;
+using CavisProject.Application.Repositories;
 
 namespace CavisProject.Application.Services
 {
@@ -47,7 +48,7 @@ namespace CavisProject.Application.Services
             _createUserValidator = createUserValidator;
             _updateUserValidator = updateUserValidator;
         }
-        public async Task<ApiResponse<PackagePreniumViewModel>> RegistPremium(string id)
+        public async Task<ApiResponse<PackagePreniumViewModel>> RegistPremiumAsync(string id)
         {
             var response = new ApiResponse<PackagePreniumViewModel>();
             try
@@ -62,15 +63,22 @@ namespace CavisProject.Application.Services
                 if (userId == Guid.Empty)
                 {
                     response.isSuccess = false;
-                    response.Message = "Register please";
+                    response.Message = "Đăng nhập !";
+                }
+                // check user có đang trong gói premium nào khác không
+                var existingPackageDetail = await _unitOfWork.PackageDetailRepository
+                    .FindAsync(pd => pd.UserId == userId.ToString() && pd.Status == 0 && pd.EndTime > DateTime.UtcNow);
+                if (existingPackageDetail != null)
+                {
+                    response.isSuccess = false;
+                    response.Message = "Quý khách đang sử dụng premium!.";
                 }
                 var packageDetail = new PackageDetail
                 {
                     PackagePremiumId = Guid.Parse(id),
                     UserId = userId.ToString(),
                     Status = 0, 
-                    StartTime = DateTime.UtcNow,
-                    EndTime = DateTime.UtcNow.AddMonths(months: (int)packagePremium.Duration)
+                   
                 };
                 await _unitOfWork.PackageDetailRepository.AddAsync(packageDetail);
                  var transaction = new Transaction
@@ -90,11 +98,11 @@ namespace CavisProject.Application.Services
                 if (isSuccess==false)
                 {
                     response.isSuccess = false;
-                    response.Message = "Premium package registered fail";
+                    response.Message = "Đăng kí premium thất bại";
                 }
                
                 response.isSuccess = true;
-                response.Message = "Premium package registered successfully.";
+                response.Message = "Đăng kí premium thành công !";
             }
             catch (DbException ex)
             {
@@ -110,41 +118,68 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremium(string id)
+        public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremiumAsync(string id)
         {
             var response = new ApiResponse<UserPackageViewModel>();
             try
             {
-                var user=await _userManager.FindByIdAsync(id);
+                var user = await _userManager.FindByIdAsync(id);
                 if (user == null)
                 {
                     throw new Exception("User not found");
                 }
-               
-                var package =await _unitOfWork.PackageDetailRepository.GetByUserIdAsync(id);
-                if(package == null)
+
+                // Lấy thông tin gói hiện tại của người dùng
+                var currentPackage = await _unitOfWork.PackageDetailRepository.GetByUserIdAsync(id);
+                if (currentPackage == null)
                 {
-                    throw new Exception("Not found");
+                    throw new Exception("Current package not found");
                 }
-                package.Status = 1;
-              /*  var roles = await _unitOfWork.UserRepository.GetCurrentUserRoleAsync(user.Id);
-                await _userManager.RemoveFromRoleAsync(user, roles);
-                await _userManager.AddToRoleAsync(user, "Premium");*/
-                var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
-                if(isSuccess==false)
+
+                // Kiểm tra và cập nhật trạng thái gói hiện tại từ 0 lên 1
+                if (currentPackage.Status == 0)
+                {
+                    currentPackage.Status = 1; // Chuyển trạng thái gói từ chưa kích hoạt (0) sang đã kích hoạt (1)
+                    _unitOfWork.PackageDetailRepository.Update(currentPackage);
+                    if (currentPackage.PackagePremiumId.HasValue)
+                    {
+                        var packagePremium = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(currentPackage.PackagePremiumId.Value);
+                        if (packagePremium == null)
+                        {
+                            throw new Exception("PackagePremium not found for the current package.");
+                        }
+
+                        // Kiểm tra và cập nhật thời gian bắt đầu và kết thúc của gói Premium mới
+                        currentPackage.StartTime = DateTime.UtcNow;
+                        currentPackage.EndTime = DateTime.UtcNow.AddMonths((int)packagePremium.Duration);
+                    }
+                    else
+                    {
+                        throw new Exception("PackagePremiumId is null for the current package.");
+                    }
+                    // Lưu thay đổi vào cơ sở dữ liệu
+                    var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
+                    if (!isSuccess)
+                    {
+                        response.isSuccess = false;
+                        response.Message = "Upgrade to premium failed.";
+                        return response;
+                    }
+                }
+                else
                 {
                     response.isSuccess = false;
-                    response.Message = "Fail";
+                    response.Message = "User already has an active premium package.";
+                    return response;
                 }
-             
+
                 response.isSuccess = true;
-                response.Message = "successfully.";
+                response.Message = "Successfully upgraded to premium.";
             }
             catch (DbException ex)
             {
                 response.isSuccess = false;
                 response.Message = ex.Message;
-
             }
             catch (Exception ex)
             {
@@ -266,28 +301,46 @@ namespace CavisProject.Application.Services
             try
             {
                 var search = (Expression<Func<User, bool>>)(e =>
-                (string.IsNullOrEmpty(filterUserModel.Search) || e.UserName.Contains(filterUserModel.Search)
-                || e.Email.Contains(filterUserModel.Search) || e.PhoneNumber.Contains(filterUserModel.Search))
+                    (string.IsNullOrEmpty(filterUserModel.Search) || e.UserName.Contains(filterUserModel.Search)
+                    || e.Email.Contains(filterUserModel.Search) || e.PhoneNumber.Contains(filterUserModel.Search))
                 );
-                var user = await _unitOfWork.UserRepository.GetFilterAsync(
+
+                var usersPagination = await _unitOfWork.UserRepository.GetFilterAsync(
                     filter: search,
                     role: filterUserModel.Roles.ToString(),
                     isActivity: filterUserModel.IsActivity,
+                    status: filterUserModel.Status, // Truyền vào trường StatusEnum
                     pageIndex: filterUserModel.PageIndex,
                     pageSize: filterUserModel.PageSize
-                    );
-                if (user.Items.IsNullOrEmpty())
+                );
+
+                if (usersPagination.Items.IsNullOrEmpty())
                 {
                     response.Data = null;
                     response.isSuccess = true;
                     response.Message = "Không tìm thấy người dùng phù hợp!";
                 }
-                var result = _mapper.Map<Pagination<UserViewModel>>(user);
+                else
+                {
+                    var userViewModels = _mapper.Map<List<UserViewModel>>(usersPagination.Items);
+                    foreach (var viewModel in userViewModels)
+                    {
+                        var packagePremiumName = await _unitOfWork.UserRepository.GetPackagePremiumNameAsync(viewModel.Id);
+                        viewModel.PackagePremiumName = packagePremiumName;
+                    }
 
-                response.Data = result;
-                response.isSuccess = true;
-                response.Message = "Successful!";
+                    var result = new Pagination<UserViewModel>
+                    {
+                        PageIndex = usersPagination.PageIndex,
+                        PageSize = usersPagination.PageSize,
+                        TotalItemsCount = usersPagination.TotalItemsCount,
+                        Items = userViewModels
+                    };
 
+                    response.Data = result;
+                    response.isSuccess = true;
+                    response.Message = "Successful!";
+                }
             }
             catch (Exception ex)
             {
@@ -297,6 +350,7 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
+
 
         public async Task<ApiResponse<UserViewModel>> GetInfoByLoginAsync()
         {
@@ -330,6 +384,7 @@ namespace CavisProject.Application.Services
                 var user = await _userManager.FindByIdAsync(id);
                 if (user == null) throw new Exception("Not found!");
                 UserViewModel userViewModel = _mapper.Map<UserViewModel>(user);
+                userViewModel.PackagePremiumName = await _unitOfWork.UserRepository.GetPackagePremiumNameAsync(id);
                 response.Data = userViewModel;
                 response.isSuccess = true;
                 response.Message = "Successful!";

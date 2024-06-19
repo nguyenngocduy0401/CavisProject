@@ -22,14 +22,14 @@ namespace CavisProject.API.Controllers
         }
         [HttpPost("mine/package-premium/{id}")]
         [SwaggerOperation(Summary = "người dùng Đăng Kí Premium  {Authorize = Customer}")]
-        public async Task<ApiResponse<PackagePreniumViewModel>> RegistPremium(string id) => await _userService.RegistPremium(id);
+        public async Task<ApiResponse<PackagePreniumViewModel>> RegistPremium(string id) => await _userService.RegistPremiumAsync(id);
         [HttpPut("~/admin/api/v1/users/{id}/package-premium")]
        // [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "admin Upgrade người dùng  lên premium{Authorize = Admin}")]
-        public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremium(string id) => await _userService.UpgradeToPremium(id);
+        public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremium(string id) => await _userService.UpgradeToPremiumAsync(id);
         [SwaggerOperation(Summary = "tìm kiếm User {Authorize = Admin}")]
         [HttpGet("")]
-        [Authorize]
+        //[Authorize]
         public async Task<ApiResponse<Pagination<UserViewModel>>> FilterUserAsync([FromQuery]FilterUserModel filterUserModel)
             => await _userService.FilterUserAsync(filterUserModel);
         [SwaggerOperation(Summary = "lấy thông tin User bằng đăng nhập")]

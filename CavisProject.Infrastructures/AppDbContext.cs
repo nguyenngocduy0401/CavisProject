@@ -797,6 +797,28 @@ namespace CavisProject.Infrastructures
                 }
                 );
             #endregion
+            #region Package
+            modelBuilder.Entity<PackagePremium>().HasData(
+                
+                new PackagePremium
+            {
+                Id = Guid.Parse("623A23FF-4EE9-409A-BF30-2E764E8BD754"),
+                PackagePremiumName = "Premium Package month",
+                Price = 5000,
+                Duration = 1, // Duration in days, months, etc., depending on your application logic
+                Description = "This is a premium package offering special features."
+            },
+                  new PackagePremium
+                  {
+                      Id = Guid.Parse("56866515-9D42-4209-A3F9-62E166CB322A"),
+                      PackagePremiumName = "Premium Package year",
+                      Price = 200000,
+                      Duration =12 , // Duration in days, months, etc., depending on your application logic
+                      Description = "This is a premium package offering special features."
+                  }
+);
+            #endregion
+
         }
     }
 }

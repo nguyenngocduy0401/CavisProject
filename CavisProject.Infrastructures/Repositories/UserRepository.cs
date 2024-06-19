@@ -40,23 +40,22 @@ namespace CavisProject.Infrastructures.Repositories
             await _dbContext.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
 
         public virtual async Task<Pagination<User>> GetFilterAsync(
-        Expression<Func<User, bool>>? filter = null,
-        Func<IQueryable<User>, IOrderedQueryable<User>>? orderBy = null,
-        string includeProperties = "",
-        int? pageIndex = null,
-        int? pageSize = null,
-        string? role=null,
-        IsActivityEnum? isActivity= null,
-        string? foreignKey = null,
-        object? foreignKeyId = null)
+            Expression<Func<User, bool>>? filter = null,
+            Func<IQueryable<User>, IOrderedQueryable<User>>? orderBy = null,
+            string includeProperties = "",
+            int? pageIndex = null,
+            int? pageSize = null,
+            string? role = null,
+            IsActivityEnum? isActivity = null,
+            UserPremiumStatusEnum? status = null,
+            string? foreignKey = null,
+            object? foreignKeyId = null)
         {
             IQueryable<User> query = _dbContext.Users;
-
             if (filter != null)
             {
                 query = query.Where(filter);
             }
-
             if (!string.IsNullOrEmpty(role))
             {
                 var usersInRole = await _userManager.GetUsersInRoleAsync(role);
@@ -68,26 +67,46 @@ namespace CavisProject.Infrastructures.Repositories
                 switch (isActivity)
                 {
                     case IsActivityEnum.Activity:
-                        query = query.Where(u => (u.LockoutEnd <= DateTimeOffset.UtcNow) || (u.LockoutEnd == null));
+                        query = query.Where(u => u.LockoutEnd <= DateTimeOffset.UtcNow || u.LockoutEnd == null);
                         break;
                     case IsActivityEnum.Inactivity:
                         query = query.Where(u => u.LockoutEnd > DateTimeOffset.UtcNow);
                         break;
                 }
-                    
             }
+
             foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeProperty);
             }
 
+            // Filter  UserPremiumStatus 
+            if (status.HasValue && status != UserPremiumStatusEnum.All)
+            {
+                var statusValue = (int)status.Value; 
+                var userIds = await query.Select(u => u.Id).ToListAsync();
+                var packageDetails = await _dbContext.PackageDetails
+                    .Where(pd => userIds.Contains(pd.UserId))
+                    .ToListAsync();
+                switch (status)
+                {
+                    case UserPremiumStatusEnum.NotActivated:
+                        userIds = packageDetails.Where(pd => pd.Status == 0).Select(pd => pd.UserId).ToList();
+                        break;
+                    case UserPremiumStatusEnum.Active:
+                        userIds = packageDetails.Where(pd => pd.Status == 1).Select(pd => pd.UserId).ToList();
+                        break;
+                    case UserPremiumStatusEnum.Expired:
+                        userIds = packageDetails.Where(pd => pd.Status == 2).Select(pd => pd.UserId).ToList();
+                        break;
+                }
+                query = query.Where(u => userIds.Contains(u.Id));
+            }
             var itemCountTask = query.CountAsync();
-
             if (orderBy != null)
             {
                 query = orderBy(query);
             }
-
             if (!string.IsNullOrEmpty(foreignKey) && foreignKeyId != null)
             {
                 if (foreignKeyId is Guid guidValue)
@@ -103,7 +122,6 @@ namespace CavisProject.Infrastructures.Repositories
                     throw new ArgumentException("Unsupported foreign key type");
                 }
             }
-
             if (pageIndex.HasValue && pageSize.HasValue)
             {
                 int validPageIndex = pageIndex.Value > 0 ? pageIndex.Value - 1 : 0;
@@ -111,21 +129,34 @@ namespace CavisProject.Infrastructures.Repositories
 
                 query = query.Skip(validPageIndex * validPageSize).Take(validPageSize);
             }
-
+            var items = await query.ToListAsync();
             var itemCount = await itemCountTask;
-
-            var result = new Pagination<User>()
+            var result = new Pagination<User>
             {
                 PageIndex = pageIndex ?? 0,
                 PageSize = pageSize ?? 10,
                 TotalItemsCount = itemCount,
-                Items = await query.ToListAsync(),
+                Items = items
             };
 
             return result;
         }
 
+        public async Task<string?> GetPackagePremiumNameAsync(string userId)
+        {
+            var user = await _dbContext.Users
+                .Include(u => u.PackageDetails)
+                    .ThenInclude(pd => pd.PackagePremium)
+                .FirstOrDefaultAsync(u => u.Id == userId);
 
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User not found");
+            }
+
+            var activePackageDetail = user.PackageDetails.FirstOrDefault(pd => pd.Status == 1);
+            return activePackageDetail?.PackagePremium.PackagePremiumName;
+        }
         public async Task AddAsync(User user)
         {
             await _dbContext.AddAsync(user);

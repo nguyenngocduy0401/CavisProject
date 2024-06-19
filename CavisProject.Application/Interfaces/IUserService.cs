@@ -12,8 +12,8 @@ namespace CavisProject.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<ApiResponse<PackagePreniumViewModel>> RegistPremium(string id);
-        Task<ApiResponse<UserPackageViewModel>> UpgradeToPremium(string id);
+        Task<ApiResponse<PackagePreniumViewModel>> RegistPremiumAsync(string id);
+        Task<ApiResponse<UserPackageViewModel>> UpgradeToPremiumAsync(string id);
         Task<ApiResponse<UserViewModel>> GetUserByIdAsync(string id);
         Task<ApiResponse<UserViewModel>> GetInfoByLoginAsync();
         Task<ApiResponse<Pagination<UserViewModel>>> FilterUserAsync(FilterUserModel filterUserModel);

@@ -30,6 +30,10 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<CreateUserModel, User>()
                 .ForMember(dest => dest.PasswordHash, src => src.MapFrom(x => x.Password));
             CreateMap<UserPackageViewModel, User>();
+            CreateMap<UserViewModel, User>();
+            CreateMap<UserViewModel, PackagePremium>();
+            CreateMap<User, UserViewModel>();
+
             #endregion
             #region Skin
             CreateMap<CreateSkinTypeViewModel, Skin>();
