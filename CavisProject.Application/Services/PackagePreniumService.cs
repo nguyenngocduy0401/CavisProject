@@ -86,21 +86,21 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-        public async Task<ApiResponse<Pagination<PackagePreniumViewModel>>> GetPackagePremiumsAsync(int pageIndex, int pageSize)
+        public async Task<ApiResponse<Pagination<PackagePremiumViewModel>>> GetPackagePremiumsAsync(int pageIndex, int pageSize)
         {
-            var response = new ApiResponse<Pagination<PackagePreniumViewModel>>();
+            var response = new ApiResponse<Pagination<PackagePremiumViewModel>>();
 
             try
             {
                 var packagePremiums = await _unitOfWork.PackagePremiumRepository.GetAllAsync();
-                var packagePreniumViewModels = _mapper.Map<List<PackagePreniumViewModel>>(packagePremiums);
+                var packagePreniumViewModels = _mapper.Map<List<PackagePremiumViewModel>>(packagePremiums);
                 foreach (var packagePreniumViewModel in packagePreniumViewModels)
                 {
                     var totalUsers = await _unitOfWork.PackageDetailRepository.GetTotalUsersByPackageIdAsync(packagePreniumViewModel.Id);
                     packagePreniumViewModel.TotalUsers = totalUsers;
                 }
                 var totalItemsCount = packagePreniumViewModels.Count;
-                var pagination = new Pagination<PackagePreniumViewModel>
+                var pagination = new Pagination<PackagePremiumViewModel>
                 {
                     PageIndex = pageIndex,
                     PageSize = pageSize,
@@ -178,9 +178,9 @@ namespace CavisProject.Application.Services
 
     
 
-    public async Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackageAsync(FilterPackagePremiumViewModel filterModel)
+    public async Task<ApiResponse<Pagination<PackagePremiumViewModel>>> FilterPackageAsync(FilterPackagePremiumViewModel filterModel)
         {
-            var response = new ApiResponse<Pagination<PackagePreniumViewModel>>();
+            var response = new ApiResponse<Pagination<PackagePremiumViewModel>>();
 
             try
             {
@@ -193,7 +193,7 @@ namespace CavisProject.Application.Services
                     pageIndex: filterModel.PageIndex,
                     pageSize: filterModel.PageSize
                 ); ;
-                var packageViewModels = _mapper.Map<List<PackagePreniumViewModel>>(paginationResult.Items);
+                var packageViewModels = _mapper.Map<List<PackagePremiumViewModel>>(paginationResult.Items);
                 //dem user su dung package
                 foreach (var packagePreniumViewModel in packageViewModels)
                 {
@@ -201,7 +201,7 @@ namespace CavisProject.Application.Services
                     packagePreniumViewModel.TotalUsers = totalUsers;
                 }
             /*    //  var totalItemsCount = packageViewModels.Count;*/
-                var paginationViewModel = new Pagination<PackagePreniumViewModel>
+                var paginationViewModel = new Pagination<PackagePremiumViewModel>
                 {
                     PageIndex = paginationResult.PageIndex,
                     PageSize = paginationResult.PageSize,
@@ -313,9 +313,9 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-        public async Task<ApiResponse<PackagePreniumViewModel>> GetPackagePremiumByIdAsync(string id)
+        public async Task<ApiResponse<PackagePremiumViewModel>> GetPackagePremiumByIdAsync(string id)
         {
-            var response = new ApiResponse<PackagePreniumViewModel>();
+            var response = new ApiResponse<PackagePremiumViewModel>();
             try
             {
                 var packagePremium = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
@@ -324,7 +324,7 @@ namespace CavisProject.Application.Services
                     throw new Exception("Không tìm thấy !");
                 }
 
-                var packagePremiumViewModel = _mapper.Map<PackagePreniumViewModel>(packagePremium);
+                var packagePremiumViewModel = _mapper.Map<PackagePremiumViewModel>(packagePremium);
 
                 response.isSuccess = true;
                 response.Data = packagePremiumViewModel;

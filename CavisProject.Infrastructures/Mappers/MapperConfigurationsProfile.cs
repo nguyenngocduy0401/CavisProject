@@ -61,8 +61,8 @@ namespace CavisProject.Infrastructures.Mappers
            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
             CreateMap<PackageDetail, User>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
-            CreateMap<Pagination<PackagePremium>, Pagination<PackagePreniumViewModel>>().ReverseMap();
-            CreateMap<PackagePremium, PackagePreniumViewModel>().ReverseMap();
+            CreateMap<Pagination<PackagePremium>, Pagination<PackagePremiumViewModel>>().ReverseMap();
+            CreateMap<PackagePremium, PackagePremiumViewModel>().ReverseMap();
             CreateMap<CreatePackagePremiumViewModel, PackagePremium>();
             CreateMap<PackageDetail, PackageDetailViewModel>()
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))

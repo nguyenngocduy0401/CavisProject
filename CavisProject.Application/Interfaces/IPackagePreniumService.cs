@@ -13,11 +13,11 @@ namespace CavisProject.Application.Interfaces
     public interface IPackagePreniumService
     {
         Task<ApiResponse<Pagination<UserViewModel>>> GetPremiumUsersAsync(int pageIndex, int pageSize);
-        Task<ApiResponse<Pagination<PackagePreniumViewModel>>> GetPackagePremiumsAsync(int pageIndex, int pageSize);
+        Task<ApiResponse<Pagination<PackagePremiumViewModel>>> GetPackagePremiumsAsync(int pageIndex, int pageSize);
         Task<ApiResponse<bool>> CreatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel);
-        Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackageAsync(FilterPackagePremiumViewModel FilterModel);
+        Task<ApiResponse<Pagination<PackagePremiumViewModel>>> FilterPackageAsync(FilterPackagePremiumViewModel FilterModel);
         Task<ApiResponse<bool>> DeletePackageAsync(string Id);
         Task<ApiResponse<bool>> UpdatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id);
-        Task<ApiResponse<PackagePreniumViewModel>> GetPackagePremiumByIdAsync(string id);
+        Task<ApiResponse<PackagePremiumViewModel>> GetPackagePremiumByIdAsync(string id);
     }
 }

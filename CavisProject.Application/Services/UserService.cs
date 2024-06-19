@@ -48,9 +48,9 @@ namespace CavisProject.Application.Services
             _createUserValidator = createUserValidator;
             _updateUserValidator = updateUserValidator;
         }
-        public async Task<ApiResponse<PackagePreniumViewModel>> RegistPremiumAsync(string id)
+        public async Task<ApiResponse<PackagePremiumViewModel>> RegistPremiumAsync(string id)
         {
-            var response = new ApiResponse<PackagePreniumViewModel>();
+            var response = new ApiResponse<PackagePremiumViewModel>();
             try
             {
                 var packagePremium = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));

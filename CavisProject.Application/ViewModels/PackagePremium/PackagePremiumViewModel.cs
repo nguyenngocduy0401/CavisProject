@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.ViewModels.PackagePremium
 {
-    public class PackagePreniumViewModel
+    public class PackagePremiumViewModel
     {
         public Guid Id { get; set; }
         public string? PackagePremiumName { get; set; }
@@ -16,7 +16,7 @@ namespace CavisProject.Application.ViewModels.PackagePremium
         public int TotalUsers { get; set; } 
 
        
-        public PackagePreniumViewModel()
+        public PackagePremiumViewModel()
         {
             TotalUsers = 0;
         }
