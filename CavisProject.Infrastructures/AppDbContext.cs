@@ -803,9 +803,9 @@ namespace CavisProject.Infrastructures
                 new PackagePremium
             {
                 Id = Guid.Parse("623A23FF-4EE9-409A-BF30-2E764E8BD754"),
-                PackagePremiumName = "Premium Package month",
+                PackagePremiumName = "Premium Package 5 days",
                 Price = 5000,
-                Duration = 1, // Duration in days, months, etc., depending on your application logic
+                Duration = 5, // Duration in days, months, etc., depending on your application logic
                 Description = "This is a premium package offering special features."
             },
                   new PackagePremium
@@ -813,7 +813,7 @@ namespace CavisProject.Infrastructures
                       Id = Guid.Parse("56866515-9D42-4209-A3F9-62E166CB322A"),
                       PackagePremiumName = "Premium Package year",
                       Price = 200000,
-                      Duration =12 , // Duration in days, months, etc., depending on your application logic
+                      Duration = 365, // Duration in days, months, etc., depending on your application logic
                       Description = "This is a premium package offering special features."
                   }
 );

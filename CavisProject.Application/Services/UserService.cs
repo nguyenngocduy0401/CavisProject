@@ -151,7 +151,7 @@ namespace CavisProject.Application.Services
 
                         // Kiểm tra và cập nhật thời gian bắt đầu và kết thúc của gói Premium mới
                         currentPackage.StartTime = DateTime.UtcNow;
-                        currentPackage.EndTime = DateTime.UtcNow.AddMonths((int)packagePremium.Duration);
+                        currentPackage.EndTime = DateTime.UtcNow.AddDays((int)packagePremium.Duration);
                     }
                     else
                     {
