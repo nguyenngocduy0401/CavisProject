@@ -23,7 +23,7 @@ namespace CavisProject.API.Controllers
         [SwaggerOperation(Summary = "tạo Package{Authorize = Admin}")]
         public async Task<ApiResponse<bool>> CreatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel) => await _packagePreniumService.CreatePackageAsync(createPackagePremiumViewModel);
 
-        [HttpGet("mine/package-premium/filter")]
+        [HttpGet("mine/package-premium")]
         [SwaggerOperation(Summary = "filter Package")]
         public async Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackageAsync([FromQuery] FilterPackagePremiumViewModel FilterModel) => await _packagePreniumService.FilterPackageAsync(FilterModel);
         [HttpPost("~/admin/api/v1/package-premium/{id}")]
