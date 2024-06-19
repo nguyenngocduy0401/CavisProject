@@ -8,34 +8,34 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace CavisProject.API.Controllers
 {
-    [Route("api/v1/")]
+    [Route("api/v1/premium-packages")]
     [ApiController]
     public class PackagePremiumController :ControllerBase
     {
-        private IPackagePreniumService _packagePreniumService;
-        public PackagePremiumController(IPackagePreniumService packagePreniumService)
+        private IPackagePreniumService _packagePremiumService;
+        public PackagePremiumController(IPackagePreniumService packagePremiumService)
         {
-            _packagePreniumService = packagePreniumService;
+            _packagePremiumService = packagePremiumService;
         }
 
-        [HttpPost("~/admin/api/v1/package-premium")]
-        [Authorize(Roles = "Admin")]
+        [HttpPost("")]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         [SwaggerOperation(Summary = "tạo Package{Authorize = Admin}")]
-        public async Task<ApiResponse<bool>> CreatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel) => await _packagePreniumService.CreatePackageAsync(createPackagePremiumViewModel);
+        public async Task<ApiResponse<bool>> CreatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel) => await _packagePremiumService.CreatePackageAsync(createPackagePremiumViewModel);
 
-        [HttpGet("mine/package-premium")]
+        [HttpGet("")]
         [SwaggerOperation(Summary = "filter Package")]
-        public async Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackageAsync([FromQuery] FilterPackagePremiumViewModel FilterModel) => await _packagePreniumService.FilterPackageAsync(FilterModel);
-        [HttpPost("~/admin/api/v1/package-premium/{id}")]
-        [Authorize(Roles = "Admin")]
+        public async Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackageAsync([FromQuery] FilterPackagePremiumViewModel FilterModel) => await _packagePremiumService.FilterPackageAsync(FilterModel);
+        [HttpPut("")]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff )]
         [SwaggerOperation(Summary = "Update Package {Authorize = Admin}")]
-        public async Task<ApiResponse<bool>> UpdatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id) => await _packagePreniumService.UpdatePackageAsync(createPackagePremiumViewModel,Id);
-        [HttpDelete("~/admin/api/v1/package-premium/{id}")]
-        [Authorize(Roles = "Admin")]
-        [SwaggerOperation(Summary = "Delete Package {Authorize = Admin}")]
-        public async Task<ApiResponse<bool>> DeletePackage(string Id)=> await _packagePreniumService.DeletePackageAsync(Id);
-        [HttpGet("mine/package-premium/{id}")]
+        public async Task<ApiResponse<bool>> UpdatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id) => await _packagePremiumService.UpdatePackageAsync(createPackagePremiumViewModel,Id);
+        [HttpDelete("")]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
+        [SwaggerOperation(Summary = "xóa gói bằng Id {Authorize = Admin}")]
+        public async Task<ApiResponse<bool>> DeletePackage(string Id)=> await _packagePremiumService.DeletePackageAsync(Id);
+        [HttpGet("{id}")]
         [SwaggerOperation(Summary = "lấy thông tin gói bằng Id")]
-        public async Task<ApiResponse<PackagePreniumViewModel>> GetPackagePremiumByIdAsync(string id) => await _packagePreniumService.GetPackagePremiumByIdAsync(id);
+        public async Task<ApiResponse<PackagePreniumViewModel>> GetPackagePremiumByIdAsync(string id) => await _packagePremiumService.GetPackagePremiumByIdAsync(id);
     }
 }
