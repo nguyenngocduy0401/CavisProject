@@ -82,7 +82,7 @@ namespace CavisProject.Infrastructures.Repositories
                 query = query.Include(includeProperty);
             }
 
-            if (status.HasValue && status != UserPremiumStatusEnum.All)
+            if (status.HasValue )
             {
                 var statusValue = (int)status.Value;
 

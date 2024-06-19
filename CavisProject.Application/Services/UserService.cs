@@ -328,7 +328,7 @@ namespace CavisProject.Application.Services
                     filter: search,
                     role: filterUserModel.Roles.ToString(),
                     isActivity: filterUserModel.IsActivity,
-                    status: filterUserModel.Status, // Truyền vào trường StatusEnum
+                    status: filterUserModel.StatusPremium, // Truyền vào trường StatusEnum
                     pageIndex: filterUserModel.PageIndex,
                     pageSize: filterUserModel.PageSize
                 );
