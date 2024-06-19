@@ -56,7 +56,7 @@ namespace CavisProject.Application.Services
                     var packagePremium = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(packageDetail.PackagePremiumId.Value);
 
                     var userViewModel = _mapper.Map<UserViewModel>(user);
-                    userViewModel.PackagePremiumName = packagePremium?.PackagePremiumName;
+                 //   userViewModel.PackagePremiumId = packagePremium?.PackagePremiumName;
 
                     userViewModels.Add(userViewModel);
                 }
@@ -121,9 +121,9 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<CreatePackagePremiumViewModel>> CreatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel)
+        public async Task<ApiResponse<bool>> CreatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel)
         {
-            var response = new ApiResponse<CreatePackagePremiumViewModel>();
+            var response = new ApiResponse<bool>();
             try
             {
                 var package = _mapper.Map<PackagePremium>(createPackagePremiumViewModel);
@@ -131,7 +131,11 @@ namespace CavisProject.Application.Services
                 var isNameExist = packageList.Any();
                 if (isNameExist)
                 {
-                    throw new Exception("Tên  đã tồn tại!");
+                    // throw new Exception("Tên  đã tồn tại!");
+                    response.Data = false;
+                    response.isSuccess = true;
+                    response.Message = "Tên  đã tồn tại!";
+                    
                 }
                 else
                 {
@@ -256,9 +260,9 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<CreatePackagePremiumViewModel>> UpdatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id)
+        public async Task<ApiResponse<bool>> UpdatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id)
         {
-            var response = new ApiResponse<CreatePackagePremiumViewModel>();
+            var response = new ApiResponse<bool>();
             try
             {
                 var exist = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(Id));               
@@ -289,7 +293,7 @@ namespace CavisProject.Application.Services
                         {
                             throw new Exception("Cập nhật thất bại");
                         }
-                        response.Data = _mapper.Map<CreatePackagePremiumViewModel>(Id);
+                        response.Data = _mapper.Map<bool>(Id);
                         response.isSuccess = true;
                         response.Message = "Cập nhật thành công";
                     }

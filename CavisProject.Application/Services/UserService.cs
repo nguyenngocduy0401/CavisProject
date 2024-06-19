@@ -53,54 +53,73 @@ namespace CavisProject.Application.Services
             var response = new ApiResponse<PackagePreniumViewModel>();
             try
             {
-                var packagePremium =await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
+                var packagePremium = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
                 if (packagePremium == null)
                 {
                     throw new Exception("Package not found");
-
                 }
+
                 var userId = _claimsService.GetCurrentUserId;
                 if (userId == Guid.Empty)
                 {
-                    response.isSuccess = false;
+                    response.isSuccess = true;
+                    response.Data = null;
                     response.Message = "Đăng nhập !";
+                    return response;
                 }
-                // check user có đang trong gói premium nào khác không
                 var existingPackageDetail = await _unitOfWork.PackageDetailRepository
-                    .FindAsync(pd => pd.UserId == userId.ToString() && pd.Status == 0 && pd.EndTime > DateTime.UtcNow);
+          .FindAsync(pd => pd.UserId == userId.ToString() && (pd.Status == 0 || pd.Status == 1));
+
                 if (existingPackageDetail != null)
                 {
                     response.isSuccess = false;
-                    response.Message = "Quý khách đang sử dụng premium!.";
+                    response.Data = null;
+                    response.Message = "Bạn đã có gói Premium đang chờ kích hoạt hoặc đang sử dụng!";
+                    return response;
                 }
-                var packageDetail = new PackageDetail
+
+                var expiredPackageDetail = await _unitOfWork.PackageDetailRepository
+            .FindAsync(pd => pd.UserId == userId.ToString() && pd.PackagePremiumId == Guid.Parse(id) && pd.Status == 3 && pd.EndTime <= DateTime.UtcNow);
+
+                if (expiredPackageDetail != null)
                 {
-                    PackagePremiumId = Guid.Parse(id),
-                    UserId = userId.ToString(),
-                    Status = 0, 
-                   
-                };
-                await _unitOfWork.PackageDetailRepository.AddAsync(packageDetail);
-                 var transaction = new Transaction
+                    expiredPackageDetail.Status = 0;
+                    _unitOfWork.PackageDetailRepository.Update(expiredPackageDetail);
+                }
+                else
+                {
+                    var packageDetail = new PackageDetail
+                    {
+                        PackagePremiumId = Guid.Parse(id),
+                        UserId = userId.ToString(),
+                        Status = 0,
+                    };
+
+                    await _unitOfWork.PackageDetailRepository.AddAsync(packageDetail);
+                }
+
+
+                var transaction = new Transaction
                 {
                     Id = Guid.NewGuid(),
                     Title = packagePremium.PackagePremiumName,
                     PurchaseTime = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"),
                     TotalPaid = packagePremium.Price,
-                 //   AppointmentId = Guid.NewGuid(),
                     UserId = userId.ToString(),
                     PackagePremiumId = Guid.Parse(id),
                     CreationDate = DateTime.UtcNow,
                     IsDeleted = false
                 };
+
                 await _unitOfWork.TransactionRepository.AddAsync(transaction);
-               var isSuccess= await _unitOfWork.SaveChangeAsync()>0;
-                if (isSuccess==false)
+                var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
+                if (!isSuccess)
                 {
                     response.isSuccess = false;
                     response.Message = "Đăng kí premium thất bại";
+                    return response;
                 }
-               
+
                 response.isSuccess = true;
                 response.Message = "Đăng kí premium thành công !";
             }
@@ -108,7 +127,6 @@ namespace CavisProject.Application.Services
             {
                 response.isSuccess = false;
                 response.Message = ex.Message;
-
             }
             catch (Exception ex)
             {
@@ -117,6 +135,7 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
+
 
         public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremiumAsync(string id)
         {
@@ -129,14 +148,14 @@ namespace CavisProject.Application.Services
                     throw new Exception("User not found");
                 }
 
-                // Lấy thông tin gói hiện tại của người dùng
+         
                 var currentPackage = await _unitOfWork.PackageDetailRepository.GetByUserIdAsync(id);
                 if (currentPackage == null)
                 {
                     throw new Exception("Current package not found");
                 }
 
-                // Kiểm tra và cập nhật trạng thái gói hiện tại từ 0 lên 1
+                
                 if (currentPackage.Status == 0)
                 {
                     currentPackage.Status = 1; // Chuyển trạng thái gói từ chưa kích hoạt (0) sang đã kích hoạt (1)
@@ -325,8 +344,8 @@ namespace CavisProject.Application.Services
                     var userViewModels = _mapper.Map<List<UserViewModel>>(usersPagination.Items);
                     foreach (var viewModel in userViewModels)
                     {
-                        var packagePremiumName = await _unitOfWork.UserRepository.GetPackagePremiumNameAsync(viewModel.Id);
-                        viewModel.PackagePremiumName = packagePremiumName;
+                        var packagePremiumName = await _unitOfWork.UserRepository.GetPackagePremiumIdAsync(viewModel.Id);
+                      //  viewModel.PackagePremiumId = packagePremiumName;
                     }
 
                     var result = new Pagination<UserViewModel>
@@ -362,6 +381,7 @@ namespace CavisProject.Application.Services
                 if (user == null) throw new Exception("Not found!");
                 var checkExist = await _unitOfWork.PersonalAnalystRepository.CheckExistPersonalAnalystAsync(userId);
                 var userViewModel = _mapper.Map<UserViewModel>(user);
+               // userViewModel.PackagePremiumId = await _unitOfWork.UserRepository.GetPackagePremiumIdAsync(userId);
                 userViewModel.CheckExistPersonal = checkExist;
                 response.Data = userViewModel;
                 response.isSuccess = true;
@@ -384,7 +404,7 @@ namespace CavisProject.Application.Services
                 var user = await _userManager.FindByIdAsync(id);
                 if (user == null) throw new Exception("Not found!");
                 UserViewModel userViewModel = _mapper.Map<UserViewModel>(user);
-                userViewModel.PackagePremiumName = await _unitOfWork.UserRepository.GetPackagePremiumNameAsync(id);
+             //   userViewModel.PackagePremiumId = await _unitOfWork.UserRepository.GetPackagePremiumIdAsync(id);
                 response.Data = userViewModel;
                 response.isSuccess = true;
                 response.Message = "Successful!";

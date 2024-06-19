@@ -30,6 +30,6 @@ namespace CavisProject.Application.Repositories
         Task AddAsync(User user);
         Task<string> GetUserByUserId(string userId);
         Task<string> GetCurrentUserRoleAsync(string userId);
-        Task<string?> GetPackagePremiumNameAsync(string userId);
+        Task<string?> GetPackagePremiumIdAsync(string userId);
     }
 }

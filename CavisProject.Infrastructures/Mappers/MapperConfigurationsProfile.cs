@@ -57,8 +57,8 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<UpgradeToPremiumViewModel, User>();
             CreateMap<Pagination<User>, Pagination<UserViewModel>>()
            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
-            CreateMap<User, UserViewModel>()
-           .ForMember(dest => dest.PackagePremiumName, opt => opt.Ignore());
+            CreateMap<PackageDetail, User>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
             CreateMap<Pagination<PackagePremium>, Pagination<PackagePreniumViewModel>>().ReverseMap();
             CreateMap<PackagePremium, PackagePreniumViewModel>().ReverseMap();
             CreateMap<CreatePackagePremiumViewModel, PackagePremium>();

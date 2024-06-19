@@ -20,7 +20,7 @@ namespace CavisProject.Application.ViewModels.UserViewModels
         public double? Wallet { get; set; }
         public bool Status { get; set; } = true;
         public double? RewardPoint { get; set; }
-        public string? PackagePremiumName { get; set; }
+/*        public string? PackagePremiumId { get; set; }*/
         public bool CheckExistPersonal { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace CavisProject.API.Controllers
         [HttpPost("~/admin/api/v1/package-premium")]
         [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "tạo Package{Authorize = Admin}")]
-        public async Task<ApiResponse<CreatePackagePremiumViewModel>> CreatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel) => await _packagePreniumService.CreatePackageAsync(createPackagePremiumViewModel);
+        public async Task<ApiResponse<bool>> CreatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel) => await _packagePreniumService.CreatePackageAsync(createPackagePremiumViewModel);
 
         [HttpGet("mine/package-premium/filter")]
         [SwaggerOperation(Summary = "filter Package")]
@@ -29,7 +29,7 @@ namespace CavisProject.API.Controllers
         [HttpPost("~/admin/api/v1/package-premium/{id}")]
         [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Update Package {Authorize = Admin}")]
-        public async Task<ApiResponse<CreatePackagePremiumViewModel>> UpdatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id) => await _packagePreniumService.UpdatePackageAsync(createPackagePremiumViewModel,Id);
+        public async Task<ApiResponse<bool>> UpdatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id) => await _packagePreniumService.UpdatePackageAsync(createPackagePremiumViewModel,Id);
         [HttpDelete("~/admin/api/v1/package-premium/{id}")]
         [Authorize(Roles = "Admin")]
         [SwaggerOperation(Summary = "Delete Package {Authorize = Admin}")]
