@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Server.HttpSys;
+﻿using CavisProject.Application.ViewModels.PackagePremium;
+using CavisProject.Domain.Entity;
+using Microsoft.AspNetCore.Server.HttpSys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,5 +24,6 @@ namespace CavisProject.Application.ViewModels.UserViewModels
         public double? RewardPoint { get; set; }
 /*        public string? PackagePremiumId { get; set; }*/
         public bool CheckExistPersonal { get; set; }
+        public PackageDetailViewModel? PackageDetail { get; set; }
     }
 }

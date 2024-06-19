@@ -344,8 +344,11 @@ namespace CavisProject.Application.Services
                     var userViewModels = _mapper.Map<List<UserViewModel>>(usersPagination.Items);
                     foreach (var viewModel in userViewModels)
                     {
-                        var packagePremiumName = await _unitOfWork.UserRepository.GetPackagePremiumIdAsync(viewModel.Id);
-                      //  viewModel.PackagePremiumId = packagePremiumName;
+                        var packageDetail = await _unitOfWork.PackageDetailRepository.GetByUserIdAsync(viewModel.Id);
+                        if (packageDetail != null)
+                        {
+                            viewModel.PackageDetail = _mapper.Map<PackageDetailViewModel>(packageDetail);
+                        }
                     }
 
                     var result = new Pagination<UserViewModel>
@@ -378,24 +381,41 @@ namespace CavisProject.Application.Services
             {
                 var userId = _claimsService.GetCurrentUserId.ToString();
                 var user = await _userManager.FindByIdAsync(userId);
-                if (user == null) throw new Exception("Not found!");
+
+                if (user == null)
+                {
+                    throw new Exception("User not found!"); 
+                }
+
+           
+                var packageDetail = await _unitOfWork.PackageDetailRepository.GetByUserIdAsync(userId);
+
                 var checkExist = await _unitOfWork.PersonalAnalystRepository.CheckExistPersonalAnalystAsync(userId);
+
                 var userViewModel = _mapper.Map<UserViewModel>(user);
-               // userViewModel.PackagePremiumId = await _unitOfWork.UserRepository.GetPackagePremiumIdAsync(userId);
+                userViewModel.PackageDetail = _mapper.Map<PackageDetailViewModel>(packageDetail); 
+
                 userViewModel.CheckExistPersonal = checkExist;
+
                 response.Data = userViewModel;
                 response.isSuccess = true;
                 response.Message = "Successful!";
             }
-            catch (Exception ex)
+            catch (DbException ex)
             {
                 response.Data = null;
                 response.isSuccess = false;
                 response.Message = ex.Message;
             }
+            catch (Exception ex)
+            {
+                response.Data = null;
+                response.isSuccess = false;
+                response.Message = "An error occurred while fetching user info."; 
+                                                                                  
+            }
             return response;
         }
-
         public async Task<ApiResponse<UserViewModel>> GetUserByIdAsync(string id)
         {
             var response = new ApiResponse<UserViewModel>();
@@ -403,8 +423,9 @@ namespace CavisProject.Application.Services
             {
                 var user = await _userManager.FindByIdAsync(id);
                 if (user == null) throw new Exception("Not found!");
+                var packageDetail = await _unitOfWork.PackageDetailRepository.GetByUserIdAsync(id);
                 UserViewModel userViewModel = _mapper.Map<UserViewModel>(user);
-             //   userViewModel.PackagePremiumId = await _unitOfWork.UserRepository.GetPackagePremiumIdAsync(id);
+                userViewModel.PackageDetail = _mapper.Map<PackageDetailViewModel>(packageDetail);
                 response.Data = userViewModel;
                 response.isSuccess = true;
                 response.Message = "Successful!";

@@ -32,7 +32,9 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<UserPackageViewModel, User>();
             CreateMap<UserViewModel, User>();
             CreateMap<UserViewModel, PackagePremium>();
-            CreateMap<User, UserViewModel>();
+            CreateMap<User, UserViewModel>().ReverseMap();
+             
+
 
             #endregion
             #region Skin
@@ -62,7 +64,11 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<Pagination<PackagePremium>, Pagination<PackagePreniumViewModel>>().ReverseMap();
             CreateMap<PackagePremium, PackagePreniumViewModel>().ReverseMap();
             CreateMap<CreatePackagePremiumViewModel, PackagePremium>();
-            
+            CreateMap<PackageDetail, PackageDetailViewModel>()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => src.StartTime))
+            .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.EndTime))
+            .ForMember(dest => dest.PackagePremiumId, opt => opt.MapFrom(src => src.PackagePremiumId));
             #endregion
             #region Product
             CreateMap<CreateProductViewModel, Product>();
