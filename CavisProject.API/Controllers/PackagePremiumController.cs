@@ -20,22 +20,22 @@ namespace CavisProject.API.Controllers
 
         [HttpPost("")]
         [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
-        [SwaggerOperation(Summary = "tạo Package{Authorize = Admin}")]
+        [SwaggerOperation(Summary = "tạo gói {Authorize = Admin, Staff}")]
         public async Task<ApiResponse<bool>> CreatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel) => await _packagePremiumService.CreatePackageAsync(createPackagePremiumViewModel);
 
         [HttpGet("")]
-        [SwaggerOperation(Summary = "filter Package")]
+        [SwaggerOperation(Summary = "tìm kiếm gói")]
         public async Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackageAsync([FromQuery] FilterPackagePremiumViewModel FilterModel) => await _packagePremiumService.FilterPackageAsync(FilterModel);
-        [HttpPut("")]
+        [HttpPut("{id}")]
         [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff )]
-        [SwaggerOperation(Summary = "Update Package {Authorize = Admin}")]
-        public async Task<ApiResponse<bool>> UpdatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id) => await _packagePremiumService.UpdatePackageAsync(createPackagePremiumViewModel,Id);
-        [HttpDelete("")]
+        [SwaggerOperation(Summary = "cập nhật gói bằng id {Authorize = Admin, Staff}")]
+        public async Task<ApiResponse<bool>> UpdatePackage(CreatePackagePremiumViewModel createPackagePremiumViewModel, string id) => await _packagePremiumService.UpdatePackageAsync(createPackagePremiumViewModel,id);
+        [HttpDelete("{id}")]
         [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
-        [SwaggerOperation(Summary = "xóa gói bằng Id {Authorize = Admin}")]
-        public async Task<ApiResponse<bool>> DeletePackage(string Id)=> await _packagePremiumService.DeletePackageAsync(Id);
+        [SwaggerOperation(Summary = "xóa gói bằng id {Authorize = Admin, Staff}")]
+        public async Task<ApiResponse<bool>> DeletePackage(string id)=> await _packagePremiumService.DeletePackageAsync(id);
         [HttpGet("{id}")]
-        [SwaggerOperation(Summary = "lấy thông tin gói bằng Id")]
+        [SwaggerOperation(Summary = "lấy thông tin gói bằng id")]
         public async Task<ApiResponse<PackagePreniumViewModel>> GetPackagePremiumByIdAsync(string id) => await _packagePremiumService.GetPackagePremiumByIdAsync(id);
     }
 }
