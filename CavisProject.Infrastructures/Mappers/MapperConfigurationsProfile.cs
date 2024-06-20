@@ -54,7 +54,7 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<UserRegisterModel, User>()
                 .ForMember(dest => dest.PasswordHash, src => src.MapFrom(x => x.Password));
             #endregion
-            #region Prenium
+            #region Premium
             CreateMap<RegistPremiumViewModel,PackagePremium>();
             CreateMap<UpgradeToPremiumViewModel, User>();
             CreateMap<Pagination<User>, Pagination<UserViewModel>>()

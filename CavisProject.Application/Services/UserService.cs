@@ -48,7 +48,7 @@ namespace CavisProject.Application.Services
             _createUserValidator = createUserValidator;
             _updateUserValidator = updateUserValidator;
         }
-        public async Task<ApiResponse<PackagePreniumViewModel>> RegisterPremiumAsync(string id)
+        public async Task<ApiResponse<PackagePremiumViewModel>> RegisterPremiumAsync(string id)
         {
             var response = new ApiResponse<PackagePremiumViewModel>();
             try
@@ -328,7 +328,7 @@ namespace CavisProject.Application.Services
                     filter: search,
                     role: filterUserModel.Roles.ToString(),
                     isActivity: filterUserModel.IsActivity,
-                    status: filterUserModel.StatusPremium, // Truyền vào trường StatusEnum
+                    status: filterUserModel.StatusPremium, 
                     pageIndex: filterUserModel.PageIndex,
                     pageSize: filterUserModel.PageSize
                 );
