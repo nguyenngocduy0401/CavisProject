@@ -393,6 +393,7 @@ namespace CavisProject.Application.Services
                 userViewModel.PackageDetail = _mapper.Map<PackageDetailViewModel>(packageDetail); 
 
                 userViewModel.CheckExistPersonal = checkExist;
+                userViewModel.Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 
                 response.Data = userViewModel;
                 response.isSuccess = true;

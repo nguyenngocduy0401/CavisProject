@@ -18,6 +18,7 @@ namespace CavisProject.Application.ViewModels.UserViewModels
         public string? FullName { get; set; }
         public string? URLImage { get; set; }
         public DateTime? DateOfBirth { get; set; }
+        public string? Role { get; set; }
         public string? Gender { get; set; }
         public string? Address { get; set; }
         public double? Wallet { get; set; }
