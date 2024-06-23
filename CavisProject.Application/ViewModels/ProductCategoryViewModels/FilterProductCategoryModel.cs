@@ -9,6 +9,7 @@ namespace CavisProject.Application.ViewModels.ProductCategoryViewModel
     public class FilterProductCategoryModel
     {
         public string? ProductCategoryName { get; set; }
+        public bool? IsDeleted { get; set; }
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 10;
     }
