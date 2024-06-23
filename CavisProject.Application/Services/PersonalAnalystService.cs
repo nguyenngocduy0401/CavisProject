@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
+using CavisProject.Application.ViewModels.MethodViewModels;
 using CavisProject.Application.ViewModels.PersonalAnalystViewModels;
 using CavisProject.Application.ViewModels.ProductViewModel;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Domain.Entity;
+using CavisProject.Domain.Enums;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -114,13 +116,13 @@ namespace CavisProject.Application.Services
             var response = new ApiResponse<Pagination<ProductViewModel>>();
             try
             {
-                var personalAnalyst  = await _unitOfWork.PersonalAnalystRepository.GetLastPersonalAnalystAsync();
+                var personalAnalyst = await _unitOfWork.PersonalAnalystRepository.GetLastPersonalAnalystAsync();
                 if (personalAnalyst == null) throw new Exception("Fail in GetLastPersonalAnalyst!");
-                var products = await _unitOfWork.PersonalAnalystRepository.SuggestProductAsync(personalAnalyst.Id, pageIndex:1,pageSize:10);
+                var products = await _unitOfWork.PersonalAnalystRepository.SuggestProductAsync(personalAnalyst.Id, pageIndex: 1, pageSize: 10);
 
 
 
-                if (products.Items == null) 
+                if (products.Items == null)
                 {
                     response.Data = null;
                     response.isSuccess = true;
@@ -146,5 +148,65 @@ namespace CavisProject.Application.Services
             return response;
         }
 
+        public async Task<ApiResponse<Pagination<MethodViewModel>>> SuggestMethodMakeUpAsync(FilterSuggestMethodModel filterSuggestMethodModel)
+        {
+            var response = new ApiResponse<Pagination<MethodViewModel>>();
+            try
+            {
+                var personalAnalyst = await _unitOfWork.PersonalAnalystRepository.GetLastPersonalAnalystAsync();
+                if (personalAnalyst == null) throw new Exception("Fail in GetLastPersonalAnalyst!");
+                var methods = await _unitOfWork.PersonalAnalystRepository.SuggestMethodAsync(personalAnalyst.Id, pageIndex: 1, pageSize: 10);
+
+
+                List<MethodViewModel> filteredMethods = new List<MethodViewModel>();
+                if (filterSuggestMethodModel.Category == MethodCategoryEnum.Skincare)
+                {
+                    filteredMethods = methods.Items
+                        .Where(m => m.Category == 0) 
+                        .Select(m => _mapper.Map<MethodViewModel>(m)) 
+                        .ToList();
+                }
+                else if (filterSuggestMethodModel.Category == MethodCategoryEnum.Makeup)
+                {
+                    filteredMethods = methods.Items
+                        .Where(m => m.Category == 1) 
+                        .Select(m => _mapper.Map<MethodViewModel>(m)) 
+                        .ToList();
+                }
+
+
+              
+                if (filteredMethods == null || filteredMethods.Count == 0)
+                {
+                    response.Data = null;
+                    response.isSuccess = true;
+                    response.Message = "Không tìm thấy phương pháp cho bạn!";
+                    return response;
+                }
+
+                var pagination = new Pagination<MethodViewModel>()
+                {
+                    PageIndex = filterSuggestMethodModel.PageIndex,
+                    PageSize = filterSuggestMethodModel.PageSize,
+                    TotalItemsCount = methods.TotalItemsCount,
+                    Items = filteredMethods
+                };
+
+                response.Data = pagination;
+                response.isSuccess = true;
+                response.Message = "Successfully!";
+            }
+            catch (DbException ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
     }
 }

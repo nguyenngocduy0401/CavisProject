@@ -15,6 +15,6 @@ namespace CavisProject.Application.Interfaces
         Task<ApiResponse<Pagination<MethodViewModel>>> FilterMethodSkinCareAsync(FilterMethodSkinCareViewModel filterModel);
         Task<ApiResponse<bool>> DeleteMethodSkinCareAsync(string id);
         Task<ApiResponse<bool>> UpdateMethodSkinCareAsync(CreateMethodViewModel update, string id);
-        Task<ApiResponse<MethodViewModel>> GetMethodSkinCareById(string id);
+        Task<ApiResponse<MethodViewModel>> GetMethodSkinCareByIdAsync(string id);
     }
 }

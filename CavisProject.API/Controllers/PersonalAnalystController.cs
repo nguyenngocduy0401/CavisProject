@@ -1,5 +1,6 @@
 ﻿using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
+using CavisProject.Application.ViewModels.MethodViewModels;
 using CavisProject.Application.ViewModels.PersonalAnalystViewModels;
 using CavisProject.Application.ViewModels.ProductViewModel;
 using CavisProject.Domain.Entity;
@@ -18,20 +19,23 @@ namespace CavisProject.API.Controllers
         {
             _personalAnalystService = personalAnalystService;
         }
-        [SwaggerOperation(Summary = "Gợi ý sản phẩm")]
+        [SwaggerOperation(Summary = "gợi ý sản phẩm")]
         [HttpGet("mine/products")]
         [Authorize]
         public async Task<ApiResponse<Pagination<ProductViewModel>>> SuggestProductAsync([FromQuery]FilterSuggestProductModel filterSuggestProductModel) => await _personalAnalystService.SuggestProductAsync(filterSuggestProductModel);
-        [SwaggerOperation(Summary = "Tìm kiếm các phân tích da của cá nhân")]
+        [SwaggerOperation(Summary = "tìm kiếm các phân tích da của cá nhân")]
         [HttpGet("mine")]
         [Authorize]
         public async Task<ApiResponse<Pagination<PersonalAnalystViewModel>>> FilterPersonalAnalystAsync([FromQuery] FilterPersonalAnalystModel filterPersonalAnalystModel) =>
             await _personalAnalystService.FilterPersonalAnalystAsync(filterPersonalAnalystModel);
-        [SwaggerOperation(Summary = "Thêm các triệu chứng về da")]
+        [SwaggerOperation(Summary = "thêm các triệu chứng về da")]
         [HttpPost("mine")]
         [Authorize]
         public async Task<ApiResponse<bool>> CreatePersonalAnalystByLoginAsync([FromBody]ListSkinPersonalModel listSkinPersonalModel) =>
             await _personalAnalystService.CreatePersonalAnalystByLoginAsync(listSkinPersonalModel);
-
+        [SwaggerOperation(Summary = "gợi ý phương pháp (phương pháp skincare và phương pháp makeup)")]
+        [HttpGet("mine/methods")]
+       // [Authorize]
+        public async Task<ApiResponse<Pagination<MethodViewModel>>> SuggestMethodAsync([FromQuery] FilterSuggestMethodModel filterSuggestMethodModel) => await _personalAnalystService.SuggestMethodMakeUpAsync(filterSuggestMethodModel);
     }
 }

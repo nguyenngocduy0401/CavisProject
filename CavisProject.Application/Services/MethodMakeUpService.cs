@@ -2,8 +2,6 @@
 using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.ViewModels.MethodViewModels;
-using CavisProject.Application.ViewModels.ProductViewModel;
-using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Domain.Entity;
 using FluentValidation;
 using Microsoft.IdentityModel.Tokens;
@@ -17,22 +15,22 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.Services
 {
-    public class MethodSkinCareService : IMethodSkinCareService
+    public class MethodMakeUpService : IMethodMakeUpService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IClaimsService _claimsService;
         private readonly IMapper _mapper;
         private readonly IValidator<CreateMethodViewModel> _validator;
-        public MethodSkinCareService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateMethodViewModel> validator, IClaimsService claimsService)
+        public MethodMakeUpService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateMethodViewModel> validator, IClaimsService claimsService)
         {
             _claimsService = claimsService;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _validator = validator;
         }
-        public async Task<ApiResponse<bool>> CreateMethodSkinCareAsync(CreateMethodViewModel create)
+        public async Task<ApiResponse<bool>> CreateMethodSkinMakeUpAsync(CreateMethodViewModel create)
         {
-           var response = new ApiResponse<bool>();
+            var response = new ApiResponse<bool>();
             try
             {
                 FluentValidation.Results.ValidationResult validationResult = await _validator.ValidateAsync(create);
@@ -47,14 +45,14 @@ namespace CavisProject.Application.Services
                 {
                     response.isSuccess = true;
                     response.Message = "Tên phương pháp đã tồn tại.";
-                    response.Data= false;
+                    response.Data = false;
                     return response;
                 }
                 var methodSkinCare = new Method
                 {
                     MethodName = create.MethodName,
                     Description = create.Description,
-                    Category = 0,           
+                    Category = 1,
                 };
                 await _unitOfWork.MethodSkinCareRepository.AddAsync(methodSkinCare);
                 var isMethodSaved = await _unitOfWork.SaveChangeAsync() > 0;
@@ -95,7 +93,7 @@ namespace CavisProject.Application.Services
                             var methodDetail = new MethodDetail
                             {
                                 MethodId = methodSkinCare.Id,
-                                SkinId =  skinCondition.Id,
+                                SkinId = skinCondition.Id,
                                 IsDeleted = false,
                             };
                             await _unitOfWork.MethodDetailRepository.AddAsync(methodDetail);
@@ -137,7 +135,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<bool>> DeleteMethodSkinCareAsync(string id)
+        public async Task<ApiResponse<bool>> DeleteMethodMakeUpAsync(string id)
         {
             var response = new ApiResponse<bool>();
             try
@@ -181,7 +179,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<MethodViewModel>>> FilterMethodSkinCareAsync(FilterMethodSkinCareViewModel filterModel)
+        public async Task<ApiResponse<Pagination<MethodViewModel>>> FilterMethodSkinMakeUpAsync(FilterMethodSkinCareViewModel filterModel)
         {
             var response = new ApiResponse<Pagination<MethodViewModel>>();
             try
@@ -191,7 +189,7 @@ namespace CavisProject.Application.Services
                     (string.IsNullOrEmpty(filterModel.Description) || s.Description.Contains(filterModel.Description)) &&
                     (!filterModel.SkinConditionID.HasValue || s.MethodDetails.Any(pd => pd.SkinId == filterModel.SkinConditionID.Value && pd.Skins.Category == false)) &&
                     (!filterModel.SkinTypeId.HasValue || s.MethodDetails.Any(pd => pd.SkinId == filterModel.SkinTypeId.Value && pd.Skins.Category == true)) &&
-                    s.Category == 0;
+                    s.Category == 1;
 
                 var method = await _unitOfWork.MethodSkinCareRepository.GetFilterAsync(
                     filter: filter,
@@ -221,7 +219,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<MethodViewModel>> GetMethodSkinCareByIdAsync(string id)
+        public async Task<ApiResponse<MethodViewModel>> GetMethodMakeUpByIdAsync(string id)
         {
             var response = new ApiResponse<MethodViewModel>();
             try
@@ -248,10 +246,12 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<bool>> UpdateMethodSkinCareAsync(CreateMethodViewModel update, string id)
+        public async Task<ApiResponse<bool>> UpdateMethodMakeUpAsync(CreateMethodViewModel update, string id)
         {
+
             var response = new ApiResponse<bool>();
-            try { 
+            try
+            {
                 var methodId = Guid.Parse(id);
                 FluentValidation.Results.ValidationResult validationResult = await _validator.ValidateAsync(update);
                 if (!validationResult.IsValid)
@@ -261,7 +261,7 @@ namespace CavisProject.Application.Services
                     return response;
                 }
                 var method = await _unitOfWork.MethodSkinCareRepository.GetByIdAsync(methodId);
-                if (method == null&&method.Category==0)
+                if (method == null&& method.Category==1)
                 {
                     response.isSuccess = true;
                     response.Data = false;
@@ -281,13 +281,13 @@ namespace CavisProject.Application.Services
                     }
                     method.MethodName = update.MethodName;
                 }
-                if (update.Description != method.Description) 
-                { 
+                if (update.Description != method.Description)
+                {
                     method.Description = update.Description;
                 }
                 var existingMethodDetails = await _unitOfWork.MethodDetailRepository.GetAllAsync(pd => pd.MethodId == method.Id);
 
-               
+
                 if (update.SkinTypeId.HasValue || (update.SkinConditionIds != null && update.SkinConditionIds.Any()))
                 {
                     foreach (var existingMethodtDetail in existingMethodDetails)
@@ -332,7 +332,7 @@ namespace CavisProject.Application.Services
                     }
                 }
 
-          
+
                 if (update.SkinConditionIds != null && update.SkinConditionIds.Any())
                 {
                     foreach (var skinConditionId in update.SkinConditionIds)

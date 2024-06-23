@@ -35,6 +35,7 @@ namespace CavisProject.Infrastructures
         private readonly IWishListRepository _wishListRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
+        private readonly IMethodMakeUpRepository _methodMakeUpRepository;
 
         public UnitOfWork(AppDbContext appDbContext, IAppointmentRepository appointmentRepository, 
             IUserRepository userRepository, IAppointmentDetailRepository appointmentDetailRepository, 
@@ -46,7 +47,7 @@ namespace CavisProject.Infrastructures
             IProductDetailRepository productDetailRepository, IProductCategoryRepository productCategoryRepository,
             ISkinTypeRepository skinTypeRepository, ISupplierRepository supplierRepository,
             ITransactionRepository transactionRepository, IWishListRepository wishListRepository,
-            IRoleRepository roleRepository, IRefreshTokenRepository refreshTokenRepository,ISkinConditionRepository skinConditionRepository)
+            IRoleRepository roleRepository, IRefreshTokenRepository refreshTokenRepository,ISkinConditionRepository skinConditionRepository,IMethodMakeUpRepository methodMakeUpRepository)
         {
             _dbContext = appDbContext;
             
@@ -72,6 +73,7 @@ namespace CavisProject.Infrastructures
             _wishListRepository = wishListRepository;
             _roleRepository = roleRepository;
             _refreshTokenRepository = refreshTokenRepository;
+            _methodMakeUpRepository = methodMakeUpRepository;
         }
 
         public IAppointmentRepository AppointmentRepository => _appointmentRepository;
@@ -116,6 +118,7 @@ namespace CavisProject.Infrastructures
         public IRefreshTokenRepository RefreshTokenRepository => _refreshTokenRepository;
 
         public ISkinConditionRepository SkinConditionRepository =>_skinConditionRepository;
+        public IMethodMakeUpRepository MethodMakeUpRepository=>_methodMakeUpRepository;
 
         public async Task<int> SaveChangeAsync()
         {

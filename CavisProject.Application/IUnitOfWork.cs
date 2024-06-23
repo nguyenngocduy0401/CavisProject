@@ -32,6 +32,7 @@ namespace CavisProject.Application
         public IWishListRepository WishListRepository { get; }
         public IRoleRepository RoleRepository { get; }
         public IRefreshTokenRepository RefreshTokenRepository { get; }
+        public IMethodMakeUpRepository MethodMakeUpRepository { get; }
         public Task<int> SaveChangeAsync();
 
     }

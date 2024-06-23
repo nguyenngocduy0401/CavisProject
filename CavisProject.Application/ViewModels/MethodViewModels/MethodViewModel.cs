@@ -8,6 +8,7 @@ namespace CavisProject.Application.ViewModels.MethodViewModels
 {
     public class MethodViewModel
     {
+        public string Id { get; set; }
         public string MethodName { get; set; }
         public string Description { get; set; }
     }

@@ -19,17 +19,17 @@ namespace CavisProject.API.Controllers
         [HttpPost("")]
        // [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> CreateMethodSkinCare([FromBody] CreateMethodViewModel model) => await _methodSkinCareService.CreateMethodSkinCareAsync(model);
-        [SwaggerOperation(Summary = "tìm kiếm thông tin loại phương pháp ")]
+        [SwaggerOperation(Summary = "tìm kiếm thông tin loại phương pháp Skincare")]
         [HttpGet("")]
         public async Task<ApiResponse<Pagination<MethodViewModel>>> FilterMethodSkinCare(FilterMethodSkinCareViewModel filter) => await _methodSkinCareService.FilterMethodSkinCareAsync(filter);
-        [SwaggerOperation(Summary = "tìm kiếm thông tin phương pháp với id ")]
+        [SwaggerOperation(Summary = "tìm kiếm thông tin phương pháp Skincare với id ")]
         [HttpGet("{id}")]
-        public async Task<ApiResponse<MethodViewModel>> GetMethodSkinCareById(string id) => await _methodSkinCareService.GetMethodSkinCareById(id);
-        [SwaggerOperation(Summary = "khóa thông tin phương pháp với id {Authorize = Admin, Staff}")]
+        public async Task<ApiResponse<MethodViewModel>> GetMethodSkinCareById(string id) => await _methodSkinCareService.GetMethodSkinCareByIdAsync(id);
+        [SwaggerOperation(Summary = "khóa thông tin phương pháp Skincare với id {Authorize = Admin, Staff}")]
         [HttpDelete("{id}")]
        // [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> DeleteMethodSkinCare(string id) => await _methodSkinCareService.DeleteMethodSkinCareAsync(id);
-        [SwaggerOperation(Summary = "cập nhật thông tin loại da với id {Authorize = Admin, Staff}")]
+        [SwaggerOperation(Summary = "cập nhật thông tin phương pháp Skincare với id {Authorize = Admin, Staff}")]
         [HttpPut("{id}")]
        // [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> UpdateMethodSkinCare([FromBody] CreateMethodViewModel model,string id) => await _methodSkinCareService.UpdateMethodSkinCareAsync(model, id);
