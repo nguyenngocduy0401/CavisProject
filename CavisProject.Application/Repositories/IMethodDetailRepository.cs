@@ -13,5 +13,6 @@ namespace CavisProject.Application.Repositories
         Task AddAsync(MethodDetail methodDetail);
         void Update(MethodDetail entity);
         Task<IEnumerable<MethodDetail>> GetAllAsync(Expression<Func<MethodDetail, bool>> predicate);
+        Task DeleteAsync(MethodDetail methodDetail);
     }
 }

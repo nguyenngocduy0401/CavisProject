@@ -55,12 +55,7 @@ namespace CavisProject.Application.Services
                     Category = 1,
                 };
                 await _unitOfWork.MethodSkinCareRepository.AddAsync(methodSkinCare);
-                var isMethodSaved = await _unitOfWork.SaveChangeAsync() > 0;
-
-                if (!isMethodSaved)
-                {
-                    throw new Exception("Failed to save the method.");
-                }
+               
                 //Xuwr li skinId
                 if (create.SkinTypeId.HasValue)
                 {
@@ -71,7 +66,7 @@ namespace CavisProject.Application.Services
                         {
                             MethodId = methodSkinCare.Id,
                             SkinId = skinType.Id,
-                            IsDeleted = false,
+                           
                         };
                         await _unitOfWork.MethodDetailRepository.AddAsync(methodDetail);
                     }
@@ -94,32 +89,36 @@ namespace CavisProject.Application.Services
                             {
                                 MethodId = methodSkinCare.Id,
                                 SkinId = skinCondition.Id,
-                                IsDeleted = false,
+                             
                             };
                             await _unitOfWork.MethodDetailRepository.AddAsync(methodDetail);
+                        }
+                        else
+                        {
+                            response.isSuccess = true;
+                            response.Data = false;
+                            response.Message = "Tình trạng da không tồn tại.";
+                            return response;
                         }
 
                     }
                 }
-                else
-                {
-                    response.isSuccess = true;
-                    response.Data = false;
-                    response.Message = "Tình trạng da không tồn tại.";
-                    return response;
-                }
+               
                 var isDetailsSaved = await _unitOfWork.SaveChangeAsync() > 0;
                 if (isDetailsSaved)
                 {
 
                     response.isSuccess = true;
+                    response.Data = true;
                     response.Message = "Create Successfully";
                 }
                 else
                 {
 
                     response.isSuccess = false;
+                    response.Data = false;
                     response.Message = "Failed to save product details.";
+                    return response;
                 }
             }
             catch (DbException ex)
@@ -141,11 +140,18 @@ namespace CavisProject.Application.Services
             try
             {
                 var exist = await _unitOfWork.MethodSkinCareRepository.GetByIdAsync(Guid.Parse(id));
+                var existingMethodDetails = await _unitOfWork.MethodDetailRepository.GetAllAsync(pd => pd.MethodId == exist.Id);
+                foreach (var existing in existingMethodDetails)
+                {
+
+                    await _unitOfWork.MethodDetailRepository.DeleteAsync(existing);
+                }
                 if (exist == null)
                 {
                     response.isSuccess = true;
                     response.Data = false;
                     response.Message = "Phương pháp không tồn tại";
+                    return response;
                 }
                 if (exist.IsDeleted)
                 {
@@ -153,16 +159,18 @@ namespace CavisProject.Application.Services
                     response.isSuccess = true;
                     response.Data = false;
                     response.Message = "Phương pháp đã được xóa";
+                    return response;
 
                 }
                 _unitOfWork.MethodSkinCareRepository.SoftRemove(exist);
                 var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
                 if (isSuccess is false)
                 {
-                    throw new Exception("Delete product is fail");
+                    throw new Exception("Delete Method is fail");
                 }
                 response.Data = _mapper.Map<bool>(id);
-
+                response.Data = true;
+                response.isSuccess = true;
                 response.Message = "Delete product is success";
             }
             catch (DbException ex)
@@ -189,6 +197,7 @@ namespace CavisProject.Application.Services
                     (string.IsNullOrEmpty(filterModel.Description) || s.Description.Contains(filterModel.Description)) &&
                     (!filterModel.SkinConditionID.HasValue || s.MethodDetails.Any(pd => pd.SkinId == filterModel.SkinConditionID.Value && pd.Skins.Category == false)) &&
                     (!filterModel.SkinTypeId.HasValue || s.MethodDetails.Any(pd => pd.SkinId == filterModel.SkinTypeId.Value && pd.Skins.Category == true)) &&
+                    (!filterModel.IsDeleted.HasValue || s.IsDeleted == filterModel.IsDeleted) &&
                     s.Category == 1;
 
                 var method = await _unitOfWork.MethodSkinCareRepository.GetFilterAsync(
@@ -292,14 +301,7 @@ namespace CavisProject.Application.Services
                 {
                     foreach (var existingMethodtDetail in existingMethodDetails)
                     {
-                        if ((update.SkinTypeId.HasValue && existingMethodtDetail.SkinId == update.SkinTypeId) ||
-                            (update.SkinConditionIds != null && update.SkinConditionIds.Contains(existingMethodtDetail.SkinId.Value)))
-                        {
-                            continue;
-                        }
-
-                        existingMethodtDetail.IsDeleted = true;
-                        _unitOfWork.MethodDetailRepository.Update(existingMethodtDetail);
+                       await _unitOfWork.MethodDetailRepository.DeleteAsync(existingMethodtDetail);
                     }
                 }
                 if (update.SkinTypeId.HasValue)
@@ -307,26 +309,21 @@ namespace CavisProject.Application.Services
                     var skinType = await _unitOfWork.SkinTypeRepository.GetFirstOrDefaultAsync(s => s.Id == update.SkinTypeId.Value && s.Category == true);
                     if (skinType != null)
                     {
-                        var existingMethodtDetail = existingMethodDetails.FirstOrDefault(pd => pd.SkinId == skinType.Id);
-                        if (existingMethodtDetail == null)
-                        {
+                        
                             var methodDetail = new MethodDetail
                             {
                                 MethodId = method.Id,
                                 SkinId = skinType.Id,
-                                IsDeleted = false
+                       
                             };
                             await _unitOfWork.MethodDetailRepository.AddAsync(methodDetail);
-                        }
-                        else if (existingMethodtDetail.IsDeleted)
-                        {
-                            existingMethodtDetail.IsDeleted = false; // kichs hoatj laij cai cu da xoa
-                            _unitOfWork.MethodDetailRepository.Update(existingMethodtDetail);
-                        }
+                        
+                        
                     }
                     else
                     {
-                        response.isSuccess = false;
+                        response.isSuccess = true;
+                        response.Data = false;
                         response.Message = "Loại da không tồn tại.";
                         return response;
                     }
@@ -340,26 +337,20 @@ namespace CavisProject.Application.Services
                         var skinCondition = await _unitOfWork.SkinConditionRepository.GetByIdAsync(skinConditionId);
                         if (skinCondition != null)
                         {
-                            var existingMethodDetail = existingMethodDetails.FirstOrDefault(pd => pd.SkinId == skinCondition.Id);
-                            if (existingMethodDetail == null)
-                            {
+                            
                                 var methodDetail = new MethodDetail
                                 {
                                     MethodId = method.Id,
                                     SkinId = skinCondition.Id,
-                                    IsDeleted = false
+                                
                                 };
                                 await _unitOfWork.MethodDetailRepository.AddAsync(methodDetail);
-                            }
-                            else if (existingMethodDetail.IsDeleted)
-                            {
-                                existingMethodDetail.IsDeleted = false;// kichs hoatj laij cai cu da xoa
-                                _unitOfWork.MethodDetailRepository.Update(existingMethodDetail);
-                            }
-                        }
+                            
+                         }
                         else
                         {
-                            response.isSuccess = false;
+                            response.isSuccess = true;
+                            response.Data = false;
                             response.Message = "Tình trạng da không tồn tại.";
                             return response;
                         }
@@ -370,11 +361,13 @@ namespace CavisProject.Application.Services
                 if (isUpdated)
                 {
                     response.isSuccess = true;
+                    response.Data = true;
                     response.Message = "Update successfully!";
                 }
                 else
                 {
                     response.isSuccess = false;
+                    response.Data = false;
                     response.Message = "Update Fail!.";
                 }
             }

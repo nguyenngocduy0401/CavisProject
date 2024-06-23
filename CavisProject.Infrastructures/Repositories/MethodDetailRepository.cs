@@ -33,6 +33,10 @@ namespace CavisProject.Infrastructures.Repositories
         {
             _dbContext.Update(entity);
         }
-
+        public async Task DeleteAsync(MethodDetail methodDetail)
+        {
+            _dbContext.Remove(methodDetail);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

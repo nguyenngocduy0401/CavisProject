@@ -12,6 +12,7 @@ namespace CavisProject.Application.ViewModels.MethodViewModels
         public string? Description { get; set; }
         public Guid? SkinTypeId { get; set; }
         public Guid? SkinConditionID { get; set; }
+        public bool ? IsDeleted { get; set; }
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 10;
     }
