@@ -67,7 +67,7 @@ namespace CavisProject.Infrastructures.Repositories
                 TotalItemsCount = itemCount,
                 Items = await productsQuery.ToListAsync()
         };
-
+           
             return pagination;
         }
         public async Task<Guid> CreatePersonalAnalystAsync(PersonalAnalyst personalAnalyst)
@@ -109,6 +109,41 @@ namespace CavisProject.Infrastructures.Repositories
             .FirstOrDefaultAsync();
             if (personalAnalyst == null) return false;
             return true;
+        }
+        public async Task<Pagination<Method>> SuggestMethodAsync(Guid personalAnalystId, int? pageIndex = null, int? pageSize = null)
+        {
+            var skinIds = await _dbContext.PersonalAnalystDetails
+                .Where(e => e.PersonalAnalystId == personalAnalystId)
+                .Select(e => e.SkinId)
+                .Distinct()
+                .ToListAsync();
+
+            var methodsQuery = _dbContext.Methods
+                .Include(e => e.MethodDetails)
+                .ThenInclude(e => e.Skins)
+                .Where(e =>
+                    e.MethodDetails.Any(md => skinIds.Contains(md.SkinId) && md.Skins.Category)
+                );
+
+            var itemCount = await methodsQuery.CountAsync();
+
+            if (pageIndex.HasValue && pageSize.HasValue)
+            {
+                int validPageIndex = pageIndex.Value > 0 ? pageIndex.Value - 1 : 0;
+                int validPageSize = pageSize.Value > 0 ? pageSize.Value : 10;
+
+                methodsQuery = methodsQuery.Skip(validPageIndex * validPageSize).Take(validPageSize);
+            }
+
+            var pagination = new Pagination<Method>()
+            {
+                PageIndex = pageIndex ?? 0,
+                PageSize = pageSize ?? 10,
+                TotalItemsCount = itemCount,
+                Items = await methodsQuery.ToListAsync()
+            };
+
+            return pagination;
         }
     }
 }

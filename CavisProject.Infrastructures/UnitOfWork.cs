@@ -17,7 +17,7 @@ namespace CavisProject.Infrastructures
         private readonly IUserRepository _userRepository;
         private readonly IAppointmentDetailRepository _appointmentDetailRepository;
         private readonly ICalendarRepository _calendarRepository;
-        private readonly IMethodRepository _methodRepository;
+        private readonly IMethodSkinCareRepository _methodSkinCareRepository;
         private readonly IMethodDetailRepository _methodDetailRepository;
         private readonly IPackageDetailRepository _packageDetailRepository;
         private readonly IPackagePremiumRepository _packagePremiumRepository;
@@ -29,15 +29,17 @@ namespace CavisProject.Infrastructures
         private readonly IProductDetailRepository _productDetailRepository;
         private readonly IProductCategoryRepository _productCategoryRepository;
         private readonly ISkinTypeRepository _skinTypeRepository;
+        private readonly ISkinConditionRepository _skinConditionRepository;
         private readonly ISupplierRepository _supplierRepository;
         private readonly ITransactionRepository _transactionRepository;
         private readonly IWishListRepository _wishListRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
+        private readonly IMethodMakeUpRepository _methodMakeUpRepository;
 
         public UnitOfWork(AppDbContext appDbContext, IAppointmentRepository appointmentRepository, 
             IUserRepository userRepository, IAppointmentDetailRepository appointmentDetailRepository, 
-            ICalendarRepository calendarRepository, IMethodRepository methodRepository, 
+            ICalendarRepository calendarRepository, IMethodSkinCareRepository methodSkinCareRepository, 
             IMethodDetailRepository methodDetailRepository, IPackageDetailRepository packageDetailRepository, 
             IPackagePremiumRepository packagePremiumRepository, IPersonalAnalystRepository personalAnalystRepository,
             IPersonalAnalystDetailRepository personalAnalystDetailRepository, IPersonalImageRepository personalImageRepository,
@@ -45,14 +47,15 @@ namespace CavisProject.Infrastructures
             IProductDetailRepository productDetailRepository, IProductCategoryRepository productCategoryRepository,
             ISkinTypeRepository skinTypeRepository, ISupplierRepository supplierRepository,
             ITransactionRepository transactionRepository, IWishListRepository wishListRepository,
-            IRoleRepository roleRepository, IRefreshTokenRepository refreshTokenRepository)
+            IRoleRepository roleRepository, IRefreshTokenRepository refreshTokenRepository,ISkinConditionRepository skinConditionRepository,IMethodMakeUpRepository methodMakeUpRepository)
         {
             _dbContext = appDbContext;
+            
             _appointmentRepository = appointmentRepository;
             _userRepository = userRepository;
             _appointmentDetailRepository = appointmentDetailRepository;
             _calendarRepository = calendarRepository;
-            _methodRepository = methodRepository;
+            _methodSkinCareRepository = methodSkinCareRepository;
             _methodDetailRepository = methodDetailRepository;
             _packageDetailRepository = packageDetailRepository;
             _packagePremiumRepository = packagePremiumRepository;
@@ -64,11 +67,13 @@ namespace CavisProject.Infrastructures
             _productDetailRepository = productDetailRepository;
             _productCategoryRepository = productCategoryRepository;
             _skinTypeRepository = skinTypeRepository;
+            _skinConditionRepository = skinConditionRepository;
             _supplierRepository = supplierRepository;
             _transactionRepository = transactionRepository;
             _wishListRepository = wishListRepository;
             _roleRepository = roleRepository;
             _refreshTokenRepository = refreshTokenRepository;
+            _methodMakeUpRepository = methodMakeUpRepository;
         }
 
         public IAppointmentRepository AppointmentRepository => _appointmentRepository;
@@ -79,7 +84,7 @@ namespace CavisProject.Infrastructures
 
         public IMethodDetailRepository MethodDetailRepository => _methodDetailRepository;
 
-        public IMethodRepository MethodRepository => _methodRepository;
+        public IMethodSkinCareRepository MethodSkinCareRepository => _methodSkinCareRepository;
 
         public IPackageDetailRepository PackageDetailRepository => _packageDetailRepository;
 
@@ -111,6 +116,9 @@ namespace CavisProject.Infrastructures
         public IRoleRepository RoleRepository => _roleRepository;
 
         public IRefreshTokenRepository RefreshTokenRepository => _refreshTokenRepository;
+
+        public ISkinConditionRepository SkinConditionRepository =>_skinConditionRepository;
+        public IMethodMakeUpRepository MethodMakeUpRepository=>_methodMakeUpRepository;
 
         public async Task<int> SaveChangeAsync()
         {

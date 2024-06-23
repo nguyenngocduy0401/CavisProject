@@ -201,6 +201,9 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Property<Guid?>("SkinId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<Guid?>("SkinTypeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -277,6 +280,28 @@ namespace CavisProject.Infrastructures.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PackagePremiums");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("623a23ff-4ee9-409a-bf30-2e764e8bd754"),
+                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "This is a premium package offering special features.",
+                            Duration = 5.0,
+                            IsDeleted = false,
+                            PackagePremiumName = "Premium Package 5 days",
+                            Price = 5000.0
+                        },
+                        new
+                        {
+                            Id = new Guid("56866515-9d42-4209-a3f9-62e166cb322a"),
+                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "This is a premium package offering special features.",
+                            Duration = 365.0,
+                            IsDeleted = false,
+                            PackagePremiumName = "Premium Package year",
+                            Price = 200000.0
+                        });
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.PersonalAnalyst", b =>
@@ -951,6 +976,9 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Property<Guid?>("SkinId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("ProductId", "SkinId");
 
                     b.HasIndex("SkinId");
@@ -961,252 +989,302 @@ namespace CavisProject.Infrastructures.Migrations
                         new
                         {
                             ProductId = new Guid("179f7f08-41a7-48c4-a389-0584aaa49ed9"),
-                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb")
+                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("179f7f08-41a7-48c4-a389-0584aaa49ed9"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("83aff4ac-c495-4582-8877-1d2fc83eb9cb"),
-                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6")
+                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("83aff4ac-c495-4582-8877-1d2fc83eb9cb"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("21653406-6211-4f18-b661-a360b581b397"),
-                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81")
+                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("21653406-6211-4f18-b661-a360b581b397"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("ef3342b3-e716-4028-b508-f29a1ec87865"),
-                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473")
+                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("ef3342b3-e716-4028-b508-f29a1ec87865"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("44231b57-5715-46e3-bf7b-8fb891b73ccb"),
-                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415")
+                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("44231b57-5715-46e3-bf7b-8fb891b73ccb"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("0e5cce09-cd4b-4681-a56f-56b4c2baec7c"),
-                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb")
+                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("0e5cce09-cd4b-4681-a56f-56b4c2baec7c"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("87092517-b5ca-4794-8a9f-33cb8ab2cbfe"),
-                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6")
+                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("87092517-b5ca-4794-8a9f-33cb8ab2cbfe"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("aaa3964a-2eb1-4e95-9fe2-ce972a357bd7"),
-                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81")
+                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("aaa3964a-2eb1-4e95-9fe2-ce972a357bd7"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("85af885a-abb5-454f-8ad8-d15147bba22e"),
-                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473")
+                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("85af885a-abb5-454f-8ad8-d15147bba22e"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("897ab50d-ebe3-4869-a1b4-d2d7f288fc45"),
-                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415")
+                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("897ab50d-ebe3-4869-a1b4-d2d7f288fc45"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("2818b73c-0d4f-4772-b528-fd08cd0ffd9c"),
-                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb")
+                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("2818b73c-0d4f-4772-b528-fd08cd0ffd9c"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("7201eaec-e23f-4c3a-a575-7aad1cbab460"),
-                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6")
+                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("7201eaec-e23f-4c3a-a575-7aad1cbab460"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("6f1fdabb-ef74-4bdd-a106-1a06ee2bc254"),
-                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81")
+                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("6f1fdabb-ef74-4bdd-a106-1a06ee2bc254"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("4b01742a-26fa-4799-92cb-8cf936fda356"),
-                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473")
+                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("4b01742a-26fa-4799-92cb-8cf936fda356"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("03a271ba-2b54-455e-8a87-7c4ac5b45a7c"),
-                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415")
+                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("03a271ba-2b54-455e-8a87-7c4ac5b45a7c"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("4df06bb4-f45a-42d5-becd-98b2e834c765"),
-                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb")
+                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("4df06bb4-f45a-42d5-becd-98b2e834c765"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("6d759056-6bc2-49df-997b-bfb173c2dc19"),
-                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6")
+                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("6d759056-6bc2-49df-997b-bfb173c2dc19"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("73ca3caf-e6bf-44c4-9441-7d90c77de17a"),
-                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81")
+                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("73ca3caf-e6bf-44c4-9441-7d90c77de17a"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("49ff65f1-31c9-485d-89f7-7a2dea6ce649"),
-                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473")
+                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("49ff65f1-31c9-485d-89f7-7a2dea6ce649"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("7b7c9d03-67a4-4ed8-a1fc-34611b8de62e"),
-                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415")
+                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("7b7c9d03-67a4-4ed8-a1fc-34611b8de62e"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("8c5f0b9a-3b55-4635-bd1d-a53e4c2a70a9"),
-                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb")
+                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("8c5f0b9a-3b55-4635-bd1d-a53e4c2a70a9"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("a4457bba-0aa8-4443-9619-d3dab29aa196"),
-                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6")
+                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("a4457bba-0aa8-4443-9619-d3dab29aa196"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("dad66471-6992-4588-a77d-ab3802ee59f7"),
-                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81")
+                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("dad66471-6992-4588-a77d-ab3802ee59f7"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("bee3860c-9eaa-4e7b-878b-90a15b9defa2"),
-                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473")
+                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("bee3860c-9eaa-4e7b-878b-90a15b9defa2"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("e447a290-469c-47ab-b918-c9534556d112"),
-                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415")
+                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("e447a290-469c-47ab-b918-c9534556d112"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         });
                 });
 
@@ -1319,7 +1397,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3867),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2237),
                             Description = "Da cân bằng với vẻ ngoài khỏe mạnh, không quá nhờn cũng không quá khô, và ít khuyết điểm.",
                             IsDeleted = false,
                             SkinsName = "Da thường"
@@ -1328,7 +1406,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3883),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2259),
                             Description = "Sự kết hợp của các loại da; thường thì vùng chữ T (trán, mũi, và cằm) là da nhờn trong khi má là da khô hoặc bình thường.",
                             IsDeleted = false,
                             SkinsName = "Da hỗn hợp"
@@ -1337,7 +1415,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3884),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2262),
                             Description = "Da dễ phản ứng với các sản phẩm và yếu tố môi trường, thường dẫn đến đỏ, ngứa, hoặc kích ứng.",
                             IsDeleted = false,
                             SkinsName = "Da nhạy cảm"
@@ -1346,7 +1424,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3886),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2264),
                             Description = "Da thiếu độ ẩm, thường cảm thấy căng, thô ráp, hoặc bong tróc, và có thể trông xỉn màu.",
                             IsDeleted = false,
                             SkinsName = "Da khô"
@@ -1355,7 +1433,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3889),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2266),
                             Description = "Da sản xuất quá nhiều bã nhờn, dẫn đến vẻ ngoài bóng và có khả năng cao bị mụn và lỗ chân lông to.",
                             IsDeleted = false,
                             SkinsName = "Da nhờn"
@@ -1364,7 +1442,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("e8685143-0f2e-42fa-8025-da53e1707461"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3893),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2269),
                             Description = "Mụn đầu đen là loại mụn mà lỗ chân lông bị tắc bởi bã nhờn và tế bào da chết. Chúng thường màu đen hoặc vàng nâu.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu đen"
@@ -1373,7 +1451,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("73766ff0-d528-4262-a1e8-656b33f58603"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3896),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2271),
                             Description = "Mụn đầu trắng cũng là lỗ chân lông bị tắc, nhưng bề mặt của chúng bị phủ bởi một lớp da sạch. Chúng thường xuất hiện màu trắng hoặc da, thường nhỏ hơn mụn đầu đen.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu trắng"
@@ -1382,7 +1460,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("5ab57d24-20ad-4b15-8427-c951419da3ba"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3899),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2273),
                             Description = "Mụn bọc là các nốt sưng và đỏ trên da mà không có đầu trắng hoặc đen ở phần trên. Chúng có thể gây đau và khó chịu.",
                             IsDeleted = false,
                             SkinsName = "Mụn bọc"
@@ -1391,7 +1469,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("bd287628-2eb7-458a-b202-d89d63faaebf"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3901),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2276),
                             Description = "Mụn mủ là các nốt sưng và đỏ có chứa mủ ở phần trên. Chúng thường là dấu hiệu của một nhiễm trùng nặng hơn trong lỗ chân lông.",
                             IsDeleted = false,
                             SkinsName = "Mụn mủ"
@@ -1400,7 +1478,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3902),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2278),
                             Description = "Mụn viêm đỏ là các nốt sưng lớn và đau nhức dưới da. Chúng thường không có mủ ở phần trên như mụn mủ.",
                             IsDeleted = false,
                             SkinsName = "Mụn viêm đỏ"
@@ -1409,7 +1487,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("f49b6287-8f31-4fd5-9899-ed1eb6d0564a"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3905),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2281),
                             Description = "Mụn đầu đinh là các nốt sưng lớn và đau nhức có mủ ở phần trên. Chúng có thể gây ra tổn thương và vết sẹo nếu không được điều trị đúng cách.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu đinh"
@@ -1418,7 +1496,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("a9035561-1399-464f-9f09-38c164a40a63"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3907),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2283),
                             Description = "Mụn thâm là các vết sẹo hoặc vết đỏ hoặc nâu trên da sau khi mụn đã lành. Chúng có thể gây ra tự ti và không tự tin về da mặt.",
                             IsDeleted = false,
                             SkinsName = "Mụn thâm"
@@ -1427,7 +1505,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3908),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2285),
                             Description = "Nám da là sự xuất hiện của các vùng sạm màu trên da, thường là do tác động của tia UV từ ánh nắng mặt trời.",
                             IsDeleted = false,
                             SkinsName = "Nám da"
@@ -1436,7 +1514,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("4678f8d2-5648-4521-9608-8e981dee9103"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 15, 18, 58, 49, 703, DateTimeKind.Local).AddTicks(3911),
+                            CreationDate = new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2287),
                             Description = "Sự xuất hiện của nếp nhăn trên da thường là kết quả của quá trình lão hóa tự nhiên, nhưng cũng có thể được tăng cường bởi tác động từ môi trường, chế độ ăn uống và lối sống.",
                             IsDeleted = false,
                             SkinsName = "Nếp nhăn"
@@ -1509,7 +1587,7 @@ namespace CavisProject.Infrastructures.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AppointmentId")
+                    b.Property<Guid?>("AppointmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CreatedBy")
@@ -1630,6 +1708,9 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("URLImage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -1952,9 +2033,7 @@ namespace CavisProject.Infrastructures.Migrations
                 {
                     b.HasOne("CavisProject.Domain.Entity.Appointment", "Appointment")
                         .WithMany("Transaction")
-                        .HasForeignKey("AppointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AppointmentId");
 
                     b.HasOne("CavisProject.Domain.Entity.PackagePremium", "PackagePremium")
                         .WithMany("Transactions")

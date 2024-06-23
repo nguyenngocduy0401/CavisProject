@@ -37,6 +37,9 @@ namespace CavisProject.API.Controllers
         [HttpGet("")]
         public async Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategory(FilterProductCategoryModel filterProductCategory)
        => await _productCategoryService.FilterProductCategory(filterProductCategory);
-        
+        [SwaggerOperation(Summary = "lấy thông tin loại sản phẩm bằng id")]
+        [HttpGet("{id}")]
+       
+        public async Task<ApiResponse<ProductCategoryViewModel>> GetProductCategoryByIdAsync(string id) => await _productCategoryService.GetProductCategoryByIdAsync(id);
     }
 }

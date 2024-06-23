@@ -136,7 +136,6 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-
         public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremiumAsync(string id)
         {
             var response = new ApiResponse<UserPackageViewModel>();
@@ -372,8 +371,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
-
         public async Task<ApiResponse<UserViewModel>> GetInfoByLoginAsync()
         {
             var response = new ApiResponse<UserViewModel>();
@@ -396,6 +393,7 @@ namespace CavisProject.Application.Services
                 userViewModel.PackageDetail = _mapper.Map<PackageDetailViewModel>(packageDetail); 
 
                 userViewModel.CheckExistPersonal = checkExist;
+                userViewModel.Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 
                 response.Data = userViewModel;
                 response.isSuccess = true;
@@ -498,6 +496,7 @@ namespace CavisProject.Application.Services
                 if (!string.IsNullOrEmpty(updateUserModel.Gender)) user.Gender = updateUserModel.Gender;
                 if (!string.IsNullOrEmpty(updateUserModel.PhoneNumber)) user.PhoneNumber = updateUserModel.PhoneNumber;
                 if (!string.IsNullOrEmpty(updateUserModel.Email)) user.Email = updateUserModel.Email;
+                if (!string.IsNullOrEmpty(updateUserModel.URLImage)) user.URLImage = updateUserModel.URLImage;
                 if(updateUserModel.DateOfBirth != null) user.DateOfBirth = updateUserModel.DateOfBirth;
                 var newUser = await _userManager.UpdateAsync(user);
                 if (!newUser.Succeeded)

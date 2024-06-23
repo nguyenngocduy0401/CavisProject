@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CavisProject.Application.Interfaces
+namespace CavisProject.Domain.Enums
 {
-    public interface IMethodService
+    public enum MethodCategoryEnum
     {
+        Skincare,
+        Makeup
     }
 }
