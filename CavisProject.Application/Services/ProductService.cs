@@ -6,6 +6,7 @@ using CavisProject.Application.ViewModels.ProductViewModel;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Domain.Entity;
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -96,7 +97,7 @@ namespace CavisProject.Application.Services
                             {
                                 ProductId = product.Id,
                                 SkinId = skinType.Id,
-                                IsDeleted = false,
+                               
                             };
                             await _unitOfWork.ProductDetailRepository.AddAsync(productDetail);
                         }
@@ -119,7 +120,7 @@ namespace CavisProject.Application.Services
                             {
                                 ProductId = product.Id,
                                 SkinId = skinCondition.Id,
-                                IsDeleted = false,
+                               
                             };
                             await _unitOfWork.ProductDetailRepository.AddAsync(productDetail);
                         }
@@ -169,6 +170,12 @@ namespace CavisProject.Application.Services
             try
             {
                 var exist = await _unitOfWork.ProductRepository.GetByIdAsync(Guid.Parse(id));
+                var existingProductDetails = await _unitOfWork.ProductDetailRepository.GetAllAsync(pd => pd.ProductId == exist.Id);
+                foreach (var existingProductDetail in existingProductDetails)
+                {
+
+                    await _unitOfWork.ProductDetailRepository.Delete(existingProductDetail);
+                }
                 if (exist == null)
                 {
                     response.isSuccess = true;
@@ -214,12 +221,12 @@ namespace CavisProject.Application.Services
                 Expression<Func<Product, bool>> filter = s =>
                     (string.IsNullOrEmpty(filterProductViewModel.ProductName) || s.ProductName.Contains(filterProductViewModel.ProductName)) &&
                     (string.IsNullOrEmpty(filterProductViewModel.Description) || s.Description.Contains(filterProductViewModel.Description)) &&
-                  (!filterProductViewModel.SupplierId.HasValue || s.SupplierId == filterProductViewModel.SupplierId.Value)&&
+                  (!filterProductViewModel.SupplierId.HasValue || s.SupplierId == filterProductViewModel.SupplierId.Value) &&
                 (!filterProductViewModel.SupplierId.HasValue || s.SupplierId == filterProductViewModel.SupplierId.Value) &&
             (!filterProductViewModel.ProductCategoryId.HasValue || s.ProductCategoryId == filterProductViewModel.ProductCategoryId.Value) &&
-            (!filterProductViewModel.SkinConditionID.HasValue || s.ProductDetails.Any(pd => pd.SkinId == filterProductViewModel.SkinConditionID.Value)) &&
-            (!filterProductViewModel.SkinTypeId.HasValue || s.ProductDetails.Any(pd => pd.SkinId == filterProductViewModel.SkinTypeId.Value));
-
+                (!filterProductViewModel.SkinConditionID.HasValue || s.ProductDetails.Any(pd => pd.SkinId == filterProductViewModel.SkinConditionID.Value && pd.Skins.Category == false)) &&
+                (!filterProductViewModel.SkinTypeId.HasValue || s.ProductDetails.Any(pd => pd.SkinId == filterProductViewModel.SkinTypeId.Value && pd.Skins.Category == true)) &&
+                (!filterProductViewModel.IsDeleted.HasValue || s.IsDeleted == filterProductViewModel.IsDeleted);
                 var products = await _unitOfWork.ProductRepository.GetFilterAsync(
                     filter: filter,
                     pageIndex: filterProductViewModel.PageIndex,
@@ -233,7 +240,7 @@ namespace CavisProject.Application.Services
                     response.Message = "Không tìm thấy sản phẩm phù hợp!";
                     return response;
                 }
-                                   var result = _mapper.Map<Pagination<ProductViewModel>>(products);
+             var result = _mapper.Map<Pagination<ProductViewModel>>(products);
 
                 response.Data = result;
                 response.isSuccess = true;
@@ -342,14 +349,8 @@ namespace CavisProject.Application.Services
                 {
                     foreach (var existingProductDetail in existingProductDetails)
                     {
-                        if ((updateProductViewModel.SkinTypeId.HasValue && existingProductDetail.SkinId == updateProductViewModel.SkinTypeId) ||
-                            (updateProductViewModel.SkinConditionIds != null && updateProductViewModel.SkinConditionIds.Contains(existingProductDetail.SkinId.Value)))
-                        {
-                            continue;
-                        }
-
-                        existingProductDetail.IsDeleted = true;
-                        _unitOfWork.ProductDetailRepository.Update(existingProductDetail);
+                       
+                      await  _unitOfWork.ProductDetailRepository.Delete(existingProductDetail);
                     }
                 }
 
@@ -358,23 +359,17 @@ namespace CavisProject.Application.Services
                     var skinType = await _unitOfWork.SkinTypeRepository.GetFirstOrDefaultAsync(s => s.Id == updateProductViewModel.SkinTypeId.Value && s.Category == true);
                     if (skinType != null)
                     {
-                        var existingProductDetail = existingProductDetails.FirstOrDefault(pd => pd.SkinId == skinType.Id);
-                        if (existingProductDetail == null)
-                        {
+                      
+                       
                             var productDetail = new ProductDetail
                             {
                                 ProductId = product.Id,
                                 SkinId = skinType.Id,
-                                IsDeleted = false
+                               
                             };
                             await _unitOfWork.ProductDetailRepository.AddAsync(productDetail);
+                        
                         }
-                        else if (existingProductDetail.IsDeleted)
-                        {
-                            existingProductDetail.IsDeleted = false;
-                            _unitOfWork.ProductDetailRepository.Update(existingProductDetail);
-                        }
-                    }
                     else
                     {
                         response.isSuccess = false;
@@ -391,23 +386,16 @@ namespace CavisProject.Application.Services
                         var skinCondition = await _unitOfWork.SkinConditionRepository.GetByIdAsync(skinConditionId);
                         if (skinCondition != null)
                         {
-                            var existingProductDetail = existingProductDetails.FirstOrDefault(pd => pd.SkinId == skinCondition.Id);
-                            if (existingProductDetail == null)
-                            {
+                         
                                 var productDetail = new ProductDetail
                                 {
                                     ProductId = product.Id,
                                     SkinId = skinCondition.Id,
-                                    IsDeleted = false
+                                  
                                 };
                                 await _unitOfWork.ProductDetailRepository.AddAsync(productDetail);
                             }
-                            else if (existingProductDetail.IsDeleted)
-                            {
-                                existingProductDetail.IsDeleted = false; 
-                                _unitOfWork.ProductDetailRepository.Update(existingProductDetail);
-                            }
-                        }
+                        
                         else
                         {
                             response.isSuccess = false;

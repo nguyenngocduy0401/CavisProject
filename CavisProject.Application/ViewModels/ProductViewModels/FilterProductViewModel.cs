@@ -12,7 +12,7 @@ namespace CavisProject.Application.ViewModels.ProductViewModel
         public string? Description { get; set; }
         public Guid? SupplierId { get; set; }
         public Guid? ProductCategoryId { get; set; }
-
+        public bool? IsDeleted{ get; set; }
         public Guid? SkinTypeId { get; set; } 
         public Guid? SkinConditionID { get; set; } 
         public int PageIndex { get; set; } = 1;
