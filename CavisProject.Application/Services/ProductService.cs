@@ -6,6 +6,7 @@ using CavisProject.Application.ViewModels.ProductViewModel;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Domain.Entity;
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -217,9 +218,8 @@ namespace CavisProject.Application.Services
                   (!filterProductViewModel.SupplierId.HasValue || s.SupplierId == filterProductViewModel.SupplierId.Value)&&
                 (!filterProductViewModel.SupplierId.HasValue || s.SupplierId == filterProductViewModel.SupplierId.Value) &&
             (!filterProductViewModel.ProductCategoryId.HasValue || s.ProductCategoryId == filterProductViewModel.ProductCategoryId.Value) &&
-            (!filterProductViewModel.SkinConditionID.HasValue || s.ProductDetails.Any(pd => pd.SkinId == filterProductViewModel.SkinConditionID.Value)) &&
-            (!filterProductViewModel.SkinTypeId.HasValue || s.ProductDetails.Any(pd => pd.SkinId == filterProductViewModel.SkinTypeId.Value));
-
+                (!filterProductViewModel.SkinConditionID.HasValue || s.ProductDetails.Any(pd => pd.SkinId == filterProductViewModel.SkinConditionID.Value && pd.Skins.Category == false)) &&
+                (!filterProductViewModel.SkinTypeId.HasValue || s.ProductDetails.Any(pd => pd.SkinId == filterProductViewModel.SkinTypeId.Value && pd.Skins.Category == true));
                 var products = await _unitOfWork.ProductRepository.GetFilterAsync(
                     filter: filter,
                     pageIndex: filterProductViewModel.PageIndex,
@@ -233,7 +233,7 @@ namespace CavisProject.Application.Services
                     response.Message = "Không tìm thấy sản phẩm phù hợp!";
                     return response;
                 }
-                                   var result = _mapper.Map<Pagination<ProductViewModel>>(products);
+             var result = _mapper.Map<Pagination<ProductViewModel>>(products);
 
                 response.Data = result;
                 response.isSuccess = true;

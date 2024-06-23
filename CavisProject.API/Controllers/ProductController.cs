@@ -9,7 +9,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace CavisProject.API.Controllers
 { [Route("api/v1/product")]
-   // [Authorize]
+   [Authorize]
     public class ProductController : ControllerBase
 
     {
@@ -28,7 +28,7 @@ namespace CavisProject.API.Controllers
         [HttpPost]
         public async Task<ApiResponse<bool>> CreateProduct([FromBody] CreateProductViewModel createProductViewModel) => await _productService.CreateProductAsync(createProductViewModel);
         [SwaggerOperation(Summary = "xóa sản phẩm {Authorize=Admin)")]
-      //  [Authorize(Roles = AppRole.Admin)]
+       [Authorize(Roles = AppRole.Admin)]
         [HttpDelete("{id}")]
         public async Task<ApiResponse<bool>> DeleteProduct(string id) => await _productService.DeleteProductAsync(id);
         [SwaggerOperation(Summary = "tìm kiếm thông tin sản phẩm  ")]
