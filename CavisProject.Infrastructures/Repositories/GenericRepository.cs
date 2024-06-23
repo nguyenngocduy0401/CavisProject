@@ -4,7 +4,6 @@ using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using CavisProject.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Entity;
 using System.Linq.Expressions;
 using System.Linq;
 
@@ -13,7 +12,7 @@ namespace CavisProject.Infrastructures.Repositories
 
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
     {
-        protected Microsoft.EntityFrameworkCore.DbSet<TEntity> _dbSet;
+        protected DbSet<TEntity> _dbSet;
         private readonly ICurrentTime _timeService;
         private readonly IClaimsService _claimsService;
 
@@ -28,19 +27,19 @@ namespace CavisProject.Infrastructures.Repositories
             IQueryable<TEntity> query = _dbSet.Where(expression);
             foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
-                query = Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.Include(query, includeProperty); // Chỉ rõ với không gian tên
+                query = query.Include(includeProperty);
             }
             return query.ToList();
         }
 
-        public virtual Pagination<TEntity> GetFilter(
+        public virtual async Task<Pagination<TEntity>> GetFilterAsync(
             Expression<Func<TEntity, bool>>? filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             string includeProperties = "",
             int? pageIndex = null,
             int? pageSize = null,
             string? foreignKey = null,
-            int? foreignKeyId = null)
+            object? foreignKeyId = null)
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -51,16 +50,27 @@ namespace CavisProject.Infrastructures.Repositories
 
             foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
-                query = Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.Include(query, includeProperty);
+                query = query.Include(includeProperty);
             }
-            var itemCount = query.Count();
+            var itemCount = await query.CountAsync();
             if (orderBy != null)
             {
                 query = orderBy(query);
             }
-            if (!string.IsNullOrEmpty(foreignKey) && foreignKeyId.HasValue)
+            if (!string.IsNullOrEmpty(foreignKey) && foreignKeyId != null)
             {
-                query = query.Where(e => EF.Property<int>(e, foreignKey) == foreignKeyId.Value);
+                if (foreignKeyId is Guid guidValue)
+                {
+                    query = query.Where(e => EF.Property<Guid>(e, foreignKey) == guidValue);
+                }
+                else if (foreignKeyId is string stringValue)
+                {
+                    query = query.Where(e => EF.Property<string>(e, foreignKey) == stringValue);
+                }
+                else
+                {
+                    throw new ArgumentException("Unsupported foreign key type");
+                }
             }
             if (pageIndex.HasValue && pageSize.HasValue)
             {
@@ -75,21 +85,16 @@ namespace CavisProject.Infrastructures.Repositories
                 PageIndex = pageIndex ?? 0,
                 PageSize = pageSize ?? 10, 
                 TotalItemsCount = itemCount,
-                Items = query.ToList(),
+                Items = await query.ToListAsync(),
             };
 
             return result;
         }
         public Task<List<TEntity>> GetAllAsync() => _dbSet.ToListAsync();
 
-        public async Task<TEntity?> GetByIdAsync(Guid id)
+        public async Task<TEntity> GetByIdAsync(Guid id)
         {
-            var result = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
-            if (result == null)
-            {
-                throw new Exception($"Not found any object with id: {id}");
-            }
-            return result;
+            return await _dbSet.FindAsync(id);
         }
 
         public async Task AddAsync(TEntity entity)
@@ -148,7 +153,7 @@ namespace CavisProject.Infrastructures.Repositories
             return await _dbSet.AnyAsync(predicate);
         }
 
-
+       
 
     }
 }

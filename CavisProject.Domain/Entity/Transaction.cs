@@ -13,7 +13,7 @@ namespace CavisProject.Domain.Entity
         public string? Title { get; set; }
         public string? PurchaseTime { get; set; }
         public double? TotalPaid { get; set; }
-        public Guid AppointmentId { get; set; }
+        public Guid? AppointmentId { get; set; }
         [ForeignKey("AppointmentId")]
         public Appointment? Appointment { get; set; }
         public string? UserId { get; set; }

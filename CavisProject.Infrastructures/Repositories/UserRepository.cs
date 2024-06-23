@@ -2,11 +2,15 @@
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using CavisProject.Domain.Entity;
+using CavisProject.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,11 +24,11 @@ namespace CavisProject.Infrastructures.Repositories
         private readonly RoleManager<Role> _roleManager;
         private readonly IClaimsService _claimsService;
 
-        public UserRepository(AppDbContext context, ICurrentTime currentTime,
+        public UserRepository(AppDbContext dbContext, ICurrentTime currentTime,
             IClaimsService claimsService, UserManager<User> userManager,
             RoleManager<Role> roleManager)
         {
-            _dbContext = context;
+            _dbContext = dbContext;
             _currentTime = currentTime;
             _claimsService = claimsService;
             _userManager = userManager;
@@ -34,37 +38,128 @@ namespace CavisProject.Infrastructures.Repositories
 
         public async Task<User> GetByPhoneNumberAsync(string phoneNumber) =>
             await _dbContext.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
-        public async Task<Pagination<User>> GetUsersByFilter
-            (string search, string role, int pageIndex = 1, int pageSize = 10)
+
+        public virtual async Task<Pagination<User>> GetFilterAsync(
+      Expression<Func<User, bool>>? filter = null,
+      Func<IQueryable<User>, IOrderedQueryable<User>>? orderBy = null,
+      string includeProperties = "",
+      int? pageIndex = null,
+      int? pageSize = null,
+      string? role = null,
+      IsActivityEnum? isActivity = null,
+      UserPremiumStatusEnum? status = null,
+      string? foreignKey = null,
+      object? foreignKeyId = null)
         {
-            var userList = _dbContext.Users
-            .Where(u =>
-            string.IsNullOrEmpty(search) ||
-            u.FullName.Contains(search) ||
-            u.PhoneNumber.Contains(search) ||
-            u.Email.Contains(search));
+            IQueryable<User> query = _dbContext.Users; 
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
             if (!string.IsNullOrEmpty(role))
             {
                 var usersInRole = await _userManager.GetUsersInRoleAsync(role);
                 var userIdsInRole = usersInRole.Select(u => u.Id);
-                userList = userList.Where(u => userIdsInRole.Contains(u.Id));
+                query = query.Where(u => userIdsInRole.Contains(u.Id));
+            }
+            if (isActivity.HasValue)
+            {
+                switch (isActivity)
+                {
+                    case IsActivityEnum.Activity:
+                        query = query.Where(u => u.LockoutEnd <= DateTimeOffset.UtcNow || u.LockoutEnd == null);
+                        break;
+                    case IsActivityEnum.Inactivity:
+                        query = query.Where(u => u.LockoutEnd > DateTimeOffset.UtcNow);
+                        break;
+                }
             }
 
-            var itemCount = await userList.CountAsync();
-            var items = await userList
-            .Skip((pageIndex - 1) * pageSize)
-            .Take(pageSize)
-            .AsNoTracking()
-            .ToListAsync();
-
-            var result = new Pagination<User>()
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
-                PageIndex = pageIndex,
-                PageSize = pageSize,
-                TotalItemsCount = itemCount,
-                Items = items,
+                query = query.Include(includeProperty);
+            }
+
+            if (status.HasValue )
+            {
+                var statusValue = (int)status.Value;
+
+                var userIds = await query.Select(u => u.Id).ToListAsync();
+
+                var packageDetails = await _dbContext.PackageDetails
+                    .Where(pd => userIds.Contains(pd.UserId))
+                    .ToListAsync();
+
+                switch (status)
+                {
+                    case UserPremiumStatusEnum.NotActivated:
+                        userIds = packageDetails.Where(pd => pd.Status == 0).Select(pd => pd.UserId).ToList();
+                        break;
+                    case UserPremiumStatusEnum.Active:
+                        userIds = packageDetails.Where(pd => pd.Status == 1).Select(pd => pd.UserId).ToList();
+                        break;
+                }
+                query = query.Where(u => userIds.Contains(u.Id));
+            }
+
+            var countTask = query.CountAsync();
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+            if (!string.IsNullOrEmpty(foreignKey) && foreignKeyId != null)
+            {
+                if (foreignKeyId is Guid guidValue)
+                {
+                    query = query.Where(e => EF.Property<Guid>(e, foreignKey) == guidValue);
+                }
+                else if (foreignKeyId is string stringValue)
+                {
+                    query = query.Where(e => EF.Property<string>(e, foreignKey) == stringValue);
+                }
+                else
+                {
+                    throw new ArgumentException("Unsupported foreign key type");
+                }
+            }
+            if (pageIndex.HasValue && pageSize.HasValue)
+            {
+                int validPageIndex = pageIndex.Value > 0 ? pageIndex.Value - 1 : 0;
+                int validPageSize = pageSize.Value > 0 ? pageSize.Value : 10;
+
+                query = query.Skip(validPageIndex * validPageSize).Take(validPageSize);
+            }
+            var count = await countTask;
+            var items = await query.ToListAsync();
+            var result = new Pagination<User>
+            {
+                PageIndex = pageIndex ?? 0,
+                PageSize = pageSize ?? 10,
+                TotalItemsCount = count,
+                Items = items
             };
+
             return result;
+        }
+
+        public async Task<string?> GetPackagePremiumIdAsync(string userId)
+        {
+            var user = await _dbContext.Users
+                .Include(u => u.PackageDetails)
+                    .ThenInclude(pd => pd.PackagePremium)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User not found");
+            }
+
+            var activePackageDetail = user.PackageDetails
+                .FirstOrDefault(pd => pd.Status == 1 && pd.EndTime > DateTime.UtcNow);
+
+            return activePackageDetail?.PackagePremium?.Id.ToString();
         }
 
         public async Task AddAsync(User user)
@@ -102,6 +197,31 @@ namespace CavisProject.Infrastructures.Repositories
         {
             var user = await _userManager.FindByIdAsync(userId);
             return (List<string>)(user != null ? await _userManager.GetRolesAsync(user) : new List<string>());
+        }
+
+        public Task<string> GetUserByUserId(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<string> GetCurrentUserRoleAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles == null || roles.Count == 0)
+            {
+                throw new Exception("User does not have any roles");
+            }
+
+            // Assuming the user has only one role, if the user has multiple roles, you may need to handle it differently
+            var currentRole = roles.First();
+
+            return currentRole;
         }
     }
 }

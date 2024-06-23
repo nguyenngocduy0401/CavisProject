@@ -1,4 +1,5 @@
 ﻿using CavisProject.Application;
+using CavisProject.Application.Commoms;
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using CavisProject.Application.Services;
@@ -18,7 +19,7 @@ namespace CavisProject.Infrastructures
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructuresService(this IServiceCollection services, string databaseConnection)
+        public static IServiceCollection AddInfrastructuresService(this IServiceCollection services, string appConfiguration)
         {
             #region Service DI
             services.AddScoped<ICurrentTime, CurrentTime>();
@@ -26,7 +27,7 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IAppointmentDetailService, AppointmentDetailService>(); 
             services.AddScoped<ICalendarService, CalendarService>();
             services.AddScoped<IMethodDetailService, MethodDetailService>();
-            services.AddScoped<IMethodService, MethodService>();
+            services.AddScoped<IMethodSkinCareService, MethodSkinCareService>();
             services.AddScoped<IPackageDetailService, PackageDetailService>();
             services.AddScoped<IPackagePreniumService, PackagePreniumService>();
             services.AddScoped<IPersonalAnalystDetailService, PersonalAnalystDetailService>();
@@ -41,9 +42,12 @@ namespace CavisProject.Infrastructures
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IUserService,UserService>();
             services.AddScoped<IWishListService, WishListService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ISkinConditionService, SkinConditionService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IPersonalAnalystDetailService, PersonalAnalystDetailService>();
+            services.AddScoped<IMethodMakeUpService,MethodMakeUpService>();
             #endregion
 
             #region Repository DI
@@ -51,7 +55,7 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<ICalendarRepository,CalendarRepository>();
             services.AddScoped<IMethodDetailRepository, MethodDetailRepository>();
-            services.AddScoped<IMethodRepository, MethodRepository>();
+            services.AddScoped<IMethodSkinCareRepository, MethodSkinCareRepository>();
             services.AddScoped<IPackageDetailRepository, PackageDetailRepository>();
             services.AddScoped<IPackagePremiumRepository, PackagePremiumRepository>();
             services.AddScoped<IPersonalAnalystDetailRepository, PersonalAnalystDetailRepository>();
@@ -63,11 +67,13 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IRefreshTokenRepository , RefreshTokenRepository>();
-            services.AddScoped<ISkinTypeRepository, SkinRepository>();
+            services.AddScoped<ISkinTypeRepository, SkinTypeRepository>();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<IWishListRepository, WishListRepository>();
+            services.AddScoped<ISkinConditionRepository , SkinConditionRepository>();
+            services.AddScoped<IMethodMakeUpRepository, MethodMakeUpRepository>();
 
 
 
@@ -87,8 +93,8 @@ namespace CavisProject.Infrastructures
             });
 
             // ATTENTION: if you do migration please check file README.md
-            services.AddDbContext<AppDbContext>(option => option.UseSqlServer(databaseConnection));
-
+            services.AddDbContext<AppDbContext>(option => option.UseSqlServer(appConfiguration));
+            /*services.AddSingleton(appConfiguration.EmailConfiguration);*/
             services.AddAutoMapper(typeof(MapperConfigurationsProfile).Assembly);
 
 

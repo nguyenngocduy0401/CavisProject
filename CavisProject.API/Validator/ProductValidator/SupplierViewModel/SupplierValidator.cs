@@ -1,9 +1,10 @@
-﻿using CavisProject.Domain.Entity;
+﻿using CavisProject.Application.ViewModels.SupplierViewModel;
+using CavisProject.Domain.Entity;
 using FluentValidation;
 
 namespace CavisProject.API.Validator.ProductValidator.SupplierViewModel
 {
-    public class SupplierValidator : AbstractValidator<Supplier>
+    public class SupplierValidator : AbstractValidator<CreateSupplierViewModel>
     {
         public SupplierValidator() {
             // SupplierName: not null and maximum 50 characters

@@ -9,5 +9,6 @@ namespace CavisProject.Application.Repositories
 {
     public interface IPackagePremiumRepository :IGenericRepository<PackagePremium>
     {
+
     }
 }

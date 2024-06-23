@@ -21,6 +21,7 @@ namespace CavisProject.Application.Services
         private readonly IValidator<CreateSkinTypeViewModel> _validatorCreateSkinType;
         public SkinConditionService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateSkinTypeViewModel> validatorCreateSkintype, IClaimsService claimsService)
         {
+            _claimsService = claimsService;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _validatorCreateSkinType = validatorCreateSkintype;
@@ -115,14 +116,14 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<CreateSkinTypeViewModel>>> FilterSkinCondition(SkinFilterModel skinTypeFilterModel)
+        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinCondition(SkinFilterModel skinTypeFilterModel)
         {
-            var response = new ApiResponse<Pagination<CreateSkinTypeViewModel>>();
+            var response = new ApiResponse<Pagination<SkinViewModel>>();
 
             try
             {
                
-                var paginationResult = _unitOfWork.SkinTypeRepository.GetFilter(
+                var paginationResult = await _unitOfWork.SkinTypeRepository.GetFilterAsync(
                     filter: s =>
                         (string.IsNullOrEmpty(skinTypeFilterModel.SkinTypeName) || s.SkinsName.Contains(skinTypeFilterModel.SkinTypeName)) &&
                         (string.IsNullOrEmpty(skinTypeFilterModel.Description) || s.Description.Contains(skinTypeFilterModel.Description)) &&
@@ -130,8 +131,8 @@ namespace CavisProject.Application.Services
                     pageIndex: skinTypeFilterModel.PageIndex,
                     pageSize: skinTypeFilterModel.PageSize
                 ); ;
-                var skinTypeViewModels = _mapper.Map<List<CreateSkinTypeViewModel>>(paginationResult.Items);
-                var paginationViewModel = new Pagination<CreateSkinTypeViewModel>
+                var skinTypeViewModels = _mapper.Map<List<SkinViewModel>>(paginationResult.Items);
+                var paginationViewModel = new Pagination<SkinViewModel>
                 {
                     PageIndex = paginationResult.PageIndex,
                     PageSize = paginationResult.PageSize,
@@ -157,6 +158,7 @@ namespace CavisProject.Application.Services
             try
             {
                 var exist = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(skinTypeId));
+
 
                 FluentValidation.Results.ValidationResult validationResult = await _validatorCreateSkinType.ValidateAsync(updateSkinType);
                 if (validationResult.IsValid)
@@ -207,21 +209,20 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> GetSkinConditionById(string skinTypeId)
+        public async Task<ApiResponse<SkinViewModel>> GetSkinConditionById(string id)
         {
-            var response = new ApiResponse<CreateSkinTypeViewModel>();
+            var response = new ApiResponse<SkinViewModel>();
 
             try
             {
-                var skinType = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(skinTypeId));
+                var skinType = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(id));
 
-                if (skinType == null)
+                if (skinType == null || skinType.Category == true)
                 {
                     throw new Exception("Skin condition not found.");
-
                 }
 
-                var skinTypeViewModel = _mapper.Map<CreateSkinTypeViewModel>(skinType);
+                var skinTypeViewModel = _mapper.Map<SkinViewModel>(skinType);
 
                 response.Data = skinTypeViewModel;
                 response.isSuccess = true;
@@ -231,15 +232,14 @@ namespace CavisProject.Application.Services
             {
                 response.isSuccess = false;
                 response.Message = ex.Message;
-
             }
             catch (Exception ex)
             {
                 response.isSuccess = false;
                 response.Message = ex.Message;
             }
-            return response;
-
+            return response; 
         }
+
     }
 }

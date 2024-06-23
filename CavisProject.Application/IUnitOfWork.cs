@@ -14,7 +14,7 @@ namespace CavisProject.Application
         public IAppointmentDetailRepository AppointmentDetailRepository { get; }
         public ICalendarRepository CalendarRepository { get; }
         public IMethodDetailRepository MethodDetailRepository { get; }
-        public IMethodRepository MethodRepository { get; }
+        public IMethodSkinCareRepository MethodSkinCareRepository { get; }
         public IPackageDetailRepository PackageDetailRepository { get; }
         public IPackagePremiumRepository PackagePremiumRepository { get; }
         public IPersonalAnalystRepository PersonalAnalystRepository { get; }
@@ -25,12 +25,14 @@ namespace CavisProject.Application
         public IProductCategoryRepository ProductCategoryRepository { get; }
         public IProductDetailRepository ProductDetailRepository { get; }
         public ISkinTypeRepository SkinTypeRepository { get; }
+        public ISkinConditionRepository SkinConditionRepository { get; }
         public IUserRepository UserRepository { get; }
         public ISupplierRepository SupplierRepository { get; }
         public ITransactionRepository TransactionRepository { get; }
         public IWishListRepository WishListRepository { get; }
         public IRoleRepository RoleRepository { get; }
         public IRefreshTokenRepository RefreshTokenRepository { get; }
+        public IMethodMakeUpRepository MethodMakeUpRepository { get; }
         public Task<int> SaveChangeAsync();
 
     }
