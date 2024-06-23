@@ -47,7 +47,8 @@ namespace CavisProject.Application.Services
                 var existingProduct = await _unitOfWork.ProductRepository.GetFirstOrDefaultAsync(p => p.ProductName == createProductViewModel.ProductName);
                 if (existingProduct != null)
                 {
-                    response.isSuccess = false;
+                    response.isSuccess = true;
+                    response.Data= false;
                     response.Message = "Tên sản phẩm đã tồn tại.";
                     return response;
                 }
@@ -81,14 +82,7 @@ namespace CavisProject.Application.Services
 
                
                     await _unitOfWork.ProductRepository.AddAsync(product);
-                    var isProductSaved = await _unitOfWork.SaveChangeAsync() > 0;
-
-                    if (!isProductSaved)
-                    {
-                        throw new Exception("Failed to save the product.");
-                    }
-
-                    if (createProductViewModel.SkinTypeId.HasValue)
+                   if (createProductViewModel.SkinTypeId.HasValue)
                     {
                         var skinType = await _unitOfWork.SkinTypeRepository.GetFirstOrDefaultAsync(s => s.Id == createProductViewModel.SkinTypeId && s.Category == true);
                         if (skinType != null)
@@ -124,16 +118,17 @@ namespace CavisProject.Application.Services
                             };
                             await _unitOfWork.ProductDetailRepository.AddAsync(productDetail);
                         }
-                      
+                        else
+                        {
+                            response.isSuccess = true;
+                            response.Data = false;
+                            response.Message = "Tình trạng da không tồn tại.";
+                            return response;
+                        }
+
                     }
                 }
-                    else
-                    {
-                        response.isSuccess = true;
-                        response.Data = false;
-                        response.Message = "Tình trạng da không tồn tại.";
-                        return response;
-                    }
+                   
 
                     var isDetailsSaved = await _unitOfWork.SaveChangeAsync() > 0;
 
@@ -141,6 +136,7 @@ namespace CavisProject.Application.Services
                     {
                       
                         response.isSuccess = true;
+                    response.Data = true;
                         response.Message = "Create Successfully";
                     }
                     else
@@ -197,7 +193,8 @@ namespace CavisProject.Application.Services
                     throw new Exception("Delete product is fail");
                 }
                 response.Data = _mapper.Map<bool>(id);
-
+                response.Data = true;
+                response.isSuccess = true;
                 response.Message = "Delete product is success";
             }
             catch (DbException ex)
@@ -372,7 +369,8 @@ namespace CavisProject.Application.Services
                         }
                     else
                     {
-                        response.isSuccess = false;
+                        response.isSuccess = true;
+                        response.Data = false;
                         response.Message = "Loại da không tồn tại.";
                         return response;
                     }
@@ -398,7 +396,8 @@ namespace CavisProject.Application.Services
                         
                         else
                         {
-                            response.isSuccess = false;
+                            response.isSuccess = true;
+                            response.Data = false;
                             response.Message = "Tình trạng da không tồn tại.";
                             return response;
                         }
@@ -411,11 +410,13 @@ namespace CavisProject.Application.Services
                 if (isUpdated)
                 {
                     response.isSuccess = true;
+                    response.Data = true;
                     response.Message = "Update successfully!";
                 }
                 else
                 {
                     response.isSuccess = false;
+                    response.Data= false;
                     response.Message = "Update Fail!.";
                 }
             }
