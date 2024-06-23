@@ -223,12 +223,12 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<bool>> DeletePackageAsync(string Id)
+        public async Task<ApiResponse<bool>> DeletePackageAsync(string id)
         {
             var response = new ApiResponse<bool>();
             try
             {
-                var exist = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(Id));
+                var exist = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
                 if (exist == null)
                 {
                     
@@ -252,7 +252,7 @@ namespace CavisProject.Application.Services
                 {
                     throw new Exception("Xóa thất bại!");
                 }
-                response.Data = _mapper.Map<bool>(Id);
+                response.Data = _mapper.Map<bool>(id);
                 response.isSuccess = true;
                 response.Data = true;
                 response.Message = "Xóa Thành Công!";
@@ -271,7 +271,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<bool>> UpdatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id)
+        public async Task<ApiResponse<bool>> UpdatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel, string id)
         {
             var response = new ApiResponse<bool>();
             try
@@ -284,7 +284,7 @@ namespace CavisProject.Application.Services
                     return response;
                 }
 
-                var exist = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(Id));
+                var exist = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
                 if (exist is null)
                 {
                     response.Message = "Gói không tồn tại";
@@ -294,7 +294,7 @@ namespace CavisProject.Application.Services
                 }
 
                 var update = _mapper.Map(createPackagePremiumViewModel, exist);
-                var skinTypeList = _unitOfWork.PackagePremiumRepository.Find(s => s.PackagePremiumName == update.PackagePremiumName && s.Id != Guid.Parse(Id));
+                var skinTypeList = _unitOfWork.PackagePremiumRepository.Find(s => s.PackagePremiumName == update.PackagePremiumName && s.Id != Guid.Parse(id));
                 var isNameExist = skinTypeList.Any();
                 if (isNameExist)
                 {

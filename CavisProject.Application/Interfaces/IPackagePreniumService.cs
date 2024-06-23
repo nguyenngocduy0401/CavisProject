@@ -16,8 +16,8 @@ namespace CavisProject.Application.Interfaces
         Task<ApiResponse<Pagination<PackagePremiumViewModel>>> GetPackagePremiumsAsync(int pageIndex, int pageSize);
         Task<ApiResponse<bool>> CreatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel);
         Task<ApiResponse<Pagination<PackagePremiumViewModel>>> FilterPackageAsync(FilterPackagePremiumViewModel FilterModel);
-        Task<ApiResponse<bool>> DeletePackageAsync(string Id);
-        Task<ApiResponse<bool>> UpdatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id);
+        Task<ApiResponse<bool>> DeletePackageAsync(string id);
+        Task<ApiResponse<bool>> UpdatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel, string id);
         Task<ApiResponse<PackagePremiumViewModel>> GetPackagePremiumByIdAsync(string id);
     }
 }
