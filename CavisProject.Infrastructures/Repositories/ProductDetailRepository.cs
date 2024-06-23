@@ -37,6 +37,10 @@ namespace CavisProject.Infrastructures.Repositories
             return await _dbset.Where(predicate).ToListAsync();
         }
 
-       
+        public async Task Delete(ProductDetail productDetail)
+        {
+            _dbContext.Remove(productDetail);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace CavisProject.Application.Repositories
         Task AddAsync(ProductDetail productDetail);
 
         void Update(ProductDetail entity);
-
+        Task Delete(ProductDetail productDetail);
         Task<IEnumerable<ProductDetail>> GetAllAsync(Expression<Func<ProductDetail, bool>> predicate);
     }
 }
