@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.Interfaces
 {
-    public interface IMethodService
+    public interface IMethodSkinCareService
     {
     }
 }

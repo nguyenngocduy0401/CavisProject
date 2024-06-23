@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Infrastructures.Repositories
 {
-    public class MethodRepository : GenericRepository<Method>, IMethodRepository
+    public class MethodRepository : GenericRepository<Method>, IMethodSkinCareRepository
     {
         private readonly AppDbContext _dbContext;
         private readonly ICurrentTime _timeService;

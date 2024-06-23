@@ -17,7 +17,7 @@ namespace CavisProject.Infrastructures
         private readonly IUserRepository _userRepository;
         private readonly IAppointmentDetailRepository _appointmentDetailRepository;
         private readonly ICalendarRepository _calendarRepository;
-        private readonly IMethodRepository _methodRepository;
+        private readonly IMethodSkinCareRepository _methodRepository;
         private readonly IMethodDetailRepository _methodDetailRepository;
         private readonly IPackageDetailRepository _packageDetailRepository;
         private readonly IPackagePremiumRepository _packagePremiumRepository;
@@ -38,7 +38,7 @@ namespace CavisProject.Infrastructures
 
         public UnitOfWork(AppDbContext appDbContext, IAppointmentRepository appointmentRepository, 
             IUserRepository userRepository, IAppointmentDetailRepository appointmentDetailRepository, 
-            ICalendarRepository calendarRepository, IMethodRepository methodRepository, 
+            ICalendarRepository calendarRepository, IMethodSkinCareRepository methodRepository, 
             IMethodDetailRepository methodDetailRepository, IPackageDetailRepository packageDetailRepository, 
             IPackagePremiumRepository packagePremiumRepository, IPersonalAnalystRepository personalAnalystRepository,
             IPersonalAnalystDetailRepository personalAnalystDetailRepository, IPersonalImageRepository personalImageRepository,
@@ -82,7 +82,7 @@ namespace CavisProject.Infrastructures
 
         public IMethodDetailRepository MethodDetailRepository => _methodDetailRepository;
 
-        public IMethodRepository MethodRepository => _methodRepository;
+        public IMethodSkinCareRepository MethodRepository => _methodRepository;
 
         public IPackageDetailRepository PackageDetailRepository => _packageDetailRepository;
 

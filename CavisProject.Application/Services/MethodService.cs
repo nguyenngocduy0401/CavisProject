@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.Services
 {
-    public class MethodService:IMethodService
+    public class MethodService:IMethodSkinCareService
     {
     }
 }
