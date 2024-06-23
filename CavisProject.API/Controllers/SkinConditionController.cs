@@ -18,8 +18,8 @@ namespace CavisProject.API.Controllers
         }
         [SwaggerOperation(Summary = "tạo thông tin triệu chứng về da  {Authorize = Admin, Staff}")]
         [HttpPost("")]
-        [Authorize]
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinCondition([FromBody] CreateSkinTypeViewModel createSkinType) => await _skinConditionService.CreateSkinCondition(createSkinType);
+       // [Authorize]
+        public async Task<ApiResponse<bool>> CreateSkinCondition([FromBody] CreateSkinTypeViewModel createSkinType) => await _skinConditionService.CreateSkinCondition(createSkinType);
         [SwaggerOperation(Summary = "tìm thông tin triệu chứng về da")]
         [HttpGet("")]
         public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinCondition(SkinFilterModel skinTypeFilterModel) => await _skinConditionService.FilterSkinCondition(skinTypeFilterModel);
@@ -28,12 +28,12 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<SkinViewModel>> GetSkinConditionById([FromRoute] string id) => await _skinConditionService.GetSkinConditionById(id);
         [SwaggerOperation(Summary = "khóa thông tin triệu chứng về da bằng id {Authorize = Admin, Staff}")]
         [HttpDelete("{id}")]
-        [Authorize]
+      //  [Authorize]
         public async Task<ApiResponse<bool>> DeleteSkinCondition([FromRoute] string id) => await _skinConditionService.DeleteSkinType(id);
-        [SwaggerOperation(Summary = "Cập nhật thông tin triệu chứng về da bằng id {Authorize = Admin, Staff}")]
+        [SwaggerOperation(Summary = "cập nhật thông tin triệu chứng về da bằng id {Authorize = Admin, Staff}")]
         [HttpPut("{id}")]
-        [Authorize]
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinCondition([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string id) => await _skinConditionService.UpdateSkinCondition(updateSkinType, id);
+       // [Authorize]
+        public async Task<ApiResponse<bool>> UpdateSkinCondition([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string id) => await _skinConditionService.UpdateSkinCondition(updateSkinType, id);
 
     }
 }

@@ -10,10 +10,10 @@ namespace CavisProject.Application.Interfaces
 {
     public interface ISkinConditionService
     {
-        Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinCondition(CreateSkinTypeViewModel createSkinType);
+        Task<ApiResponse<bool>> CreateSkinCondition(CreateSkinTypeViewModel createSkinType);
         Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinCondition(SkinFilterModel skinTypeFilterModel);
         Task<ApiResponse<bool>> DeleteSkinType(string skinTypeId);
-        Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinCondition(CreateSkinTypeViewModel updateSkinType, string skinTypeId);
+        Task<ApiResponse<bool>> UpdateSkinCondition(CreateSkinTypeViewModel updateSkinType, string skinTypeId);
         Task<ApiResponse<SkinViewModel>> GetSkinConditionById(string id);
     }
 }

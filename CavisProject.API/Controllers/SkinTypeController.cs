@@ -16,8 +16,8 @@ namespace CavisProject.API.Controllers
         public SkinTypeController(ISkintypeService skinTypeService) { _skinTypeService = skinTypeService; }
         [SwaggerOperation(Summary = "tạo thông tin loại da với (SkinCategory = 1 là loại da, = 2 triệu chứng về da) {Authorize = Admin, Staff}")]
         [HttpPost("")]
-        [Authorize]
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinType([FromBody] CreateSkinTypeViewModel createSkinType) => await _skinTypeService.CreateSkinType(createSkinType);
+       // [Authorize]
+        public async Task<ApiResponse<bool>> CreateSkinType([FromBody] CreateSkinTypeViewModel createSkinType) => await _skinTypeService.CreateSkinType(createSkinType);
         [SwaggerOperation(Summary = "tìm kiếm thông tin loại da ")]
         [HttpGet("")]
         public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinType(SkinFilterModel skinTypeFilterModel) 
@@ -27,12 +27,12 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<SkinViewModel>> GetSkinTypeById([FromRoute] string id) => await _skinTypeService.GetSkinTypeById(id);
         [SwaggerOperation(Summary = "khóa thông tin loại da với id {Authorize = Admin, Staff}")]
         [HttpDelete("{id}")]
-        [Authorize]
+      //  [Authorize]
         public async Task<ApiResponse<bool>> DeleteSkinType([FromRoute] string id) => await _skinTypeService.DeleteSkinType(id);
         [SwaggerOperation(Summary = "cập nhật thông tin loại da với id {Authorize = Admin, Staff}")]
         [HttpPut("{id}")]
-        [Authorize]
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinType([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string id) => await _skinTypeService.UpdateSkinType(updateSkinType, id);
+      //  [Authorize]
+        public async Task<ApiResponse<bool>> UpdateSkinType([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string id) => await _skinTypeService.UpdateSkinType(updateSkinType, id);
        
     }
 }
