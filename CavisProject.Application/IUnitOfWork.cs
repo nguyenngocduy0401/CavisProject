@@ -25,6 +25,7 @@ namespace CavisProject.Application
         public IProductCategoryRepository ProductCategoryRepository { get; }
         public IProductDetailRepository ProductDetailRepository { get; }
         public ISkinTypeRepository SkinTypeRepository { get; }
+        public ISkinConditionRepository SkinConditionRepository { get; }
         public IUserRepository UserRepository { get; }
         public ISupplierRepository SupplierRepository { get; }
         public ITransactionRepository TransactionRepository { get; }

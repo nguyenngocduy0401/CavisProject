@@ -13,8 +13,8 @@ namespace CavisProject.Application.ViewModels.ProductViewModel
         public Guid? SupplierId { get; set; }
         public Guid? ProductCategoryId { get; set; }
 
-        public Guid? SkinTypeId { get; set; } // Loại Skin là Category = true
-        public Guid? SkinConditionID { get; set; } // Loại Skin là Category = false
+        public Guid? SkinTypeId { get; set; } 
+        public Guid? SkinConditionID { get; set; } 
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 10;
     }

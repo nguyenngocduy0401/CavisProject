@@ -5,17 +5,18 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CavisProject.Infrastructures.Repositories
 {
-    public class SkinRepository : GenericRepository<Skin>, ISkinTypeRepository
+    public class SkinConditionRepository : GenericRepository<Skin>, ISkinConditionRepository
     {
         private readonly AppDbContext _dbContext;
         private readonly ICurrentTime _timeService;
         private readonly IClaimsService _claimsService;
-        public SkinRepository(
+        public SkinConditionRepository(
             AppDbContext context,
             ICurrentTime timeService,
             IClaimsService claimsService
@@ -26,14 +27,12 @@ namespace CavisProject.Infrastructures.Repositories
             _timeService = timeService;
             _claimsService = claimsService;
         }
-        public async Task<List<Skin>> GetAllWithCategoryFalseAsync()
+      
+        public async Task<List<Skin>> GetAllSkinConditionAsync()
         {
-            return await _dbContext.Skins.Where(s => !s.Category).ToListAsync();
-        }
-
-        public async Task<List<Skin>> GetAllWithCategoryTrueAsync()
-        {
-            return await _dbContext.Skins.Where(s => s.Category).ToListAsync();
+            return await _dbContext.Set<Skin>()
+                .Where(sc => sc.Category == false)
+                .ToListAsync();
         }
     }
 }

@@ -29,6 +29,7 @@ namespace CavisProject.Infrastructures
         private readonly IProductDetailRepository _productDetailRepository;
         private readonly IProductCategoryRepository _productCategoryRepository;
         private readonly ISkinTypeRepository _skinTypeRepository;
+        private readonly ISkinConditionRepository _skinConditionRepository;
         private readonly ISupplierRepository _supplierRepository;
         private readonly ITransactionRepository _transactionRepository;
         private readonly IWishListRepository _wishListRepository;
@@ -45,9 +46,10 @@ namespace CavisProject.Infrastructures
             IProductDetailRepository productDetailRepository, IProductCategoryRepository productCategoryRepository,
             ISkinTypeRepository skinTypeRepository, ISupplierRepository supplierRepository,
             ITransactionRepository transactionRepository, IWishListRepository wishListRepository,
-            IRoleRepository roleRepository, IRefreshTokenRepository refreshTokenRepository)
+            IRoleRepository roleRepository, IRefreshTokenRepository refreshTokenRepository,ISkinConditionRepository skinConditionRepository)
         {
             _dbContext = appDbContext;
+            
             _appointmentRepository = appointmentRepository;
             _userRepository = userRepository;
             _appointmentDetailRepository = appointmentDetailRepository;
@@ -64,6 +66,7 @@ namespace CavisProject.Infrastructures
             _productDetailRepository = productDetailRepository;
             _productCategoryRepository = productCategoryRepository;
             _skinTypeRepository = skinTypeRepository;
+            _skinConditionRepository = skinConditionRepository;
             _supplierRepository = supplierRepository;
             _transactionRepository = transactionRepository;
             _wishListRepository = wishListRepository;
@@ -111,6 +114,8 @@ namespace CavisProject.Infrastructures
         public IRoleRepository RoleRepository => _roleRepository;
 
         public IRefreshTokenRepository RefreshTokenRepository => _refreshTokenRepository;
+
+        public ISkinConditionRepository SkinConditionRepository =>_skinConditionRepository;
 
         public async Task<int> SaveChangeAsync()
         {

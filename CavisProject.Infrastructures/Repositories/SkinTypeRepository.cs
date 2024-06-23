@@ -4,7 +4,6 @@ using CavisProject.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -12,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Infrastructures.Repositories
 {
-    public class ProductRepository : GenericRepository<Product>,IProductRepository
+    public class SkinTypeRepository : GenericRepository<Skin>, ISkinTypeRepository
     {
         private readonly AppDbContext _dbContext;
         private readonly ICurrentTime _timeService;
         private readonly IClaimsService _claimsService;
-        public ProductRepository(
+        public SkinTypeRepository(
             AppDbContext context,
             ICurrentTime timeService,
             IClaimsService claimsService
@@ -28,17 +27,18 @@ namespace CavisProject.Infrastructures.Repositories
             _timeService = timeService;
             _claimsService = claimsService;
         }
-        public async Task<List<Product>> GetProductsBySkinIdAsync(Guid skinId)
+        public async Task<List<Skin>> GetAllWithCategoryFalseAsync()
         {
-            var products = await _dbContext.Products
-                                    .Where(p => p.ProductDetails.Any(pd => pd.SkinId == skinId))
-                                    .ToListAsync();
-
-            return products;
+            return await _dbContext.Skins.Where(s => !s.Category).ToListAsync();
         }
-        public async Task<Product> GetFirstOrDefaultAsync(Expression<Func<Product, bool>> filter, string includeProperties = "")
+
+        public async Task<List<Skin>> GetAllWithCategoryTrueAsync()
         {
-            IQueryable<Product> query = _dbSet;
+            return await _dbContext.Skins.Where(s => s.Category).ToListAsync();
+        }
+        public async Task<Skin> GetFirstOrDefaultAsync(Expression<Func<Skin, bool>> filter, string includeProperties = "")
+        {
+            IQueryable<Skin> query = _dbSet;
 
             if (filter != null)
             {
