@@ -52,6 +52,7 @@ namespace CavisProject.Application.Services
                 {
                     MethodName = create.MethodName,
                     Description = create.Description,
+                    Url = create.Url,
                     Category = 1,
                 };
                 await _unitOfWork.MethodSkinCareRepository.AddAsync(methodSkinCare);
@@ -293,6 +294,10 @@ namespace CavisProject.Application.Services
                 if (update.Description != method.Description)
                 {
                     method.Description = update.Description;
+                }
+                if (update.Url != method.Url)
+                {
+                    method.Url = update.Url;
                 }
                 var existingMethodDetails = await _unitOfWork.MethodDetailRepository.GetAllAsync(pd => pd.MethodId == method.Id);
 
