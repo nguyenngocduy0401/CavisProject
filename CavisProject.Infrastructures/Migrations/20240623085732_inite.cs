@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CavisProject.Infrastructures.Migrations
 {
     /// <inheritdoc />
-    public partial class NewDB : Migration
+    public partial class inite : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -544,6 +544,7 @@ namespace CavisProject.Infrastructures.Migrations
                 {
                     MethodId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SkinId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     SkinTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -616,7 +617,8 @@ namespace CavisProject.Infrastructures.Migrations
                 columns: table => new
                 {
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SkinId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    SkinId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -687,20 +689,20 @@ namespace CavisProject.Infrastructures.Migrations
                 columns: new[] { "Id", "Category", "CreatedBy", "CreationDate", "DeleteBy", "DeletionDate", "Description", "IsDeleted", "ModificationBy", "ModificationDate", "SkinsName" },
                 values: new object[,]
                 {
-                    { new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"), true, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(499), null, null, "Da thiếu độ ẩm, thường cảm thấy căng, thô ráp, hoặc bong tróc, và có thể trông xỉn màu.", false, null, null, "Da khô" },
-                    { new Guid("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"), false, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(524), null, null, "Mụn viêm đỏ là các nốt sưng lớn và đau nhức dưới da. Chúng thường không có mủ ở phần trên như mụn mủ.", false, null, null, "Mụn viêm đỏ" },
-                    { new Guid("4678f8d2-5648-4521-9608-8e981dee9103"), false, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(539), null, null, "Sự xuất hiện của nếp nhăn trên da thường là kết quả của quá trình lão hóa tự nhiên, nhưng cũng có thể được tăng cường bởi tác động từ môi trường, chế độ ăn uống và lối sống.", false, null, null, "Nếp nhăn" },
-                    { new Guid("550ee872-ea09-42a0-b9ac-809890debafb"), true, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(461), null, null, "Da cân bằng với vẻ ngoài khỏe mạnh, không quá nhờn cũng không quá khô, và ít khuyết điểm.", false, null, null, "Da thường" },
-                    { new Guid("5ab57d24-20ad-4b15-8427-c951419da3ba"), false, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(517), null, null, "Mụn bọc là các nốt sưng và đỏ trên da mà không có đầu trắng hoặc đen ở phần trên. Chúng có thể gây đau và khó chịu.", false, null, null, "Mụn bọc" },
-                    { new Guid("73766ff0-d528-4262-a1e8-656b33f58603"), false, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(512), null, null, "Mụn đầu trắng cũng là lỗ chân lông bị tắc, nhưng bề mặt của chúng bị phủ bởi một lớp da sạch. Chúng thường xuất hiện màu trắng hoặc da, thường nhỏ hơn mụn đầu đen.", false, null, null, "Mụn đầu trắng" },
-                    { new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(535), null, null, "Nám da là sự xuất hiện của các vùng sạm màu trên da, thường là do tác động của tia UV từ ánh nắng mặt trời.", false, null, null, "Nám da" },
-                    { new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"), true, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(504), null, null, "Da sản xuất quá nhiều bã nhờn, dẫn đến vẻ ngoài bóng và có khả năng cao bị mụn và lỗ chân lông to.", false, null, null, "Da nhờn" },
-                    { new Guid("a9035561-1399-464f-9f09-38c164a40a63"), false, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(532), null, null, "Mụn thâm là các vết sẹo hoặc vết đỏ hoặc nâu trên da sau khi mụn đã lành. Chúng có thể gây ra tự ti và không tự tin về da mặt.", false, null, null, "Mụn thâm" },
-                    { new Guid("a960d28f-2807-4d58-8248-91eec518d415"), true, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(495), null, null, "Da dễ phản ứng với các sản phẩm và yếu tố môi trường, thường dẫn đến đỏ, ngứa, hoặc kích ứng.", false, null, null, "Da nhạy cảm" },
-                    { new Guid("bd287628-2eb7-458a-b202-d89d63faaebf"), false, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(520), null, null, "Mụn mủ là các nốt sưng và đỏ có chứa mủ ở phần trên. Chúng thường là dấu hiệu của một nhiễm trùng nặng hơn trong lỗ chân lông.", false, null, null, "Mụn mủ" },
-                    { new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"), true, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(491), null, null, "Sự kết hợp của các loại da; thường thì vùng chữ T (trán, mũi, và cằm) là da nhờn trong khi má là da khô hoặc bình thường.", false, null, null, "Da hỗn hợp" },
-                    { new Guid("e8685143-0f2e-42fa-8025-da53e1707461"), false, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(508), null, null, "Mụn đầu đen là loại mụn mà lỗ chân lông bị tắc bởi bã nhờn và tế bào da chết. Chúng thường màu đen hoặc vàng nâu.", false, null, null, "Mụn đầu đen" },
-                    { new Guid("f49b6287-8f31-4fd5-9899-ed1eb6d0564a"), false, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(528), null, null, "Mụn đầu đinh là các nốt sưng lớn và đau nhức có mủ ở phần trên. Chúng có thể gây ra tổn thương và vết sẹo nếu không được điều trị đúng cách.", false, null, null, "Mụn đầu đinh" }
+                    { new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"), true, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2264), null, null, "Da thiếu độ ẩm, thường cảm thấy căng, thô ráp, hoặc bong tróc, và có thể trông xỉn màu.", false, null, null, "Da khô" },
+                    { new Guid("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"), false, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2278), null, null, "Mụn viêm đỏ là các nốt sưng lớn và đau nhức dưới da. Chúng thường không có mủ ở phần trên như mụn mủ.", false, null, null, "Mụn viêm đỏ" },
+                    { new Guid("4678f8d2-5648-4521-9608-8e981dee9103"), false, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2287), null, null, "Sự xuất hiện của nếp nhăn trên da thường là kết quả của quá trình lão hóa tự nhiên, nhưng cũng có thể được tăng cường bởi tác động từ môi trường, chế độ ăn uống và lối sống.", false, null, null, "Nếp nhăn" },
+                    { new Guid("550ee872-ea09-42a0-b9ac-809890debafb"), true, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2237), null, null, "Da cân bằng với vẻ ngoài khỏe mạnh, không quá nhờn cũng không quá khô, và ít khuyết điểm.", false, null, null, "Da thường" },
+                    { new Guid("5ab57d24-20ad-4b15-8427-c951419da3ba"), false, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2273), null, null, "Mụn bọc là các nốt sưng và đỏ trên da mà không có đầu trắng hoặc đen ở phần trên. Chúng có thể gây đau và khó chịu.", false, null, null, "Mụn bọc" },
+                    { new Guid("73766ff0-d528-4262-a1e8-656b33f58603"), false, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2271), null, null, "Mụn đầu trắng cũng là lỗ chân lông bị tắc, nhưng bề mặt của chúng bị phủ bởi một lớp da sạch. Chúng thường xuất hiện màu trắng hoặc da, thường nhỏ hơn mụn đầu đen.", false, null, null, "Mụn đầu trắng" },
+                    { new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2285), null, null, "Nám da là sự xuất hiện của các vùng sạm màu trên da, thường là do tác động của tia UV từ ánh nắng mặt trời.", false, null, null, "Nám da" },
+                    { new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"), true, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2266), null, null, "Da sản xuất quá nhiều bã nhờn, dẫn đến vẻ ngoài bóng và có khả năng cao bị mụn và lỗ chân lông to.", false, null, null, "Da nhờn" },
+                    { new Guid("a9035561-1399-464f-9f09-38c164a40a63"), false, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2283), null, null, "Mụn thâm là các vết sẹo hoặc vết đỏ hoặc nâu trên da sau khi mụn đã lành. Chúng có thể gây ra tự ti và không tự tin về da mặt.", false, null, null, "Mụn thâm" },
+                    { new Guid("a960d28f-2807-4d58-8248-91eec518d415"), true, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2262), null, null, "Da dễ phản ứng với các sản phẩm và yếu tố môi trường, thường dẫn đến đỏ, ngứa, hoặc kích ứng.", false, null, null, "Da nhạy cảm" },
+                    { new Guid("bd287628-2eb7-458a-b202-d89d63faaebf"), false, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2276), null, null, "Mụn mủ là các nốt sưng và đỏ có chứa mủ ở phần trên. Chúng thường là dấu hiệu của một nhiễm trùng nặng hơn trong lỗ chân lông.", false, null, null, "Mụn mủ" },
+                    { new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"), true, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2259), null, null, "Sự kết hợp của các loại da; thường thì vùng chữ T (trán, mũi, và cằm) là da nhờn trong khi má là da khô hoặc bình thường.", false, null, null, "Da hỗn hợp" },
+                    { new Guid("e8685143-0f2e-42fa-8025-da53e1707461"), false, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2269), null, null, "Mụn đầu đen là loại mụn mà lỗ chân lông bị tắc bởi bã nhờn và tế bào da chết. Chúng thường màu đen hoặc vàng nâu.", false, null, null, "Mụn đầu đen" },
+                    { new Guid("f49b6287-8f31-4fd5-9899-ed1eb6d0564a"), false, null, new DateTime(2024, 6, 23, 15, 57, 31, 779, DateTimeKind.Local).AddTicks(2281), null, null, "Mụn đầu đinh là các nốt sưng lớn và đau nhức có mủ ở phần trên. Chúng có thể gây ra tổn thương và vết sẹo nếu không được điều trị đúng cách.", false, null, null, "Mụn đầu đinh" }
                 });
 
             migrationBuilder.InsertData(
@@ -742,59 +744,59 @@ namespace CavisProject.Infrastructures.Migrations
 
             migrationBuilder.InsertData(
                 table: "ProductDetails",
-                columns: new[] { "ProductId", "SkinId" },
+                columns: new[] { "ProductId", "SkinId", "IsDeleted" },
                 values: new object[,]
                 {
-                    { new Guid("03a271ba-2b54-455e-8a87-7c4ac5b45a7c"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("03a271ba-2b54-455e-8a87-7c4ac5b45a7c"), new Guid("a960d28f-2807-4d58-8248-91eec518d415") },
-                    { new Guid("0e5cce09-cd4b-4681-a56f-56b4c2baec7c"), new Guid("550ee872-ea09-42a0-b9ac-809890debafb") },
-                    { new Guid("0e5cce09-cd4b-4681-a56f-56b4c2baec7c"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("179f7f08-41a7-48c4-a389-0584aaa49ed9"), new Guid("550ee872-ea09-42a0-b9ac-809890debafb") },
-                    { new Guid("179f7f08-41a7-48c4-a389-0584aaa49ed9"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("21653406-6211-4f18-b661-a360b581b397"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("21653406-6211-4f18-b661-a360b581b397"), new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81") },
-                    { new Guid("2818b73c-0d4f-4772-b528-fd08cd0ffd9c"), new Guid("550ee872-ea09-42a0-b9ac-809890debafb") },
-                    { new Guid("2818b73c-0d4f-4772-b528-fd08cd0ffd9c"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("44231b57-5715-46e3-bf7b-8fb891b73ccb"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("44231b57-5715-46e3-bf7b-8fb891b73ccb"), new Guid("a960d28f-2807-4d58-8248-91eec518d415") },
-                    { new Guid("49ff65f1-31c9-485d-89f7-7a2dea6ce649"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("49ff65f1-31c9-485d-89f7-7a2dea6ce649"), new Guid("be37023d-6a58-4b4b-92e5-39dcece45473") },
-                    { new Guid("4b01742a-26fa-4799-92cb-8cf936fda356"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("4b01742a-26fa-4799-92cb-8cf936fda356"), new Guid("be37023d-6a58-4b4b-92e5-39dcece45473") },
-                    { new Guid("4df06bb4-f45a-42d5-becd-98b2e834c765"), new Guid("550ee872-ea09-42a0-b9ac-809890debafb") },
-                    { new Guid("4df06bb4-f45a-42d5-becd-98b2e834c765"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("6d759056-6bc2-49df-997b-bfb173c2dc19"), new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6") },
-                    { new Guid("6d759056-6bc2-49df-997b-bfb173c2dc19"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("6f1fdabb-ef74-4bdd-a106-1a06ee2bc254"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("6f1fdabb-ef74-4bdd-a106-1a06ee2bc254"), new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81") },
-                    { new Guid("7201eaec-e23f-4c3a-a575-7aad1cbab460"), new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6") },
-                    { new Guid("7201eaec-e23f-4c3a-a575-7aad1cbab460"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("73ca3caf-e6bf-44c4-9441-7d90c77de17a"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("73ca3caf-e6bf-44c4-9441-7d90c77de17a"), new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81") },
-                    { new Guid("7b7c9d03-67a4-4ed8-a1fc-34611b8de62e"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("7b7c9d03-67a4-4ed8-a1fc-34611b8de62e"), new Guid("a960d28f-2807-4d58-8248-91eec518d415") },
-                    { new Guid("83aff4ac-c495-4582-8877-1d2fc83eb9cb"), new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6") },
-                    { new Guid("83aff4ac-c495-4582-8877-1d2fc83eb9cb"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("85af885a-abb5-454f-8ad8-d15147bba22e"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("85af885a-abb5-454f-8ad8-d15147bba22e"), new Guid("be37023d-6a58-4b4b-92e5-39dcece45473") },
-                    { new Guid("87092517-b5ca-4794-8a9f-33cb8ab2cbfe"), new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6") },
-                    { new Guid("87092517-b5ca-4794-8a9f-33cb8ab2cbfe"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("897ab50d-ebe3-4869-a1b4-d2d7f288fc45"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("897ab50d-ebe3-4869-a1b4-d2d7f288fc45"), new Guid("a960d28f-2807-4d58-8248-91eec518d415") },
-                    { new Guid("8c5f0b9a-3b55-4635-bd1d-a53e4c2a70a9"), new Guid("550ee872-ea09-42a0-b9ac-809890debafb") },
-                    { new Guid("8c5f0b9a-3b55-4635-bd1d-a53e4c2a70a9"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("a4457bba-0aa8-4443-9619-d3dab29aa196"), new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6") },
-                    { new Guid("a4457bba-0aa8-4443-9619-d3dab29aa196"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("aaa3964a-2eb1-4e95-9fe2-ce972a357bd7"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("aaa3964a-2eb1-4e95-9fe2-ce972a357bd7"), new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81") },
-                    { new Guid("bee3860c-9eaa-4e7b-878b-90a15b9defa2"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("bee3860c-9eaa-4e7b-878b-90a15b9defa2"), new Guid("be37023d-6a58-4b4b-92e5-39dcece45473") },
-                    { new Guid("dad66471-6992-4588-a77d-ab3802ee59f7"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("dad66471-6992-4588-a77d-ab3802ee59f7"), new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81") },
-                    { new Guid("e447a290-469c-47ab-b918-c9534556d112"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("e447a290-469c-47ab-b918-c9534556d112"), new Guid("a960d28f-2807-4d58-8248-91eec518d415") },
-                    { new Guid("ef3342b3-e716-4028-b508-f29a1ec87865"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f") },
-                    { new Guid("ef3342b3-e716-4028-b508-f29a1ec87865"), new Guid("be37023d-6a58-4b4b-92e5-39dcece45473") }
+                    { new Guid("03a271ba-2b54-455e-8a87-7c4ac5b45a7c"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("03a271ba-2b54-455e-8a87-7c4ac5b45a7c"), new Guid("a960d28f-2807-4d58-8248-91eec518d415"), false },
+                    { new Guid("0e5cce09-cd4b-4681-a56f-56b4c2baec7c"), new Guid("550ee872-ea09-42a0-b9ac-809890debafb"), false },
+                    { new Guid("0e5cce09-cd4b-4681-a56f-56b4c2baec7c"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("179f7f08-41a7-48c4-a389-0584aaa49ed9"), new Guid("550ee872-ea09-42a0-b9ac-809890debafb"), false },
+                    { new Guid("179f7f08-41a7-48c4-a389-0584aaa49ed9"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("21653406-6211-4f18-b661-a360b581b397"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("21653406-6211-4f18-b661-a360b581b397"), new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"), false },
+                    { new Guid("2818b73c-0d4f-4772-b528-fd08cd0ffd9c"), new Guid("550ee872-ea09-42a0-b9ac-809890debafb"), false },
+                    { new Guid("2818b73c-0d4f-4772-b528-fd08cd0ffd9c"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("44231b57-5715-46e3-bf7b-8fb891b73ccb"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("44231b57-5715-46e3-bf7b-8fb891b73ccb"), new Guid("a960d28f-2807-4d58-8248-91eec518d415"), false },
+                    { new Guid("49ff65f1-31c9-485d-89f7-7a2dea6ce649"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("49ff65f1-31c9-485d-89f7-7a2dea6ce649"), new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"), false },
+                    { new Guid("4b01742a-26fa-4799-92cb-8cf936fda356"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("4b01742a-26fa-4799-92cb-8cf936fda356"), new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"), false },
+                    { new Guid("4df06bb4-f45a-42d5-becd-98b2e834c765"), new Guid("550ee872-ea09-42a0-b9ac-809890debafb"), false },
+                    { new Guid("4df06bb4-f45a-42d5-becd-98b2e834c765"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("6d759056-6bc2-49df-997b-bfb173c2dc19"), new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"), false },
+                    { new Guid("6d759056-6bc2-49df-997b-bfb173c2dc19"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("6f1fdabb-ef74-4bdd-a106-1a06ee2bc254"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("6f1fdabb-ef74-4bdd-a106-1a06ee2bc254"), new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"), false },
+                    { new Guid("7201eaec-e23f-4c3a-a575-7aad1cbab460"), new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"), false },
+                    { new Guid("7201eaec-e23f-4c3a-a575-7aad1cbab460"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("73ca3caf-e6bf-44c4-9441-7d90c77de17a"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("73ca3caf-e6bf-44c4-9441-7d90c77de17a"), new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"), false },
+                    { new Guid("7b7c9d03-67a4-4ed8-a1fc-34611b8de62e"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("7b7c9d03-67a4-4ed8-a1fc-34611b8de62e"), new Guid("a960d28f-2807-4d58-8248-91eec518d415"), false },
+                    { new Guid("83aff4ac-c495-4582-8877-1d2fc83eb9cb"), new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"), false },
+                    { new Guid("83aff4ac-c495-4582-8877-1d2fc83eb9cb"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("85af885a-abb5-454f-8ad8-d15147bba22e"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("85af885a-abb5-454f-8ad8-d15147bba22e"), new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"), false },
+                    { new Guid("87092517-b5ca-4794-8a9f-33cb8ab2cbfe"), new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"), false },
+                    { new Guid("87092517-b5ca-4794-8a9f-33cb8ab2cbfe"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("897ab50d-ebe3-4869-a1b4-d2d7f288fc45"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("897ab50d-ebe3-4869-a1b4-d2d7f288fc45"), new Guid("a960d28f-2807-4d58-8248-91eec518d415"), false },
+                    { new Guid("8c5f0b9a-3b55-4635-bd1d-a53e4c2a70a9"), new Guid("550ee872-ea09-42a0-b9ac-809890debafb"), false },
+                    { new Guid("8c5f0b9a-3b55-4635-bd1d-a53e4c2a70a9"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("a4457bba-0aa8-4443-9619-d3dab29aa196"), new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"), false },
+                    { new Guid("a4457bba-0aa8-4443-9619-d3dab29aa196"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("aaa3964a-2eb1-4e95-9fe2-ce972a357bd7"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("aaa3964a-2eb1-4e95-9fe2-ce972a357bd7"), new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"), false },
+                    { new Guid("bee3860c-9eaa-4e7b-878b-90a15b9defa2"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("bee3860c-9eaa-4e7b-878b-90a15b9defa2"), new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"), false },
+                    { new Guid("dad66471-6992-4588-a77d-ab3802ee59f7"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("dad66471-6992-4588-a77d-ab3802ee59f7"), new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"), false },
+                    { new Guid("e447a290-469c-47ab-b918-c9534556d112"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("e447a290-469c-47ab-b918-c9534556d112"), new Guid("a960d28f-2807-4d58-8248-91eec518d415"), false },
+                    { new Guid("ef3342b3-e716-4028-b508-f29a1ec87865"), new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"), false },
+                    { new Guid("ef3342b3-e716-4028-b508-f29a1ec87865"), new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"), false }
                 });
 
             migrationBuilder.CreateIndex(

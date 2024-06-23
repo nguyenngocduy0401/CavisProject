@@ -27,7 +27,7 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IAppointmentDetailService, AppointmentDetailService>(); 
             services.AddScoped<ICalendarService, CalendarService>();
             services.AddScoped<IMethodDetailService, MethodDetailService>();
-            services.AddScoped<IMethodSkinCareService, MethodService>();
+            services.AddScoped<IMethodSkinCareService, MethodSkinCareService>();
             services.AddScoped<IPackageDetailService, PackageDetailService>();
             services.AddScoped<IPackagePreniumService, PackagePreniumService>();
             services.AddScoped<IPersonalAnalystDetailService, PersonalAnalystDetailService>();
@@ -54,7 +54,7 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<ICalendarRepository,CalendarRepository>();
             services.AddScoped<IMethodDetailRepository, MethodDetailRepository>();
-            services.AddScoped<IMethodSkinCareRepository, MethodRepository>();
+            services.AddScoped<IMethodSkinCareRepository, MethodSkinCareRepository>();
             services.AddScoped<IPackageDetailRepository, PackageDetailRepository>();
             services.AddScoped<IPackagePremiumRepository, PackagePremiumRepository>();
             services.AddScoped<IPersonalAnalystDetailRepository, PersonalAnalystDetailRepository>();

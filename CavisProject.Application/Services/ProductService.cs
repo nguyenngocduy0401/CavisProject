@@ -338,7 +338,6 @@ namespace CavisProject.Application.Services
 
                 var existingProductDetails = await _unitOfWork.ProductDetailRepository.GetAllAsync(pd => pd.ProductId == product.Id);
 
-                // Mark existing ProductDetail records as deleted except those that match new SkinTypeId or SkinConditionIds
                 if (updateProductViewModel.SkinTypeId.HasValue || (updateProductViewModel.SkinConditionIds != null && updateProductViewModel.SkinConditionIds.Any()))
                 {
                     foreach (var existingProductDetail in existingProductDetails)
@@ -354,7 +353,6 @@ namespace CavisProject.Application.Services
                     }
                 }
 
-                // Add or update ProductDetail record if SkinTypeId is provided
                 if (updateProductViewModel.SkinTypeId.HasValue)
                 {
                     var skinType = await _unitOfWork.SkinTypeRepository.GetFirstOrDefaultAsync(s => s.Id == updateProductViewModel.SkinTypeId.Value && s.Category == true);
@@ -385,7 +383,7 @@ namespace CavisProject.Application.Services
                     }
                 }
 
-                // Add or update ProductDetail records for each provided SkinConditionId
+             
                 if (updateProductViewModel.SkinConditionIds != null && updateProductViewModel.SkinConditionIds.Any())
                 {
                     foreach (var skinConditionId in updateProductViewModel.SkinConditionIds)

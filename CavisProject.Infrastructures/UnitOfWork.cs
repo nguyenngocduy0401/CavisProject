@@ -17,7 +17,7 @@ namespace CavisProject.Infrastructures
         private readonly IUserRepository _userRepository;
         private readonly IAppointmentDetailRepository _appointmentDetailRepository;
         private readonly ICalendarRepository _calendarRepository;
-        private readonly IMethodSkinCareRepository _methodRepository;
+        private readonly IMethodSkinCareRepository _methodSkinCareRepository;
         private readonly IMethodDetailRepository _methodDetailRepository;
         private readonly IPackageDetailRepository _packageDetailRepository;
         private readonly IPackagePremiumRepository _packagePremiumRepository;
@@ -38,7 +38,7 @@ namespace CavisProject.Infrastructures
 
         public UnitOfWork(AppDbContext appDbContext, IAppointmentRepository appointmentRepository, 
             IUserRepository userRepository, IAppointmentDetailRepository appointmentDetailRepository, 
-            ICalendarRepository calendarRepository, IMethodSkinCareRepository methodRepository, 
+            ICalendarRepository calendarRepository, IMethodSkinCareRepository methodSkinCareRepository, 
             IMethodDetailRepository methodDetailRepository, IPackageDetailRepository packageDetailRepository, 
             IPackagePremiumRepository packagePremiumRepository, IPersonalAnalystRepository personalAnalystRepository,
             IPersonalAnalystDetailRepository personalAnalystDetailRepository, IPersonalImageRepository personalImageRepository,
@@ -54,7 +54,7 @@ namespace CavisProject.Infrastructures
             _userRepository = userRepository;
             _appointmentDetailRepository = appointmentDetailRepository;
             _calendarRepository = calendarRepository;
-            _methodRepository = methodRepository;
+            _methodSkinCareRepository = methodSkinCareRepository;
             _methodDetailRepository = methodDetailRepository;
             _packageDetailRepository = packageDetailRepository;
             _packagePremiumRepository = packagePremiumRepository;
@@ -82,7 +82,7 @@ namespace CavisProject.Infrastructures
 
         public IMethodDetailRepository MethodDetailRepository => _methodDetailRepository;
 
-        public IMethodSkinCareRepository MethodRepository => _methodRepository;
+        public IMethodSkinCareRepository MethodSkinCareRepository => _methodSkinCareRepository;
 
         public IPackageDetailRepository PackageDetailRepository => _packageDetailRepository;
 

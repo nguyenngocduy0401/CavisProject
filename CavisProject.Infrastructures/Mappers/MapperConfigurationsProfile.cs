@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CavisProject.Application.ViewModels.MethodViewModels;
 
 namespace CavisProject.Infrastructures.Mappers
 {
@@ -83,6 +84,12 @@ namespace CavisProject.Infrastructures.Mappers
             #region PersonalAnalyst
             CreateMap<Pagination<PersonalAnalyst>, Pagination<PersonalAnalystViewModel>>();
             CreateMap<PersonalAnalyst, PersonalAnalystViewModel>();
+            #endregion
+            #region Method
+            CreateMap<CreateMethodViewModel, Method>();
+            CreateMap<Method, MethodViewModel>().ReverseMap();
+            CreateMap<Pagination<Method>, Pagination<MethodViewModel>>().ReverseMap();
+            CreateMap<string, bool>().ConvertUsing(str => str == "true" || str == "1");
             #endregion
         }
     }
