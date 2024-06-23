@@ -51,6 +51,10 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<CreateSupplierViewModel, Supplier>();
             CreateMap<Supplier, CreateSupplierViewModel>();
             CreateMap<SupplierViewModel, Supplier>();
+            CreateMap<Supplier, SupplierViewModel>();
+            CreateMap<ProductCategory, ProductCategoryViewModel>()
+           .ForMember(dest => dest.ProductCategoryName, opt => opt.MapFrom(src => src.ProductCategoryName));
+         
             CreateMap<UserRegisterModel, User>()
                 .ForMember(dest => dest.PasswordHash, src => src.MapFrom(x => x.Password));
             #endregion
