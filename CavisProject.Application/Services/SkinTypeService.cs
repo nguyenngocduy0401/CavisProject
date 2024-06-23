@@ -33,7 +33,7 @@ namespace CavisProject.Application.Services
         }
 
 
-        public async Task<ApiResponse<bool>> CreateSkinType(CreateSkinTypeViewModel createSkinType)
+        public async Task<ApiResponse<bool>> CreateSkinTypeAsync(CreateSkinTypeViewModel createSkinType)
         {
             var response = new ApiResponse<bool>();
             try
@@ -91,7 +91,7 @@ namespace CavisProject.Application.Services
         }
 
 
-        public async Task<ApiResponse<bool>> DeleteSkinType(string skinTypeId)
+        public async Task<ApiResponse<bool>> DeleteSkinTypeAsync(string skinTypeId)
         {
             var response = new ApiResponse<bool>();
             try
@@ -144,7 +144,7 @@ namespace CavisProject.Application.Services
 
 
 
-        public async Task<ApiResponse<bool>> UpdateSkinType(CreateSkinTypeViewModel updateSkinType, string skinTypeId)
+        public async Task<ApiResponse<bool>> UpdateSkinTypeAsync(CreateSkinTypeViewModel updateSkinType, string skinTypeId)
         {
             var response = new ApiResponse<bool>();
             try
@@ -203,7 +203,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinType(SkinFilterModel skinTypeFilterModel)
+        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinTypeAsync(SkinFilterModel skinTypeFilterModel)
         {
             var response = new ApiResponse<Pagination<SkinViewModel>>();
 
@@ -239,7 +239,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<SkinViewModel>> GetSkinTypeById(string id)
+        public async Task<ApiResponse<SkinViewModel>> GetSkinTypeByIdAsync(string id)
         {
             var response = new ApiResponse<SkinViewModel>();
 

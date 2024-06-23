@@ -26,7 +26,7 @@ namespace CavisProject.Application.Services
             _unitOfWork = unitOfWork;
             _validatorCreateSkinType = validatorCreateSkintype;
         }
-        public async Task<ApiResponse<bool>> CreateSkinCondition(CreateSkinTypeViewModel createSkinType)
+        public async Task<ApiResponse<bool>> CreateSkinConditionAsync(CreateSkinTypeViewModel createSkinType)
         {
             var response = new ApiResponse<bool>();
             try
@@ -82,7 +82,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<bool>> DeleteSkinType(string skinTypeId)
+        public async Task<ApiResponse<bool>> DeleteSkinTypeAsync(string skinTypeId)
         {
             var response = new ApiResponse<bool>();
             try
@@ -131,7 +131,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinCondition(SkinFilterModel skinTypeFilterModel)
+        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinConditionAsync(SkinFilterModel skinTypeFilterModel)
         {
             var response = new ApiResponse<Pagination<SkinViewModel>>();
 
@@ -168,7 +168,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<bool>> UpdateSkinCondition(CreateSkinTypeViewModel updateSkinType, string skinTypeId)
+        public async Task<ApiResponse<bool>> UpdateSkinConditionAsync(CreateSkinTypeViewModel updateSkinType, string skinTypeId)
         {
             var response = new ApiResponse<bool>();
             try
@@ -227,7 +227,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<SkinViewModel>> GetSkinConditionById(string id)
+        public async Task<ApiResponse<SkinViewModel>> GetSkinConditionByIdAsync(string id)
         {
             var response = new ApiResponse<SkinViewModel>();
 
