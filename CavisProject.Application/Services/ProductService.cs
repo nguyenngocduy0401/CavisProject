@@ -371,7 +371,7 @@ namespace CavisProject.Application.Services
                         }
                         else if (existingProductDetail.IsDeleted)
                         {
-                            existingProductDetail.IsDeleted = false; // Re-enable if it was marked as deleted
+                            existingProductDetail.IsDeleted = false;
                             _unitOfWork.ProductDetailRepository.Update(existingProductDetail);
                         }
                     }
@@ -404,7 +404,7 @@ namespace CavisProject.Application.Services
                             }
                             else if (existingProductDetail.IsDeleted)
                             {
-                                existingProductDetail.IsDeleted = false; // Re-enable if it was marked as deleted
+                                existingProductDetail.IsDeleted = false; 
                                 _unitOfWork.ProductDetailRepository.Update(existingProductDetail);
                             }
                         }
