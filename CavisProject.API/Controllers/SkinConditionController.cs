@@ -18,7 +18,7 @@ namespace CavisProject.API.Controllers
         }
         [SwaggerOperation(Summary = "tạo thông tin triệu chứng về da  {Authorize = Admin, Staff}")]
         [HttpPost("")]
-        [Authorize]
+       // [Authorize]
         public async Task<ApiResponse<bool>> CreateSkinCondition([FromBody] CreateSkinTypeViewModel createSkinType) => await _skinConditionService.CreateSkinConditionAsync(createSkinType);
         [SwaggerOperation(Summary = "tìm thông tin triệu chứng về da")]
         [HttpGet("")]
@@ -28,11 +28,11 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<SkinViewModel>> GetSkinConditionById([FromRoute] string id) => await _skinConditionService.GetSkinConditionByIdAsync(id);
         [SwaggerOperation(Summary = "khóa thông tin triệu chứng về da bằng id {Authorize = Admin, Staff}")]
         [HttpDelete("{id}")]
-       [Authorize]
+      //  [Authorize]
         public async Task<ApiResponse<bool>> DeleteSkinCondition([FromRoute] string id) => await _skinConditionService.DeleteSkinTypeAsync(id);
         [SwaggerOperation(Summary = "cập nhật thông tin triệu chứng về da bằng id {Authorize = Admin, Staff}")]
         [HttpPut("{id}")]
-        [Authorize]
+       // [Authorize]
         public async Task<ApiResponse<bool>> UpdateSkinCondition([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string id) => await _skinConditionService.UpdateSkinConditionAsync(updateSkinType, id);
 
     }
