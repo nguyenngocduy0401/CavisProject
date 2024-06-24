@@ -22,6 +22,7 @@ namespace CavisProject.Infrastructures
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<AppointmentDetail> AppointmentDetails { get; set; }
         public DbSet<Calendar> Calendars { get; set; }
+        public DbSet<CalendarDetail> CalendarDetails { get; set; }
         public DbSet<Method> Methods { get; set; }
         public DbSet<MethodDetail> MethodDetails { get; set; }
         public DbSet<PackageDetail> PackageDetails { get; set; }
@@ -51,6 +52,7 @@ namespace CavisProject.Infrastructures
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonalMethodDetailConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductDetailConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(WishListConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CalendarDetailConfiguration).Assembly);
             #region SeedSkin
             modelBuilder.Entity<Skin>().HasData(
                 new Skin

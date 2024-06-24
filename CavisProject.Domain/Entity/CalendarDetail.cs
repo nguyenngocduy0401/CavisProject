@@ -7,16 +7,14 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Domain.Entity
 {
-    public class Calendar : BaseEntity
+    public class CalendarDetail
     {
-        public Guid CalendarId { get; set; }
-        public DateTime? StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
-        public double? Duration { get; set; }
         public string? UserId { get; set; }
         [ForeignKey("UserId")]
         public User? User { get; set; }
-        public virtual ICollection<CalendarDetail>? CalendarDetails { get; set; }
+        public Guid CalendarId { get; set; }
+        [ForeignKey("CalendarId")]
+        public Calendar? Calendar { get; set; }
 
     }
 }
