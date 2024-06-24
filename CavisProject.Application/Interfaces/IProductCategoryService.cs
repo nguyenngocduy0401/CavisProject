@@ -11,10 +11,11 @@ namespace CavisProject.Application.Interfaces
 {
     public interface IProductCategoryService
     {
-        Task<ApiResponse<CreateProductCategoryViewModel>> CreateProductCategory(CreateProductCategoryViewModel createProductCategoryViewModel);
-        Task<ApiResponse<CreateProductCategoryViewModel>> UppdateProductCategory(CreateProductCategoryViewModel UpdateProductCategoryViewModel,string id);
-        Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategory(FilterProductCategoryModel filterProductCategory);
-        Task<ApiResponse<bool>> DeleteProductCategory(string id);
+        Task<ApiResponse<bool>> CreateProductCategoryAsync(CreateProductCategoryViewModel createProductCategoryViewModel);
+        Task<ApiResponse<bool>> UpdateProductCategoryAsync(CreateProductCategoryViewModel UpdateProductCategoryViewModel,string id);
+        Task<ApiResponse<ProductCategoryViewModel>> GetProductCategoryByIdAsync(string id);
+        Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategoryAsync(FilterProductCategoryModel filterProductCategory);
+        Task<ApiResponse<bool>> DeleteProductCategoryAsync(string id);
 
     }
 }

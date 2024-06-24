@@ -4,6 +4,7 @@ using CavisProject.Application.Interfaces;
 using CavisProject.Application.ViewModels.PersonalAnalystViewModels;
 using CavisProject.Application.ViewModels.ProductViewModel;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
+using CavisProject.Application.ViewModels.UserViewModels;
 using CavisProject.Domain.Entity;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
@@ -116,9 +117,18 @@ namespace CavisProject.Application.Services
             {
                 var personalAnalyst  = await _unitOfWork.PersonalAnalystRepository.GetLastPersonalAnalystAsync();
                 if (personalAnalyst == null) throw new Exception("Fail in GetLastPersonalAnalyst!");
-                var products = await _unitOfWork.PersonalAnalystRepository.SuggestProductAsync(personalAnalyst.Id, pageIndex:1,pageSize:10);
-
-
+                var filter = (Expression<Func<Product, bool>>)(e =>
+                (!filterSuggestProductModel.MinPrice.HasValue || e.Price <= filterSuggestProductModel.MinPrice) &&
+                (!filterSuggestProductModel.MaxPrice.HasValue || e.Price >= filterSuggestProductModel.MaxPrice)
+                );
+                var products = await _unitOfWork.PersonalAnalystRepository.SuggestProductAsync(
+                    personalAnalyst.Id,
+                    foreignKey: "ProductCategory",
+                    foreignKeyId: filterSuggestProductModel.CategoryId,
+                    filter: filter,
+                    compatibleProductsEnum:filterSuggestProductModel.CompatibleProducts,
+                    pageIndex: filterSuggestProductModel.PageIndex,
+                    pageSize: filterSuggestProductModel.PageSize);
 
                 if (products.Items == null) 
                 {

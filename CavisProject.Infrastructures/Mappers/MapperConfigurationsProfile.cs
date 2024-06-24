@@ -45,7 +45,7 @@ namespace CavisProject.Infrastructures.Mappers
             #region ProductCategory
             CreateMap<CreateProductCategoryViewModel, ProductCategory>();
             CreateMap<ProductCategory, CreateProductCategoryViewModel>();
-            CreateMap<ProductCategoryViewModel, ProductCategory>();
+            CreateMap<ProductCategoryViewModel, ProductCategory>().ReverseMap();
             #endregion
             #region Supplier
             CreateMap<CreateSupplierViewModel, Supplier>();

@@ -135,8 +135,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
-
         public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremiumAsync(string id)
         {
             var response = new ApiResponse<UserPackageViewModel>();
@@ -275,7 +273,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
         public async Task<ApiResponse<bool>> DeleteUserAsync(string id)
         {
             var response = new ApiResponse<bool>();
@@ -313,7 +310,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
         public async Task<ApiResponse<Pagination<UserViewModel>>> FilterUserAsync(FilterUserModel filterUserModel)
         {
             var response = new ApiResponse<Pagination<UserViewModel>>();
@@ -372,8 +368,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
-
         public async Task<ApiResponse<UserViewModel>> GetInfoByLoginAsync()
         {
             var response = new ApiResponse<UserViewModel>();
@@ -438,7 +432,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
         public async Task<ApiResponse<bool>> UpdatePasswordAsync(UpdatePasswordModel updatePasswordModel)
         {
             var response = new ApiResponse<bool>();
@@ -477,7 +470,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
         public async Task<ApiResponse<bool>> UpdateUserAsync(UpdateUserModel updateUserModel)
         {
             var response = new ApiResponse<bool>();
