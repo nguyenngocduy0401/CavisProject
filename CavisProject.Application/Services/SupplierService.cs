@@ -130,7 +130,7 @@ namespace CavisProject.Application.Services
                       (string.IsNullOrEmpty(filterSupplierViewModel.SupplierName) || s.SupplierName.Contains(filterSupplierViewModel.SupplierName)) &&
                     (string.IsNullOrEmpty(filterSupplierViewModel.PhoneNumber) || s.PhoneNumber.Contains(filterSupplierViewModel.PhoneNumber)) &&
                     (string.IsNullOrEmpty(filterSupplierViewModel.Email) || s.Email.Contains(filterSupplierViewModel.Email)) &&
-                    (filterSupplierViewModel.Status == 0 || s.Status == filterSupplierViewModel.Status) &&
+                   (!filterSupplierViewModel.Status.HasValue || s.Status == filterSupplierViewModel.Status) &&
                     (string.IsNullOrEmpty(filterSupplierViewModel.Address) || s.Address.Contains(filterSupplierViewModel.Address)),
                     pageIndex: filterSupplierViewModel.PageIndex,
                     pageSize: filterSupplierViewModel.PageSize
@@ -198,6 +198,35 @@ namespace CavisProject.Application.Services
                     }
 
                 }
+            }
+            catch (DbException ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+
+            }
+            catch (Exception ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+        public async Task<ApiResponse<CreateSupplierViewModel>> GetSupplierByIdAsync(string id)
+        {
+            var response = new ApiResponse<CreateSupplierViewModel>();
+            try
+            {
+                var supplier = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
+                if (supplier == null)
+                {
+                    throw new Exception("Không tìm thấy !");
+                }
+
+                var supplierViewModel = _mapper.Map<CreateSupplierViewModel>(supplier);
+
+                response.isSuccess = true;
+                response.Data = supplierViewModel;
             }
             catch (DbException ex)
             {

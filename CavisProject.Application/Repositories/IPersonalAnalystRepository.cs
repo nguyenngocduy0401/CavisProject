@@ -25,5 +25,6 @@ namespace CavisProject.Application.Repositories
         string? foreignKey = null,
         object? foreignKeyId = null);
         Task<bool> CheckExistPersonalAnalystAsync(string userId);
+        Task<Pagination<Method>> SuggestMethodAsync(Guid personalAnalystId, int? pageIndex = null, int? pageSize = null);
     }
 }

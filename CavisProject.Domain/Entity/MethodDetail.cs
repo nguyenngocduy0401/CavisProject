@@ -15,5 +15,6 @@ namespace CavisProject.Domain.Entity
         public Guid? SkinId { get; set; }
         [ForeignKey("SkinTypeId")]
         public Skin? Skins { get; set; }
+        
     }
 }

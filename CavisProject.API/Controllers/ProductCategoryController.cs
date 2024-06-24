@@ -35,8 +35,11 @@ namespace CavisProject.API.Controllers
        =>  await _productCategoryService.UpdateProductCategoryAsync(createProductCategoryViewModel, id);
         [SwaggerOperation(Summary = "tìm kiếm thông tin loại sản phẩm {Authorize = Admin, Staff}")]
         [HttpGet("")]
-        public async Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategoryAsync(FilterProductCategoryModel filterProductCategory)
-       => await _productCategoryService.FilterProductCategoryAsync(filterProductCategory);
-        
+        public async Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategory(FilterProductCategoryModel filterProductCategory)
+       => await _productCategoryService.FilterProductCategory(filterProductCategory);
+        [SwaggerOperation(Summary = "lấy thông tin loại sản phẩm bằng id")]
+        [HttpGet("{id}")]
+       
+        public async Task<ApiResponse<ProductCategoryViewModel>> GetProductCategoryByIdAsync(string id) => await _productCategoryService.GetProductCategoryByIdAsync(id);
     }
 }

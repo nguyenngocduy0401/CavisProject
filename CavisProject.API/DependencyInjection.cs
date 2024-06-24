@@ -21,6 +21,8 @@ using CavisProject.Application.ViewModels.ProductViewModel;
 using System.Text.Json.Serialization;
 using CavisProject.API.Validator.UserValidator;
 using CavisProject.API.Validator.ProductValidator;
+using CavisProject.Application.ViewModels.MethodViewModels;
+using CavisProject.API.Validator.MethodValidator;
 
 namespace CavisProject.API
 {
@@ -78,7 +80,7 @@ namespace CavisProject.API
             services.AddScoped<IClaimsService, ClaimsService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddHttpContextAccessor();
-           services.AddHostedService<SetupIdentityDataSeeder>();
+         //  services.AddHostedService<SetupIdentityDataSeeder>();
             services.AddControllers();
             services.AddLogging();
 
@@ -99,6 +101,7 @@ namespace CavisProject.API
             services.AddTransient<IValidator<UserResetPasswordModel>, UserResetPasswordValidator>();
             services.AddTransient<IValidator<CreatePackagePremiumViewModel>, CreatePackagePremiumViewModelValidator>();
             services.AddTransient<IValidator<CreateProductViewModel>, CreateProductViewModelValidator>();
+            services.AddTransient<IValidator<CreateMethodViewModel>,CreateMethodValidator>();   
             #endregion
 
             return services;

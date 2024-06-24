@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +12,9 @@ namespace CavisProject.Application.ViewModels.ProductViewModel
         public string? Description { get; set; }
         public Guid? SupplierId { get; set; }
         public Guid? ProductCategoryId { get; set; }
-        public List<Guid>? SkinIds { get; set; }
+        public bool? IsDeleted{ get; set; }
+        public Guid? SkinTypeId { get; set; } 
+        public Guid? SkinConditionID { get; set; } 
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 10;
     }

@@ -201,6 +201,9 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Property<Guid?>("SkinId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<Guid?>("SkinTypeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -973,6 +976,9 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Property<Guid?>("SkinId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("ProductId", "SkinId");
 
                     b.HasIndex("SkinId");
@@ -983,252 +989,302 @@ namespace CavisProject.Infrastructures.Migrations
                         new
                         {
                             ProductId = new Guid("179f7f08-41a7-48c4-a389-0584aaa49ed9"),
-                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb")
+                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("179f7f08-41a7-48c4-a389-0584aaa49ed9"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("83aff4ac-c495-4582-8877-1d2fc83eb9cb"),
-                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6")
+                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("83aff4ac-c495-4582-8877-1d2fc83eb9cb"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("21653406-6211-4f18-b661-a360b581b397"),
-                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81")
+                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("21653406-6211-4f18-b661-a360b581b397"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("ef3342b3-e716-4028-b508-f29a1ec87865"),
-                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473")
+                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("ef3342b3-e716-4028-b508-f29a1ec87865"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("44231b57-5715-46e3-bf7b-8fb891b73ccb"),
-                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415")
+                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("44231b57-5715-46e3-bf7b-8fb891b73ccb"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("0e5cce09-cd4b-4681-a56f-56b4c2baec7c"),
-                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb")
+                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("0e5cce09-cd4b-4681-a56f-56b4c2baec7c"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("87092517-b5ca-4794-8a9f-33cb8ab2cbfe"),
-                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6")
+                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("87092517-b5ca-4794-8a9f-33cb8ab2cbfe"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("aaa3964a-2eb1-4e95-9fe2-ce972a357bd7"),
-                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81")
+                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("aaa3964a-2eb1-4e95-9fe2-ce972a357bd7"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("85af885a-abb5-454f-8ad8-d15147bba22e"),
-                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473")
+                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("85af885a-abb5-454f-8ad8-d15147bba22e"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("897ab50d-ebe3-4869-a1b4-d2d7f288fc45"),
-                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415")
+                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("897ab50d-ebe3-4869-a1b4-d2d7f288fc45"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("2818b73c-0d4f-4772-b528-fd08cd0ffd9c"),
-                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb")
+                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("2818b73c-0d4f-4772-b528-fd08cd0ffd9c"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("7201eaec-e23f-4c3a-a575-7aad1cbab460"),
-                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6")
+                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("7201eaec-e23f-4c3a-a575-7aad1cbab460"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("6f1fdabb-ef74-4bdd-a106-1a06ee2bc254"),
-                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81")
+                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("6f1fdabb-ef74-4bdd-a106-1a06ee2bc254"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("4b01742a-26fa-4799-92cb-8cf936fda356"),
-                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473")
+                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("4b01742a-26fa-4799-92cb-8cf936fda356"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("03a271ba-2b54-455e-8a87-7c4ac5b45a7c"),
-                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415")
+                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("03a271ba-2b54-455e-8a87-7c4ac5b45a7c"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("4df06bb4-f45a-42d5-becd-98b2e834c765"),
-                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb")
+                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("4df06bb4-f45a-42d5-becd-98b2e834c765"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("6d759056-6bc2-49df-997b-bfb173c2dc19"),
-                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6")
+                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("6d759056-6bc2-49df-997b-bfb173c2dc19"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("73ca3caf-e6bf-44c4-9441-7d90c77de17a"),
-                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81")
+                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("73ca3caf-e6bf-44c4-9441-7d90c77de17a"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("49ff65f1-31c9-485d-89f7-7a2dea6ce649"),
-                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473")
+                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("49ff65f1-31c9-485d-89f7-7a2dea6ce649"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("7b7c9d03-67a4-4ed8-a1fc-34611b8de62e"),
-                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415")
+                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("7b7c9d03-67a4-4ed8-a1fc-34611b8de62e"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("8c5f0b9a-3b55-4635-bd1d-a53e4c2a70a9"),
-                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb")
+                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("8c5f0b9a-3b55-4635-bd1d-a53e4c2a70a9"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("a4457bba-0aa8-4443-9619-d3dab29aa196"),
-                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6")
+                            SkinId = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("a4457bba-0aa8-4443-9619-d3dab29aa196"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("dad66471-6992-4588-a77d-ab3802ee59f7"),
-                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81")
+                            SkinId = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("dad66471-6992-4588-a77d-ab3802ee59f7"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("bee3860c-9eaa-4e7b-878b-90a15b9defa2"),
-                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473")
+                            SkinId = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("bee3860c-9eaa-4e7b-878b-90a15b9defa2"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("e447a290-469c-47ab-b918-c9534556d112"),
-                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415")
+                            SkinId = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
+                            IsDeleted = false
                         },
                         new
                         {
                             ProductId = new Guid("e447a290-469c-47ab-b918-c9534556d112"),
-                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f")
+                            SkinId = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
+                            IsDeleted = false
                         });
                 });
 
@@ -1652,6 +1708,9 @@ namespace CavisProject.Infrastructures.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("URLImage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)

@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.Repositories
 {
-    public interface ISkinTypeRepository:IGenericRepository<Skin>
+    public interface IMethodSkinCareRepository :IGenericRepository<Method>
     {
-        Task<Skin> GetFirstOrDefaultAsync(Expression<Func<Skin, bool>> filter, string includeProperties = "");
+        Task<Method> GetFirstOrDefaultAsync(Expression<Func<Method, bool>> filter, string includeProperties = "");
     }
 }
