@@ -22,7 +22,6 @@ namespace CavisProject.API.Controllers
         [Authorize]
         public async Task<ApiResponse<bool>> CreateProductCategoryAsync([FromBody] CreateProductCategoryViewModel createProductCategoryViewModel)
         => await _productCategoryService.CreateProductCategoryAsync(createProductCategoryViewModel);
-
         [SwaggerOperation(Summary = "xóa thông tin loại sản phẩm bằng id {Authorize = Admin, Staff}")]
         [HttpDelete("{id}")]
         [Authorize]
@@ -36,10 +35,9 @@ namespace CavisProject.API.Controllers
         [SwaggerOperation(Summary = "tìm kiếm thông tin loại sản phẩm {Authorize = Admin, Staff}")]
         [HttpGet("")]
         public async Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategory(FilterProductCategoryModel filterProductCategory)
-       => await _productCategoryService.FilterProductCategory(filterProductCategory);
+       => await _productCategoryService.FilterProductCategoryAsync(filterProductCategory);
         [SwaggerOperation(Summary = "lấy thông tin loại sản phẩm bằng id")]
         [HttpGet("{id}")]
-       
         public async Task<ApiResponse<ProductCategoryViewModel>> GetProductCategoryByIdAsync(string id) => await _productCategoryService.GetProductCategoryByIdAsync(id);
     }
 }

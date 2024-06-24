@@ -223,34 +223,5 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-        public async Task<ApiResponse<ProductCategoryViewModel>> GetProductCategoryByIdAsync(string id)
-        {
-            var response = new ApiResponse<ProductCategoryViewModel>();
-            try
-            {
-                var productCategory = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
-                if (productCategory == null)
-                {
-                    throw new Exception("Không tìm thấy !");
-                }
-
-                var productCategoryViewModel = _mapper.Map<ProductCategoryViewModel>(productCategory);
-
-                response.isSuccess = true;
-                response.Data = productCategoryViewModel;
-            }
-            catch (DbException ex)
-            {
-                response.isSuccess = false;
-                response.Message = ex.Message;
-
-            }
-            catch (Exception ex)
-            {
-                response.isSuccess = false;
-                response.Message = ex.Message;
-            }
-            return response;
-        }
     }
 }
