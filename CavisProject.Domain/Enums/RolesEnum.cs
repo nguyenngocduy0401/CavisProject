@@ -11,6 +11,7 @@ namespace CavisProject.Domain.Enums
         Administrator,
         Customer,
         Staff,
-        Expert
+        ExpertSkinCare,
+        ExpertMakeup
     }
 }
