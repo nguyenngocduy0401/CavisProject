@@ -1,4 +1,5 @@
 ﻿using CavisProject.Domain.Entity;
+using CavisProject.Domain.Enums;
 using CavisProject.Infrastructures.FluentAPIs;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -216,7 +217,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/paula.jpg?alt=media&token=25b6781b-fb55-4cc6-999d-1944d6533418",
                      URL = "https://hasaki.vn/san-pham/sua-rua-mat-paula-s-choice-can-bang-da-190ml-2329.html",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("5E500A0F-E114-4F88-95D1-F1B12FBA0654")
+                     ProductCategoryId = Guid.Parse("5E500A0F-E114-4F88-95D1-F1B12FBA0654"),
+                     Status = (ProductStatusEnum)1
                  },
                  new Product
                  {
@@ -228,7 +230,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/hadalabo.png?alt=media&token=3804cc5d-10c7-4ff4-8a71-4ef665bc413c",
                      URL = "https://hasaki.vn/san-pham/kem-rua-mat-hada-labo-duong-am-toi-uu-80g-4359.html?gad_source=1&gclid=CjwKCAjw65-zBhBkEiwAjrqRMId5JCuqnjMla9hkVGIMUrzwnpV_bVDm3yfaLjmKMnJj6yLlQ6Wq1RoCu10QAvD_BwE",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("5E500A0F-E114-4F88-95D1-F1B12FBA0654")
+                     ProductCategoryId = Guid.Parse("5E500A0F-E114-4F88-95D1-F1B12FBA0654"),
+                     Status = (ProductStatusEnum)1
                  },
                  new Product
                  {
@@ -240,7 +243,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/vichy.png?alt=media&token=4fbad0f6-a839-43dd-b704-4864cc3e9ba6",
                      URL = "https://hasaki.vn/san-pham/sua-rua-mat-dang-gel-vichy-lam-sach-sau-cho-da-nhon-mun-50ml-80971.html",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("5E500A0F-E114-4F88-95D1-F1B12FBA0654")
+                     ProductCategoryId = Guid.Parse("5E500A0F-E114-4F88-95D1-F1B12FBA0654"),
+                     Status = (ProductStatusEnum)1
                  }, 
                  new Product
                  {
@@ -252,7 +256,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/eucerin3.jpg?alt=media&token=3a6317da-f045-42d8-917b-825ea52c5fd8",
                      URL = "https://hasaki.vn/san-pham/gel-rua-mat-eucerin-tuoi-mat-cho-da-thuong-nhay-cam-200ml-89925.html",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("5E500A0F-E114-4F88-95D1-F1B12FBA0654")
+                     ProductCategoryId = Guid.Parse("5E500A0F-E114-4F88-95D1-F1B12FBA0654"),
+                     Status = (ProductStatusEnum)1
                  }, 
                  new Product
                  {
@@ -264,7 +269,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/centella3.png?alt=media&token=49d34368-8e90-4165-baca-a774cc354262",
                      URL = "https://hasaki.vn/san-pham/sua-rua-mat-chiet-xuat-rau-ma-skin1004-diu-nhe-lam-sach-sau-da-125ml-86169.html",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("5E500A0F-E114-4F88-95D1-F1B12FBA0654")
+                     ProductCategoryId = Guid.Parse("5E500A0F-E114-4F88-95D1-F1B12FBA0654"),
+                     Status = (ProductStatusEnum)1
                  }, 
                  new Product
                  {
@@ -276,7 +282,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/2thayers.png?alt=media&token=6d12bf7b-6a41-4cdc-bddf-1ccb677f4d93",
                      URL = "https://hasaki.vn/san-pham/nuoc-hoa-hong-khong-con-thayers-huong-hoa-hong-355ml-3227.html",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("30E2E877-861B-4AE5-8A6B-B2E93A79175E")
+                     ProductCategoryId = Guid.Parse("30E2E877-861B-4AE5-8A6B-B2E93A79175E"),
+                     Status = (ProductStatusEnum)1
                  }, 
                  new Product
                  {
@@ -288,7 +295,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/2tonique.jpg?alt=media&token=b9c6411d-cfec-44a5-bbfd-341f3697d725",
                      URL = "https://hasaki.vn/san-pham/nuoc-hoa-hong-evoluderm-danh-cho-da-kho-va-nhay-cam-500ml-14949.html",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("30E2E877-861B-4AE5-8A6B-B2E93A79175E")
+                     ProductCategoryId = Guid.Parse("30E2E877-861B-4AE5-8A6B-B2E93A79175E"),
+                     Status = (ProductStatusEnum)1
                  }, 
                  new Product
                  {
@@ -300,7 +308,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/2caryophy.png?alt=media&token=1f38576d-d99e-44a8-a625-94b23ecdada3",
                      URL = "https://hasaki.vn/san-pham/nuoc-hoa-hong-cho-da-mun-caryophy-300ml-78140.html?gad_source=1&gclid=CjwKCAjw65-zBhBkEiwAjrqRMFIk6UKxeIL3HRR1hvVcUaAjCJiMbyuE5tweE_JTxteiOnVqbvEaIRoCgGkQAvD_BwE",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("30E2E877-861B-4AE5-8A6B-B2E93A79175E")
+                     ProductCategoryId = Guid.Parse("30E2E877-861B-4AE5-8A6B-B2E93A79175E"),
+                     Status = (ProductStatusEnum)1
                  }, 
                  new Product
                  {
@@ -312,7 +321,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/2klairs-2.jpg?alt=media&token=d74a0e41-5ab2-40dc-b17c-610118bb4f24",
                      URL = "https://hasaki.vn/san-pham/nuoc-hoa-hong-khong-mui-klairs-danh-cho-da-nhay-cam-180ml-65994.html?gad_source=1&gclid=CjwKCAjw65-zBhBkEiwAjrqRMEJSpgovsMtCFQ3MpacrWVHnPjqQ3_KqAoJ_LWQS2Tnz8BNEfLazNxoCj4MQAvD_BwE",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("30E2E877-861B-4AE5-8A6B-B2E93A79175E")
+                     ProductCategoryId = Guid.Parse("30E2E877-861B-4AE5-8A6B-B2E93A79175E"),
+                     Status = (ProductStatusEnum)1
                  }, 
                  new Product
                  {
@@ -324,7 +334,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/2mamonde2.jpg?alt=media&token=d6b5de2a-9ba2-4ed8-88f2-93d459bba634",
                      URL = "https://hasaki.vn/san-pham/nuoc-can-bang-mamonde-duong-am-diu-nhe-cho-da-nhay-cam-250ml-95787.html",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("30E2E877-861B-4AE5-8A6B-B2E93A79175E")
+                     ProductCategoryId = Guid.Parse("30E2E877-861B-4AE5-8A6B-B2E93A79175E"),
+                     Status = (ProductStatusEnum)1
                  },
                  //3
                  new Product
@@ -337,7 +348,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/Olay.jpg?alt=media&token=8c757a0c-383d-4499-b3b8-7f3e2b48b719",
                      URL = "https://hasaki.vn/san-pham/kem-duong-am-ban-dem-olay-lam-sang-da-mo-tham-nam-50g-87859.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqndHWwtwmT9MaaMeaKHq6Ymco3tN1Wa0ytsHuzvR-rgK4l3PeomwccgaAiaREALw_wcB",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"), 
-                     ProductCategoryId = Guid.Parse("DB5D4968-16F9-48C6-AB2B-FEEF85208D5A") 
+                     ProductCategoryId = Guid.Parse("DB5D4968-16F9-48C6-AB2B-FEEF85208D5A"),
+                     Status = (ProductStatusEnum)1
                  },
                  new Product
                  {
@@ -349,7 +361,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/Laneige.jpg?alt=media&token=bd50a06e-3645-4acf-b488-fb8cc8349dea",
                      URL = "https://hasaki.vn/san-pham/kem-duong-am-laneige-cho-da-kho-50ml-1026.html",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("DB5D4968-16F9-48C6-AB2B-FEEF85208D5A")
+                     ProductCategoryId = Guid.Parse("DB5D4968-16F9-48C6-AB2B-FEEF85208D5A"),
+                     Status = (ProductStatusEnum)1
                  },
                  new Product
                  {
@@ -361,7 +374,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/La%20Roche-Posay%20Effacla.jpg?alt=media&token=b7a3c1b8-2882-4389-8b73-fd2090b43a35",
                      URL = "https://hasaki.vn/san-pham/kem-duong-la-roche-posay-lam-giam-mun-chuyen-biet-15ml-1092.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqndVhOh7KFY12qi3dIFnBPywwEf96mC1lZgd4WZqlyHGD6C95HwLIgAaArFpEALw_wcB",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("DB5D4968-16F9-48C6-AB2B-FEEF85208D5A")
+                     ProductCategoryId = Guid.Parse("DB5D4968-16F9-48C6-AB2B-FEEF85208D5A"),
+                     Status = (ProductStatusEnum)1
                  },
                  new Product
                  {
@@ -373,7 +387,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/Neutrogena%20Hydro%20Boost%20Water%20Gel.jpg?alt=media&token=6bdfef98-734c-4454-b201-f8bd93bea6e1",
                      URL = "https://hasaki.vn/san-pham/kem-duong-am-neutrogena-cung-cap-nuoc-cho-da-50g-90339.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqndONELGoevx8Sn66b5Fl2QsToH_IahOd8gyeYIIKK-E271RuWnktCAaAvogEALw_wcB",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("DB5D4968-16F9-48C6-AB2B-FEEF85208D5A")
+                     ProductCategoryId = Guid.Parse("DB5D4968-16F9-48C6-AB2B-FEEF85208D5A"),
+                     Status = (ProductStatusEnum)1
                  },
                  new Product
                  {
@@ -385,7 +400,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/Eucerin%20Lipo-Balance%20Intensive%20Nourishing%20Cream.jpg?alt=media&token=423592d5-ccc1-44cc-8d8d-27a3944d8952",
                      URL = "https://hasaki.vn/san-pham/kem-duong-am-eucerin-cho-da-thuong-den-da-hon-hop-50ml-68136.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqneRasEsTiW395OeWuFa_ZebB5tH1gDMjSIQjEO7EnM4IB3DUtnZINoaAggoEALw_wcB",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("DB5D4968-16F9-48C6-AB2B-FEEF85208D5A")
+                     ProductCategoryId = Guid.Parse("DB5D4968-16F9-48C6-AB2B-FEEF85208D5A"),
+                     Status = (ProductStatusEnum)1
                  },
                  //4
                  new Product
@@ -398,7 +414,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/MartiDerm%20The%20Originals%20Proteos%20Screen%20SPF50%2B%20Fluid%20Cream.jpg?alt=media&token=e92f624b-918d-4428-9cc8-3a0f18a27c96",
                      URL = "https://hasaki.vn/san-pham/kem-chong-nang-martiderm-pho-rong-toan-dien-spf50-40ml-90401.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqnf0BPilz_8AKunYGCdgJi4LTr0XOYFCe5IumOshtzd6qwrtvxNm4P0aAtjXEALw_wcB",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("39201E62-9CE1-45CC-9625-EE52BABC780D")
+                     ProductCategoryId = Guid.Parse("39201E62-9CE1-45CC-9625-EE52BABC780D"),
+                     Status = (ProductStatusEnum)1
                  },
                  new Product
                  {
@@ -410,7 +427,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/Biore%20UV%20Aqua%20Rich%20Watery%20Essence.jpg?alt=media&token=9f37b704-dda7-4941-b0bb-78a14b6f90d1",
                      URL = "https://hasaki.vn/san-pham/essence-chong-nang-mang-nuoc-duong-am-biore-spf50-pa-50g-6408.html",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("39201E62-9CE1-45CC-9625-EE52BABC780D")
+                     ProductCategoryId = Guid.Parse("39201E62-9CE1-45CC-9625-EE52BABC780D"),
+                     Status = (ProductStatusEnum)1
                  },
                  new Product
                  {
@@ -422,7 +440,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/Anessa%20Perfect%20UV%20Sunscreen%20Skincare%20Milk%20N.jpg?alt=media&token=c4371658-3aaf-45f4-9584-a8a24ca456bf",
                      URL = "https://hasaki.vn/san-pham/sua-chong-nang-anessa-duong-da-kiem-dau-60ml-moi-119084.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqncntdErbsKUwqZ1ntRjnIi2tuJK8v-PTr8LUKmSCyVI-y_8aMZ80VsaAkPxEALw_wcB",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("39201E62-9CE1-45CC-9625-EE52BABC780D")
+                     ProductCategoryId = Guid.Parse("39201E62-9CE1-45CC-9625-EE52BABC780D"),
+                     Status = (ProductStatusEnum)1
                  },
                  new Product
                  {
@@ -434,7 +453,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/Vichy%20Capital%20Soleil%20Mattifying.jpg?alt=media&token=64266959-9a96-4d6d-bb0e-9fe026cb969d",
                      URL = "https://hasaki.vn/san-pham/kem-chong-nang-vichy-kiem-dau-spf50-50ml-88835.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqnfcttLtt9diCT48iS-WDplNHtsBwy_Umy_EgQqc-rN_ia_0uYNCvT4aAlP1EALw_wcB",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("39201E62-9CE1-45CC-9625-EE52BABC780D")
+                     ProductCategoryId = Guid.Parse("39201E62-9CE1-45CC-9625-EE52BABC780D"),
+                     Status = (ProductStatusEnum)1
                  },
                  new Product
                  {
@@ -446,7 +466,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/Kiehl's%20Ultra%20Light%20Daily%20UV%20Defense%20SPF.jpg?alt=media&token=bf69bece-dafc-4706-aa39-6172f0fa267a",
                      URL = "https://hasaki.vn/san-pham/kem-chong-nang-hang-ngay-kiehl-s-spf50-pa-30ml-73170.html",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("39201E62-9CE1-45CC-9625-EE52BABC780D")
+                     ProductCategoryId = Guid.Parse("39201E62-9CE1-45CC-9625-EE52BABC780D"),
+                     Status = (ProductStatusEnum)1
                  },
                  //5
                  new Product
@@ -459,7 +480,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/Byphasse%20Solution%20Micellaire.jpg?alt=media&token=6037becc-f411-44cd-85e4-be7fd34f4ed5",
                      URL = "https://hasaki.vn/san-pham/nuoc-tay-trang-byphasse-cho-moi-loai-da-500ml-3183.html",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("839DC6D7-4B15-479B-9E01-17B8D3303144")
+                     ProductCategoryId = Guid.Parse("839DC6D7-4B15-479B-9E01-17B8D3303144"),
+                     Status = (ProductStatusEnum)1
                  },
                  new Product
                  {
@@ -471,7 +493,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/L'Or%C3%A9al%20Paris%20Micellar%20Water%203-in-1%20Moisturizing%20Even%20For%20Sensitive%20Skin.jpg?alt=media&token=a4dd0fe3-9c4f-4ae1-a88c-79deca96ce68",
                      URL = "https://hasaki.vn/san-pham/nuoc-tay-trang-l-oreal-3-in-1-lam-sach-sau-400ml-34119.html",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("839DC6D7-4B15-479B-9E01-17B8D3303144")
+                     ProductCategoryId = Guid.Parse("839DC6D7-4B15-479B-9E01-17B8D3303144"),
+                     Status = (ProductStatusEnum)1
                  },
                  new Product
                  {
@@ -483,7 +506,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/Klairs%20Gentle%20Black%20Deep%20Cleansing%20Oil.jpg?alt=media&token=605ebe34-80fa-4feb-8aa5-fa4468361e8a",
                      URL = "https://hasaki.vn/san-pham/dau-tay-trang-klairs-lam-sach-sau-cho-moi-loai-da-150ml-66046.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqneXiK5EtEZTGc8AreQnfD9DH2BaoDtu8cyOxWfBT2lWqrgD2Mqq4JoaAonLEALw_wcB",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("839DC6D7-4B15-479B-9E01-17B8D3303144")
+                     ProductCategoryId = Guid.Parse("839DC6D7-4B15-479B-9E01-17B8D3303144"),
+                     Status = (ProductStatusEnum)1
                  },
                  new Product
                  {
@@ -495,7 +519,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/Caryophy%20Smart%20Cleansing%20Water.jpg?alt=media&token=64c2e8fc-e893-45aa-bd86-0b592f309392",
                      URL = "https://hasaki.vn/san-pham/nuoc-tay-trang-caryophy-cho-da-dau-mun-nhay-cam-500ml-91531.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqnc5cVVKaND4RQ-VF7ZpLe2tG3uH1mkEN-QQ8en7HkAakUuKQ3quz9saAogdEALw_wcB",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("839DC6D7-4B15-479B-9E01-17B8D3303144")
+                     ProductCategoryId = Guid.Parse("839DC6D7-4B15-479B-9E01-17B8D3303144"),
+                     Status = (ProductStatusEnum)1,
                  },
                  new Product
                  {
@@ -507,7 +532,8 @@ namespace CavisProject.Infrastructures
                      URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/Simple%20Micellar%20Cleansing%20Water.jpg?alt=media&token=3747c611-6b2f-4464-91e5-6de00f90fefb",
                      URL = "https://hasaki.vn/san-pham/nuoc-tay-trang-simple-lam-sach-trang-diem-va-cap-am-400ml-104259.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqndbwfo5t-8uGNIEDk-WrXO8F2GSsjCT3GqN-MmQOs2iLV92I4XqnqoaAiTaEALw_wcB",
                      SupplierId = Guid.Parse("8F78562C-4DA1-4CF4-9100-22215C0B6530"),
-                     ProductCategoryId = Guid.Parse("839DC6D7-4B15-479B-9E01-17B8D3303144")
+                     ProductCategoryId = Guid.Parse("839DC6D7-4B15-479B-9E01-17B8D3303144"),
+                     Status= (ProductStatusEnum)1
                  }
                 );
                  

@@ -26,29 +26,34 @@ namespace CavisProject.Application.Services
             _unitOfWork = unitOfWork;
             _validatorCreateSkinType = validatorCreateSkintype;
         }
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> CreateSkinCondition(CreateSkinTypeViewModel createSkinType)
+        public async Task<ApiResponse<bool>> CreateSkinConditionAsync(CreateSkinTypeViewModel createSkinType)
         {
-            var response = new ApiResponse<CreateSkinTypeViewModel>();
+            var response = new ApiResponse<bool>();
             try
             {
+                FluentValidation.Results.ValidationResult validationResult = await _validatorCreateSkinType.ValidateAsync(createSkinType);
+                if (!validationResult.IsValid)
+                {
+                    response.isSuccess = false;
+                    response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
+                    return response;
+                }
                 var skinType = _mapper.Map<Skin>(createSkinType);
                var skinTypeList =  _unitOfWork.SkinTypeRepository.Find(s => s.SkinsName == createSkinType.SkinsName);
                 var isNameExist = skinTypeList.Any();
                 if (isNameExist)
                 {
-                    throw new Exception("Skin Condition Name is exist!");
+                    
+                    response.Message = "Tên đã tồn tại";
+
+                    response.isSuccess = true;
+                    response.Data = false;
+                    return response;
                 }
-                else
-                {
-                    FluentValidation.Results.ValidationResult validationResult = await _validatorCreateSkinType.ValidateAsync(createSkinType);
-                    if (!validationResult.IsValid)
-                    {
-                        response.isSuccess = false;
-                        response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
-                        return response;
-                    }
-                    else
-                    {
+                
+              
+                   
+                    
                         skinType.Category = false;
                         await _unitOfWork.SkinTypeRepository.AddAsync(skinType);
                         var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
@@ -56,11 +61,12 @@ namespace CavisProject.Application.Services
                         {
                             throw new Exception("Create Skin Condition is fail!");
                         }
-                        response.Data = _mapper.Map<CreateSkinTypeViewModel>(createSkinType);
+                       response.isSuccess = true;
+                response.Data = true;
                         response.Message = "Create Skin Condition is success";
 
-                    }
-                }
+                    
+                
             }
             catch (DbException ex)
             {
@@ -76,7 +82,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<bool>> DeleteSkinType(string skinTypeId)
+        public async Task<ApiResponse<bool>> DeleteSkinTypeAsync(string skinTypeId)
         {
             var response = new ApiResponse<bool>();
             try
@@ -84,12 +90,20 @@ namespace CavisProject.Application.Services
                 var exist = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(skinTypeId));
                 if (exist == null)
                 {
-                    throw new Exception("No Skin Condition Exit");
+                    response.Message = "Tình trạng da không tồn tại";
+
+                    response.isSuccess = true;
+                    response.Data = false;
+                    return response;
                 }
                 if (exist.IsDeleted)
                 {
 
-                    throw new Exception("Skin Condition is already deleted");
+                    response.Message = "Tình trạng da đã được xóa";
+
+                    response.isSuccess = true;
+                    response.Data = false;
+                    return response;
 
                 }
                 _unitOfWork.SkinTypeRepository.SoftRemove(exist);
@@ -99,7 +113,8 @@ namespace CavisProject.Application.Services
                     throw new Exception("Delete Skin Condition is fail");
                 }
                 response.Data = _mapper.Map<bool>(skinTypeId);
-
+                response.isSuccess = true;
+                response.Data= true;
                 response.Message = "Delete Skin Condition is success";
             }
             catch (DbException ex)
@@ -116,7 +131,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinCondition(SkinFilterModel skinTypeFilterModel)
+        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinConditionAsync(SkinFilterModel skinTypeFilterModel)
         {
             var response = new ApiResponse<Pagination<SkinViewModel>>();
 
@@ -127,6 +142,7 @@ namespace CavisProject.Application.Services
                     filter: s =>
                         (string.IsNullOrEmpty(skinTypeFilterModel.SkinTypeName) || s.SkinsName.Contains(skinTypeFilterModel.SkinTypeName)) &&
                         (string.IsNullOrEmpty(skinTypeFilterModel.Description) || s.Description.Contains(skinTypeFilterModel.Description)) &&
+                        (!skinTypeFilterModel.IsDeleted.HasValue || s.IsDeleted == skinTypeFilterModel.IsDeleted.Value) &&
                         s.Category == false,
                     pageIndex: skinTypeFilterModel.PageIndex,
                     pageSize: skinTypeFilterModel.PageSize
@@ -152,55 +168,56 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<CreateSkinTypeViewModel>> UpdateSkinCondition(CreateSkinTypeViewModel updateSkinType, string skinTypeId)
+        public async Task<ApiResponse<bool>> UpdateSkinConditionAsync(CreateSkinTypeViewModel updateSkinType, string skinTypeId)
         {
-            var response = new ApiResponse<CreateSkinTypeViewModel>();
+            var response = new ApiResponse<bool>();
             try
             {
                 var exist = await _unitOfWork.SkinTypeRepository.GetByIdAsync(Guid.Parse(skinTypeId));
 
+                if (exist is null)
+                {
+                    response.isSuccess = false;
+                    response.Message = "Tình trạng da không tồn tại";
+                    response.Data = false;
+                    return response;
+                }
 
                 FluentValidation.Results.ValidationResult validationResult = await _validatorCreateSkinType.ValidateAsync(updateSkinType);
-                if (validationResult.IsValid)
+                if (!validationResult.IsValid)
                 {
                     response.isSuccess = false;
                     response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
                     return response;
                 }
-                else
+
+                var skinTypeList = _unitOfWork.SkinTypeRepository.Find(s => s.SkinsName == updateSkinType.SkinsName && s.Id != Guid.Parse(skinTypeId));
+                var isNameExist = skinTypeList.Any();
+                if (isNameExist)
                 {
-                    if (exist is null)
-                    {
-                        throw new Exception("Skin Condition not found");
-
-                    }
-                    else
-                    {
-                        var update = _mapper.Map(updateSkinType, exist);
-                        var skinTypeList = _unitOfWork.SkinTypeRepository.Find(s => s.SkinsName == update.SkinsName);
-                        var isNameExist = skinTypeList.Any();
-                        if (isNameExist)
-                        {
-                            throw new Exception("Skin Condition Name is exist!");
-                        }
-                        var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
-
-                        if (isSuccess is false)
-                        {
-                            throw new Exception("Update Skin Condition is fail");
-                        }
-                        response.Data = _mapper.Map<CreateSkinTypeViewModel>(skinTypeId);
-
-                        response.Message = "Update Skin Condition is success";
-                    }
-
+                    response.isSuccess = false;
+                    response.Message = "Tên đã tồn tại";
+                    response.Data = false;
+                    return response;
                 }
+
+                var update = _mapper.Map(updateSkinType, exist);
+                _unitOfWork.SkinTypeRepository.Update(update);
+                var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
+
+                if (!isSuccess)
+                {
+                    throw new Exception("Update Skin Condition is fail");
+                }
+
+                response.isSuccess = true;
+                response.Data = true;
+                response.Message = "Update Skin Condition is success";
             }
             catch (DbException ex)
             {
                 response.isSuccess = false;
                 response.Message = ex.Message;
-
             }
             catch (Exception ex)
             {
@@ -209,7 +226,8 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-        public async Task<ApiResponse<SkinViewModel>> GetSkinConditionById(string id)
+
+        public async Task<ApiResponse<SkinViewModel>> GetSkinConditionByIdAsync(string id)
         {
             var response = new ApiResponse<SkinViewModel>();
 
@@ -219,7 +237,11 @@ namespace CavisProject.Application.Services
 
                 if (skinType == null || skinType.Category == true)
                 {
-                    throw new Exception("Skin condition not found.");
+                    response.Message = "Tình trạng da không tồn tại";
+
+                    response.isSuccess = true;
+                    response.Data = null;
+                    return response;
                 }
 
                 var skinTypeViewModel = _mapper.Map<SkinViewModel>(skinType);

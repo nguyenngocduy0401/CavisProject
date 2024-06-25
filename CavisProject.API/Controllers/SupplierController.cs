@@ -18,27 +18,27 @@ namespace CavisProject.API.Controllers
         }
         [SwaggerOperation(Summary = "tạo thông tin nhà cung cấp sản phẩm {Authorize = Admin, Staff}")]
         [HttpPost("")]
-        public async Task<ApiResponse<CreateSupplierViewModel>> CreateSupplier([FromBody] CreateSupplierViewModel createSupplierViewModel)
+        public async Task<ApiResponse<bool>> CreateSupplier([FromBody] CreateSupplierViewModel createSupplierViewModel)
         
-           => await _supplierService.CreateSupplier(createSupplierViewModel);
+           => await _supplierService.CreateSupplierAsync(createSupplierViewModel);
 
         [SwaggerOperation(Summary = "tìm kiếm thông tin nhà cung cấp sản phẩm")]
         [HttpGet("")]
         public async Task<ApiResponse<Pagination<SupplierViewModel>>> FilterSupplier(FilterSupplierViewModel filterSupplierViewModel)
-        => await _supplierService.FilterSupplier(filterSupplierViewModel);
+        => await _supplierService.FilterSupplierAsync(filterSupplierViewModel);
 
         [SwaggerOperation(Summary = "khóa thông tin nhà cung cấp sản phẩm {Authorize = Admin, Staff}")]
         [HttpDelete("{id}")]
-        [Authorize]
-        public async Task<ApiResponse<bool>> DeleteSupplier([FromRoute] string supplierId)
+       // [Authorize]
+        public async Task<ApiResponse<bool>> DeleteSupplier([FromRoute] string id)
         
-          =>  await _supplierService.DeleteSupplier(supplierId);
+          =>  await _supplierService.DeleteSupplierAsync(id);
 
         [SwaggerOperation(Summary = "cập nhật thông tin nhà cung cấp sản phẩm {Authorize = Admin, Staff}")]
         [HttpPut("{id}")]
-        [Authorize]
-        public async Task<ApiResponse<CreateSupplierViewModel>> UpdateSupplier([FromBody] CreateSupplierViewModel updateSupplierViewModel, [FromRoute] string id)
-      =>   await _supplierService.UppdateSupplier(updateSupplierViewModel, id);
+      //  [Authorize]
+        public async Task<ApiResponse<bool>> UpdateSupplier([FromBody] CreateSupplierViewModel updateSupplierViewModel, [FromRoute] string id)
+      =>   await _supplierService.UpdateSupplierAsync(updateSupplierViewModel, id);
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "lấy thông tin nhà cung cấp sản phẩm  bằng id")]
         public async Task<ApiResponse<CreateSupplierViewModel>> GetSupplierByIdAsync(string id)=> await _supplierService.GetSupplierByIdAsync(id);
