@@ -2,6 +2,7 @@
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using CavisProject.Domain.Entity;
+using CavisProject.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -32,43 +33,140 @@ namespace CavisProject.Infrastructures.Repositories
             _timeService = timeService;
             _claimsService = claimsService;
         }
-        public async Task<Pagination<Product>> SuggestProductAsync(Guid personalAnalystId, int? pageIndex = null, int? pageSize = null)
+        public async Task<Pagination<Product>> SuggestProductAsync(
+        Guid personalAnalystId,
+        CompatibleProductsEnum compatibleProductsEnum,
+        int? pageIndex = null,
+        int? pageSize = null,
+        Expression<Func<Product, bool>>? filter = null,
+        Func<IQueryable<Product>, IOrderedQueryable<Product>>? orderBy = null,
+        string includeProperties = "",
+        string? foreignKey = null,
+        object? foreignKeyId = null
+        )
         {
+            // Lấy danh sách SkinId từ PersonalAnalystDetails
             var skinIds = await _dbContext.PersonalAnalystDetails
                 .Where(e => e.PersonalAnalystId == personalAnalystId)
                 .Select(e => e.SkinId)
                 .Distinct()
                 .ToListAsync();
 
-            var productsQuery = _dbContext.Products
-                .Include(e => e.ProductDetails)
-                .ThenInclude(e => e.Skins)
-                .Where(e =>
-                    e.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category)
-                // Contains Skin with Category = true
-                /* &&e.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && !pd.Skins.Category)  // Contains Skin with Category = false*/
-                );
+            IQueryable<Product> query = _dbContext.Products;
+            if (!string.IsNullOrEmpty(foreignKey) && foreignKeyId != null)
+            {
+                if (foreignKeyId is Guid guidValue)
+                {
+                    query = query.Where(e => e.ProductCategoryId == guidValue);
+                }
+                else if (foreignKeyId is string stringValue)
+                {
+                    query = query.Where(e => EF.Property<string>(e, foreignKey) == stringValue);
+                }
+                else
+                {
+                    throw new ArgumentException("Unsupported foreign key type");
+                }
+            }
+            switch (compatibleProductsEnum)
+            {
+                case CompatibleProductsEnum.Low:
+                    query = query.Include(e => e.ProductDetails)
+                        .ThenInclude(e => e.Skins)
+                        .Where(e =>
+                            e.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category)
+                        // Contains Skin with Category = true
+                        /* &&e.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && !pd.Skins.Category)  // Contains Skin with Category = false*/
+                        );
+                    break;
+                case CompatibleProductsEnum.Medium:
+                    query = query.Include(e => e.ProductDetails)
+                        .ThenInclude(e => e.Skins)
+                        .Where(e =>
+                            e.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category)// Contains Skin with Category = true
+                         && e.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && !pd.Skins.Category)  // Contains Skin with Category = false
+                        );
+                    break;
+                case CompatibleProductsEnum.High:
+                    query = query.Include(e => e.ProductDetails)
+                        .ThenInclude(e => e.Skins)
+                        .Where(e =>
+                            e.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category)// Contains Skin with Category = true
+                         && e.ProductDetails.Count(pd => skinIds.Contains(pd.SkinId) && !pd.Skins.Category) >= 2  // Contains Skin with Category = false
+                        );
+                    break;
+                case CompatibleProductsEnum.Extremely:
+                    // Lấy danh sách các Category = true và số lượng sản phẩm tương ứng với mỗi Category
+                    var categories = await _dbContext.ProductDetails
+                        .Where(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category)
+                        .Select(pd => pd.ProductId)
+                        .Distinct()
+                        .ToListAsync();
 
-            var itemCount = await productsQuery.CountAsync();
+                    // Danh sách chứa các sản phẩm đã lấy
+                    var selectedProductIds = new List<Guid>();
 
+                    // Lặp qua từng Category = true
+                    foreach (var categoryProductId in categories)
+                    {
+                        // Lấy sản phẩm có nhiều Skin.Category = false nhất cho từng Category = true
+                        var productId = await _dbContext.Products
+                            .Where(p => p.ProductDetails.Any(pd => pd.ProductId == categoryProductId))
+                            .OrderByDescending(p => p.ProductDetails.Count(pd => skinIds.Contains(pd.SkinId) && !pd.Skins.Category))
+                            .Select(p => p.Id)
+                            .FirstOrDefaultAsync();
+
+                        // Nếu tìm thấy sản phẩm thì thêm vào danh sách đã chọn
+                        if (productId != Guid.Empty)
+                        {
+                            selectedProductIds.Add(productId);
+                        }
+                    }
+
+                    query = query.Where(p => selectedProductIds.Contains(p.Id));
+                    break;
+                default:
+                    query = query.Include(e => e.ProductDetails)
+                        .ThenInclude(e => e.Skins)
+                        .Where(e =>
+                            e.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category)
+                        );
+                    break;
+            }
+
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+            var itemCount = await query.CountAsync();
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+            
             if (pageIndex.HasValue && pageSize.HasValue)
             {
                 int validPageIndex = pageIndex.Value > 0 ? pageIndex.Value - 1 : 0;
                 int validPageSize = pageSize.Value > 0 ? pageSize.Value : 10;
 
-                productsQuery = productsQuery.Skip(validPageIndex * validPageSize).Take(validPageSize);
+                query = query.Skip(validPageIndex * validPageSize).Take(validPageSize);
             }
 
-
-            var pagination = new Pagination<Product>()
+            var result = new Pagination<Product>()
             {
                 PageIndex = pageIndex ?? 0,
                 PageSize = pageSize ?? 10,
                 TotalItemsCount = itemCount,
-                Items = await productsQuery.ToListAsync()
-        };
-           
-            return pagination;
+                Items = await query.ToListAsync(),
+            };
+
+            return result;
         }
         public async Task<Guid> CreatePersonalAnalystAsync(PersonalAnalyst personalAnalyst)
         {

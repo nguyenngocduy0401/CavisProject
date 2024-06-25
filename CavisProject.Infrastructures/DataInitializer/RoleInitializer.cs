@@ -20,7 +20,7 @@ namespace CavisProject.Infrastructures.DataInitializer
         }
         public async Task RoleInitializeAsync()
         {
-            string[] roleNames = { AppRole.Admin, AppRole.Customer, AppRole.Staff, AppRole.Expert };
+            string[] roleNames = { AppRole.Admin, AppRole.Customer, AppRole.Staff, AppRole.ExpertSkinCare, AppRole.ExpertMakeup };
 
 
             IdentityResult roleResult;

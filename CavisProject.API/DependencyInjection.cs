@@ -80,7 +80,7 @@ namespace CavisProject.API
             services.AddScoped<IClaimsService, ClaimsService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddHttpContextAccessor();
-         //  services.AddHostedService<SetupIdentityDataSeeder>();
+           services.AddHostedService<SetupIdentityDataSeeder>();
             services.AddControllers();
             services.AddLogging();
 
