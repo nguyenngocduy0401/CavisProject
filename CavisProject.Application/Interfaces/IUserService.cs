@@ -12,7 +12,7 @@ namespace CavisProject.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<ApiResponse<PackagePreniumViewModel>> RegisterPremiumAsync(string id);
+        Task<ApiResponse<PackagePremiumViewModel>> RegisterPremiumAsync(string id);
         Task<ApiResponse<UserPackageViewModel>> UpgradeToPremiumAsync(string id);
         Task<ApiResponse<UserViewModel>> GetUserByIdAsync(string id);
         Task<ApiResponse<UserViewModel>> GetInfoByLoginAsync();

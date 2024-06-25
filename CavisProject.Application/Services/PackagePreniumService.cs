@@ -86,21 +86,21 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-        public async Task<ApiResponse<Pagination<PackagePreniumViewModel>>> GetPackagePremiumsAsync(int pageIndex, int pageSize)
+        public async Task<ApiResponse<Pagination<PackagePremiumViewModel>>> GetPackagePremiumsAsync(int pageIndex, int pageSize)
         {
-            var response = new ApiResponse<Pagination<PackagePreniumViewModel>>();
+            var response = new ApiResponse<Pagination<PackagePremiumViewModel>>();
 
             try
             {
                 var packagePremiums = await _unitOfWork.PackagePremiumRepository.GetAllAsync();
-                var packagePreniumViewModels = _mapper.Map<List<PackagePreniumViewModel>>(packagePremiums);
+                var packagePreniumViewModels = _mapper.Map<List<PackagePremiumViewModel>>(packagePremiums);
                 foreach (var packagePreniumViewModel in packagePreniumViewModels)
                 {
                     var totalUsers = await _unitOfWork.PackageDetailRepository.GetTotalUsersByPackageIdAsync(packagePreniumViewModel.Id);
                     packagePreniumViewModel.TotalUsers = totalUsers;
                 }
                 var totalItemsCount = packagePreniumViewModels.Count;
-                var pagination = new Pagination<PackagePreniumViewModel>
+                var pagination = new Pagination<PackagePremiumViewModel>
                 {
                     PageIndex = pageIndex,
                     PageSize = pageSize,
@@ -135,6 +135,7 @@ namespace CavisProject.Application.Services
                     response.Data = false;
                     response.isSuccess = true;
                     response.Message = "Tên  đã tồn tại!";
+                    return response;
                     
                 }
                 else
@@ -156,6 +157,7 @@ namespace CavisProject.Application.Services
                             throw new Exception("Khởi tạo lỗi!");
                         }
                         response.isSuccess = true;
+                        response.Data= true;
                         response.Message = "Tạo Thành Công !";
 
                     }
@@ -178,9 +180,9 @@ namespace CavisProject.Application.Services
 
     
 
-    public async Task<ApiResponse<Pagination<PackagePreniumViewModel>>> FilterPackageAsync(FilterPackagePremiumViewModel filterModel)
+    public async Task<ApiResponse<Pagination<PackagePremiumViewModel>>> FilterPackageAsync(FilterPackagePremiumViewModel filterModel)
         {
-            var response = new ApiResponse<Pagination<PackagePreniumViewModel>>();
+            var response = new ApiResponse<Pagination<PackagePremiumViewModel>>();
 
             try
             {
@@ -188,12 +190,13 @@ namespace CavisProject.Application.Services
                     filter: s =>
                         (string.IsNullOrEmpty(filterModel.PackagePremiumName) || s.PackagePremiumName.Contains(filterModel.PackagePremiumName)) &&
                         (filterModel.Price == 0 || s.Price == filterModel.Price) &&
-                        (filterModel.Duration == 0 || s.Duration == filterModel.Duration) ,
+                        (filterModel.Duration == 0 || s.Duration == filterModel.Duration) &&
+                        (!filterModel.IsDeleted.HasValue || s.IsDeleted == filterModel.IsDeleted),
                       
                     pageIndex: filterModel.PageIndex,
                     pageSize: filterModel.PageSize
                 ); ;
-                var packageViewModels = _mapper.Map<List<PackagePreniumViewModel>>(paginationResult.Items);
+                var packageViewModels = _mapper.Map<List<PackagePremiumViewModel>>(paginationResult.Items);
                 //dem user su dung package
                 foreach (var packagePreniumViewModel in packageViewModels)
                 {
@@ -201,7 +204,7 @@ namespace CavisProject.Application.Services
                     packagePreniumViewModel.TotalUsers = totalUsers;
                 }
             /*    //  var totalItemsCount = packageViewModels.Count;*/
-                var paginationViewModel = new Pagination<PackagePreniumViewModel>
+                var paginationViewModel = new Pagination<PackagePremiumViewModel>
                 {
                     PageIndex = paginationResult.PageIndex,
                     PageSize = paginationResult.PageSize,
@@ -220,20 +223,27 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<bool>> DeletePackageAsync(string Id)
+        public async Task<ApiResponse<bool>> DeletePackageAsync(string id)
         {
             var response = new ApiResponse<bool>();
             try
             {
-                var exist = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(Id));
+                var exist = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
                 if (exist == null)
                 {
-                    throw new Exception("Không tồn tại");
+                    
+                    response.Message = "gói không tồn tại";
+                    response.isSuccess = true;
+                    response.Data = false;
+                    return response;
                 }
                 if (exist.IsDeleted)
                 {
 
-                    throw new Exception("đã được xóa");
+                    response.Message = "gói đã được xóa";
+                    response.isSuccess = true;
+                    response.Data = false;
+                    return response;
 
                 }
                 _unitOfWork.PackagePremiumRepository.SoftRemove(exist);
@@ -242,8 +252,9 @@ namespace CavisProject.Application.Services
                 {
                     throw new Exception("Xóa thất bại!");
                 }
-                response.Data = _mapper.Map<bool>(Id);
+                response.Data = _mapper.Map<bool>(id);
                 response.isSuccess = true;
+                response.Data = true;
                 response.Message = "Xóa Thành Công!";
             }
             catch (DbException ex)
@@ -260,51 +271,55 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<bool>> UpdatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel, string Id)
+        public async Task<ApiResponse<bool>> UpdatePackageAsync(CreatePackagePremiumViewModel createPackagePremiumViewModel, string id)
         {
             var response = new ApiResponse<bool>();
             try
             {
-                var exist = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(Id));               
-                    if (exist is null)
-                    {
-                        throw new Exception("Gói không tồn tại");
+                FluentValidation.Results.ValidationResult validationResult = await _validator.ValidateAsync(createPackagePremiumViewModel);
+                if (!validationResult.IsValid)
+                {
+                    response.isSuccess = false;
+                    response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
+                    return response;
+                }
 
-                    }
-                    else
-                    {
-                        var update = _mapper.Map(createPackagePremiumViewModel, exist);
-                        var skinTypeList = _unitOfWork.PackagePremiumRepository.Find(s => s.PackagePremiumName == update.PackagePremiumName);
-                        var isNameExist = skinTypeList.Any();
-                        if (isNameExist)
-                        {
-                            throw new Exception("Tên này đã tồn tại!");
-                        }
-                        FluentValidation.Results.ValidationResult validationResult = await _validator.ValidateAsync(createPackagePremiumViewModel);
-                        if (validationResult.IsValid)
-                        {
-                            response.isSuccess = false;
-                            response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
-                            return response;
-                        }
-                    var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
+                var exist = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
+                if (exist is null)
+                {
+                    response.Message = "Gói không tồn tại";
+                    response.isSuccess = false;
+                    response.Data = false;
+                    return response;
+                }
 
-                        if (isSuccess is false)
-                        {
-                            throw new Exception("Cập nhật thất bại");
-                        }
-                        response.Data = _mapper.Map<bool>(Id);
-                        response.isSuccess = true;
-                        response.Message = "Cập nhật thành công";
-                    }
+                var update = _mapper.Map(createPackagePremiumViewModel, exist);
+                var skinTypeList = _unitOfWork.PackagePremiumRepository.Find(s => s.PackagePremiumName == update.PackagePremiumName && s.Id != Guid.Parse(id));
+                var isNameExist = skinTypeList.Any();
+                if (isNameExist)
+                {
+                    response.Message = "Tên này đã tồn tại!";
+                    response.isSuccess = false;
+                    response.Data = false;
+                    return response;
+                }
 
-                
+                _unitOfWork.PackagePremiumRepository.Update(update);
+                var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
+
+                if (!isSuccess)
+                {
+                    throw new Exception("Cập nhật thất bại");
+                }
+
+                response.Data = true;
+                response.isSuccess = true;
+                response.Message = "Cập nhật thành công";
             }
             catch (DbException ex)
             {
                 response.isSuccess = false;
                 response.Message = ex.Message;
-
             }
             catch (Exception ex)
             {
@@ -313,20 +328,26 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-        public async Task<ApiResponse<PackagePreniumViewModel>> GetPackagePremiumByIdAsync(string id)
+
+        public async Task<ApiResponse<PackagePremiumViewModel>> GetPackagePremiumByIdAsync(string id)
         {
-            var response = new ApiResponse<PackagePreniumViewModel>();
+            var response = new ApiResponse<PackagePremiumViewModel>();
             try
             {
                 var packagePremium = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
                 if (packagePremium == null)
                 {
-                    throw new Exception("Không tìm thấy !");
+                    response.Message = "Không tìm thấy !";
+
+                    response.isSuccess = true;
+                    response.Data = null;
+                    return response;
                 }
 
-                var packagePremiumViewModel = _mapper.Map<PackagePreniumViewModel>(packagePremium);
+                var packagePremiumViewModel = _mapper.Map<PackagePremiumViewModel>(packagePremium);
 
                 response.isSuccess = true;
+                
                 response.Data = packagePremiumViewModel;
             }
             catch (DbException ex)

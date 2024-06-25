@@ -39,19 +39,20 @@ namespace CavisProject.Infrastructures.Repositories
         public async Task<User> GetByPhoneNumberAsync(string phoneNumber) =>
             await _dbContext.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
 
+
         public virtual async Task<Pagination<User>> GetFilterAsync(
-      Expression<Func<User, bool>>? filter = null,
-      Func<IQueryable<User>, IOrderedQueryable<User>>? orderBy = null,
-      string includeProperties = "",
-      int? pageIndex = null,
-      int? pageSize = null,
-      string? role = null,
-      IsActivityEnum? isActivity = null,
-      UserPremiumStatusEnum? status = null,
-      string? foreignKey = null,
-      object? foreignKeyId = null)
+     Expression<Func<User, bool>>? filter = null,
+     Func<IQueryable<User>, IOrderedQueryable<User>>? orderBy = null,
+     string includeProperties = "",
+     int? pageIndex = null,
+     int? pageSize = null,
+     string? role = null,
+     IsActivityEnum? isActivity = null,
+     UserPremiumStatusEnum? status = null,
+     string? foreignKey = null,
+     object? foreignKeyId = null)
         {
-            IQueryable<User> query = _dbContext.Users; 
+            IQueryable<User> query = _dbContext.Users;
 
             if (filter != null)
             {
@@ -64,6 +65,7 @@ namespace CavisProject.Infrastructures.Repositories
                 var userIdsInRole = usersInRole.Select(u => u.Id);
                 query = query.Where(u => userIdsInRole.Contains(u.Id));
             }
+
             if (isActivity.HasValue)
             {
                 switch (isActivity)
@@ -77,15 +79,9 @@ namespace CavisProject.Infrastructures.Repositories
                 }
             }
 
-            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
 
-            if (status.HasValue )
+            if (status.HasValue)
             {
-                var statusValue = (int)status.Value;
-
                 var userIds = await query.Select(u => u.Id).ToListAsync();
 
                 var packageDetails = await _dbContext.PackageDetails
@@ -100,15 +96,23 @@ namespace CavisProject.Infrastructures.Repositories
                     case UserPremiumStatusEnum.Active:
                         userIds = packageDetails.Where(pd => pd.Status == 1).Select(pd => pd.UserId).ToList();
                         break;
+                    
                 }
+
                 query = query.Where(u => userIds.Contains(u.Id));
             }
 
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
             var countTask = query.CountAsync();
+
             if (orderBy != null)
             {
                 query = orderBy(query);
             }
+
             if (!string.IsNullOrEmpty(foreignKey) && foreignKeyId != null)
             {
                 if (foreignKeyId is Guid guidValue)
@@ -124,6 +128,7 @@ namespace CavisProject.Infrastructures.Repositories
                     throw new ArgumentException("Unsupported foreign key type");
                 }
             }
+
             if (pageIndex.HasValue && pageSize.HasValue)
             {
                 int validPageIndex = pageIndex.Value > 0 ? pageIndex.Value - 1 : 0;
@@ -131,6 +136,7 @@ namespace CavisProject.Infrastructures.Repositories
 
                 query = query.Skip(validPageIndex * validPageSize).Take(validPageSize);
             }
+
             var count = await countTask;
             var items = await query.ToListAsync();
             var result = new Pagination<User>

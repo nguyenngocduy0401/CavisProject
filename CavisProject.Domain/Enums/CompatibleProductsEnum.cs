@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Domain.Enums
 {
-    public enum RolesEnum
+    public enum CompatibleProductsEnum
     {
-        Administrator,
-        Customer,
-        Staff,
-        ExpertSkinCare,
-        ExpertMakeup
+        Low,
+        Medium,
+        High,
+        Extremely
     }
 }

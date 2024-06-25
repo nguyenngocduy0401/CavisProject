@@ -16,6 +16,8 @@ namespace CavisProject.Application.Interfaces
         Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategoryAsync(FilterProductCategoryModel filterProductCategory);
         Task<ApiResponse<bool>> DeleteProductCategoryAsync(string id);
         Task<ApiResponse<ProductCategoryViewModel>> GetProductCategoryByIdAsync(string id);
+        Task<ApiResponse<Pagination<ProductCategoryViewModel>>> FilterProductCategoryAsync(FilterProductCategoryModel filterProductCategory);
+        Task<ApiResponse<bool>> DeleteProductCategoryAsync(string id);
 
     }
 }
