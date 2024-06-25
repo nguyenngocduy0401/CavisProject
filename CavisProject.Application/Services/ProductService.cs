@@ -5,6 +5,7 @@ using CavisProject.Application.ViewModels.ProductViewModel;
 
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Domain.Entity;
+using CavisProject.Domain.Enums;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.IdentityModel.Tokens;
@@ -48,8 +49,15 @@ namespace CavisProject.Application.Services
                 if (existingProduct != null)
                 {
                     response.isSuccess = true;
-                    response.Data= false;
+                    response.Data = false;
                     response.Message = "Tên sản phẩm đã tồn tại.";
+                    return response;
+                }
+                if (!Enum.IsDefined(typeof(ProductStatusEnum), createProductViewModel.Status))
+                {
+                    response.isSuccess = false;
+                    response.Data = false;
+                    response.Message = "Loại sản phâm không tồn tại.";
                     return response;
                 }
                 var product = new Product
@@ -60,6 +68,7 @@ namespace CavisProject.Application.Services
                     URL = createProductViewModel.URL,
                     SupplierId = createProductViewModel.SupplierId,
                     ProductCategoryId = createProductViewModel.ProductCategoryId,
+                    Status = (ProductStatusEnum)createProductViewModel.Status
                 };
 
                 var supplierExists = await _unitOfWork.SupplierRepository.GetByIdAsync(createProductViewModel.SupplierId.Value);
@@ -80,41 +89,27 @@ namespace CavisProject.Application.Services
                     return response;
                 }
 
-               
-                    await _unitOfWork.ProductRepository.AddAsync(product);
-                   if (createProductViewModel.SkinTypeId.HasValue)
-                    {
-                        var skinType = await _unitOfWork.SkinTypeRepository.GetFirstOrDefaultAsync(s => s.Id == createProductViewModel.SkinTypeId && s.Category == true);
-                        if (skinType != null)
-                        {
-                            var productDetail = new ProductDetail
-                            {
-                                ProductId = product.Id,
-                                SkinId = skinType.Id,
-                               
-                            };
-                            await _unitOfWork.ProductDetailRepository.AddAsync(productDetail);
-                        }
-                        else
-                        {
-                            response.isSuccess = true;
-                            response.Data = false;
-                            response.Message = "Loại da không tồn tại.";
-                            return response;
-                        }
-                    }
-                if (createProductViewModel.SkinConditionIds != null && createProductViewModel.SkinConditionIds.Any())
+
+                await _unitOfWork.ProductRepository.AddAsync(product);
+                bool hasCategory1 = false;
+                bool hasCategory0 = false;
+
+                if (createProductViewModel.SkinId != null && createProductViewModel.SkinId.Any())
                 {
-                    foreach (var skinConditionId in createProductViewModel.SkinConditionIds)
+                    foreach (var skinId in createProductViewModel.SkinId)
                     {
-                        var skinCondition = await _unitOfWork.SkinConditionRepository.GetByIdAsync(skinConditionId);
-                        if (skinCondition != null)
+                        var skin = await _unitOfWork.SkinConditionRepository.GetByIdAsync(skinId);
+                        if (skin != null)
                         {
+                            if (skin.Category)
+                                hasCategory1 = true;
+                            else
+                                hasCategory0 = true;
+
                             var productDetail = new ProductDetail
                             {
                                 ProductId = product.Id,
-                                SkinId = skinCondition.Id,
-                               
+                                SkinId = skin.Id
                             };
                             await _unitOfWork.ProductDetailRepository.AddAsync(productDetail);
                         }
@@ -125,27 +120,33 @@ namespace CavisProject.Application.Services
                             response.Message = "Tình trạng da không tồn tại.";
                             return response;
                         }
+                    }
 
+                    if (!hasCategory1 || !hasCategory0)
+                    {
+                        response.isSuccess = false;
+                        response.Message = "Phải có ít nhất một tinh trạng da và 1 loại da";
+                        return response;
                     }
                 }
-                   
 
-                    var isDetailsSaved = await _unitOfWork.SaveChangeAsync() > 0;
 
-                    if (isDetailsSaved)
-                    {
-                      
-                        response.isSuccess = true;
+                var isDetailsSaved = await _unitOfWork.SaveChangeAsync() > 0;
+
+                if (isDetailsSaved)
+                {
+
+                    response.isSuccess = true;
                     response.Data = true;
-                        response.Message = "Create Successfully";
-                    }
-                    else
-                    {
-                      
-                        response.isSuccess = false;
-                        response.Message = "Failed to save product details.";
-                    }
-                }          
+                    response.Message = "Create Successfully";
+                }
+                else
+                {
+
+                    response.isSuccess = false;
+                    response.Message = "Failed to save product details.";
+                }
+            }
             catch (DbException ex)
             {
                 response.isSuccess = false;
@@ -158,6 +159,7 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
+
 
 
         public async Task<ApiResponse<bool>> DeleteProductAsync(string id)
@@ -221,8 +223,8 @@ namespace CavisProject.Application.Services
                   (!filterProductViewModel.SupplierId.HasValue || s.SupplierId == filterProductViewModel.SupplierId.Value) &&
                 (!filterProductViewModel.SupplierId.HasValue || s.SupplierId == filterProductViewModel.SupplierId.Value) &&
             (!filterProductViewModel.ProductCategoryId.HasValue || s.ProductCategoryId == filterProductViewModel.ProductCategoryId.Value) &&
-                (!filterProductViewModel.SkinConditionID.HasValue || s.ProductDetails.Any(pd => pd.SkinId == filterProductViewModel.SkinConditionID.Value && pd.Skins.Category == false)) &&
-                (!filterProductViewModel.SkinTypeId.HasValue || s.ProductDetails.Any(pd => pd.SkinId == filterProductViewModel.SkinTypeId.Value && pd.Skins.Category == true)) &&
+                 (!filterProductViewModel.Status.HasValue || s.Status == filterProductViewModel.Status) &&
+            (filterProductViewModel.SkinId == null || !filterProductViewModel.SkinId.Any() || s.ProductDetails.Any(pd => filterProductViewModel.SkinId.Contains(pd.SkinId.Value)))&&
                 (!filterProductViewModel.IsDeleted.HasValue || s.IsDeleted == filterProductViewModel.IsDeleted);
                 var products = await _unitOfWork.ProductRepository.GetFilterAsync(
                     filter: filter,
@@ -282,7 +284,7 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-        public async Task<ApiResponse<bool>> UpdateProductAsync(CreateProductViewModel updateProductViewModel,string id)
+        public async Task<ApiResponse<bool>> UpdateProductAsync(CreateProductViewModel updateProductViewModel, string id)
         {
             var response = new ApiResponse<bool>();
             try
@@ -304,6 +306,13 @@ namespace CavisProject.Application.Services
                     return response;
 
                 }
+                if (!Enum.IsDefined(typeof(ProductStatusEnum), updateProductViewModel.Status))
+                {
+                    response.isSuccess = false;
+                    response.Data = false;
+                    response.Message = "Giá trị của Status không hợp lệ.";
+                    return response;
+                }
 
                 if (!string.IsNullOrEmpty(updateProductViewModel.ProductName) && updateProductViewModel.ProductName != product.ProductName)
                 {
@@ -318,7 +327,7 @@ namespace CavisProject.Application.Services
                     product.ProductName = updateProductViewModel.ProductName;
                 }
 
-                if (updateProductViewModel.ClickMoney!=0)
+                if (updateProductViewModel.ClickMoney != 0)
                     product.ClickMoney = updateProductViewModel.ClickMoney;
 
                 if (!string.IsNullOrEmpty(updateProductViewModel.Description))
@@ -326,13 +335,16 @@ namespace CavisProject.Application.Services
 
                 if (!string.IsNullOrEmpty(updateProductViewModel.URL))
                     product.URL = updateProductViewModel.URL;
-
+                if (updateProductViewModel.Status != null)
+                {
+                    product.Status = (ProductStatusEnum)updateProductViewModel.Status;
+                }
                 if (updateProductViewModel.SupplierId.HasValue)
                 {
                     var supplierExists = await _unitOfWork.SupplierRepository.GetByIdAsync(updateProductViewModel.SupplierId.Value);
                     if (supplierExists == null)
                     {
-                        response.isSuccess = true ;
+                        response.isSuccess = true;
                         response.Message = "Nhà cung cấp không tồn tại.";
                         response.Data = false;
                         return response;
@@ -341,59 +353,33 @@ namespace CavisProject.Application.Services
                 }
 
                 var existingProductDetails = await _unitOfWork.ProductDetailRepository.GetAllAsync(pd => pd.ProductId == product.Id);
-
-                if (updateProductViewModel.SkinTypeId.HasValue || (updateProductViewModel.SkinConditionIds != null && updateProductViewModel.SkinConditionIds.Any()))
+                foreach (var existingProductDetail in existingProductDetails)
                 {
-                    foreach (var existingProductDetail in existingProductDetails)
-                    {
-                       
-                      await  _unitOfWork.ProductDetailRepository.Delete(existingProductDetail);
-                    }
+                    await _unitOfWork.ProductDetailRepository.Delete(existingProductDetail);
                 }
 
-                if (updateProductViewModel.SkinTypeId.HasValue)
+                bool hasCategory1 = false;
+                bool hasCategory0 = false;
+
+                if (updateProductViewModel.SkinId != null && updateProductViewModel.SkinId.Any())
                 {
-                    var skinType = await _unitOfWork.SkinTypeRepository.GetFirstOrDefaultAsync(s => s.Id == updateProductViewModel.SkinTypeId.Value && s.Category == true);
-                    if (skinType != null)
+                    foreach (var skinId in updateProductViewModel.SkinId)
                     {
-                      
-                       
+                        var skin = await _unitOfWork.SkinConditionRepository.GetByIdAsync(skinId);
+                        if (skin != null)
+                        {
+                            if (skin.Category)
+                                hasCategory1 = true;
+                            else
+                                hasCategory0 = true;
+
                             var productDetail = new ProductDetail
                             {
                                 ProductId = product.Id,
-                                SkinId = skinType.Id,
-                               
+                                SkinId = skin.Id
                             };
                             await _unitOfWork.ProductDetailRepository.AddAsync(productDetail);
-                        
                         }
-                    else
-                    {
-                        response.isSuccess = true;
-                        response.Data = false;
-                        response.Message = "Loại da không tồn tại.";
-                        return response;
-                    }
-                }
-
-             
-                if (updateProductViewModel.SkinConditionIds != null && updateProductViewModel.SkinConditionIds.Any())
-                {
-                    foreach (var skinConditionId in updateProductViewModel.SkinConditionIds)
-                    {
-                        var skinCondition = await _unitOfWork.SkinConditionRepository.GetByIdAsync(skinConditionId);
-                        if (skinCondition != null)
-                        {
-                         
-                                var productDetail = new ProductDetail
-                                {
-                                    ProductId = product.Id,
-                                    SkinId = skinCondition.Id,
-                                  
-                                };
-                                await _unitOfWork.ProductDetailRepository.AddAsync(productDetail);
-                            }
-                        
                         else
                         {
                             response.isSuccess = true;
@@ -402,7 +388,15 @@ namespace CavisProject.Application.Services
                             return response;
                         }
                     }
+
+                    if (!hasCategory1 || !hasCategory0)
+                    {
+                        response.isSuccess = false;
+                        response.Message = "Danh sách SkinId phải có ít nhất một SkinId với Category = 1 và một SkinId với Category = 0.";
+                        return response;
+                    }
                 }
+
 
 
                 var isUpdated = await _unitOfWork.SaveChangeAsync() > 0;
@@ -416,7 +410,7 @@ namespace CavisProject.Application.Services
                 else
                 {
                     response.isSuccess = false;
-                    response.Data= false;
+                    response.Data = false;
                     response.Message = "Update Fail!.";
                 }
             }
@@ -432,6 +426,5 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
     }
 }

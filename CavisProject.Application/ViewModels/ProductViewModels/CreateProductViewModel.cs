@@ -16,7 +16,7 @@ namespace CavisProject.Application.ViewModels.ProductViewModel
         public string? URL { get; set; }
         public Guid? SupplierId { get; set; }
         public Guid? ProductCategoryId { get; set; }
-        public Guid? SkinTypeId { get; set; }
-        public List<Guid>? SkinConditionIds { get; set; }
+        public List<Guid>? SkinId { get; set; }
+        public int Status { get; set; }
     }
 }
