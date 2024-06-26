@@ -520,5 +520,45 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
+
+        public async Task<ApiResponse<bool>> ApproveMethodAsync(string id)
+        {
+            var response = new ApiResponse<bool>();
+            try
+            {
+                var method = await _unitOfWork.MethodSkinCareRepository.GetByIdAsync(Guid.Parse(id));
+                if (method == null) { 
+                    response.isSuccess = false;
+                    response.Data = false;
+                    response.Message = "Phương pháp không tồn tại!";
+                    return response;
+                }
+                method.Status = MethodStatusEnum.active;
+                var isUpdated = await _unitOfWork.SaveChangeAsync() > 0;
+                if (isUpdated)
+                {
+                    response.isSuccess = true;
+                    response.Data = true;
+                    response.Message = "Successfully!";
+                }
+                else
+                {
+                    response.isSuccess = false;
+                    response.Data = false;
+                    response.Message = "Update Failed.";
+                }
+            }
+            catch (DbException ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
     }
 }

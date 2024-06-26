@@ -21,5 +21,6 @@ namespace CavisProject.Application.Interfaces
         Task<ApiResponse<bool>> DeleteUserAsync(string id);
         Task<ApiResponse<bool>> CreateUserAsync(CreateUserModel createUserModel);
         Task<ApiResponse<bool>> UpdatePasswordAsync(UpdatePasswordModel updatePasswordModel);
+        Task<ApiResponse<bool>> ApproveMethodAsync(string id);
     }
 }

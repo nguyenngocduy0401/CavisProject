@@ -62,5 +62,9 @@ namespace CavisProject.API.Controllers
         [Authorize]
         public async Task<ApiResponse<bool>> DeleteUserAsync(string id)
             => await _userService.DeleteUserAsync(id);
+        [SwaggerOperation(Summary = "duyệt phương pháp {Authorise=Admin}}")]
+        [HttpPut("mine/method/{id}")]
+        [Authorize(AppRole.Admin)]
+        public async Task<ApiResponse<bool>> ApproveMethodAsync(string id)=> await _userService.ApproveMethodAsync(id);
     }
 }
