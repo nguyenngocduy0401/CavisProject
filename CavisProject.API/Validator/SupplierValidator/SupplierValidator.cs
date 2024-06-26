@@ -2,11 +2,12 @@
 using CavisProject.Domain.Entity;
 using FluentValidation;
 
-namespace CavisProject.API.Validator.ProductValidator.SupplierViewModel
+namespace CavisProject.API.Validator.SupplierValidator
 {
     public class SupplierValidator : AbstractValidator<CreateSupplierViewModel>
     {
-        public SupplierValidator() {
+        public SupplierValidator()
+        {
             // SupplierName: not null and maximum 50 characters
             RuleFor(x => x.SupplierName)
                 .NotNull().WithMessage("SupplierName cannot be null")

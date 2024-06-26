@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CavisProject.Application.ViewModels.PackagePremium
+namespace CavisProject.Application.ViewModels.PackagePremiumViewModels
 {
     public class CreatePackagePremiumViewModel
     {

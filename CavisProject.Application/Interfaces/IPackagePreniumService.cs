@@ -1,5 +1,5 @@
 ﻿using CavisProject.Application.Commons;
-using CavisProject.Application.ViewModels.PackagePremium;
+using CavisProject.Application.ViewModels.PackagePremiumViewModels;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Application.ViewModels.UserViewModels;
 using System;

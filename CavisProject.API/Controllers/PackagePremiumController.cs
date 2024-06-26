@@ -1,6 +1,6 @@
 using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
-using CavisProject.Application.ViewModels.PackagePremium;
+using CavisProject.Application.ViewModels.PackagePremiumViewModels;
 using CavisProject.Application.ViewModels.UserViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
