@@ -13,7 +13,7 @@ namespace CavisProject.Application.ViewModels.PersonalAnalystViewModels
         public double? MaxPrice { get; set; }
         public Guid? CategoryId { get; set; }
         public CompatibleProductsEnum CompatibleProducts { get; set; } = CompatibleProductsEnum.Low;
-        public ProductCategoryEnum Category { get; set; } = ProductCategoryEnum.Skincare;
+        public ProductStatusEnum Category { get; set; } = ProductStatusEnum.Skincare;
         public int PageIndex { get; set; } = 0;
         public int PageSize { get; set; } = 10;
     }

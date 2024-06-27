@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Domain.Enums
 {
-    public   enum ProductStatusEnum
+    public enum ProductStatusEnum
     {
-        Makeup=0,
-        Skincare=1
+        Makeup,
+        Skincare
     }
 }

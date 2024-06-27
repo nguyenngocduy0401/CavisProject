@@ -53,9 +53,9 @@ namespace CavisProject.Infrastructures
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductDetailConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(WishListConfiguration).Assembly);
             #region User
-            /*modelBuilder.Entity<User>().HasData
+            modelBuilder.Entity<User>().HasData
                 (
-                new User 
+                new User
                 {
                     Id = "da8a7be0-e888-4201-8500-3c5b2dba7776",
                     UserName = "Cavis",
@@ -63,11 +63,11 @@ namespace CavisProject.Infrastructures
                     Email = "cavis@gmail.com",
                     FullName = "Cavis",
                     URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/cavis-logo.png?alt=media&token=ec5a2f56-7adc-4abb-b5a8-b478b9d9cb78",
-                    DateOfBirth =  DateTime.Now,
+                    DateOfBirth = DateTime.Now,
                     Status = true,
                     Wallet = 0,
                 }
-                );*/
+                );
             #endregion
             #region SeedSkin
             modelBuilder.Entity<Skin>().HasData(
@@ -563,14 +563,24 @@ namespace CavisProject.Infrastructures
                 new ProductDetail
                 {
                     ProductId = Guid.Parse("179F7F08-41A7-48C4-A389-0584AAA49ED9"),
-                    SkinId = Guid.Parse("550EE872-EA09-42A0-B9AC-809890DEBAFB"),
+                    SkinId = Guid.Parse("550EE872-EA09-42A0-B9AC-809890DEBAFB"),//Da thường
                 },
                 new ProductDetail
                 {
                     ProductId = Guid.Parse("179F7F08-41A7-48C4-A389-0584AAA49ED9"),
-                    SkinId = Guid.Parse("8D9526B4-4532-4AFF-8F69-379DBAC8A55F"),
+                    SkinId = Guid.Parse("8D9526B4-4532-4AFF-8F69-379DBAC8A55F"),//Nám da
                 },
-                //83AFF4AC-C495-4582-8877-1D2FC83EB9CB
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("179F7F08-41A7-48C4-A389-0584AAA49ED9"),
+                    SkinId = Guid.Parse("4678f8d2-5648-4521-9608-8e981dee9103"),//Nếp nhăn
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("179F7F08-41A7-48C4-A389-0584AAA49ED9"),
+                    SkinId = Guid.Parse("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"),//Mụn viêm đỏ
+                },
+                #region 8383AFF4AC-C495-4582-8877-1D2FC83EB9CB
                 new ProductDetail
                 {
                     ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
@@ -579,9 +589,50 @@ namespace CavisProject.Infrastructures
                 new ProductDetail
                 {
                     ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
-                    SkinId = Guid.Parse("8D9526B4-4532-4AFF-8F69-379DBAC8A55F"),
+                    SkinId = Guid.Parse("8D9526B4-4532-4AFF-8F69-379DBAC8A55F"),//Nám da
                 },
-                //21653406-6211-4F18-B661-A360B581B397
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("4678f8d2-5648-4521-9608-8e981dee9103"),//Nếp nhăn
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("5AB57D24-20AD-4B15-8427-C951419DA3BA"),//Mụn bọc
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"),//Mụn viêm đỏ
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("BD287628-2EB7-458A-B202-D89D63FAAEBF"),//Mụn mũ
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("E8685143-0F2E-42FA-8025-DA53E1707461"),//Mụn đầu đen
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("F49B6287-8F31-4FD5-9899-ED1EB6D0564A"),//Mụn đầu đinh
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("A9035561-1399-464F-9F09-38C164A40A63"),//Mụn thâm
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("73766FF0-D528-4262-A1E8-656B33F58603"),//Mụn đầu trắng
+                },
+            #endregion
+#region 21653406-6211-4F18-B661-A360B581B397
                 new ProductDetail
                 {
                     ProductId = Guid.Parse("21653406-6211-4F18-B661-A360B581B397"),
@@ -590,8 +641,19 @@ namespace CavisProject.Infrastructures
                 new ProductDetail
                 {
                     ProductId = Guid.Parse("21653406-6211-4F18-B661-A360B581B397"),
-                    SkinId = Guid.Parse("8D9526B4-4532-4AFF-8F69-379DBAC8A55F"),
+                    SkinId = Guid.Parse("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"),//Mụn viêm đỏ
                 },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("21653406-6211-4F18-B661-A360B581B397"),
+                    SkinId = Guid.Parse("5AB57D24-20AD-4B15-8427-C951419DA3BA"),//Mụn bọc
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("21653406-6211-4F18-B661-A360B581B397"),
+                    SkinId = Guid.Parse("BD287628-2EB7-458A-B202-D89D63FAAEBF"),//Mụn mủ
+                },
+            #endregion
                 //EF3342B3-E716-4028-B508-F29A1EC87865
                 new ProductDetail
                 {
