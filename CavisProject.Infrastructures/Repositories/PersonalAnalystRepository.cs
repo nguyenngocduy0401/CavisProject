@@ -84,7 +84,7 @@ namespace CavisProject.Infrastructures.Repositories
                         .ThenInclude(e => e.Skins)
                         .Where(e =>
                             e.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category)// Contains Skin with Category = true
-                         && e.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && !pd.Skins.Category)  // Contains Skin with Category = false
+                         && e.ProductDetails.Count(pd => skinIds.Contains(pd.SkinId) && !pd.Skins.Category) >=1 // Contains Skin with Category = false
                         );
                     break;
                 case CompatibleProductsEnum.High:
