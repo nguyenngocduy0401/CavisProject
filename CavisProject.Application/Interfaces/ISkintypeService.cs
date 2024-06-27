@@ -11,7 +11,7 @@ namespace CavisProject.Application.Interfaces
     public interface ISkintypeService
     {
         Task<ApiResponse<bool>> CreateSkinTypeAsync(CreateSkinTypeViewModel createSkinType);
-        Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinTypeAsync(SkinFilterModel skinTypeFilterModel);
+        Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinTypeAsync(SkinTypeFilterModel skinTypeFilterModel);
         Task<ApiResponse<bool>> DeleteSkinTypeAsync(string skinTypeId);
         Task<ApiResponse<bool>> UpdateSkinTypeAsync(CreateSkinTypeViewModel updateSkinType, string skinTypeId);
         Task<ApiResponse<SkinViewModel>> GetSkinTypeByIdAsync(string id);

@@ -29,11 +29,11 @@ namespace CavisProject.API.Controllers
         [HttpPut("{id}")]
         [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         [SwaggerOperation(Summary = "cập nhât thông tin gói bằng Id {Authorize = Admin}")]
-        public async Task<ApiResponse<bool>> UpdatePackage([FromBody] CreatePackagePremiumViewModel createPackagePremiumViewModel, string id) => await _packagePremiumService.UpdatePackageAsync(createPackagePremiumViewModel, id);
+        public async Task<ApiResponse<bool>> UpdatePackageAsync([FromBody] CreatePackagePremiumViewModel createPackagePremiumViewModel, string id) => await _packagePremiumService.UpdatePackageAsync(createPackagePremiumViewModel, id);
         [HttpDelete("{id}")]
         [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         [SwaggerOperation(Summary = "xóa gói bằng Id {Authorize = Admin}")]
-        public async Task<ApiResponse<bool>> DeletePackage(string id) => await _packagePremiumService.DeletePackageAsync(id);
+        public async Task<ApiResponse<bool>> DeletePackageAsync(string id) => await _packagePremiumService.DeletePackageAsync(id);
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "lấy thông tin gói bằng Id")]
         public async Task<ApiResponse<PackagePremiumViewModel>> GetPackagePremiumByIdAsync(string id) => await _packagePremiumService.GetPackagePremiumByIdAsync(id);

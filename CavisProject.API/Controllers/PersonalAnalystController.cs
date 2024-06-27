@@ -35,7 +35,7 @@ namespace CavisProject.API.Controllers
             await _personalAnalystService.CreatePersonalAnalystByLoginAsync(listSkinPersonalModel);
         [SwaggerOperation(Summary = "gợi ý phương pháp (phương pháp skincare và phương pháp makeup)")]
         [HttpGet("mine/methods")]
-       // [Authorize]
+        [Authorize]
         public async Task<ApiResponse<Pagination<MethodViewModel>>> SuggestMethodAsync([FromQuery] FilterSuggestMethodModel filterSuggestMethodModel) => await _personalAnalystService.SuggestMethodMakeUpAsync(filterSuggestMethodModel);
     }
 }
