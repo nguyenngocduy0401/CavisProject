@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.ViewModels.SkinTypeViewModel
 {
-    public class SkinFilterModel
+    public class SkinTypeFilterModel
     {
         public string? SkinTypeName { get; set; }
         public string? Description { get; set; }

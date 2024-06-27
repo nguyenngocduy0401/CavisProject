@@ -2,6 +2,7 @@
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.Services;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
+using CavisProject.Application.ViewModels.SkinTypeViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -32,7 +33,7 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<bool>> DeleteSkinConditionAsync([FromRoute] string id) => await _skinConditionService.DeleteSkinTypeAsync(id);
         [SwaggerOperation(Summary = "cập nhật thông tin triệu chứng về da bằng id {Authorize = Admin, Staff}")]
         [HttpPut("{id}")]
-        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
+        [Authorize]
         public async Task<ApiResponse<bool>> UpdateSkinCondition([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string id) => await _skinConditionService.UpdateSkinConditionAsync(updateSkinType, id);
 
     }
