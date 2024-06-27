@@ -56,7 +56,7 @@ namespace CavisProject.Application.Services
                     Description = create.Description,
                     Url = create.Url,
                     Category = 1,
-                     Status = (MethodStatusEnum)0
+                     Status = MethodStatusEnum.inactive,
                 };
                 await _unitOfWork.MethodSkinCareRepository.AddAsync(methodSkinCare);
                 bool hasCategory1 = false;
