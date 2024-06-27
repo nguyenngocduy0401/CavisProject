@@ -24,7 +24,7 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<ProductViewModel>> GetProductDetailByIdAsync(string id) =>
             await _productService.GetProductDetailByIdAsync(id);
         [SwaggerOperation(Summary = "tạo mới sản phẩm {Authorize=Admin,Staff)")]
-       // [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         [HttpPost]
         public async Task<ApiResponse<bool>> CreateProductAsync([FromBody] CreateProductViewModel createProductViewModel) => await _productService.CreateProductAsync(createProductViewModel);
         [SwaggerOperation(Summary = "xóa sản phẩm {Authorize=Admin)")]

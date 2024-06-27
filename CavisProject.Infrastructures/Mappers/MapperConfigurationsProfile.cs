@@ -93,7 +93,7 @@ namespace CavisProject.Infrastructures.Mappers
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.URLImage, opt => opt.MapFrom(src => src.URLImage))
             .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
-            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.User.FullName))
             .ForMember(dest => dest.UserAvatar, opt => opt.MapFrom(src => src.User.URLImage));
             CreateMap<Pagination<Method>, Pagination<MethodViewModel>>().ReverseMap();
             CreateMap<string, bool>().ConvertUsing(str => str == "true" || str == "1");

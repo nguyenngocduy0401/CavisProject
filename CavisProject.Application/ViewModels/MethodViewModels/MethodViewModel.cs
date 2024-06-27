@@ -13,7 +13,7 @@ namespace CavisProject.Application.ViewModels.MethodViewModels
         public string? MethodName { get; set; }
         public string? Description { get; set; }
         public string? URLImage { get; set; }
-        public string? UserName { get; set; }
+        public string? FullName { get; set; }
         public MethodCategoryEnum? Category { get; set; }
         public string? UserAvatar { get; set; }
         
