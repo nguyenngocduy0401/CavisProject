@@ -14,8 +14,10 @@ namespace CavisProject.Application.ViewModels.MethodViewModels
         public string? Description { get; set; }
         public string? URLImage { get; set; }
         public string? FullName { get; set; }
+         
         public MethodCategoryEnum? Category { get; set; }
         public string? UserAvatar { get; set; }
-        
+        public DateTime CreationDate { get; set; }
+
     }
 }
