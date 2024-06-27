@@ -398,7 +398,8 @@ namespace CavisProject.Application.Services
 
                     if (!hasCategory1 || !hasCategory0)
                     {
-                        response.isSuccess = false;
+                        response.isSuccess = true;
+                        response.Data = false;
                         response.Message = "Danh sách SkinId phải có ít nhất một SkinId với Category = 1 và một SkinId với Category = 0.";
                         return response;
                     }
