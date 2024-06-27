@@ -55,7 +55,7 @@ namespace CavisProject.Application.Services
                 }
                 if (!Enum.IsDefined(typeof(ProductStatusEnum), createProductViewModel.Status))
                 {
-                    response.isSuccess = false;
+                    response.isSuccess = true;
                     response.Data = false;
                     response.Message = "Loại sản phâm không tồn tại.";
                     return response;
@@ -68,6 +68,7 @@ namespace CavisProject.Application.Services
                     URL = createProductViewModel.URL,
                     SupplierId = createProductViewModel.SupplierId,
                     ProductCategoryId = createProductViewModel.ProductCategoryId,
+                    Price = createProductViewModel.Price,
                     Status = (ProductStatusEnum)createProductViewModel.Status
                 };
 
@@ -124,8 +125,9 @@ namespace CavisProject.Application.Services
 
                     if (!hasCategory1 || !hasCategory0)
                     {
-                        response.isSuccess = false;
+                        response.isSuccess = true;
                         response.Message = "Phải có ít nhất một tinh trạng da và 1 loại da";
+                        response.Data = false;
                         return response;
                     }
                 }
@@ -223,7 +225,7 @@ namespace CavisProject.Application.Services
                   (!filterProductViewModel.SupplierId.HasValue || s.SupplierId == filterProductViewModel.SupplierId.Value) &&
                 (!filterProductViewModel.SupplierId.HasValue || s.SupplierId == filterProductViewModel.SupplierId.Value) &&
             (!filterProductViewModel.ProductCategoryId.HasValue || s.ProductCategoryId == filterProductViewModel.ProductCategoryId.Value) &&
-                 (!filterProductViewModel.Status.HasValue || s.Status == filterProductViewModel.Status) &&
+                 (!filterProductViewModel.Status.HasValue || s.Status == filterProductViewModel.Status.Value) &&
             (filterProductViewModel.SkinId == null || !filterProductViewModel.SkinId.Any() || s.ProductDetails.Any(pd => filterProductViewModel.SkinId.Contains(pd.SkinId.Value)))&&
                 (!filterProductViewModel.IsDeleted.HasValue || s.IsDeleted == filterProductViewModel.IsDeleted);
                 var products = await _unitOfWork.ProductRepository.GetFilterAsync(
@@ -326,7 +328,10 @@ namespace CavisProject.Application.Services
                     }
                     product.ProductName = updateProductViewModel.ProductName;
                 }
-
+                if(updateProductViewModel.Price != 0)
+                {
+                    product.Price = updateProductViewModel.Price;
+                }
                 if (updateProductViewModel.ClickMoney != 0)
                     product.ClickMoney = updateProductViewModel.ClickMoney;
 
