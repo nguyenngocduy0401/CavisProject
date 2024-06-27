@@ -15,7 +15,7 @@ namespace CavisProject.API.Validator.MethodValidator
                 RuleFor(x => x.Description)
                     .NotEmpty().WithMessage("Description cannot be empty")
                     .MaximumLength(500).WithMessage("Description cannot exceed 500 characters");
-                RuleFor(x=>x.Url).NotEmpty().WithMessage("Url cannot be empty").MaximumLength(1000).WithMessage("Url cannot exceed 500 characters");
+                RuleFor(x=>x.URLImage).NotEmpty().WithMessage("Url cannot be empty").MaximumLength(1000).WithMessage("Url cannot exceed 500 characters");
             }
         }
     }
