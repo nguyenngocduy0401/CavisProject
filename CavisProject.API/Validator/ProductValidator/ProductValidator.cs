@@ -17,7 +17,7 @@ namespace CavisProject.API.Validator.ProductValidator
                 .NotEmpty().WithMessage("Product name is required.");
 
             RuleFor(x => x.ClickMoney)
-                .GreaterThan(1).WithMessage("Click money must be greater than 10000.");
+                .GreaterThan(1).WithMessage("Click money must be greater than 10000.").LessThan(10000).WithMessage("Price must be less than 10000.");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Description is required.")
