@@ -18,7 +18,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using CavisProject.Application.ViewModels.PackagePremium;
+using CavisProject.Application.ViewModels.PackagePremiumViewModels;
 using CavisProject.Application.Repositories;
 
 namespace CavisProject.Application.Services

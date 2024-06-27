@@ -1,5 +1,5 @@
 ﻿using CavisProject.Application.ViewModels.MethodViewModels;
-using CavisProject.Application.ViewModels.PackagePremium;
+using CavisProject.Application.ViewModels.PackagePremiumViewModels;
 using FluentValidation;
 
 namespace CavisProject.API.Validator.MethodValidator

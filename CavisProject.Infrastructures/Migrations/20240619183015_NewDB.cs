@@ -688,8 +688,10 @@ namespace CavisProject.Infrastructures.Migrations
                 columns: new[] { "Id", "Category", "CreatedBy", "CreationDate", "DeleteBy", "DeletionDate", "Description", "IsDeleted", "ModificationBy", "ModificationDate", "SkinsName" },
                 values: new object[,]
                 {
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240625170533_ac.cs
 <<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.cs
-<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.cs
+========
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.cs
                     { new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"), true, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(499), null, null, "Da thiếu độ ẩm, thường cảm thấy căng, thô ráp, hoặc bong tróc, và có thể trông xỉn màu.", false, null, null, "Da khô" },
                     { new Guid("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"), false, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(524), null, null, "Mụn viêm đỏ là các nốt sưng lớn và đau nhức dưới da. Chúng thường không có mủ ở phần trên như mụn mủ.", false, null, null, "Mụn viêm đỏ" },
                     { new Guid("4678f8d2-5648-4521-9608-8e981dee9103"), false, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(539), null, null, "Sự xuất hiện của nếp nhăn trên da thường là kết quả của quá trình lão hóa tự nhiên, nhưng cũng có thể được tăng cường bởi tác động từ môi trường, chế độ ăn uống và lối sống.", false, null, null, "Nếp nhăn" },
@@ -704,9 +706,8 @@ namespace CavisProject.Infrastructures.Migrations
                     { new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"), true, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(491), null, null, "Sự kết hợp của các loại da; thường thì vùng chữ T (trán, mũi, và cằm) là da nhờn trong khi má là da khô hoặc bình thường.", false, null, null, "Da hỗn hợp" },
                     { new Guid("e8685143-0f2e-42fa-8025-da53e1707461"), false, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(508), null, null, "Mụn đầu đen là loại mụn mà lỗ chân lông bị tắc bởi bã nhờn và tế bào da chết. Chúng thường màu đen hoặc vàng nâu.", false, null, null, "Mụn đầu đen" },
                     { new Guid("f49b6287-8f31-4fd5-9899-ed1eb6d0564a"), false, null, new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(528), null, null, "Mụn đầu đinh là các nốt sưng lớn và đau nhức có mủ ở phần trên. Chúng có thể gây ra tổn thương và vết sẹo nếu không được điều trị đúng cách.", false, null, null, "Mụn đầu đinh" }
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240625170533_ac.cs
 ========
-========
->>>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7:CavisProject.Infrastructures/Migrations/20240625170533_ac.cs
                     { new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"), true, null, new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3699), null, null, "Da thiếu độ ẩm, thường cảm thấy căng, thô ráp, hoặc bong tróc, và có thể trông xỉn màu.", false, null, null, "Da khô" },
                     { new Guid("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"), false, null, new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3714), null, null, "Mụn viêm đỏ là các nốt sưng lớn và đau nhức dưới da. Chúng thường không có mủ ở phần trên như mụn mủ.", false, null, null, "Mụn viêm đỏ" },
                     { new Guid("4678f8d2-5648-4521-9608-8e981dee9103"), false, null, new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3724), null, null, "Sự xuất hiện của nếp nhăn trên da thường là kết quả của quá trình lão hóa tự nhiên, nhưng cũng có thể được tăng cường bởi tác động từ môi trường, chế độ ăn uống và lối sống.", false, null, null, "Nếp nhăn" },
@@ -721,10 +722,9 @@ namespace CavisProject.Infrastructures.Migrations
                     { new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"), true, null, new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3696), null, null, "Sự kết hợp của các loại da; thường thì vùng chữ T (trán, mũi, và cằm) là da nhờn trong khi má là da khô hoặc bình thường.", false, null, null, "Da hỗn hợp" },
                     { new Guid("e8685143-0f2e-42fa-8025-da53e1707461"), false, null, new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3704), null, null, "Mụn đầu đen là loại mụn mà lỗ chân lông bị tắc bởi bã nhờn và tế bào da chết. Chúng thường màu đen hoặc vàng nâu.", false, null, null, "Mụn đầu đen" },
                     { new Guid("f49b6287-8f31-4fd5-9899-ed1eb6d0564a"), false, null, new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3716), null, null, "Mụn đầu đinh là các nốt sưng lớn và đau nhức có mủ ở phần trên. Chúng có thể gây ra tổn thương và vết sẹo nếu không được điều trị đúng cách.", false, null, null, "Mụn đầu đinh" }
-<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.cs
 >>>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7:CavisProject.Infrastructures/Migrations/20240625170533_ac.cs
 ========
->>>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7:CavisProject.Infrastructures/Migrations/20240625170533_ac.cs
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.cs
                 });
 
             migrationBuilder.InsertData(

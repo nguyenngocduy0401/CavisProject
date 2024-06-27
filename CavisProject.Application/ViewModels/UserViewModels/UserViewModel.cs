@@ -1,4 +1,4 @@
-﻿using CavisProject.Application.ViewModels.PackagePremium;
+﻿using CavisProject.Application.ViewModels.PackagePremiumViewModels;
 using CavisProject.Domain.Entity;
 using Microsoft.AspNetCore.Server.HttpSys;
 using System;
