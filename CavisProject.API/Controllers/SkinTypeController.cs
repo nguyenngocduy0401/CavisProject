@@ -20,7 +20,7 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<bool>> CreateSkinType([FromBody] CreateSkinTypeViewModel createSkinType) => await _skinTypeService.CreateSkinTypeAsync(createSkinType);
         [SwaggerOperation(Summary = "tìm kiếm thông tin loại da ")]
         [HttpGet("")]
-        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinType(SkinFilterModel skinTypeFilterModel) 
+        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinType(SkinTypeFilterModel skinTypeFilterModel) 
             => await _skinTypeService.FilterSkinTypeAsync(skinTypeFilterModel);
         [SwaggerOperation(Summary = "tìm kiếm thông tin loại da với id ")]
         [HttpGet("{id}")]
