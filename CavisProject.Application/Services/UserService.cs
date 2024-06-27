@@ -18,7 +18,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using CavisProject.Application.ViewModels.PackagePremium;
+using CavisProject.Application.ViewModels.PackagePremiumViewModels;
 using CavisProject.Application.Repositories;
 
 namespace CavisProject.Application.Services
@@ -48,9 +48,9 @@ namespace CavisProject.Application.Services
             _createUserValidator = createUserValidator;
             _updateUserValidator = updateUserValidator;
         }
-        public async Task<ApiResponse<PackagePreniumViewModel>> RegisterPremiumAsync(string id)
+        public async Task<ApiResponse<PackagePremiumViewModel>> RegisterPremiumAsync(string id)
         {
-            var response = new ApiResponse<PackagePreniumViewModel>();
+            var response = new ApiResponse<PackagePremiumViewModel>();
             try
             {
                 var packagePremium = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
@@ -135,7 +135,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
         public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremiumAsync(string id)
         {
             var response = new ApiResponse<UserPackageViewModel>();
@@ -274,7 +273,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
         public async Task<ApiResponse<bool>> DeleteUserAsync(string id)
         {
             var response = new ApiResponse<bool>();
@@ -312,7 +310,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
         public async Task<ApiResponse<Pagination<UserViewModel>>> FilterUserAsync(FilterUserModel filterUserModel)
         {
             var response = new ApiResponse<Pagination<UserViewModel>>();
@@ -327,7 +324,7 @@ namespace CavisProject.Application.Services
                     filter: search,
                     role: filterUserModel.Roles.ToString(),
                     isActivity: filterUserModel.IsActivity,
-                    status: filterUserModel.StatusPremium, // Truyền vào trường StatusEnum
+                    status: filterUserModel.StatusPremium, 
                     pageIndex: filterUserModel.PageIndex,
                     pageSize: filterUserModel.PageSize
                 );
@@ -436,7 +433,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
         public async Task<ApiResponse<bool>> UpdatePasswordAsync(UpdatePasswordModel updatePasswordModel)
         {
             var response = new ApiResponse<bool>();
@@ -475,7 +471,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
         public async Task<ApiResponse<bool>> UpdateUserAsync(UpdateUserModel updateUserModel)
         {
             var response = new ApiResponse<bool>();

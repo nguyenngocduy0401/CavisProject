@@ -12,10 +12,10 @@ namespace CavisProject.Application.Interfaces
 {
     public interface ISupplierService
     {
-        Task<ApiResponse<CreateSupplierViewModel>> CreateSupplier(CreateSupplierViewModel  createSupplierViewModel);
-        Task<ApiResponse<CreateSupplierViewModel>> UppdateSupplier(CreateSupplierViewModel updateSupplierViewModel, string id);
-        Task<ApiResponse<bool>> DeleteSupplier(string id);
-        Task<ApiResponse<Pagination<SupplierViewModel>>> FilterSupplier(FilterSupplierViewModel filterSupplierViewModel);
+        Task<ApiResponse<bool>> CreateSupplierAsync(CreateSupplierViewModel  createSupplierViewModel);
+        Task<ApiResponse<bool>> UpdateSupplierAsync(CreateSupplierViewModel updateSupplierViewModel, string id);
+        Task<ApiResponse<bool>> DeleteSupplierAsync(string id);
+        Task<ApiResponse<Pagination<SupplierViewModel>>> FilterSupplierAsync(FilterSupplierViewModel filterSupplierViewModel);
         Task<ApiResponse<CreateSupplierViewModel>> GetSupplierByIdAsync(string id);
     }
 }

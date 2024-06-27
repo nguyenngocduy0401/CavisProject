@@ -11,12 +11,13 @@ namespace CavisProject.Application.ViewModels.ProductViewModel
         public string? ProductName { get; set; }
   
         public double ClickMoney { get; set; }
+        public double Price { get; set; }
 
         public string? Description { get; set; }
         public string? URL { get; set; }
         public Guid? SupplierId { get; set; }
         public Guid? ProductCategoryId { get; set; }
-        public Guid? SkinTypeId { get; set; }
-        public List<Guid>? SkinConditionIds { get; set; }
+        public List<Guid>? SkinId { get; set; }
+        public int Status { get; set; }
     }
 }

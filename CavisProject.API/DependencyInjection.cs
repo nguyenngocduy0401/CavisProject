@@ -12,10 +12,8 @@ using CavisProject.API.Validator.SkinTypeValdator;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Application.ViewModels.ProductCategoryViewModel;
 using CavisProject.Domain.Entity;
-using CavisProject.API.Validator.ProductValidator.ProductCategoryValidator;
 using CavisProject.Application.ViewModels.SupplierViewModel;
-using CavisProject.API.Validator.ProductValidator.SupplierViewModel;
-using CavisProject.Application.ViewModels.PackagePremium;
+using CavisProject.Application.ViewModels.PackagePremiumViewModels;
 using CavisProject.API.Validator.PackageValidator;
 using CavisProject.Application.ViewModels.ProductViewModel;
 using System.Text.Json.Serialization;
@@ -23,6 +21,8 @@ using CavisProject.API.Validator.UserValidator;
 using CavisProject.API.Validator.ProductValidator;
 using CavisProject.Application.ViewModels.MethodViewModels;
 using CavisProject.API.Validator.MethodValidator;
+using CavisProject.API.Validator.ProductCategoryValidator;
+using CavisProject.API.Validator.SupplierValidator;
 
 namespace CavisProject.API
 {
@@ -80,7 +80,7 @@ namespace CavisProject.API
             services.AddScoped<IClaimsService, ClaimsService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddHttpContextAccessor();
-         //  services.AddHostedService<SetupIdentityDataSeeder>();
+           services.AddHostedService<SetupIdentityDataSeeder>();
             services.AddControllers();
             services.AddLogging();
 

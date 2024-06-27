@@ -13,6 +13,7 @@ namespace CavisProject.Application.ViewModels.SupplierViewModel
         public string? Email { get; set; }
         public int? Status { get; set; }
         public string? Address { get; set; }
+        public bool? IsDeleted { get; set; }
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 10;
     }

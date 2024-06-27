@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CavisProject.Application.ViewModels.PackagePremium
+namespace CavisProject.Application.ViewModels.PackagePremiumViewModels
 {
-    public class PackagePreniumViewModel
+    public class PackagePremiumViewModel
     {
         public Guid Id { get; set; }
         public string? PackagePremiumName { get; set; }
@@ -14,11 +14,5 @@ namespace CavisProject.Application.ViewModels.PackagePremium
         public double Duration { get; set; }
         public string? Description { get; set; }
         public int TotalUsers { get; set; } 
-
-       
-        public PackagePreniumViewModel()
-        {
-            TotalUsers = 0;
-        }
     }
 }

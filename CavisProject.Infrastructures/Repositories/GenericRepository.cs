@@ -42,21 +42,6 @@ namespace CavisProject.Infrastructures.Repositories
             object? foreignKeyId = null)
         {
             IQueryable<TEntity> query = _dbSet;
-
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-            var itemCount = await query.CountAsync();
-            if (orderBy != null)
-            {
-                query = orderBy(query);
-            }
             if (!string.IsNullOrEmpty(foreignKey) && foreignKeyId != null)
             {
                 if (foreignKeyId is Guid guidValue)
@@ -72,6 +57,22 @@ namespace CavisProject.Infrastructures.Repositories
                     throw new ArgumentException("Unsupported foreign key type");
                 }
             }
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+            var itemCount = await query.CountAsync();
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+            
             if (pageIndex.HasValue && pageSize.HasValue)
             {
                 int validPageIndex = pageIndex.Value > 0 ? pageIndex.Value - 1 : 0;
@@ -111,7 +112,13 @@ namespace CavisProject.Infrastructures.Repositories
             entity.DeleteBy = _claimsService.GetCurrentUserId;
             _dbSet.Update(entity);
         }
-
+        public void RestoreSoftRemove(TEntity entity)
+        {
+            entity.IsDeleted = true;
+            entity.DeletionDate = _timeService.GetCurrentTime();
+            entity.DeleteBy = _claimsService.GetCurrentUserId;
+            _dbSet.Update(entity);
+        }
         public void Update(TEntity entity)
         {
             entity.ModificationDate = _timeService.GetCurrentTime();

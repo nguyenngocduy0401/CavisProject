@@ -28,48 +28,45 @@ namespace CavisProject.Application.Services
             _validator = validator;
         }
 
-        public async Task<ApiResponse<CreateSupplierViewModel>> CreateSupplier(CreateSupplierViewModel createSupplierViewModel)
+        public async Task<ApiResponse<bool>> CreateSupplierAsync(CreateSupplierViewModel createSupplierViewModel)
         {
-
-            var response = new ApiResponse<CreateSupplierViewModel>();
+            var response = new ApiResponse<bool>();
             try
             {
-                var supplier = _mapper.Map<Supplier>(createSupplierViewModel);
                 var supplierList = _unitOfWork.SupplierRepository.Find(s => s.SupplierName == createSupplierViewModel.SupplierName);
                 var isNameExist = supplierList.Any();
                 if (isNameExist)
                 {
-                    throw new Exception("Supplier Name is exist!");
+                    response.isSuccess = false;
+                    response.Message = "Tên nhà cung cấp đã tồn tại";
+                    response.Data = false;
+                    return response;
                 }
-                else
-                {
-                    FluentValidation.Results.ValidationResult validationResult = await _validator.ValidateAsync(createSupplierViewModel);
-                    if (!validationResult.IsValid)
-                    {
-                        response.isSuccess = false;
-                        response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
-                        return response;
-                    }
-                    else
-                    {
-                   
-                        await _unitOfWork.SupplierRepository.AddAsync(supplier);
-                        var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
-                        if (isSuccess is false)
-                        {
-                            throw new Exception("Create Supplier is fail!");
-                        }
-                        response.Data = _mapper.Map<CreateSupplierViewModel>(createSupplierViewModel);
-                        response.Message = "Create Supplier is success";
 
-                    }
+                FluentValidation.Results.ValidationResult validationResult = await _validator.ValidateAsync(createSupplierViewModel);
+                if (!validationResult.IsValid)
+                {
+                    response.isSuccess = false;
+                    response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
+                    return response;
                 }
+
+                var supplier = _mapper.Map<Supplier>(createSupplierViewModel);
+                await _unitOfWork.SupplierRepository.AddAsync(supplier);
+                var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
+                if (!isSuccess)
+                {
+                    throw new Exception("Tạo nhà cung cấp thất bại");
+                }
+
+                response.isSuccess = true;
+                response.Data = true;
+                response.Message = "Tạo nhà cung cấp thành công";
             }
             catch (DbException ex)
             {
                 response.isSuccess = false;
                 response.Message = ex.Message;
-
             }
             catch (Exception ex)
             {
@@ -79,7 +76,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<bool>> DeleteSupplier(string id)
+        public async Task<ApiResponse<bool>> DeleteSupplierAsync(string id)
         {
             var response = new ApiResponse<bool>();
             try
@@ -87,12 +84,20 @@ namespace CavisProject.Application.Services
                 var exist = await _unitOfWork.SupplierRepository.GetByIdAsync(Guid.Parse(id));
                 if (exist == null)
                 {
-                    throw new Exception("No Supplier Exit");
+                    response.Message = "Nhà cung cấp không tồn tại";
+
+                    response.isSuccess = true;
+                    response.Data = false;
+                    return response;
                 }
                 if (exist.IsDeleted)
                 {
 
-                    throw new Exception("Supplier is already deleted");
+                     response.Message = "nhà cung cấp đã được xóa";
+
+                    response.isSuccess = true;
+                    response.Data = false;
+                    return response;
 
                 }
                 _unitOfWork.SupplierRepository.SoftRemove(exist);
@@ -102,7 +107,8 @@ namespace CavisProject.Application.Services
                     throw new Exception("Delete Supplier is fail");
                 }
                 response.Data = _mapper.Map<bool>(id);
-
+                response.isSuccess = true;
+                response.Data = true;
                 response.Message = "Delete Supplier is success";
             }
             catch (DbException ex)
@@ -119,7 +125,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<SupplierViewModel>>> FilterSupplier(FilterSupplierViewModel filterSupplierViewModel)
+        public async Task<ApiResponse<Pagination<SupplierViewModel>>> FilterSupplierAsync(FilterSupplierViewModel filterSupplierViewModel)
         {
             var response = new ApiResponse<Pagination<SupplierViewModel>>();
 
@@ -131,7 +137,8 @@ namespace CavisProject.Application.Services
                     (string.IsNullOrEmpty(filterSupplierViewModel.PhoneNumber) || s.PhoneNumber.Contains(filterSupplierViewModel.PhoneNumber)) &&
                     (string.IsNullOrEmpty(filterSupplierViewModel.Email) || s.Email.Contains(filterSupplierViewModel.Email)) &&
                    (!filterSupplierViewModel.Status.HasValue || s.Status == filterSupplierViewModel.Status) &&
-                    (string.IsNullOrEmpty(filterSupplierViewModel.Address) || s.Address.Contains(filterSupplierViewModel.Address)),
+                    (string.IsNullOrEmpty(filterSupplierViewModel.Address) || s.Address.Contains(filterSupplierViewModel.Address))&&
+                    (!filterSupplierViewModel.IsDeleted.HasValue || s.IsDeleted == filterSupplierViewModel.IsDeleted),
                     pageIndex: filterSupplierViewModel.PageIndex,
                     pageSize: filterSupplierViewModel.PageSize
                 );
@@ -156,54 +163,56 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<CreateSupplierViewModel>> UppdateSupplier(CreateSupplierViewModel updateSupplierViewModel, string id)
+        public async Task<ApiResponse<bool>> UpdateSupplierAsync(CreateSupplierViewModel updateSupplierViewModel, string id)
         {
-            var response = new ApiResponse<CreateSupplierViewModel>();
+            var response = new ApiResponse<bool>();
             try
             {
                 var exist = await _unitOfWork.SupplierRepository.GetByIdAsync(Guid.Parse(id));
 
+                if (exist is null)
+                {
+                    response.isSuccess = false;
+                    response.Message = "Nhà cung cấp không tồn tại";
+                    response.Data = false;
+                    return response;
+                }
+
                 FluentValidation.Results.ValidationResult validationResult = await _validator.ValidateAsync(updateSupplierViewModel);
-                if (validationResult.IsValid)
+                if (!validationResult.IsValid)
                 {
                     response.isSuccess = false;
                     response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
                     return response;
                 }
-                else
+
+                var supplierList = _unitOfWork.SupplierRepository.Find(s => s.SupplierName == updateSupplierViewModel.SupplierName && s.Id != Guid.Parse(id));
+                var isNameExist = supplierList.Any();
+                if (isNameExist)
                 {
-                    if (exist is null)
-                    {
-                        throw new Exception("Supplier not found");
-
-                    }
-                    else
-                    {
-                        var update = _mapper.Map(updateSupplierViewModel, exist);
-                        var supplierList = _unitOfWork.SupplierRepository.Find(s => s.SupplierName == update.SupplierName);
-                        var isNameExist = supplierList.Any();
-                        if (isNameExist)
-                        {
-                            throw new Exception("Supplier Name is exist!");
-                        }
-                        var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
-
-                        if (isSuccess is false)
-                        {
-                            throw new Exception("Update Supplier is fail");
-                        }
-                        response.Data = _mapper.Map<CreateSupplierViewModel>(id);
-
-                        response.Message = "Update Supplier is success";
-                    }
-
+                    response.isSuccess = false;
+                    response.Message = "Tên nhà cung cấp đã tồn tại";
+                    response.Data = false;
+                    return response;
                 }
+
+                var update = _mapper.Map(updateSupplierViewModel, exist);
+                _unitOfWork.SupplierRepository.Update(update);
+                var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
+
+                if (!isSuccess)
+                {
+                    throw new Exception("Cập nhật nhà cung cấp thất bại");
+                }
+
+                response.isSuccess = true;
+                response.Data = true;
+                response.Message = "Cập nhật nhà cung cấp thành công";
             }
             catch (DbException ex)
             {
                 response.isSuccess = false;
                 response.Message = ex.Message;
-
             }
             catch (Exception ex)
             {
@@ -212,27 +221,31 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
+
         public async Task<ApiResponse<CreateSupplierViewModel>> GetSupplierByIdAsync(string id)
         {
             var response = new ApiResponse<CreateSupplierViewModel>();
             try
             {
-                var supplier = await _unitOfWork.PackagePremiumRepository.GetByIdAsync(Guid.Parse(id));
+                var supplier = await _unitOfWork.SupplierRepository.GetByIdAsync(Guid.Parse(id));
                 if (supplier == null)
                 {
-                    throw new Exception("Không tìm thấy !");
+                    response.isSuccess = false;
+                    response.Message = "Nhà cung cấp không tồn tại";
+                    response.Data = null;
+                    return response;
                 }
 
                 var supplierViewModel = _mapper.Map<CreateSupplierViewModel>(supplier);
 
                 response.isSuccess = true;
                 response.Data = supplierViewModel;
+                response.Message = "Lấy thông tin nhà cung cấp thành công";
             }
             catch (DbException ex)
             {
                 response.isSuccess = false;
                 response.Message = ex.Message;
-
             }
             catch (Exception ex)
             {
@@ -241,5 +254,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
+
     }
 }
