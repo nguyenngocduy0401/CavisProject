@@ -9,7 +9,6 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace CavisProject.API.Controllers
 {
     [Route("api/v1/method-skin-care")]
- [Authorize]
     public class MethodSkinCareController : ControllerBase
     {
        

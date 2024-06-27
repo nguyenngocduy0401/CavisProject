@@ -32,7 +32,7 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<bool>> DeleteSkinConditionAsync([FromRoute] string id) => await _skinConditionService.DeleteSkinTypeAsync(id);
         [SwaggerOperation(Summary = "cập nhật thông tin triệu chứng về da bằng id {Authorize = Admin, Staff}")]
         [HttpPut("{id}")]
-       // [Authorize]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> UpdateSkinCondition([FromBody] CreateSkinTypeViewModel updateSkinType, [FromRoute] string id) => await _skinConditionService.UpdateSkinConditionAsync(updateSkinType, id);
 
     }

@@ -8,14 +8,13 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace CavisProject.API.Controllers
 {
     [Route("api/v1/method-make-up")]
-     [Authorize]
     public class MethodMakeUpController
     {
         private readonly IMethodMakeUpService _methodMakeUpService;
         public MethodMakeUpController(IMethodMakeUpService methodMakeUpService) { _methodMakeUpService = methodMakeUpService; }
         [SwaggerOperation(Summary = "tạo thông tin phương pháp MakeUp {Authorize = Admin, Staff}")]
         [HttpPost("")]
-         [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> CreateMethodMakeUp([FromBody] CreateMethodViewModel model) => await _methodMakeUpService.CreateMethodSkinMakeUpAsync(model);
         [SwaggerOperation(Summary = "tìm kiếm thông tin loại phương pháp MakeUp ")]
         [HttpGet("")]

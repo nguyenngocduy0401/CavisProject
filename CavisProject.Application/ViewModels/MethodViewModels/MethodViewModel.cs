@@ -11,5 +11,6 @@ namespace CavisProject.Application.ViewModels.MethodViewModels
         public string Id { get; set; }
         public string MethodName { get; set; }
         public string Description { get; set; }
+        public Guid? CreatedBy { get; set; }
     }
 }
