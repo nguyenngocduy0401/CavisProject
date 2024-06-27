@@ -227,6 +227,8 @@ namespace CavisProject.Application.Services
             (!filterProductViewModel.ProductCategoryId.HasValue || s.ProductCategoryId == filterProductViewModel.ProductCategoryId.Value) &&
                  (!filterProductViewModel.Status.HasValue || s.Status == filterProductViewModel.Status.Value) &&
             (filterProductViewModel.SkinId == null || !filterProductViewModel.SkinId.Any() || s.ProductDetails.Any(pd => filterProductViewModel.SkinId.Contains(pd.SkinId.Value)))&&
+             (!filterProductViewModel.MinPrice.HasValue || s.Price >= filterProductViewModel.MinPrice.Value) &&
+            (!filterProductViewModel.MaxPrice.HasValue || s.Price <= filterProductViewModel.MaxPrice.Value) &&
                 (!filterProductViewModel.IsDeleted.HasValue || s.IsDeleted == filterProductViewModel.IsDeleted);
                 var products = await _unitOfWork.ProductRepository.GetFilterAsync(
                     filter: filter,
