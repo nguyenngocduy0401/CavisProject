@@ -2,6 +2,7 @@
 using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
+using CavisProject.Application.ViewModels.SkinTypeViewModels;
 using CavisProject.Domain.Entity;
 using FluentValidation;
 using System;
@@ -131,7 +132,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinConditionAsync(SkinFilterModel skinTypeFilterModel)
+        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinConditionAsync(SkinConditionFilterModel skinTypeFilterModel)
         {
             var response = new ApiResponse<Pagination<SkinViewModel>>();
 
@@ -140,7 +141,7 @@ namespace CavisProject.Application.Services
                
                 var paginationResult = await _unitOfWork.SkinTypeRepository.GetFilterAsync(
                     filter: s =>
-                        (string.IsNullOrEmpty(skinTypeFilterModel.SkinTypeName) || s.SkinsName.Contains(skinTypeFilterModel.SkinTypeName)) &&
+                        (string.IsNullOrEmpty(skinTypeFilterModel.SkinConditionName) || s.SkinsName.Contains(skinTypeFilterModel.SkinConditionName)) &&
                         (string.IsNullOrEmpty(skinTypeFilterModel.Description) || s.Description.Contains(skinTypeFilterModel.Description)) &&
                         (!skinTypeFilterModel.IsDeleted.HasValue || s.IsDeleted == skinTypeFilterModel.IsDeleted.Value) &&
                         s.Category == false,
