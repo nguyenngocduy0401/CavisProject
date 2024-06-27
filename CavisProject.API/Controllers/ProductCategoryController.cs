@@ -19,17 +19,17 @@ namespace CavisProject.API.Controllers
         }
         [SwaggerOperation(Summary = "tạo thông tin loại sản phẩm {Authorize = Admin, Staff}")]
         [HttpPost("")]
-        [Authorize]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> CreateProductCategoryAsync([FromBody] CreateProductCategoryViewModel createProductCategoryViewModel)
         => await _productCategoryService.CreateProductCategoryAsync(createProductCategoryViewModel);
         [SwaggerOperation(Summary = "xóa thông tin loại sản phẩm bằng id {Authorize = Admin, Staff}")]
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> DeleteProductCategoryAsync(string id)
         => await _productCategoryService.DeleteProductCategoryAsync(id);
         [SwaggerOperation(Summary = "cập nhật thông tin loại sản phẩm bằng id {Authorize = Admin, Staff}")]
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> UpdateProductCategoryAsync([FromBody] CreateProductCategoryViewModel createProductCategoryViewModel, [FromRoute] string id)
        =>  await _productCategoryService.UpdateProductCategoryAsync(createProductCategoryViewModel, id);
         [SwaggerOperation(Summary = "tìm kiếm thông tin loại sản phẩm {Authorize = Admin, Staff}")]

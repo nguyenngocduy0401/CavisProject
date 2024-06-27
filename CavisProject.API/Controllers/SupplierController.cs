@@ -18,6 +18,7 @@ namespace CavisProject.API.Controllers
         }
         [SwaggerOperation(Summary = "tạo thông tin nhà cung cấp sản phẩm {Authorize = Admin, Staff}")]
         [HttpPost("")]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> CreateSupplier([FromBody] CreateSupplierViewModel createSupplierViewModel)
         
            => await _supplierService.CreateSupplierAsync(createSupplierViewModel);
@@ -29,14 +30,14 @@ namespace CavisProject.API.Controllers
 
         [SwaggerOperation(Summary = "khóa thông tin nhà cung cấp sản phẩm {Authorize = Admin, Staff}")]
         [HttpDelete("{id}")]
-       // [Authorize]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> DeleteSupplier([FromRoute] string id)
         
           =>  await _supplierService.DeleteSupplierAsync(id);
 
         [SwaggerOperation(Summary = "cập nhật thông tin nhà cung cấp sản phẩm {Authorize = Admin, Staff}")]
         [HttpPut("{id}")]
-      //  [Authorize]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> UpdateSupplier([FromBody] CreateSupplierViewModel updateSupplierViewModel, [FromRoute] string id)
       =>   await _supplierService.UpdateSupplierAsync(updateSupplierViewModel, id);
         [HttpGet("{id}")]
