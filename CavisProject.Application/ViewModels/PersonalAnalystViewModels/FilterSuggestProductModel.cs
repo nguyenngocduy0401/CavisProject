@@ -9,7 +9,11 @@ namespace CavisProject.Application.ViewModels.PersonalAnalystViewModels
 {
     public class FilterSuggestProductModel
     {
-        public ProductCategoryEnum Category { get; set; }
+        public double? MinPrice { get; set; }
+        public double? MaxPrice { get; set; }
+        public Guid? CategoryId { get; set; }
+        public CompatibleProductsEnum CompatibleProducts { get; set; } = CompatibleProductsEnum.Low;
+        public ProductCategoryEnum Category { get; set; } = ProductCategoryEnum.Skincare;
         public int PageIndex { get; set; } = 0;
         public int PageSize { get; set; } = 10;
     }

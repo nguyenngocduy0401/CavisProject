@@ -33,39 +33,41 @@ namespace CavisProject.Application.Services
             var response = new ApiResponse<bool>();
             try
             {
-                var scategoryList = _unitOfWork.ProductCategoryRepository.Find(p => p.ProductCategoryName == createProductCategoryViewModel.ProductCategoryName);
+                var category = _mapper.Map<ProductCategory>(createProductCategoryViewModel);
+                var scategoryList = _unitOfWork.SkinTypeRepository.Find(s => s.SkinsName == createProductCategoryViewModel.ProductCategoryName);
                 var isNameExist = scategoryList.Any();
                 if (isNameExist)
                 {
-                    response.isSuccess = false;
-                    response.Message = "Danh mục sản phẩm đã tồn tại";
-                    return response;
+                    throw new Exception("Product Categoory Name is exist!");
                 }
-
-                FluentValidation.Results.ValidationResult validationResult = await _validatorCreate.ValidateAsync(createProductCategoryViewModel);
-                if (!validationResult.IsValid)
+                else
                 {
-                    response.isSuccess = false;
-                    response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
-                    return response;
-                }
+                    FluentValidation.Results.ValidationResult validationResult = await _validatorCreate.ValidateAsync(createProductCategoryViewModel);
+                    if (!validationResult.IsValid)
+                    {
+                        response.isSuccess = false;
+                        response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
+                        return response;
+                    }
+                    else
+                    {
+                        await _unitOfWork.ProductCategoryRepository.AddAsync(category);
+                        var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
+                        if (isSuccess is false)
+                        {
+                            throw new Exception("Create category fail");
+                        }
+                        response.Data = true;
+                        response.Message = "Create category is success";
 
-                var category = _mapper.Map<ProductCategory>(createProductCategoryViewModel);
-                await _unitOfWork.ProductCategoryRepository.AddAsync(category);
-                var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
-                if (!isSuccess)
-                {
-                    throw new Exception("Tạo danh mục sản phẩm thất bại");
+                    }
                 }
-
-                response.isSuccess = true;
-                response.Data = true;
-                response.Message = "Tạo danh mục sản phẩm thành công";
             }
             catch (DbException ex)
             {
                 response.isSuccess = false;
                 response.Message = ex.Message;
+
             }
             catch (Exception ex)
             {
@@ -73,6 +75,7 @@ namespace CavisProject.Application.Services
                 response.Message = ex.Message;
             }
             return response;
+
         }
 
         public async Task<ApiResponse<bool>> DeleteProductCategoryAsync(string id)
@@ -83,41 +86,26 @@ namespace CavisProject.Application.Services
                 var exist = await _unitOfWork.ProductCategoryRepository.GetByIdAsync(Guid.Parse(id));
                 if (exist == null)
                 {
-                    response.Message = "danh mục sản phẩm không tồn tại";
-
-                    response.isSuccess = true;
-                    response.Data = false;
-                    return response;
+                    throw new Exception("No category Exit");
                 }
                 if (exist.IsDeleted)
                 {
 
-                    response.Message = "danh mục sản phẩm đã được xóa";
-
-                    response.isSuccess = true;
-                    response.Data = false;
-                    return response;
+                    throw new Exception("category is already deleted");
 
                 }
                 _unitOfWork.ProductCategoryRepository.SoftRemove(exist);
                 var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
                 if (isSuccess is false)
-                {
                     throw new Exception("Delete category is fail");
-                }
-                response.Data = _mapper.Map<bool>(id);
+ 
                 response.Data = true;
                 response.isSuccess = true;
-                response.Message = "Delete category is success";
-            }
-            catch (DbException ex)
-            {
-                response.isSuccess = false;
-                response.Message = ex.Message;
-
+                response.Message = "Successful!";
             }
             catch (Exception ex)
             {
+                response.Data = false;
                 response.isSuccess = false;
                 response.Message = ex.Message;
             }
@@ -131,10 +119,15 @@ namespace CavisProject.Application.Services
             {
                 var paginationResult = await _unitOfWork.ProductCategoryRepository.GetFilterAsync(
                     filter: s =>
-                    (string.IsNullOrEmpty(filterProductCategory.ProductCategoryName) || s.ProductCategoryName.Contains(filterProductCategory.ProductCategoryName))&&
-                    (!filterProductCategory.IsDeleted.HasValue || s.IsDeleted == filterProductCategory.IsDeleted.Value),
+                    (string.IsNullOrEmpty(filterProductCategory.ProductCategoryName) || s.ProductCategoryName.Contains(filterProductCategory.ProductCategoryName)),
                     pageIndex: filterProductCategory.PageIndex,
-                    pageSize: filterProductCategory.PageSize); ;
+                    pageSize: filterProductCategory.PageSize);
+                if (paginationResult.Items == null) 
+                {
+                    response.Data = null;
+                    response.isSuccess = true;
+                    response.Message = "Không tìm thấy sản phẩm phù hợp!";
+                }
                 var categoryViewModel= _mapper.Map<List<ProductCategoryViewModel>>(paginationResult.Items);
                 var paginationViewModel = new Pagination<ProductCategoryViewModel>
                 {
@@ -145,73 +138,15 @@ namespace CavisProject.Application.Services
                 };
                 response.Data = paginationViewModel;
                 response.isSuccess = true;
-                response.Message = "Filter product category retrived successfully";
+                response.Message = "Successful!";
             }
             catch (Exception ex)
             {
+                response.Data = null;
                 response.isSuccess = false;
-                response.Message = "Error occurred while filtering skin types: " + ex.Message;
+                response.Message =  ex.Message;
             }
 
-            return response;
-        }
-
-        public async Task<ApiResponse<bool>> UpdateProductCategoryAsync(CreateProductCategoryViewModel updateProductCategoryViewModel, string id)
-        {
-            var response = new ApiResponse<bool>();
-            try
-            {
-                var exist = await _unitOfWork.ProductCategoryRepository.GetByIdAsync(Guid.Parse(id));
-
-                if (exist is null)
-                {
-                    response.isSuccess = false;
-                    response.Message = "Danh mục sản phẩm không tồn tại";
-                    response.Data = false;
-                    return response;
-                }
-
-                FluentValidation.Results.ValidationResult validationResult = await _validatorCreate.ValidateAsync(updateProductCategoryViewModel);
-                if (!validationResult.IsValid)
-                {
-                    response.isSuccess = false;
-                    response.Message = string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage));
-                    return response;
-                }
-
-                var categoryList = _unitOfWork.ProductCategoryRepository.Find(c => c.ProductCategoryName == updateProductCategoryViewModel.ProductCategoryName && c.Id != Guid.Parse(id));
-                var isNameExist = categoryList.Any();
-                if (isNameExist)
-                {
-                    response.isSuccess = false;
-                    response.Message = "Tên danh mục sản phẩm đã tồn tại";
-                    response.Data = false;
-                    return response;
-                }
-
-                var update = _mapper.Map(updateProductCategoryViewModel, exist);
-                _unitOfWork.ProductCategoryRepository.Update(update);
-                var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
-
-                if (!isSuccess)
-                {
-                    throw new Exception("Cập nhật danh mục sản phẩm thất bại");
-                }
-
-                response.isSuccess = true;
-                response.Data = true;
-                response.Message = "Cập nhật danh mục sản phẩm thành công";
-            }
-            catch (DbException ex)
-            {
-                response.isSuccess = false;
-                response.Message = ex.Message;
-            }
-            catch (Exception ex)
-            {
-                response.isSuccess = false;
-                response.Message = ex.Message;
-            }
             return response;
         }
 
@@ -221,32 +156,72 @@ namespace CavisProject.Application.Services
             try
             {
                 var productCategory = await _unitOfWork.ProductCategoryRepository.GetByIdAsync(Guid.Parse(id));
-                if (productCategory == null)
-                {
-                    response.isSuccess = false;
-                    response.Message = "Danh mục sản phẩm không tồn tại";
-                    response.Data = null;
-                    return response;
-                }
-
-                var productCategoryViewModel = _mapper.Map<ProductCategoryViewModel>(productCategory);
-
-                response.isSuccess = true;
-                response.Data = productCategoryViewModel;
-                response.Message = "Lấy danh mục sản phẩm thành công";
-            }
-            catch (DbException ex)
-            {
+                if (productCategory == null) throw new Exception("Do not find category!");
+                var categoryViewModel = _mapper.Map<ProductCategoryViewModel>(productCategory);
+                response.Data = categoryViewModel;
                 response.isSuccess = false;
-                response.Message = ex.Message;
+                response.Message = "Successful!";
             }
             catch (Exception ex)
             {
+                response.Data = null;
                 response.isSuccess = false;
                 response.Message = ex.Message;
             }
             return response;
         }
 
+
+        public async Task<ApiResponse<bool>> UpdateProductCategoryAsync(CreateProductCategoryViewModel UpdateProductCategoryViewModel, string id)
+        {
+            var response = new ApiResponse<bool>();
+            try
+            {
+                var exist = await _unitOfWork.ProductCategoryRepository.GetByIdAsync(Guid.Parse(id));
+
+                FluentValidation.Results.ValidationResult validationResult = await _validatorCreate.ValidateAsync(UpdateProductCategoryViewModel);
+                if (validationResult.IsValid) throw new Exception(string.Join(", ", validationResult.Errors.Select(error => error.ErrorMessage)));
+                else
+                {
+                    if (exist is null) throw new Exception("Category not found");
+
+                    else
+                    {
+                        var update = _mapper.Map(UpdateProductCategoryViewModel, exist);
+                        var scategoryList = _unitOfWork.SkinTypeRepository.Find(s => s.SkinsName == UpdateProductCategoryViewModel.ProductCategoryName);
+                        var isNameExist = scategoryList.Any();
+                        if (isNameExist)
+                        {
+                            throw new Exception("Tên của loại sản phẩm đã tồn tại!");
+                        }
+                        else
+                        {
+                            var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
+
+                            if (isSuccess is false) throw new Exception("Update Category is fail");
+                        
+                            response.Data = true;
+                            response.isSuccess = true;
+                            response.Message = "Cập nhật thành công!";
+                        }
+
+                    }
+                }
+            }
+            catch (DbException ex)
+            {
+                response.Data = false;
+                response.isSuccess = false;
+                response.Message = ex.Message;
+
+            }
+            catch (Exception ex)
+            {
+                response.Data = false;
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
     }
 }

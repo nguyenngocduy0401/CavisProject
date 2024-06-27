@@ -46,7 +46,7 @@ namespace CavisProject.Infrastructures.Mappers
             #region ProductCategory
             CreateMap<CreateProductCategoryViewModel, ProductCategory>();
             CreateMap<ProductCategory, CreateProductCategoryViewModel>();
-            CreateMap<ProductCategoryViewModel, ProductCategory>();
+            CreateMap<ProductCategoryViewModel, ProductCategory>().ReverseMap();
             #endregion
             #region Supplier
             CreateMap<CreateSupplierViewModel, Supplier>();
@@ -59,15 +59,15 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<UserRegisterModel, User>()
                 .ForMember(dest => dest.PasswordHash, src => src.MapFrom(x => x.Password));
             #endregion
-            #region Prenium
+            #region Premium
             CreateMap<RegistPremiumViewModel,PackagePremium>();
             CreateMap<UpgradeToPremiumViewModel, User>();
             CreateMap<Pagination<User>, Pagination<UserViewModel>>()
            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
             CreateMap<PackageDetail, User>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.UserId));
-            CreateMap<Pagination<PackagePremium>, Pagination<PackagePreniumViewModel>>().ReverseMap();
-            CreateMap<PackagePremium, PackagePreniumViewModel>().ReverseMap();
+            CreateMap<Pagination<PackagePremium>, Pagination<PackagePremiumViewModel>>().ReverseMap();
+            CreateMap<PackagePremium, PackagePremiumViewModel>().ReverseMap();
             CreateMap<CreatePackagePremiumViewModel, PackagePremium>();
             CreateMap<PackageDetail, PackageDetailViewModel>()
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))

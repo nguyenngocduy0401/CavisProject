@@ -11,6 +11,7 @@ namespace CavisProject.Application.Commons
         public const string Admin = "Administrator";
         public const string Customer = "Customer";
         public const string Staff = "Staff";
-        public const string Expert = "Expert";
+        public const string ExpertSkinCare = "ExpertSkinCare";
+        public const string ExpertMakeup = "ExpertMakeup";
     }
 }

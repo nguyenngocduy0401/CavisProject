@@ -12,7 +12,7 @@ namespace CavisProject.Application.ViewModels.UserViewModels
         public string? Search { get; set;}
         public RolesEnum? Roles { get; set;}
         public IsActivityEnum? IsActivity { get; set;}
-        public UserPremiumStatusEnum StatusPremium { get; set; }
+        public UserPremiumStatusEnum? StatusPremium { get; set; }
         public int PageIndex { get; set; } = 0;
         public int PageSize { get; set; } = 10;
 

@@ -3,7 +3,9 @@ using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.ViewModels.MethodViewModels;
 using CavisProject.Domain.Entity;
+using CavisProject.Domain.Enums;
 using FluentValidation;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -54,43 +56,27 @@ namespace CavisProject.Application.Services
                     Description = create.Description,
                     Url = create.Url,
                     Category = 1,
+                     Status = (MethodStatusEnum)0
                 };
                 await _unitOfWork.MethodSkinCareRepository.AddAsync(methodSkinCare);
-               
-                //Xuwr li skinId
-                if (create.SkinTypeId.HasValue)
+                bool hasCategory1 = false;
+                bool hasCategory0 = false;
+                if (create.SkinId != null && create.SkinId.Any())
                 {
-                    var skinType = await _unitOfWork.SkinTypeRepository.GetFirstOrDefaultAsync(s => s.Id == create.SkinTypeId && s.Category == true);
-                    if (skinType != null)
+                    foreach (var skinId in create.SkinId)
                     {
-                        var methodDetail = new MethodDetail
+                        var skin = await _unitOfWork.SkinConditionRepository.GetByIdAsync(skinId);
+                        if (skin != null)
                         {
-                            MethodId = methodSkinCare.Id,
-                            SkinId = skinType.Id,
-                           
-                        };
-                        await _unitOfWork.MethodDetailRepository.AddAsync(methodDetail);
-                    }
-                    else
-                    {
-                        response.isSuccess = true;
-                        response.Data = false;
-                        response.Message = "Loại da không tồn tại.";
-                        return response;
-                    }
-                }
-                if (create.SkinConditionIds != null && create.SkinConditionIds.Any())
-                {
-                    foreach (var skinConditionId in create.SkinConditionIds)
-                    {
-                        var skinCondition = await _unitOfWork.SkinConditionRepository.GetByIdAsync(skinConditionId);
-                        if (skinCondition != null)
-                        {
+                            if (skin.Category)
+                                hasCategory1 = true;
+                            else
+                                hasCategory0 = true;
+
                             var methodDetail = new MethodDetail
                             {
                                 MethodId = methodSkinCare.Id,
-                                SkinId = skinCondition.Id,
-                             
+                                SkinId = skin.Id
                             };
                             await _unitOfWork.MethodDetailRepository.AddAsync(methodDetail);
                         }
@@ -101,10 +87,16 @@ namespace CavisProject.Application.Services
                             response.Message = "Tình trạng da không tồn tại.";
                             return response;
                         }
+                    }
 
+                    if (!hasCategory1 || !hasCategory0)
+                    {
+                        response.isSuccess = false;
+                        response.Message = "Phải có ít nhất một tinh trạng da và 1 loại da";
+                        return response;
                     }
                 }
-               
+
                 var isDetailsSaved = await _unitOfWork.SaveChangeAsync() > 0;
                 if (isDetailsSaved)
                 {
@@ -196,8 +188,8 @@ namespace CavisProject.Application.Services
                 Expression<Func<Method, bool>> filter = s =>
                     (string.IsNullOrEmpty(filterModel.MethodName) || s.MethodName.Contains(filterModel.MethodName)) &&
                     (string.IsNullOrEmpty(filterModel.Description) || s.Description.Contains(filterModel.Description)) &&
-                    (!filterModel.SkinConditionID.HasValue || s.MethodDetails.Any(pd => pd.SkinId == filterModel.SkinConditionID.Value && pd.Skins.Category == false)) &&
-                    (!filterModel.SkinTypeId.HasValue || s.MethodDetails.Any(pd => pd.SkinId == filterModel.SkinTypeId.Value && pd.Skins.Category == true)) &&
+                     (filterModel.SkinID == null || !filterModel.SkinID.Any() || s.MethodDetails.Any(pd => filterModel.SkinID.Contains(pd.SkinId.Value))) &&
+                     (!filterModel.Status.HasValue || s.Status == filterModel.Status) &&
                     (!filterModel.IsDeleted.HasValue || s.IsDeleted == filterModel.IsDeleted) &&
                     s.Category == 1;
 
@@ -300,58 +292,28 @@ namespace CavisProject.Application.Services
                     method.Url = update.Url;
                 }
                 var existingMethodDetails = await _unitOfWork.MethodDetailRepository.GetAllAsync(pd => pd.MethodId == method.Id);
+                bool hasCategory1 = false;
+                bool hasCategory0 = false;
 
+                if (update.SkinId != null && update.SkinId.Any())
+                {
+                    foreach (var skinId in update.SkinId)
+                    {
+                        var skin = await _unitOfWork.SkinConditionRepository.GetByIdAsync(skinId);
+                        if (skin != null)
+                        {
+                            if (skin.Category)
+                                hasCategory1 = true;
+                            else
+                                hasCategory0 = true;
 
-                if (update.SkinTypeId.HasValue || (update.SkinConditionIds != null && update.SkinConditionIds.Any()))
-                {
-                    foreach (var existingMethodtDetail in existingMethodDetails)
-                    {
-                       await _unitOfWork.MethodDetailRepository.DeleteAsync(existingMethodtDetail);
-                    }
-                }
-                if (update.SkinTypeId.HasValue)
-                {
-                    var skinType = await _unitOfWork.SkinTypeRepository.GetFirstOrDefaultAsync(s => s.Id == update.SkinTypeId.Value && s.Category == true);
-                    if (skinType != null)
-                    {
-                        
                             var methodDetail = new MethodDetail
                             {
                                 MethodId = method.Id,
-                                SkinId = skinType.Id,
-                       
+                                SkinId = skin.Id
                             };
                             await _unitOfWork.MethodDetailRepository.AddAsync(methodDetail);
-                        
-                        
-                    }
-                    else
-                    {
-                        response.isSuccess = true;
-                        response.Data = false;
-                        response.Message = "Loại da không tồn tại.";
-                        return response;
-                    }
-                }
-
-
-                if (update.SkinConditionIds != null && update.SkinConditionIds.Any())
-                {
-                    foreach (var skinConditionId in update.SkinConditionIds)
-                    {
-                        var skinCondition = await _unitOfWork.SkinConditionRepository.GetByIdAsync(skinConditionId);
-                        if (skinCondition != null)
-                        {
-                            
-                                var methodDetail = new MethodDetail
-                                {
-                                    MethodId = method.Id,
-                                    SkinId = skinCondition.Id,
-                                
-                                };
-                                await _unitOfWork.MethodDetailRepository.AddAsync(methodDetail);
-                            
-                         }
+                        }
                         else
                         {
                             response.isSuccess = true;
@@ -359,6 +321,13 @@ namespace CavisProject.Application.Services
                             response.Message = "Tình trạng da không tồn tại.";
                             return response;
                         }
+                    }
+
+                    if (!hasCategory1 || !hasCategory0)
+                    {
+                        response.isSuccess = false;
+                        response.Message = "Phải có ít nhất một tinh trạng da và 1 loại da";
+                        return response;
                     }
                 }
                 var isUpdated = await _unitOfWork.SaveChangeAsync() > 0;

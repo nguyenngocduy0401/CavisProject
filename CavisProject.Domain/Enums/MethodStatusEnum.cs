@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Domain.Enums
 {
-    public enum RolesEnum
+    public enum MethodStatusEnum
     {
-        Administrator,
-        Customer,
-        Staff,
-        ExpertSkinCare,
-        ExpertMakeup
+        active = 1,
+        inactive = 0
     }
 }

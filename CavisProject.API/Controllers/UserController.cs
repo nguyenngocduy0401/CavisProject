@@ -20,11 +20,11 @@ namespace CavisProject.API.Controllers
         {
             _userService = userService;
         }
-        [HttpPost("mine/premium-packages/{id}")]
+        [HttpPost("mine/package-premium/{id}")]
         [SwaggerOperation(Summary = "người dùng Đăng Kí Premium  {Authorize = Customer}")]
-        public async Task<ApiResponse<PackagePreniumViewModel>> RegisterPremium(string id) => await _userService.RegisterPremiumAsync(id);
-        [HttpPut("{id}/premium-packages")]
-       // [Authorize(Roles = "Admin")]
+        public async Task<ApiResponse<PackagePremiumViewModel>> RegisterPremium(string id) => await _userService.RegisterPremiumAsync(id);
+        [HttpPut("~/admin/api/v1/users/{id}/package-premium")]
+        [Authorize(Roles = AppRole.Admin)]
         [SwaggerOperation(Summary = "admin Upgrade người dùng  lên premium{Authorize = Admin}")]
         public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremium(string id) => await _userService.UpgradeToPremiumAsync(id);
         [SwaggerOperation(Summary = "tìm kiếm User {Authorize = Admin}")]
@@ -62,5 +62,9 @@ namespace CavisProject.API.Controllers
         [Authorize]
         public async Task<ApiResponse<bool>> DeleteUserAsync(string id)
             => await _userService.DeleteUserAsync(id);
+        [SwaggerOperation(Summary = "duyệt phương pháp {Authorise=Admin}}")]
+        [HttpPut("mine/method/{id}")]
+        [Authorize(AppRole.Admin)]
+        public async Task<ApiResponse<bool>> ApproveMethodAsync(string id)=> await _userService.ApproveMethodAsync(id);
     }
 }

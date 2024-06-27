@@ -52,6 +52,23 @@ namespace CavisProject.Infrastructures
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonalMethodDetailConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductDetailConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(WishListConfiguration).Assembly);
+            #region User
+            /*modelBuilder.Entity<User>().HasData
+                (
+                new User 
+                {
+                    Id = "da8a7be0-e888-4201-8500-3c5b2dba7776",
+                    UserName = "Cavis",
+                    PhoneNumber = "0987654321",
+                    Email = "cavis@gmail.com",
+                    FullName = "Cavis",
+                    URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/cavis-logo.png?alt=media&token=ec5a2f56-7adc-4abb-b5a8-b478b9d9cb78",
+                    DateOfBirth =  DateTime.Now,
+                    Status = true,
+                    Wallet = 0,
+                }
+                );*/
+            #endregion
             #region SeedSkin
             modelBuilder.Entity<Skin>().HasData(
                 new Skin
@@ -538,7 +555,7 @@ namespace CavisProject.Infrastructures
                 );
                  
             #endregion
-            #region #region SeedProductDetail
+            #region SeedProductDetail
             modelBuilder.Entity<ProductDetail>().HasData
                 (
                 //set1
@@ -844,7 +861,20 @@ namespace CavisProject.Infrastructures
                   }
 );
             #endregion
-
+            #region seedMethod
+            modelBuilder.Entity<Method>().HasData(
+                 new Method
+                 {
+                     Id = Guid.Parse("550EE872-EA09-42A0-B9AC-809890DEBAFB"),
+                     MethodName = "Chăm sóc da thường",
+                     Category = 0,
+                     Description = "<h4><strong><span style=\"font-size:11pt;\">1. Chăm sóc da thường</span></strong></h4>\r\n<p><span style=\"font-size:11pt;\">Da thường là loại da lý tưởng mà nhiều người mong muốn có được. Đây là loại da không nhờn, không khô, ít mụn và thường có độ ẩm cân bằng. Tuy nhiên, để duy trì làn da khỏe đẹp này, bạn vẫn cần có một quy trình chăm sóc da đúng cách.</span></p>\r\n<p><strong><span style=\"font-size:11pt;\">Phương pháp chăm sóc:</span></strong></p>\r\n<ol>\r\n    <li style=\"list-style-type:decimal;font-size:11pt;\">\r\n        <p><strong><span style=\"font-size:11pt;\">Làm sạch da:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><strong><span style=\"font-size:11pt;\">Tẩy trang:</span></strong><span style=\"font-size:11pt;\">Sử dụng sản phẩm tẩy trang không chứa cồn để loại bỏ mỹ phẩm và bụi bẩn.</span></p>\r\n            </li>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><strong><span style=\"font-size:11pt;\">Rửa mặt:</span></strong><span style=\"font-size:11pt;\">Rửa mặt buổi sáng và tối bằng sữa rửa mặt có độ pH từ 4.5-5.5 để duy trì độ cân bằng tự nhiên của da.</span></p>\r\n            </li>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><strong><span style=\"font-size:11pt;\">Tẩy tế bào chết:</span></strong><span style=\"font-size:11pt;\">Tẩy tế bào chết 2 lần/tuần để loại bỏ da chết, giúp da mịn màng hơn.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n    <li style=\"list-style-type:decimal;font-size:11pt;\">\r\n        <p><strong><span style=\"font-size:11pt;\">Toner:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><span style=\"font-size:11pt;\">Sử dụng toner không chứa cồn để cân bằng độ pH và cấp ẩm cho da sau khi rửa mặt.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n    <li style=\"list-style-type:decimal;font-size:11pt;\">\r\n        <p><strong><span style=\"font-size:11pt;\">Dưỡng ẩm:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><span style=\"font-size:11pt;\">Sử dụng kem dưỡng ẩm ban ngày và ban đêm để duy trì độ ẩm cho da.</span></p>\r\n            </li>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><span style=\"font-size:11pt;\">Đắp mặt nạ 2 lần/tuần, ưu tiên các nguyên liệu tự nhiên như yến mạch, bơ để cung cấp thêm dưỡng chất cho da.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n    <li style=\"list-style-type:decimal;font-size:11pt;\">\r\n        <p><strong><span style=\"font-size:11pt;\">Chống nắng:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><span style=\"font-size:11pt;\">Thoa kem chống nắng hàng ngày để bảo vệ da khỏi tác hại của tia UV.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n</ol>\r\n<div id=\"gtx-trans\" style=\"position: absolute; left: -58px; top: 43.5312px;\">\r\n    <div class=\"gtx-trans-icon\"><br></div>\r\n</div>\r\n",
+                     Status = 0,
+                     UserId = "da8a7be0-e888-4201-8500-3c5b2dba7776",
+                     CreationDate = DateTime.Now
+                 }
+                 );
+            #endregion
         }
     }
 }
