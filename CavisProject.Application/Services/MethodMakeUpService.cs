@@ -196,7 +196,8 @@ namespace CavisProject.Application.Services
                 var method = await _unitOfWork.MethodSkinCareRepository.GetFilterAsync(
                     filter: filter,
                     pageIndex: filterModel.PageIndex,
-                    pageSize: filterModel.PageSize
+                    pageSize: filterModel.PageSize,
+                    includeProperties: "User"
                 );
 
                 if (method.Items.IsNullOrEmpty())

@@ -217,11 +217,10 @@ namespace CavisProject.Infrastructures.Repositories
                 .ToListAsync();
 
             var methodsQuery = _dbContext.Methods
-                .Include(e => e.MethodDetails)
-                .ThenInclude(e => e.Skins)
-                .Where(e =>
-                    e.MethodDetails.Any(md => skinIds.Contains(md.SkinId) && md.Skins.Category)
-                );
+                 .Include(e => e.MethodDetails)
+                 .ThenInclude(e => e.Skins)
+                 .Where(e => e.MethodDetails.Any(md => skinIds.Contains(md.SkinId) && md.Skins.Category)||
+                               e.MethodDetails.Any(md => skinIds.Contains(md.SkinId) && !md.Skins.Category));
 
             var itemCount = await methodsQuery.CountAsync();
 

@@ -87,7 +87,14 @@ namespace CavisProject.Infrastructures.Mappers
             #endregion
             #region Method
             CreateMap<CreateMethodViewModel, Method>();
-            CreateMap<Method, MethodViewModel>().ReverseMap();
+            CreateMap<Method, MethodViewModel>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.MethodName, opt => opt.MapFrom(src => src.MethodName))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+            .ForMember(dest => dest.URLImage, opt => opt.MapFrom(src => src.URLImage))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
+            .ForMember(dest => dest.UserAvatar, opt => opt.MapFrom(src => src.User.URLImage));
             CreateMap<Pagination<Method>, Pagination<MethodViewModel>>().ReverseMap();
             CreateMap<string, bool>().ConvertUsing(str => str == "true" || str == "1");
             #endregion
