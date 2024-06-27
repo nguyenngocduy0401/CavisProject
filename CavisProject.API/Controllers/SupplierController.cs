@@ -29,16 +29,16 @@ namespace CavisProject.API.Controllers
 
         [SwaggerOperation(Summary = "khóa thông tin nhà cung cấp sản phẩm {Authorize = Admin, Staff}")]
         [HttpDelete("{id}")]
-       // [Authorize]
+        [Authorize]
         public async Task<ApiResponse<bool>> DeleteSupplierAsync([FromRoute] string id)
         
           =>  await _supplierService.DeleteSupplierAsync(id);
 
         [SwaggerOperation(Summary = "cập nhật thông tin nhà cung cấp sản phẩm {Authorize = Admin, Staff}")]
         [HttpPut("{id}")]
-      //  [Authorize]
+        [Authorize]
         public async Task<ApiResponse<bool>> UpdateSupplierAsync([FromBody] CreateSupplierViewModel updateSupplierViewModel, [FromRoute] string id)
-      =>   await _supplierService.UpdateSupplierAsync(updateSupplierViewModel, id);
+        =>   await _supplierService.UpdateSupplierAsync(updateSupplierViewModel, id);
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "lấy thông tin nhà cung cấp sản phẩm  bằng id")]
         public async Task<ApiResponse<CreateSupplierViewModel>> GetSupplierByIdAsync(string id)=> await _supplierService.GetSupplierByIdAsync(id);

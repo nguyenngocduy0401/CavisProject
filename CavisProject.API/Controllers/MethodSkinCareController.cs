@@ -16,7 +16,7 @@ namespace CavisProject.API.Controllers
         public MethodSkinCareController(IMethodSkinCareService methodSkinCareService) { _methodSkinCareService = methodSkinCareService; }
         [SwaggerOperation(Summary = "tạo thông tin phương pháp Skincare {Authorize = Admin, Staff}")]
         [HttpPost("")]
-     [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> CreateMethodSkinCareAsync([FromBody] CreateMethodViewModel model) => await _methodSkinCareService.CreateMethodSkinCareAsync(model);
         [SwaggerOperation(Summary = "tìm kiếm thông tin loại phương pháp Skincare")]
         [HttpGet("")]
@@ -26,11 +26,11 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<MethodViewModel>> GetMethodSkinCareByIdAsync(string id) => await _methodSkinCareService.GetMethodSkinCareByIdAsync(id);
         [SwaggerOperation(Summary = "khóa thông tin phương pháp Skincare với id {Authorize = Admin, Staff}")]
         [HttpDelete("{id}")]
-    [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> DeleteMethodSkinCareAsync(string id) => await _methodSkinCareService.DeleteMethodSkinCareAsync(id);
         [SwaggerOperation(Summary = "cập nhật thông tin phương pháp Skincare với id {Authorize = Admin, Staff}")]
         [HttpPut("{id}")]
-      [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
+        [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> UpdateMethodSkinCareAsync([FromBody] CreateMethodViewModel model,string id) => await _methodSkinCareService.UpdateMethodSkinCareAsync(model, id);
     }
 }

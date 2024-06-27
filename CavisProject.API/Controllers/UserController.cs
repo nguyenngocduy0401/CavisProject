@@ -29,7 +29,6 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremium(string id) => await _userService.UpgradeToPremiumAsync(id);
         [SwaggerOperation(Summary = "tìm kiếm User {Authorize = Admin}")]
         [HttpGet("")]
-        //[Authorize]
         public async Task<ApiResponse<Pagination<UserViewModel>>> FilterUserAsync([FromQuery]FilterUserModel filterUserModel)
             => await _userService.FilterUserAsync(filterUserModel);
         [SwaggerOperation(Summary = "lấy thông tin User bằng đăng nhập")]
