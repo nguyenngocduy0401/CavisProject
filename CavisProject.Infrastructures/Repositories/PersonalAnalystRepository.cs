@@ -97,21 +97,20 @@ namespace CavisProject.Infrastructures.Repositories
                     break;
                 case CompatibleProductsEnum.Extremely:
                     // Lấy danh sách các Category = true và số lượng sản phẩm tương ứng với mỗi Category
-                    var categories = await _dbContext.ProductDetails
-                        .Where(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category)
-                        .Select(pd => pd.ProductId)
-                        .Distinct()
+                    var categories = await _dbContext.ProductCategories
+                        .Where(pc => pc.Products.Any(p => p.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category)))
+                        .Select(pc => pc.Id)
                         .ToListAsync();
 
                     // Danh sách chứa các sản phẩm đã lấy
                     var selectedProductIds = new List<Guid>();
 
-                    // Lặp qua từng Category = true
-                    foreach (var categoryProductId in categories)
+                    // Lặp qua từng Category
+                    foreach (var categoryId in categories)
                     {
-                        // Lấy sản phẩm có nhiều Skin.Category = false nhất cho từng Category = true
+                        // Lấy sản phẩm có nhiều Skin.Category = false nhất cho từng Category
                         var productId = await _dbContext.Products
-                            .Where(p => p.ProductDetails.Any(pd => pd.ProductId == categoryProductId))
+                            .Where(p => p.ProductCategoryId == categoryId)
                             .OrderByDescending(p => p.ProductDetails.Count(pd => skinIds.Contains(pd.SkinId) && !pd.Skins.Category))
                             .Select(p => p.Id)
                             .FirstOrDefaultAsync();

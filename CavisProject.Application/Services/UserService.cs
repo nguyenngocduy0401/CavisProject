@@ -62,18 +62,20 @@ namespace CavisProject.Application.Services
                 var userId = _claimsService.GetCurrentUserId;
                 if (userId == Guid.Empty)
                 {
-                    response.isSuccess = true;
+                  
                     response.Data = null;
+                    response.isSuccess = true;
                     response.Message = "Đăng nhập !";
                     return response;
                 }
                 var existingPackageDetail = await _unitOfWork.PackageDetailRepository
-          .FindAsync(pd => pd.UserId == userId.ToString() && (pd.Status == 0 || pd.Status == 1));
+                .FindAsync(pd => pd.UserId == userId.ToString() && (pd.Status == 0 || (pd.Status == 1 && pd.EndTime >= DateTime.Now)));
 
                 if (existingPackageDetail != null)
                 {
-                    response.isSuccess = false;
+                    
                     response.Data = null;
+                    response.isSuccess = true;
                     response.Message = "Bạn đã có gói Premium đang chờ kích hoạt hoặc đang sử dụng!";
                     return response;
                 }
