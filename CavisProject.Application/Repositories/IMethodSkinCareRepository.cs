@@ -11,5 +11,6 @@ namespace CavisProject.Application.Repositories
     public interface IMethodSkinCareRepository :IGenericRepository<Method>
     {
         Task<Method> GetFirstOrDefaultAsync(Expression<Func<Method, bool>> filter, string includeProperties = "");
+        Task<Method> GetMethodByIdAsync(Guid methodId);
     }
 }
