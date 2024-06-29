@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CavisProject.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace CavisProject.Domain.Entity
         public Guid? ProductCategoryId { get; set; }
         [ForeignKey("ProductCategoryId")]
         public ProductCategory? ProductCategory { get; set; }
+        public ProductStatusEnum Status { get; set; }
         public virtual ICollection<WishList>? WishLists { get; set; }
         public virtual ICollection<ProductDetail>? ProductDetails { get; set; }
     }

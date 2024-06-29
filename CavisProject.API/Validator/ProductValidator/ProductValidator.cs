@@ -22,7 +22,9 @@ namespace CavisProject.API.Validator.ProductValidator
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Description is required.")
                 .MaximumLength(500).WithMessage("Description must be less than or equal to 500 characters.");
-
+            
+            RuleFor(x => x.Price)
+                .NotEmpty().WithMessage("Price is required.").GreaterThan(1000).WithMessage("Price must be greater than 1000.");
             RuleFor(x => x.URL)
                 .NotEmpty().WithMessage("URL is required.");
         }

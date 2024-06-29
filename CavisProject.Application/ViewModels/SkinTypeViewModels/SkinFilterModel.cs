@@ -10,7 +10,7 @@ namespace CavisProject.Application.ViewModels.SkinTypeViewModel
     {
         public string? SkinTypeName { get; set; }
         public string? Description { get; set; }
-       // public bool Category { get; set; } = true;
+            public bool? IsDeleted { get; set; }
         public int PageIndex { get; set; } = 1;
         public int PageSize { get; set; } = 10;
     }

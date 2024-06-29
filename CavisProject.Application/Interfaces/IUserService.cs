@@ -1,5 +1,5 @@
 ﻿using CavisProject.Application.Commons;
-using CavisProject.Application.ViewModels.PackagePremium;
+using CavisProject.Application.ViewModels.PackagePremiumViewModels;
 using CavisProject.Application.ViewModels.RegistPreniumViewModel;
 using CavisProject.Application.ViewModels.UserViewModels;
 using System;
@@ -12,7 +12,7 @@ namespace CavisProject.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<ApiResponse<PackagePreniumViewModel>> RegisterPremiumAsync(string id);
+        Task<ApiResponse<PackagePremiumViewModel>> RegisterPremiumAsync(string id);
         Task<ApiResponse<UserPackageViewModel>> UpgradeToPremiumAsync(string id);
         Task<ApiResponse<UserViewModel>> GetUserByIdAsync(string id);
         Task<ApiResponse<UserViewModel>> GetInfoByLoginAsync();
@@ -21,5 +21,6 @@ namespace CavisProject.Application.Interfaces
         Task<ApiResponse<bool>> DeleteUserAsync(string id);
         Task<ApiResponse<bool>> CreateUserAsync(CreateUserModel createUserModel);
         Task<ApiResponse<bool>> UpdatePasswordAsync(UpdatePasswordModel updatePasswordModel);
+        Task<ApiResponse<bool>> ApproveMethodAsync(string id);
     }
 }

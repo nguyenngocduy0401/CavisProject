@@ -4,6 +4,7 @@ using CavisProject.Infrastructures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CavisProject.Infrastructures.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+    [Migration("20240624125338_updateDataV2")]
+    partial class updateDataV2
+========
+    [Migration("20240619183015_NewDB")]
+    partial class NewDB
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,11 +188,8 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Status")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -200,7 +205,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
                             Category = 0,
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(8461),
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(5042),
                             Description = "<h4><strong><span style=\"font-size:11pt;\">1. Chăm sóc da thường</span></strong></h4>\r\n<p><span style=\"font-size:11pt;\">Da thường là loại da lý tưởng mà nhiều người mong muốn có được. Đây là loại da không nhờn, không khô, ít mụn và thường có độ ẩm cân bằng. Tuy nhiên, để duy trì làn da khỏe đẹp này, bạn vẫn cần có một quy trình chăm sóc da đúng cách.</span></p>\r\n<p><strong><span style=\"font-size:11pt;\">Phương pháp chăm sóc:</span></strong></p>\r\n<ol>\r\n    <li style=\"list-style-type:decimal;font-size:11pt;\">\r\n        <p><strong><span style=\"font-size:11pt;\">Làm sạch da:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><strong><span style=\"font-size:11pt;\">Tẩy trang:</span></strong><span style=\"font-size:11pt;\">Sử dụng sản phẩm tẩy trang không chứa cồn để loại bỏ mỹ phẩm và bụi bẩn.</span></p>\r\n            </li>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><strong><span style=\"font-size:11pt;\">Rửa mặt:</span></strong><span style=\"font-size:11pt;\">Rửa mặt buổi sáng và tối bằng sữa rửa mặt có độ pH từ 4.5-5.5 để duy trì độ cân bằng tự nhiên của da.</span></p>\r\n            </li>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><strong><span style=\"font-size:11pt;\">Tẩy tế bào chết:</span></strong><span style=\"font-size:11pt;\">Tẩy tế bào chết 2 lần/tuần để loại bỏ da chết, giúp da mịn màng hơn.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n    <li style=\"list-style-type:decimal;font-size:11pt;\">\r\n        <p><strong><span style=\"font-size:11pt;\">Toner:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><span style=\"font-size:11pt;\">Sử dụng toner không chứa cồn để cân bằng độ pH và cấp ẩm cho da sau khi rửa mặt.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n    <li style=\"list-style-type:decimal;font-size:11pt;\">\r\n        <p><strong><span style=\"font-size:11pt;\">Dưỡng ẩm:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><span style=\"font-size:11pt;\">Sử dụng kem dưỡng ẩm ban ngày và ban đêm để duy trì độ ẩm cho da.</span></p>\r\n            </li>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><span style=\"font-size:11pt;\">Đắp mặt nạ 2 lần/tuần, ưu tiên các nguyên liệu tự nhiên như yến mạch, bơ để cung cấp thêm dưỡng chất cho da.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n    <li style=\"list-style-type:decimal;font-size:11pt;\">\r\n        <p><strong><span style=\"font-size:11pt;\">Chống nắng:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><span style=\"font-size:11pt;\">Thoa kem chống nắng hàng ngày để bảo vệ da khỏi tác hại của tia UV.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n</ol>\r\n<div id=\"gtx-trans\" style=\"position: absolute; left: -58px; top: 43.5312px;\">\r\n    <div class=\"gtx-trans-icon\"><br></div>\r\n</div>\r\n",
                             IsDeleted = false,
                             MethodName = "Chăm sóc da thường",
@@ -472,9 +477,6 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<Guid?>("SupplierId")
                         .HasColumnType("uniqueidentifier");
 
@@ -507,7 +509,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 638000.0,
                             ProductCategoryId = new Guid("5e500a0f-e114-4f88-95d1-f1b12fba0654"),
                             ProductName = "Sữa Rửa Mặt Paula’s Choice Cân Bằng Độ Ẩm Da 190ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/sua-rua-mat-paula-s-choice-can-bang-da-190ml-2329.html",
@@ -524,7 +525,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 83000.0,
                             ProductCategoryId = new Guid("5e500a0f-e114-4f88-95d1-f1b12fba0654"),
                             ProductName = "Kem Rửa Mặt Hada Labo Sạch Sâu Dưỡng Ẩm 80g",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/kem-rua-mat-hada-labo-duong-am-toi-uu-80g-4359.html?gad_source=1&gclid=CjwKCAjw65-zBhBkEiwAjrqRMId5JCuqnjMla9hkVGIMUrzwnpV_bVDm3yfaLjmKMnJj6yLlQ6Wq1RoCu10QAvD_BwE",
@@ -541,7 +541,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 140000.0,
                             ProductCategoryId = new Guid("5e500a0f-e114-4f88-95d1-f1b12fba0654"),
                             ProductName = "Sữa Rửa Mặt Vichy Dạng Gel Làm Sạch Sâu Da Dầu Mụn 50ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/sua-rua-mat-dang-gel-vichy-lam-sach-sau-cho-da-nhon-mun-50ml-80971.html",
@@ -558,7 +557,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 408000.0,
                             ProductCategoryId = new Guid("5e500a0f-e114-4f88-95d1-f1b12fba0654"),
                             ProductName = "Gel Rửa Mặt Eucerin Làm Sạch Dịu Nhẹ Da Nhạy Cảm 200ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/gel-rua-mat-eucerin-tuoi-mat-cho-da-thuong-nhay-cam-200ml-89925.html",
@@ -575,7 +573,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 375000.0,
                             ProductCategoryId = new Guid("5e500a0f-e114-4f88-95d1-f1b12fba0654"),
                             ProductName = "Sữa Rửa Mặt Skin1004 Làm Sạch Sâu Cho Da Nhạy Cảm 125ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/sua-rua-mat-chiet-xuat-rau-ma-skin1004-diu-nhe-lam-sach-sau-da-125ml-86169.html",
@@ -592,7 +589,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 264000.0,
                             ProductCategoryId = new Guid("30e2e877-861b-4ae5-8a6b-b2e93a79175e"),
                             ProductName = "Nước Hoa Hồng Thayers Không Cồn Hương Hoa Hồng 355ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/nuoc-hoa-hong-khong-con-thayers-huong-hoa-hong-355ml-3227.html",
@@ -609,7 +605,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 325000.0,
                             ProductCategoryId = new Guid("30e2e877-861b-4ae5-8a6b-b2e93a79175e"),
                             ProductName = "Nước Hoa Hồng Evoluderm Dành Cho Da Khô Và Nhạy Cảm 500ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/nuoc-hoa-hong-evoluderm-danh-cho-da-kho-va-nhay-cam-500ml-14949.html",
@@ -626,7 +621,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 400000.0,
                             ProductCategoryId = new Guid("30e2e877-861b-4ae5-8a6b-b2e93a79175e"),
                             ProductName = "Nước Hoa Hồng Caryophy Ngừa Mụn Kiềm Dầu Giảm Thâm 300ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/nuoc-hoa-hong-cho-da-mun-caryophy-300ml-78140.html?gad_source=1&gclid=CjwKCAjw65-zBhBkEiwAjrqRMFIk6UKxeIL3HRR1hvVcUaAjCJiMbyuE5tweE_JTxteiOnVqbvEaIRoCgGkQAvD_BwE",
@@ -643,7 +637,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 409000.0,
                             ProductCategoryId = new Guid("30e2e877-861b-4ae5-8a6b-b2e93a79175e"),
                             ProductName = "Nước Hoa Hồng Klairs Không Mùi Cho Da Nhạy Cảm 180ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/nuoc-hoa-hong-khong-mui-klairs-danh-cho-da-nhay-cam-180ml-65994.html?gad_source=1&gclid=CjwKCAjw65-zBhBkEiwAjrqRMEJSpgovsMtCFQ3MpacrWVHnPjqQ3_KqAoJ_LWQS2Tnz8BNEfLazNxoCj4MQAvD_BwE",
@@ -660,7 +653,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 360000.0,
                             ProductCategoryId = new Guid("30e2e877-861b-4ae5-8a6b-b2e93a79175e"),
                             ProductName = "Toner Mamonde Dưỡng Ẩm, Dịu Nhẹ Da Nhạy Cảm 250ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/nuoc-can-bang-mamonde-duong-am-diu-nhe-cho-da-nhay-cam-250ml-95787.html",
@@ -677,7 +669,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 270000.0,
                             ProductCategoryId = new Guid("db5d4968-16f9-48c6-ab2b-feef85208d5a"),
                             ProductName = "Kem Dưỡng Olay Luminous Sáng Da Mờ Thâm Nám Ban Đêm 50g",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/kem-duong-am-ban-dem-olay-lam-sang-da-mo-tham-nam-50g-87859.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqndHWwtwmT9MaaMeaKHq6Ymco3tN1Wa0ytsHuzvR-rgK4l3PeomwccgaAiaREALw_wcB",
@@ -694,7 +685,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 850000.0,
                             ProductCategoryId = new Guid("db5d4968-16f9-48c6-ab2b-feef85208d5a"),
                             ProductName = "Kem Dưỡng Ẩm Laneige Cấp Nước Cho Da Khô 50ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/kem-duong-am-laneige-cho-da-kho-50ml-1026.html",
@@ -711,7 +701,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 610000.0,
                             ProductCategoryId = new Guid("db5d4968-16f9-48c6-ab2b-feef85208d5a"),
                             ProductName = "Kem Giảm Mụn La Roche-Posay Dành Cho Mụn Sưng Đỏ 15ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/kem-duong-la-roche-posay-lam-giam-mun-chuyen-biet-15ml-1092.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqndVhOh7KFY12qi3dIFnBPywwEf96mC1lZgd4WZqlyHGD6C95HwLIgAaArFpEALw_wcB",
@@ -728,7 +717,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 389000.0,
                             ProductCategoryId = new Guid("db5d4968-16f9-48c6-ab2b-feef85208d5a"),
                             ProductName = "Kem Dưỡng Ẩm Neutrogena Cấp Nước Cho Da Dầu 50g",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/kem-duong-am-neutrogena-cung-cap-nuoc-cho-da-50g-90339.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqndONELGoevx8Sn66b5Fl2QsToH_IahOd8gyeYIIKK-E271RuWnktCAaAvogEALw_wcB",
@@ -745,7 +733,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 590000.0,
                             ProductCategoryId = new Guid("db5d4968-16f9-48c6-ab2b-feef85208d5a"),
                             ProductName = "Kem Dưỡng Ẩm Eucerin Dịu Nhẹ Cho Da Thường, Hỗn Hợp 50ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/kem-duong-am-eucerin-cho-da-thuong-den-da-hon-hop-50ml-68136.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqneRasEsTiW395OeWuFa_ZebB5tH1gDMjSIQjEO7EnM4IB3DUtnZINoaAggoEALw_wcB",
@@ -762,7 +749,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 1350000.0,
                             ProductCategoryId = new Guid("39201e62-9ce1-45cc-9625-ee52babc780d"),
                             ProductName = "Kem Chống Nắng MartiDerm Phổ Rộng Bảo Vệ Toàn Diện",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/kem-chong-nang-martiderm-pho-rong-toan-dien-spf50-40ml-90401.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqnf0BPilz_8AKunYGCdgJi4LTr0XOYFCe5IumOshtzd6qwrtvxNm4P0aAtjXEALw_wcB",
@@ -779,7 +765,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 195000.0,
                             ProductCategoryId = new Guid("39201e62-9ce1-45cc-9625-ee52babc780d"),
                             ProductName = "Essence Chống Nắng Bioré Màng Nước Dưỡng Ẩm Da 50g",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/essence-chong-nang-mang-nuoc-duong-am-biore-spf50-pa-50g-6408.html",
@@ -796,7 +781,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 715000.0,
                             ProductCategoryId = new Guid("39201e62-9ce1-45cc-9625-ee52babc780d"),
                             ProductName = "Sữa Chống Nắng Anessa Dưỡng Da Kiềm Dầu 60ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/sua-chong-nang-anessa-duong-da-kiem-dau-60ml-moi-119084.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqncntdErbsKUwqZ1ntRjnIi2tuJK8v-PTr8LUKmSCyVI-y_8aMZ80VsaAkPxEALw_wcB",
@@ -813,7 +797,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 585000.0,
                             ProductCategoryId = new Guid("39201e62-9ce1-45cc-9625-ee52babc780d"),
                             ProductName = "Kem Chống Nắng Vichy Chống Bụi Mịn Cho Da Dầu Mụn 50ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/kem-chong-nang-vichy-kiem-dau-spf50-50ml-88835.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqnfcttLtt9diCT48iS-WDplNHtsBwy_Umy_EgQqc-rN_ia_0uYNCvT4aAlP1EALw_wcB",
@@ -830,7 +813,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 950000.0,
                             ProductCategoryId = new Guid("39201e62-9ce1-45cc-9625-ee52babc780d"),
                             ProductName = "Kem Chống Nắng Hằng Ngày Kiehl's SPF50/PA ++++ 30ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/kem-chong-nang-hang-ngay-kiehl-s-spf50-pa-30ml-73170.html",
@@ -847,7 +829,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 180000.0,
                             ProductCategoryId = new Guid("839dc6d7-4b15-479b-9e01-17b8d3303144"),
                             ProductName = "Nước Tẩy Trang Byphasse Cho Mọi Loại Da 500ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/nuoc-tay-trang-byphasse-cho-moi-loai-da-500ml-3183.html",
@@ -864,7 +845,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 269000.0,
                             ProductCategoryId = new Guid("839dc6d7-4b15-479b-9e01-17b8d3303144"),
                             ProductName = "Nước Tẩy Trang L'Oreal Làm Sạch Sâu Trang Điểm 400ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/nuoc-tay-trang-l-oreal-3-in-1-lam-sach-sau-400ml-34119.html",
@@ -881,7 +861,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 425000.0,
                             ProductCategoryId = new Guid("839dc6d7-4b15-479b-9e01-17b8d3303144"),
                             ProductName = "Dầu Tẩy Trang Klairs Làm Sạch Sâu Cho Mọi Loại Da 150ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/dau-tay-trang-klairs-lam-sach-sau-cho-moi-loai-da-150ml-66046.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqneXiK5EtEZTGc8AreQnfD9DH2BaoDtu8cyOxWfBT2lWqrgD2Mqq4JoaAonLEALw_wcB",
@@ -898,7 +877,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 460000.0,
                             ProductCategoryId = new Guid("839dc6d7-4b15-479b-9e01-17b8d3303144"),
                             ProductName = "Nước Tẩy Trang Caryophy Cho Da Dầu Mụn, Nhạy Cảm 500ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/nuoc-tay-trang-caryophy-cho-da-dau-mun-nhay-cam-500ml-91531.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqnc5cVVKaND4RQ-VF7ZpLe2tG3uH1mkEN-QQ8en7HkAakUuKQ3quz9saAogdEALw_wcB",
@@ -915,7 +893,6 @@ namespace CavisProject.Infrastructures.Migrations
                             Price = 189000.0,
                             ProductCategoryId = new Guid("839dc6d7-4b15-479b-9e01-17b8d3303144"),
                             ProductName = "Nước Tẩy Trang Simple Làm Sạch Trang Điểm Vượt Trội 400ml",
-                            Status = 1,
                             SupplierId = new Guid("8f78562c-4da1-4cf4-9100-22215c0b6530"),
                             TotalMoney = 0.0,
                             URL = "https://hasaki.vn/san-pham/nuoc-tay-trang-simple-lam-sach-trang-diem-va-cap-am-400ml-104259.html?gad_source=1&gclid=Cj0KCQjwsaqzBhDdARIsAK2gqndbwfo5t-8uGNIEDk-WrXO8F2GSsjCT3GqN-MmQOs2iLV92I4XqnqoaAiTaEALw_wcB",
@@ -1385,11 +1362,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
                             Category = true,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7831),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3681),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4514),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(461),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Da cân bằng với vẻ ngoài khỏe mạnh, không quá nhờn cũng không quá khô, và ít khuyết điểm.",
                             IsDeleted = false,
                             SkinsName = "Da thường"
@@ -1398,11 +1375,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
                             Category = true,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7849),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3696),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4532),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(491),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Sự kết hợp của các loại da; thường thì vùng chữ T (trán, mũi, và cằm) là da nhờn trong khi má là da khô hoặc bình thường.",
                             IsDeleted = false,
                             SkinsName = "Da hỗn hợp"
@@ -1411,11 +1388,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
                             Category = true,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7853),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3698),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4536),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(495),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Da dễ phản ứng với các sản phẩm và yếu tố môi trường, thường dẫn đến đỏ, ngứa, hoặc kích ứng.",
                             IsDeleted = false,
                             SkinsName = "Da nhạy cảm"
@@ -1424,11 +1401,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
                             Category = true,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7856),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3699),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4538),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(499),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Da thiếu độ ẩm, thường cảm thấy căng, thô ráp, hoặc bong tróc, và có thể trông xỉn màu.",
                             IsDeleted = false,
                             SkinsName = "Da khô"
@@ -1437,11 +1414,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
                             Category = true,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7861),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3701),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4540),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(504),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Da sản xuất quá nhiều bã nhờn, dẫn đến vẻ ngoài bóng và có khả năng cao bị mụn và lỗ chân lông to.",
                             IsDeleted = false,
                             SkinsName = "Da nhờn"
@@ -1450,11 +1427,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("e8685143-0f2e-42fa-8025-da53e1707461"),
                             Category = false,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7863),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3704),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4543),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(508),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Mụn đầu đen là loại mụn mà lỗ chân lông bị tắc bởi bã nhờn và tế bào da chết. Chúng thường màu đen hoặc vàng nâu.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu đen"
@@ -1463,11 +1440,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("73766ff0-d528-4262-a1e8-656b33f58603"),
                             Category = false,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7866),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3706),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4545),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(512),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Mụn đầu trắng cũng là lỗ chân lông bị tắc, nhưng bề mặt của chúng bị phủ bởi một lớp da sạch. Chúng thường xuất hiện màu trắng hoặc da, thường nhỏ hơn mụn đầu đen.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu trắng"
@@ -1476,11 +1453,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("5ab57d24-20ad-4b15-8427-c951419da3ba"),
                             Category = false,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7868),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3709),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4548),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(517),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Mụn bọc là các nốt sưng và đỏ trên da mà không có đầu trắng hoặc đen ở phần trên. Chúng có thể gây đau và khó chịu.",
                             IsDeleted = false,
                             SkinsName = "Mụn bọc"
@@ -1489,11 +1466,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("bd287628-2eb7-458a-b202-d89d63faaebf"),
                             Category = false,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7881),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3711),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4551),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(520),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Mụn mủ là các nốt sưng và đỏ có chứa mủ ở phần trên. Chúng thường là dấu hiệu của một nhiễm trùng nặng hơn trong lỗ chân lông.",
                             IsDeleted = false,
                             SkinsName = "Mụn mủ"
@@ -1502,11 +1479,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"),
                             Category = false,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7883),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3714),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4554),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(524),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Mụn viêm đỏ là các nốt sưng lớn và đau nhức dưới da. Chúng thường không có mủ ở phần trên như mụn mủ.",
                             IsDeleted = false,
                             SkinsName = "Mụn viêm đỏ"
@@ -1515,11 +1492,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("f49b6287-8f31-4fd5-9899-ed1eb6d0564a"),
                             Category = false,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7886),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3716),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4564),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(528),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Mụn đầu đinh là các nốt sưng lớn và đau nhức có mủ ở phần trên. Chúng có thể gây ra tổn thương và vết sẹo nếu không được điều trị đúng cách.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu đinh"
@@ -1528,11 +1505,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("a9035561-1399-464f-9f09-38c164a40a63"),
                             Category = false,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7888),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3719),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4567),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(532),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Mụn thâm là các vết sẹo hoặc vết đỏ hoặc nâu trên da sau khi mụn đã lành. Chúng có thể gây ra tự ti và không tự tin về da mặt.",
                             IsDeleted = false,
                             SkinsName = "Mụn thâm"
@@ -1541,11 +1518,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
                             Category = false,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7891),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3721),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4569),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(535),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Nám da là sự xuất hiện của các vùng sạm màu trên da, thường là do tác động của tia UV từ ánh nắng mặt trời.",
                             IsDeleted = false,
                             SkinsName = "Nám da"
@@ -1554,11 +1531,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("4678f8d2-5648-4521-9608-8e981dee9103"),
                             Category = false,
-<<<<<<< HEAD
-                            CreationDate = new DateTime(2024, 6, 26, 1, 11, 23, 507, DateTimeKind.Local).AddTicks(7893),
-=======
-                            CreationDate = new DateTime(2024, 6, 26, 0, 5, 33, 101, DateTimeKind.Local).AddTicks(3724),
->>>>>>> c335c29ac170c753d61add89bfbcddcb2700ffa7
+<<<<<<<< HEAD:CavisProject.Infrastructures/Migrations/20240624125338_updateDataV2.Designer.cs
+                            CreationDate = new DateTime(2024, 6, 24, 19, 53, 38, 111, DateTimeKind.Local).AddTicks(4573),
+========
+                            CreationDate = new DateTime(2024, 6, 20, 1, 30, 14, 957, DateTimeKind.Local).AddTicks(539),
+>>>>>>>> main:CavisProject.Infrastructures/Migrations/20240619183015_NewDB.Designer.cs
                             Description = "Sự xuất hiện của nếp nhăn trên da thường là kết quả của quá trình lão hóa tự nhiên, nhưng cũng có thể được tăng cường bởi tác động từ môi trường, chế độ ăn uống và lối sống.",
                             IsDeleted = false,
                             SkinsName = "Nếp nhăn"
