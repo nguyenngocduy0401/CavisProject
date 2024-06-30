@@ -1,4 +1,5 @@
 using CavisProject.API;
+using CavisProject.API.Middlewares;
 using CavisProject.Application.Commoms;
 using CavisProject.Infrastructures;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -45,7 +46,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
-
+app.UseMiddleware<PerformanceMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

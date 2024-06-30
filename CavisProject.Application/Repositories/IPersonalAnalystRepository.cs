@@ -15,6 +15,7 @@ namespace CavisProject.Application.Repositories
         Task<List<Guid?>> GetSkinIdsByPersonalAnalystIdAsync(string personalAnalystId);
         Task<Guid> CreatePersonalAnalystAsync(PersonalAnalyst personalAnalyst);
         Task<PersonalAnalyst> GetLastPersonalAnalystAsync();
+        Task<PersonalAnalyst> GetLastPersonalAnalystDetailAsync();
         Task<Pagination<Product>> SuggestProductAsync(Guid personalAnalystId,
         CompatibleProductsEnum compatibleProductsEnum,
         int? pageIndex = null,

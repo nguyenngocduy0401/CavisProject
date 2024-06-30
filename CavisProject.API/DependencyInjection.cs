@@ -23,6 +23,7 @@ using CavisProject.Application.ViewModels.MethodViewModels;
 using CavisProject.API.Validator.MethodValidator;
 using CavisProject.API.Validator.ProductCategoryValidator;
 using CavisProject.API.Validator.SupplierValidator;
+using CavisProject.API.Middlewares;
 
 namespace CavisProject.API
 {
@@ -63,7 +64,8 @@ namespace CavisProject.API
                     }
                 });
             });
-
+            services.AddSingleton<PerformanceMiddleware>();
+            services.AddSingleton<Stopwatch>();
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>

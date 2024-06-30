@@ -186,7 +186,18 @@ namespace CavisProject.Infrastructures.Repositories
             if (personalAnalyst == null) throw new Exception();
             return personalAnalyst;
         }
-
+        public async Task<PersonalAnalyst> GetLastPersonalAnalystDetailAsync()
+        {
+            var userId = _claimsService.GetCurrentUserId.ToString();
+            var personalAnalyst = await _dbContext.PersonalAnalysts
+            .Include(e => e.PersonalAnalystDetails)
+            .ThenInclude(e => e.Skins)
+            .Where(e => e.UserId == userId)
+            .OrderByDescending(e => e.StartDate)
+            .FirstOrDefaultAsync();
+            if (personalAnalyst == null) throw new Exception();
+            return personalAnalyst;
+        }
         public async Task<List<Guid?>> GetSkinIdsByPersonalAnalystIdAsync(string personalAnalystId)
         {
             // Thực hiện truy vấn để lấy các skinId của personalAnalystId từ cơ sở dữ liệu

@@ -5,6 +5,7 @@ using CavisProject.Application.ViewModels.MethodViewModels;
 using CavisProject.Application.ViewModels.PersonalAnalystViewModels;
 using CavisProject.Application.ViewModels.ProductViewModel;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
+using CavisProject.Application.ViewModels.SkinTypeViewModels;
 using CavisProject.Application.ViewModels.UserViewModels;
 using CavisProject.Domain.Entity;
 using CavisProject.Domain.Enums;
@@ -16,6 +17,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -214,6 +216,35 @@ namespace CavisProject.Application.Services
             catch (Exception ex)
             {
                 response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
+        public async Task<ApiResponse<SkinListViewModel>> SkinListByLoginAsync() 
+        {
+            var response = new ApiResponse<SkinListViewModel>();
+            try
+            {
+                var personalAnalyst = await _unitOfWork.PersonalAnalystRepository.GetLastPersonalAnalystDetailAsync();
+                var personlAnalystDetails =  personalAnalyst.PersonalAnalystDetails.ToList();
+                var skinListViewModel = new SkinListViewModel();
+                foreach (var personlAnalystDetail in personlAnalystDetails)
+                {
+                    if (personlAnalystDetail.Skins.Category == false) 
+                    {
+                        if (skinListViewModel.SkinConditions != null) skinListViewModel.SkinConditions.Add(personlAnalystDetail.Skins.SkinsName); 
+                    }  
+                    else skinListViewModel.SkinType = personlAnalystDetail.Skins.SkinsName;
+                }
+                response.Data = skinListViewModel;
+                response.isSuccess = true;
+                response.Message = "Successfull!";
+            }
+            catch (Exception ex) 
+            {
+                response.Data = null;
+                response.isSuccess = true;
                 response.Message = ex.Message;
             }
             return response;

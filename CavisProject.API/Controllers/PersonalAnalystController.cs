@@ -3,6 +3,7 @@ using CavisProject.Application.Interfaces;
 using CavisProject.Application.ViewModels.MethodViewModels;
 using CavisProject.Application.ViewModels.PersonalAnalystViewModels;
 using CavisProject.Application.ViewModels.ProductViewModel;
+using CavisProject.Application.ViewModels.SkinTypeViewModels;
 using CavisProject.Domain.Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,5 +38,9 @@ namespace CavisProject.API.Controllers
         [HttpGet("mine/methods")]
         [Authorize]
         public async Task<ApiResponse<Pagination<MethodViewModel>>> SuggestMethodAsync([FromQuery] FilterSuggestMethodModel filterSuggestMethodModel) => await _personalAnalystService.SuggestMethodMakeUpAsync(filterSuggestMethodModel);
+        [SwaggerOperation(Summary = "lấy skin của người dùng khi đăng nhập")]
+        [HttpGet("mine/skins")]
+        [Authorize]
+        public async Task<ApiResponse<SkinListViewModel>> SkinListAsync() => await _personalAnalystService.SkinListByLoginAsync();
     }
 }
