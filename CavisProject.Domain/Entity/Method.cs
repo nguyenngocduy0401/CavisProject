@@ -15,6 +15,7 @@ namespace CavisProject.Domain.Entity
         public string? Description { get; set; }
         public MethodStatusEnum? Status { get; set; } //admin duyet
         public string? UserId { get; set; }
+        public string? URLImage { get; set; }
         public string? Url {  get; set; }
         [ForeignKey("UserId")]
         public User? User { get; set; }

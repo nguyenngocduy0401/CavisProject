@@ -30,6 +30,38 @@ namespace CavisProject.Application.Services
             _unitOfWork = unitOfWork;
             _validator = validator;
         }
+
+        public async Task<ApiResponse<MethodViewModel>> GetMethodByIdAsync(string id)
+        {
+            var response = new ApiResponse<MethodViewModel>();
+            try
+            {
+                var method = await _unitOfWork.MethodSkinCareRepository.GetMethodByIdAsync(Guid.Parse(id));
+                if (method == null) 
+                {
+                    response.isSuccess = false;
+                    response.Message = "Not found method";
+                    return response;
+
+                }
+               
+                var methodViewModel = _mapper.Map<MethodViewModel>(method);
+                response.Data = methodViewModel;
+                response.isSuccess = true;
+                response.Message = "Successful";
+            }
+            catch (DbException ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                response.isSuccess = false;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
         public async Task<ApiResponse<bool>> CreateMethodSkinMakeUpAsync(CreateMethodViewModel create)
         {
             var response = new ApiResponse<bool>();
@@ -196,7 +228,8 @@ namespace CavisProject.Application.Services
                 var method = await _unitOfWork.MethodSkinCareRepository.GetFilterAsync(
                     filter: filter,
                     pageIndex: filterModel.PageIndex,
-                    pageSize: filterModel.PageSize
+                    pageSize: filterModel.PageSize,
+                    includeProperties: "User"
                 );
 
                 if (method.Items.IsNullOrEmpty())
