@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CavisProject.Application.ViewModels.MethodViewModels;
+using CavisProject.Application.ViewModels.SkincareRoutineViewModels;
 
 namespace CavisProject.Infrastructures.Mappers
 {
@@ -33,7 +34,7 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<UserPackageViewModel, User>();
             CreateMap<UserViewModel, User>();
             CreateMap<UserViewModel, PackagePremium>();
-            CreateMap<User, UserViewModel>().ReverseMap();
+            CreateMap<User, UserViewModel>();
              
 
 
@@ -98,6 +99,10 @@ namespace CavisProject.Infrastructures.Mappers
             .ForMember(dest => dest.CreationDate, opt => opt.MapFrom(src => src.CreationDate));
             CreateMap<Pagination<Method>, Pagination<MethodViewModel>>().ReverseMap();
             CreateMap<string, bool>().ConvertUsing(str => str == "true" || str == "1");
+            #endregion
+            #region SkincareRoutine
+            CreateMap<UpdateSkincareRoutineModel, SkincareRoutine>();
+            CreateMap<SkincareRoutine, SkincareRoutineViewModel>();
             #endregion
         }
     }
