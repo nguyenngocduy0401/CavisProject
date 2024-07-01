@@ -32,7 +32,7 @@ namespace CavisProject.Infrastructures.Repositories
         {
             return await _dbContext.PackageDetails
                 .Where(e => e.UserId == userId)
-                .OrderBy(e => e.StartTime)
+                .OrderByDescending(e => e.StartTime)
                 .FirstOrDefaultAsync();
         }
         public async Task<List<PackageDetail>> GetAllAsync()
