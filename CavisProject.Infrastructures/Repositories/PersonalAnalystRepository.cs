@@ -110,7 +110,7 @@ namespace CavisProject.Infrastructures.Repositories
                     {
                         // Lấy sản phẩm có nhiều Skin.Category = false nhất cho từng Category
                         var productId = await _dbContext.Products
-                            .Where(p => p.ProductCategoryId == categoryId)
+                            .Where(p => p.ProductCategoryId == categoryId && p.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category))
                             .OrderByDescending(p => p.ProductDetails.Count(pd => skinIds.Contains(pd.SkinId) && !pd.Skins.Category))
                             .Select(p => p.Id)
                             .FirstOrDefaultAsync();
