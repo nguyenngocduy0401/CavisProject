@@ -25,6 +25,7 @@ namespace CavisProject.Domain.Entity
         public virtual ICollection<WishList>? WishLists { get; set; } 
         public virtual ICollection<PersonalAnalyst>? PersonalAnalysts { get; set; }
         public virtual ICollection<PackageDetail>? PackageDetails { get; set; }
+        public virtual ICollection<CalendarDetail>? CalendarDetails { get; set; }
         public virtual ICollection<RefreshToken>? RefreshToken { get; set; }
     }
 }
