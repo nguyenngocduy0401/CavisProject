@@ -43,7 +43,12 @@ namespace CavisProject.Infrastructures.Repositories
 
             return await query.FirstOrDefaultAsync();
         }
-       
+        public async Task<Method> GetMethodByIdAsync(Guid methodId)
+        {
+            return await _dbContext.Set<Method>()
+                                 .Include(m => m.User)
+                                 .FirstOrDefaultAsync(m => m.Id == methodId);
+        }
     }
 }
 

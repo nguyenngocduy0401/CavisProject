@@ -15,5 +15,6 @@ namespace CavisProject.Application.Interfaces
         Task<ApiResponse<bool>> DeleteMethodMakeUpAsync(string id);
         Task<ApiResponse<bool>> UpdateMethodMakeUpAsync(CreateMethodViewModel update, string id);
         Task<ApiResponse<MethodViewModel>> GetMethodMakeUpByIdAsync(string id);
+        Task<ApiResponse<MethodViewModel>> GetMethodByIdAsync(string id);
     }
 }
