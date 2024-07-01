@@ -2,6 +2,7 @@ using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.ViewModels.PackagePremiumViewModels;
 using CavisProject.Application.ViewModels.RegistPreniumViewModel;
+using CavisProject.Application.ViewModels.SkincareRoutineViewModels;
 using CavisProject.Application.ViewModels.UserViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,9 +17,11 @@ namespace CavisProject.API.Controllers
     public class UserController : ControllerBase
     {
         public readonly IUserService _userService;
-        public UserController(IUserService userService)
+        public readonly ISkincareRoutineService _skincareRoutineService;
+        public UserController(IUserService userService, ISkincareRoutineService skincareRoutineService)
         {
             _userService = userService;
+            _skincareRoutineService = skincareRoutineService;
         }
         [HttpPost("mine/package-premium/{id}")]
         [SwaggerOperation(Summary = "người dùng Đăng Kí Premium  {Authorize = Customer}")]
@@ -65,5 +68,10 @@ namespace CavisProject.API.Controllers
         [HttpPut("mine/method/{id}")]
         [Authorize(AppRole.Admin)]
         public async Task<ApiResponse<bool>> ApproveMethodAsync(string id)=> await _userService.ApproveMethodAsync(id);
+
+        [SwaggerOperation(Summary = "lấy thông tin dưỡng da hàng ngày")]
+        [HttpGet("mine/skincare-routines")]
+        [Authorize]
+        public async Task<ApiResponse<SkincareRoutineViewModel>> GetSkincareRoutineByLoginAsync() => await _skincareRoutineService.GetSkincareRoutineByLogin();
     }
 }

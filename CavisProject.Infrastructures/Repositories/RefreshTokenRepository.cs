@@ -1,4 +1,4 @@
-﻿using CavisProject.Application.Interfaces;
+﻿using CavisProject.Application.Repositories;
 using CavisProject.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;

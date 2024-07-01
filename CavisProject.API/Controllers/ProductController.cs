@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace CavisProject.API.Controllers
-{ [Route("api/v1/products")]
-   //[Authorize]
+{ 
+    [Route("api/v1/products")]
     public class ProductController : ControllerBase
 
     {
