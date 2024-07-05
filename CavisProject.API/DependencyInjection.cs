@@ -24,6 +24,8 @@ using CavisProject.API.Validator.MethodValidator;
 using CavisProject.API.Validator.ProductCategoryValidator;
 using CavisProject.API.Validator.SupplierValidator;
 using CavisProject.API.Middlewares;
+using CavisProject.Application.ViewModels.PersonalImageViewModels;
+using CavisProject.API.Validator.PersonalImageValidator;
 
 namespace CavisProject.API
 {
@@ -103,7 +105,8 @@ namespace CavisProject.API
             services.AddTransient<IValidator<UserResetPasswordModel>, UserResetPasswordValidator>();
             services.AddTransient<IValidator<CreatePackagePremiumViewModel>, CreatePackagePremiumViewModelValidator>();
             services.AddTransient<IValidator<CreateProductViewModel>, CreateProductViewModelValidator>();
-            services.AddTransient<IValidator<CreateMethodViewModel>,CreateMethodValidator>();   
+            services.AddTransient<IValidator<CreateMethodViewModel>,CreateMethodValidator>();
+            services.AddTransient<IValidator<CreatePersonalImageViewModel>, CreatePersonalImageValidator>();
             #endregion
 
             return services;

@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CavisProject.Application.ViewModels.MethodViewModels;
 using CavisProject.Application.ViewModels.SkincareRoutineViewModels;
+using CavisProject.Application.ViewModels.PersonalImageViewModels;
 
 namespace CavisProject.Infrastructures.Mappers
 {
@@ -103,6 +104,12 @@ namespace CavisProject.Infrastructures.Mappers
             #region SkincareRoutine
             CreateMap<UpdateSkincareRoutineModel, SkincareRoutine>();
             CreateMap<SkincareRoutine, SkincareRoutineViewModel>();
+            #endregion
+            #region PersonalImage
+            CreateMap<CreatePersonalImageViewModel, PersonalImage>();
+            CreateMap<Pagination<PersonalImage>, Pagination<PersonalImageViewModel>>().ReverseMap();
+            CreateMap<PersonalImage, PersonalImageViewModel>();
+
             #endregion
         }
     }

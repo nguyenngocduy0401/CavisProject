@@ -162,9 +162,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
-
-
         public async Task<ApiResponse<bool>> DeleteProductAsync(string id)
         {
             var response = new ApiResponse<bool>();
@@ -255,10 +252,6 @@ namespace CavisProject.Application.Services
                 response.Message = ex.Message;
             }
             return response;
-        }
-        public Task<ApiResponse<CreateProductViewModel>> GetProductDetail(string id)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<ApiResponse<ProductViewModel>> GetProductDetailByIdAsync(string productId)
