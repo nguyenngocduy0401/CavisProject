@@ -13,6 +13,7 @@ namespace CavisProject.Application
         public IAppointmentRepository AppointmentRepository { get; }
         public IAppointmentDetailRepository AppointmentDetailRepository { get; }
         public ICalendarRepository CalendarRepository { get; }
+        public ICalendarDetailRepository CalendarDetailRepository { get; }
         public IMethodDetailRepository MethodDetailRepository { get; }
         public IMethodSkinCareRepository MethodSkinCareRepository { get; }
         public IPackageDetailRepository PackageDetailRepository { get; }

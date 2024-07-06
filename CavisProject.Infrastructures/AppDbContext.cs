@@ -879,35 +879,34 @@ namespace CavisProject.Infrastructures
             modelBuilder.Entity<Calendar>().HasData(
                    new Calendar
                    {
-                       Id= Guid.Parse("701137F8-1506-4CA6-AD2A-0E4FC753529F"),
-                       StartTime = DateTime.Today.AddHours(19),
-                       EndTime = DateTime.Today.AddHours(21),
-                       Duration=2,
-                       Type=0
-                   },
-                   new Calendar
+                       Id = Guid.Parse("FCE513A4-01D5-47A8-9FD2-887381FF6A7D"),
+                       StartTime = new TimeSpan(8, 0, 0),
+                       EndTime = new TimeSpan(10, 0, 0),
+                       Duration = 2.0
+                   }, new Calendar
                    {
-                       Id = Guid.Parse("1692ABC1-2B8B-48B5-8C86-AAEB70339CF0"),
-                       StartTime = DateTime.Today.AddHours(9),
-                       EndTime = DateTime.Today.AddHours(11),
-                       Duration = 2,
-                       Type = 0,
-                   },
-                   new Calendar
+                       Id = Guid.Parse("5BD3814D-2306-4B91-9412-73512136FE04"),
+                       StartTime = new TimeSpan(11, 0, 0),
+                       EndTime = new TimeSpan(13, 0, 0),
+                       Duration = 2.0
+                   }, new Calendar
                    {
-                       Id = Guid.Parse("3B4E855C-07DD-4009-99A6-34E2A01F6C77"),
-                       StartTime = DateTime.Today.AddHours(13),
-                       EndTime = DateTime.Today.AddHours(15),
-                       Duration = 2,
-                       Type = 0
-                   },
-                   new Calendar
+                       Id = Guid.Parse("E5795B99-A5EA-4FFE-A799-A097475872A4"),
+                       StartTime = new TimeSpan(14 , 0, 0),
+                       EndTime = new TimeSpan(16, 0, 0),
+                       Duration = 2.0
+                   }, new Calendar
                    {
-                       Id = Guid.Parse("B0A8D897-1D36-41AF-9184-86E646B7C2D5"),
-                       StartTime = DateTime.Today.AddHours(16),
-                       EndTime = DateTime.Today.AddHours(18),
-                       Duration = 2,
-                       Type = 0
+                       Id = Guid.Parse("FFC9FC78-FAA7-4E37-B618-DB6AFF2EFB5F"),
+                       StartTime = new TimeSpan(16, 0, 0),
+                       EndTime = new TimeSpan(18, 0, 0),
+                       Duration = 2.0
+                   }, new Calendar
+                   {
+                       Id = Guid.Parse("74816131-CAC6-4BC3-B1E5-5ED31BDA575E"),
+                       StartTime = new TimeSpan(19, 0, 0),
+                       EndTime = new TimeSpan(21, 0, 0),
+                       Duration = 2.0
                    }
 
                    );

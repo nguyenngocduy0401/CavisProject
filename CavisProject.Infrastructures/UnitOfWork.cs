@@ -17,6 +17,7 @@ namespace CavisProject.Infrastructures
         private readonly IUserRepository _userRepository;
         private readonly IAppointmentDetailRepository _appointmentDetailRepository;
         private readonly ICalendarRepository _calendarRepository;
+        private readonly ICalendarDetailRepository _calendarDetailRepository;
         private readonly IMethodSkinCareRepository _methodSkinCareRepository;
         private readonly IMethodDetailRepository _methodDetailRepository;
         private readonly IPackageDetailRepository _packageDetailRepository;
@@ -47,10 +48,11 @@ namespace CavisProject.Infrastructures
             IProductDetailRepository productDetailRepository, IProductCategoryRepository productCategoryRepository,
             ISkinTypeRepository skinTypeRepository, ISupplierRepository supplierRepository,
             ITransactionRepository transactionRepository, IWishListRepository wishListRepository,
-            IRoleRepository roleRepository, IRefreshTokenRepository refreshTokenRepository,ISkinConditionRepository skinConditionRepository,IMethodMakeUpRepository methodMakeUpRepository)
+            IRoleRepository roleRepository, IRefreshTokenRepository refreshTokenRepository,ISkinConditionRepository skinConditionRepository
+            ,IMethodMakeUpRepository methodMakeUpRepository,ICalendarDetailRepository calendarDetailRepository)
         {
             _dbContext = appDbContext;
-            
+            _calendarDetailRepository = calendarDetailRepository;
             _appointmentRepository = appointmentRepository;
             _userRepository = userRepository;
             _appointmentDetailRepository = appointmentDetailRepository;
@@ -119,7 +121,7 @@ namespace CavisProject.Infrastructures
 
         public ISkinConditionRepository SkinConditionRepository =>_skinConditionRepository;
         public IMethodMakeUpRepository MethodMakeUpRepository=>_methodMakeUpRepository;
-
+        public ICalendarDetailRepository CalendarDetailRepository => _calendarDetailRepository;
         public async Task<int> SaveChangeAsync()
         {
             return await _dbContext.SaveChangesAsync();

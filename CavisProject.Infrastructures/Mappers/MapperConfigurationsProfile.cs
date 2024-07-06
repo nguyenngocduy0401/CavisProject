@@ -15,6 +15,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CavisProject.Application.ViewModels.MethodViewModels;
+using CavisProject.Application.ViewModels.Calendar;
+using CavisProject.Application.ViewModels.AppointmentViewModel;
 
 namespace CavisProject.Infrastructures.Mappers
 {
@@ -97,6 +99,15 @@ namespace CavisProject.Infrastructures.Mappers
             .ForMember(dest => dest.UserAvatar, opt => opt.MapFrom(src => src.User.URLImage));
             CreateMap<Pagination<Method>, Pagination<MethodViewModel>>().ReverseMap();
             CreateMap<string, bool>().ConvertUsing(str => str == "true" || str == "1");
+            #endregion
+            #region Calendar and Appointment
+            CreateMap<Calendar, CalendarViewModel>().ReverseMap();
+            CreateMap<Appointment, CreateAppointmentViewModel>().ReverseMap();
+            CreateMap<CalendarDetail, ExpertAvailabilityViewModel>()
+           .ForMember(dest => dest.ExpertId, opt => opt.MapFrom(src => src.UserId))
+           .ForMember(dest => dest.ExpertName, opt => opt.MapFrom(src => src.User.FullName)) 
+           .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
+            .ForMember(dest => dest.AvatarURL, opt => opt.MapFrom(src => src.User.URLImage));
             #endregion
         }
     }

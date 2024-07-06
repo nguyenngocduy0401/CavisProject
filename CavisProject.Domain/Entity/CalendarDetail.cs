@@ -15,6 +15,6 @@ namespace CavisProject.Domain.Entity
         public Guid CalendarId { get; set; }
         [ForeignKey("CalendarId")]
         public Calendar? Calendar { get; set; }
-
+        public DateTime? AvailabilityDate{ get; set; }
     }
 }
