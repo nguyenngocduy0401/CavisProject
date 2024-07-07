@@ -228,7 +228,7 @@ namespace CavisProject.Infrastructures.Repositories
 
             var methodsQuery = _dbContext.Methods
                  .Include(e => e.MethodDetails)
-                 .ThenInclude(e => e.Skins)
+                 .ThenInclude(e => e.Skins).Include(e => e.User)
                  .Where(e => e.MethodDetails.Any(md => skinIds.Contains(md.SkinId) && md.Skins.Category)||
                                e.MethodDetails.Any(md => skinIds.Contains(md.SkinId) && !md.Skins.Category));
 
