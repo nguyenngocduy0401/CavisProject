@@ -8,7 +8,7 @@ namespace CavisProject.Application.ViewModels.SkincareRoutineViewModels
 {
     public class UpdateSkincareRoutineModel
     {
-        public bool? Moring { get; set; }
+        public bool? Morning { get; set; }
         public bool? Night { get; set; }        
     }
 }

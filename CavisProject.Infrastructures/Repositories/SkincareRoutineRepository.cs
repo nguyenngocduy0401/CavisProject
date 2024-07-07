@@ -30,7 +30,7 @@ namespace CavisProject.Infrastructures.Repositories
         public async Task<bool> CheckExistSkincareRoutine(string userId)
         {
             var skincareRoutine = await _dbSet.Where(e => e.UserId == userId)
-                .OrderByDescending(e => e.CreatedBy).FirstOrDefaultAsync();
+                .OrderByDescending(e => e.CreationDate).FirstOrDefaultAsync();
             if (skincareRoutine == null) return false;
             if (DateOnly.FromDateTime(skincareRoutine.CreationDate) != DateOnly.FromDateTime(DateTime.Now)) return false;
             return true;

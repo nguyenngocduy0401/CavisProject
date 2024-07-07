@@ -71,14 +71,16 @@ namespace CavisProject.Application.Services
             {
                 var skincareRoutine = await _unitOfWork.SkincareRoutineRepository.GetByIdAsync(id);
                 if (skincareRoutine == null) throw new Exception("Not found!");
-                if (updateSkincareRoutineModel.Moring == true && updateSkincareRoutineModel.Night == true) 
+                if (skincareRoutine.Morning == true && skincareRoutine.Night == true) 
                 {
                     response.Data = false;
                     response.isSuccess = true;
                     response.Message = "Quá trình đã hoàn thành không thể cập nhật lại!";
+                    return response;
                 }
+                if (updateSkincareRoutineModel.Morning != null) skincareRoutine.Morning = (bool)updateSkincareRoutineModel.Morning;
                 if (updateSkincareRoutineModel.Night != null) skincareRoutine.Night = (bool)updateSkincareRoutineModel.Night;
-                if (updateSkincareRoutineModel.Moring != null) skincareRoutine.Morning = (bool)updateSkincareRoutineModel.Moring;
+                
                 _unitOfWork.SkincareRoutineRepository.Update(skincareRoutine);
                 var isSucccess = await _unitOfWork.SaveChangeAsync() > 0;
                 if (!isSucccess) throw new Exception("Can not update!");
