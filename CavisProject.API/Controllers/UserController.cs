@@ -2,6 +2,7 @@ using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.Services;
 using CavisProject.Application.ViewModels.AppointmentViewModel;
+using CavisProject.Application.ViewModels.CalendarViewModel;
 using CavisProject.Application.ViewModels.PackagePremiumViewModels;
 using CavisProject.Application.ViewModels.PersonalImageViewModels;
 using CavisProject.Application.ViewModels.RegistPreniumViewModel;
@@ -23,13 +24,16 @@ namespace CavisProject.API.Controllers
         public readonly ISkincareRoutineService _skincareRoutineService;
         public readonly IPersonalImageService _personalImageService;    
         private readonly IAppointmentService _appointmentService;
-        public UserController(IUserService userService, ISkincareRoutineService skincareRoutineService,
+        private readonly ICalendarService _calendarService;
+        public UserController(ICalendarService calendarService, IUserService userService, ISkincareRoutineService skincareRoutineService,
             IPersonalImageService personalImageService, IAppointmentService appointmentService)
         {
             _userService = userService;
             _skincareRoutineService = skincareRoutineService;
             _personalImageService = personalImageService;
             _appointmentService = appointmentService;
+
+            _calendarService= calendarService;
         }
         [HttpPost("mine/package-premium/{id}")]
         [SwaggerOperation(Summary = "người dùng Đăng Kí Premium  {Authorize = Customer}")]
@@ -98,5 +102,8 @@ namespace CavisProject.API.Controllers
         [SwaggerOperation(Summary = "đặt lịch tư vấn với chuyên gia make up")]
         [HttpPost("mine/appointment-makeup")]
         public async Task<ApiResponse<bool>> BookMakeUpAppointment([FromBody] CreateMakeUpAppointmentViewModel create) => await _appointmentService.BookMakeUpAppointment(create);
+        [SwaggerOperation(Summary = "chuyên gia chọn lịch có thể nhận tư vấn {Authorize = Expert}")]
+        [HttpPost("mine/calendar")]
+        public async Task<ApiResponse<bool>> SetAvailabilityAsync([FromBody] List<CalendarDetailViewModel> availabilities) => await _calendarService.SetAvailabilityAsync(availabilities);
     }
 }
