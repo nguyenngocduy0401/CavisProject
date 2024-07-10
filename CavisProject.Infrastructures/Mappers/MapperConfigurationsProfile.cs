@@ -125,6 +125,7 @@ namespace CavisProject.Infrastructures.Mappers
             // CreateMap<List<CalendarDetailViewModel>,List<CalendarDetail>>().ReverseMap();
             CreateMap<AppointmentViewModel, Appointment>()
                 .ReverseMap();
+            #endregion
             #region SkincareRoutine
             CreateMap<UpdateSkincareRoutineModel, SkincareRoutine>();
             CreateMap<SkincareRoutine, SkincareRoutineViewModel>();

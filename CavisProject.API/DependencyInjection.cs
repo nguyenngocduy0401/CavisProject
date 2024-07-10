@@ -110,6 +110,7 @@ namespace CavisProject.API
             services.AddTransient<IValidator<CreateMethodViewModel>,CreateMethodValidator>();
             services.AddTransient<IValidator<CreateAppointmentViewModel>, CreateAppointmentValidator>();
             services.AddTransient<IValidator<CreatePersonalImageViewModel>, CreatePersonalImageValidator>();
+            services.AddTransient<IValidator<CreateMakeUpAppointmentViewModel>, CreateMakeUpAppointmentValidator>();
             #endregion
 
             return services;

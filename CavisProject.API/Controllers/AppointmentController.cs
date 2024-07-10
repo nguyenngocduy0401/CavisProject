@@ -19,7 +19,10 @@ namespace CavisProject.API.Controllers
         [HttpGet("mine")]
         public async Task<ApiResponse<Pagination<AppointmentViewModel>>> GetWeeklyScheduleAsync( AvailableExpertSkincareFilterViewModel filter) => await _appointmentService.GetWeeklyScheduleAsync(filter);
         [SwaggerOperation(Summary = "đặt lịch tư vấn với chuyên gia skin care")]
-        [HttpPost("mine")]
+        [HttpPost("mine/skin-care")]
         public async Task<ApiResponse<bool>> BookAppointmentAsync([FromBody]CreateAppointmentViewModel create)=> await _appointmentService.BookAppointmentAsync(create);
+        [SwaggerOperation(Summary = "đặt lịch tư vấn với chuyên gia make up")]
+        [HttpPost("mine/make-up")]
+        public async Task<ApiResponse<bool>> BookMakeUpAppointment([FromBody]CreateMakeUpAppointmentViewModel create) => await _appointmentService.BookMakeUpAppointment(create);
     }
 }

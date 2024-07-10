@@ -1,5 +1,7 @@
 using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
+using CavisProject.Application.Services;
+using CavisProject.Application.ViewModels.AppointmentViewModel;
 using CavisProject.Application.ViewModels.PackagePremiumViewModels;
 using CavisProject.Application.ViewModels.PersonalImageViewModels;
 using CavisProject.Application.ViewModels.RegistPreniumViewModel;
@@ -20,12 +22,14 @@ namespace CavisProject.API.Controllers
         public readonly IUserService _userService;
         public readonly ISkincareRoutineService _skincareRoutineService;
         public readonly IPersonalImageService _personalImageService;    
+        private readonly IAppointmentService _appointmentService;
         public UserController(IUserService userService, ISkincareRoutineService skincareRoutineService,
-            IPersonalImageService personalImageService)
+            IPersonalImageService personalImageService, IAppointmentService appointmentService)
         {
             _userService = userService;
             _skincareRoutineService = skincareRoutineService;
             _personalImageService = personalImageService;
+            _appointmentService = appointmentService;
         }
         [HttpPost("mine/package-premium/{id}")]
         [SwaggerOperation(Summary = "người dùng Đăng Kí Premium  {Authorize = Customer}")]
@@ -88,5 +92,11 @@ namespace CavisProject.API.Controllers
         [Authorize]
         public async Task<ApiResponse<bool>> CreatePersonalImageByLoginAsync(CreatePersonalImageViewModel createPersonalImageViewModel)
             => await _personalImageService.CreatePersonalImageByLoginAsync(createPersonalImageViewModel);
+        [SwaggerOperation(Summary = "đặt lịch tư vấn với chuyên gia skin care")]
+        [HttpPost("mine/appointment-skincare")]
+        public async Task<ApiResponse<bool>> BookAppointmentAsync([FromBody] CreateAppointmentViewModel create) => await _appointmentService.BookAppointmentAsync(create);
+        [SwaggerOperation(Summary = "đặt lịch tư vấn với chuyên gia make up")]
+        [HttpPost("mine/appointment-makeup")]
+        public async Task<ApiResponse<bool>> BookMakeUpAppointment([FromBody] CreateMakeUpAppointmentViewModel create) => await _appointmentService.BookMakeUpAppointment(create);
     }
 }
