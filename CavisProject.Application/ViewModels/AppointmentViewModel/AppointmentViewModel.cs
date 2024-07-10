@@ -16,5 +16,7 @@ namespace CavisProject.Application.ViewModels.AppointmentViewModel
         public TimeSpan? EndTime { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Email { get; set; }
+        public string? ExpertId { get; set; }
+        public string? UserId { get; set; }
     }
 }

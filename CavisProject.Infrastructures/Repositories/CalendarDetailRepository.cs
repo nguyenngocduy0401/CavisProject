@@ -160,27 +160,14 @@ namespace CavisProject.Infrastructures.Repositories
             var startDateTime = date.Date + startTime;
             var endDateTime = date.Date + endTime;
 
-            var isAvailable = await _dbContext.Set<CalendarDetail>()
-                .Include(cd => cd.Calendar)
-                .AnyAsync(cd => cd.UserId == expertId &&
-                cd.AvailabilityDate.HasValue&&
-                                cd.AvailabilityDate.Value.Date == date.Date &&
-                                cd.Calendar.StartTime <= startDateTime.TimeOfDay &&
-                                cd.Calendar.EndTime >= endDateTime.TimeOfDay);
-
-            if (!isAvailable)
-            {
-                return false;
-            }
-
-            
+            // Check if there is any overlapping appointment in AppointmentDetail
             var hasConflict = await _dbContext.Set<AppointmentDetail>()
-        .Include(ad => ad.Appointment)
-        .AnyAsync(ad => ad.UserId == expertId &&
-                        ad.Appointment.Date == date &&
-                        ((ad.Appointment.StartTime.HasValue && ad.Appointment.StartTime.Value.TimeOfDay <= startTime && ad.Appointment.EndTime.HasValue && ad.Appointment.EndTime.Value.TimeOfDay > startTime) ||
-                         (ad.Appointment.StartTime.HasValue && ad.Appointment.StartTime.Value.TimeOfDay < endTime && ad.Appointment.EndTime.HasValue && ad.Appointment.EndTime.Value.TimeOfDay >= endTime) ||
-                         (ad.Appointment.StartTime.HasValue && ad.Appointment.StartTime.Value.TimeOfDay >= startTime && ad.Appointment.EndTime.HasValue && ad.Appointment.EndTime.Value.TimeOfDay <= endTime)));
+                .Include(ad => ad.Appointment)
+                .AnyAsync(ad => ad.UserId == expertId &&
+                                ad.Appointment.Date == date &&
+                                ((ad.Appointment.StartTime.HasValue && ad.Appointment.StartTime.Value.TimeOfDay <= startTime && ad.Appointment.EndTime.HasValue && ad.Appointment.EndTime.Value.TimeOfDay > startTime) ||
+                                 (ad.Appointment.StartTime.HasValue && ad.Appointment.StartTime.Value.TimeOfDay < endTime && ad.Appointment.EndTime.HasValue && ad.Appointment.EndTime.Value.TimeOfDay >= endTime) ||
+                                 (ad.Appointment.StartTime.HasValue && ad.Appointment.StartTime.Value.TimeOfDay >= startTime && ad.Appointment.EndTime.HasValue && ad.Appointment.EndTime.Value.TimeOfDay <= endTime)));
 
             return !hasConflict;
         }

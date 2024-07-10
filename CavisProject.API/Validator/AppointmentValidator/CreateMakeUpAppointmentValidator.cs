@@ -8,9 +8,6 @@ namespace CavisProject.API.Validator.AppointmentValidator
     {
         public CreateMakeUpAppointmentValidator()
         {
-            RuleFor(x => x.Title)
-            .NotEmpty().WithMessage("Title is required.")
-            .MaximumLength(100).WithMessage("Title must be less than 100 characters.");
 
             RuleFor(x => x.Date)
           .NotEmpty().WithMessage("Date is required.")
