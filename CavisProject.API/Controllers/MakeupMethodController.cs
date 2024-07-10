@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace CavisProject.API.Controllers
 {
-    [Route("api/v1/methods-make-up")]
+    [Route("api/v1/makeup-methods")]
     public class MethodMakeUpController
     {
         private readonly IMethodMakeUpService _methodMakeUpService;

@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace CavisProject.API.Controllers
 {
-    [Route("api/v1/methods-skin-care")]
+    [Route("api/v1/skincare-methods")]
     public class MethodSkinCareController : ControllerBase
     {
        
