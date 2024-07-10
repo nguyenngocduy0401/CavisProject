@@ -77,18 +77,18 @@ namespace CavisProject.Application.Services
                 var existingMethod = await _unitOfWork.MethodSkinCareRepository.GetFirstOrDefaultAsync(p => p.MethodName == create.MethodName);
                 if (existingMethod != null)
                 {
+                    response.Data = false;
                     response.isSuccess = true;
                     response.Message = "Tên phương pháp đã tồn tại.";
-                    response.Data = false;
                     return response;
                 }
                 var methodSkinCare = new Method
                 {
                     MethodName = create.MethodName,
                     Description = create.Description,
-                    Url = create.Url,
+                    URLImage = create.URLImage,
                     Category = 1,
-                     Status = (MethodStatusEnum)0
+                     Status = MethodStatusEnum.inactive,
                 };
                 await _unitOfWork.MethodSkinCareRepository.AddAsync(methodSkinCare);
                 bool hasCategory1 = false;
@@ -114,8 +114,8 @@ namespace CavisProject.Application.Services
                         }
                         else
                         {
-                            response.isSuccess = true;
                             response.Data = false;
+                            response.isSuccess = true;
                             response.Message = "Tình trạng da không tồn tại.";
                             return response;
                         }
@@ -132,16 +132,14 @@ namespace CavisProject.Application.Services
                 var isDetailsSaved = await _unitOfWork.SaveChangeAsync() > 0;
                 if (isDetailsSaved)
                 {
-
-                    response.isSuccess = true;
                     response.Data = true;
+                    response.isSuccess = true;
                     response.Message = "Create Successfully";
                 }
                 else
                 {
-
-                    response.isSuccess = false;
                     response.Data = false;
+                    response.isSuccess = false;
                     response.Message = "Failed to save product details.";
                     return response;
                 }
@@ -173,16 +171,17 @@ namespace CavisProject.Application.Services
                 }
                 if (exist == null)
                 {
-                    response.isSuccess = true;
                     response.Data = false;
+                    response.isSuccess = true;
                     response.Message = "Phương pháp không tồn tại";
                     return response;
                 }
                 if (exist.IsDeleted)
                 {
 
-                    response.isSuccess = true;
+                    
                     response.Data = false;
+                    response.isSuccess = true;
                     response.Message = "Phương pháp đã được xóa";
                     return response;
 
@@ -193,7 +192,6 @@ namespace CavisProject.Application.Services
                 {
                     throw new Exception("Delete Method is fail");
                 }
-                response.Data = _mapper.Map<bool>(id);
                 response.Data = true;
                 response.isSuccess = true;
                 response.Message = "Delete product is success";
@@ -298,8 +296,8 @@ namespace CavisProject.Application.Services
                 var method = await _unitOfWork.MethodSkinCareRepository.GetByIdAsync(methodId);
                 if (method == null&& method.Category==1)
                 {
-                    response.isSuccess = true;
                     response.Data = false;
+                    response.isSuccess = true;
                     response.Message = "Phương pháp không tồn tại.";
                     return response;
 
@@ -309,9 +307,9 @@ namespace CavisProject.Application.Services
                     var existingProduct = await _unitOfWork.MethodSkinCareRepository.GetFirstOrDefaultAsync(p => p.MethodName == update.MethodName && p.Id != methodId);
                     if (existingProduct != null)
                     {
+                        response.Data = false;
                         response.isSuccess = true;
                         response.Message = "Tên phương pháp đã tồn tại.";
-                        response.Data = false;
                         return response;
                     }
                     method.MethodName = update.MethodName;
@@ -320,9 +318,9 @@ namespace CavisProject.Application.Services
                 {
                     method.Description = update.Description;
                 }
-                if (update.Url != method.Url)
+                if (update.URLImage != method.URLImage)
                 {
-                    method.Url = update.Url;
+                    method.URLImage = update.URLImage;
                 }
                 var existingMethodDetails = await _unitOfWork.MethodDetailRepository.GetAllAsync(pd => pd.MethodId == method.Id);
                 bool hasCategory1 = false;
@@ -349,8 +347,8 @@ namespace CavisProject.Application.Services
                         }
                         else
                         {
-                            response.isSuccess = true;
                             response.Data = false;
+                            response.isSuccess = true;
                             response.Message = "Tình trạng da không tồn tại.";
                             return response;
                         }
@@ -367,14 +365,14 @@ namespace CavisProject.Application.Services
 
                 if (isUpdated)
                 {
-                    response.isSuccess = true;
                     response.Data = true;
+                    response.isSuccess = true;
                     response.Message = "Update successfully!";
                 }
                 else
                 {
-                    response.isSuccess = false;
                     response.Data = false;
+                    response.isSuccess = false;
                     response.Message = "Update Fail!.";
                 }
             }

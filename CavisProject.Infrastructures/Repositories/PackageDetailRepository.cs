@@ -31,7 +31,9 @@ namespace CavisProject.Infrastructures.Repositories
         public async Task<PackageDetail> GetByUserIdAsync(string userId)
         {
             return await _dbContext.PackageDetails
-                .FirstOrDefaultAsync(pd => pd.UserId == userId);
+                .Where(e => e.UserId == userId)
+                .OrderByDescending(e => e.StartTime)
+                .FirstOrDefaultAsync();
         }
         public async Task<List<PackageDetail>> GetAllAsync()
         {

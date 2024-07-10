@@ -2,6 +2,7 @@
 using CavisProject.Application.ViewModels.MethodViewModels;
 using CavisProject.Application.ViewModels.PersonalAnalystViewModels;
 using CavisProject.Application.ViewModels.ProductViewModel;
+using CavisProject.Application.ViewModels.SkinTypeViewModels;
 using CavisProject.Domain.Entity;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,6 @@ namespace CavisProject.Application.Interfaces
         Task<ApiResponse<bool>> CreatePersonalAnalystByLoginAsync(ListSkinPersonalModel listSkinPersonalModel);
         Task<ApiResponse<Pagination<PersonalAnalystViewModel>>> FilterPersonalAnalystAsync(
             FilterPersonalAnalystModel filterPersonalAnalystModel);
+        Task<ApiResponse<SkinListViewModel>> SkinListByLoginAsync();
     }
 }

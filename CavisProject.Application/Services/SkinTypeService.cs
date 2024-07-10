@@ -203,7 +203,7 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinTypeAsync(SkinFilterModel skinTypeFilterModel)
+        public async Task<ApiResponse<Pagination<SkinViewModel>>> FilterSkinTypeAsync(SkinTypeFilterModel skinTypeFilterModel)
         {
             var response = new ApiResponse<Pagination<SkinViewModel>>();
 

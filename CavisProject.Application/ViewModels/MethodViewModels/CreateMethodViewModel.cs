@@ -12,7 +12,7 @@ namespace CavisProject.Application.ViewModels.MethodViewModels
     {
         public string? MethodName { get; set; }
         public string? Description { get; set; }
-        public string? Url { get; set; }
+        public string? URLImage { get; set; }
         public List<Guid>? SkinId { get; set; }
 
     }

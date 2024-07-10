@@ -84,7 +84,7 @@ namespace CavisProject.Infrastructures.Repositories
                         .ThenInclude(e => e.Skins)
                         .Where(e =>
                             e.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category)// Contains Skin with Category = true
-                         && e.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && !pd.Skins.Category)  // Contains Skin with Category = false
+                         && e.ProductDetails.Count(pd => skinIds.Contains(pd.SkinId) && !pd.Skins.Category) >=1 // Contains Skin with Category = false
                         );
                     break;
                 case CompatibleProductsEnum.High:
@@ -97,21 +97,20 @@ namespace CavisProject.Infrastructures.Repositories
                     break;
                 case CompatibleProductsEnum.Extremely:
                     // Lấy danh sách các Category = true và số lượng sản phẩm tương ứng với mỗi Category
-                    var categories = await _dbContext.ProductDetails
-                        .Where(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category)
-                        .Select(pd => pd.ProductId)
-                        .Distinct()
+                    var categories = await _dbContext.ProductCategories
+                        .Where(pc => pc.Products.Any(p => p.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category)))
+                        .Select(pc => pc.Id)
                         .ToListAsync();
 
                     // Danh sách chứa các sản phẩm đã lấy
                     var selectedProductIds = new List<Guid>();
 
-                    // Lặp qua từng Category = true
-                    foreach (var categoryProductId in categories)
+                    // Lặp qua từng Category
+                    foreach (var categoryId in categories)
                     {
-                        // Lấy sản phẩm có nhiều Skin.Category = false nhất cho từng Category = true
+                        // Lấy sản phẩm có nhiều Skin.Category = false nhất cho từng Category
                         var productId = await _dbContext.Products
-                            .Where(p => p.ProductDetails.Any(pd => pd.ProductId == categoryProductId))
+                            .Where(p => p.ProductCategoryId == categoryId && p.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category))
                             .OrderByDescending(p => p.ProductDetails.Count(pd => skinIds.Contains(pd.SkinId) && !pd.Skins.Category))
                             .Select(p => p.Id)
                             .FirstOrDefaultAsync();
@@ -187,7 +186,18 @@ namespace CavisProject.Infrastructures.Repositories
             if (personalAnalyst == null) throw new Exception();
             return personalAnalyst;
         }
-
+        public async Task<PersonalAnalyst> GetLastPersonalAnalystDetailAsync()
+        {
+            var userId = _claimsService.GetCurrentUserId.ToString();
+            var personalAnalyst = await _dbContext.PersonalAnalysts
+            .Include(e => e.PersonalAnalystDetails)
+            .ThenInclude(e => e.Skins)
+            .Where(e => e.UserId == userId)
+            .OrderByDescending(e => e.StartDate)
+            .FirstOrDefaultAsync();
+            if (personalAnalyst == null) throw new Exception();
+            return personalAnalyst;
+        }
         public async Task<List<Guid?>> GetSkinIdsByPersonalAnalystIdAsync(string personalAnalystId)
         {
             // Thực hiện truy vấn để lấy các skinId của personalAnalystId từ cơ sở dữ liệu
@@ -218,7 +228,7 @@ namespace CavisProject.Infrastructures.Repositories
 
             var methodsQuery = _dbContext.Methods
                  .Include(e => e.MethodDetails)
-                 .ThenInclude(e => e.Skins)
+                 .ThenInclude(e => e.Skins).Include(e => e.User)
                  .Where(e => e.MethodDetails.Any(md => skinIds.Contains(md.SkinId) && md.Skins.Category)||
                                e.MethodDetails.Any(md => skinIds.Contains(md.SkinId) && !md.Skins.Category));
 

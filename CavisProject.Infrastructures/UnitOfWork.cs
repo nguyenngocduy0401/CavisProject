@@ -1,5 +1,4 @@
 ﻿using CavisProject.Application;
-using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -37,6 +36,7 @@ namespace CavisProject.Infrastructures
         private readonly IRoleRepository _roleRepository;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IMethodMakeUpRepository _methodMakeUpRepository;
+        private readonly ISkincareRoutineRepository _skincareRoutineRepository;
 
         public UnitOfWork(AppDbContext appDbContext, IAppointmentRepository appointmentRepository, 
             IUserRepository userRepository, IAppointmentDetailRepository appointmentDetailRepository, 
@@ -49,7 +49,8 @@ namespace CavisProject.Infrastructures
             ISkinTypeRepository skinTypeRepository, ISupplierRepository supplierRepository,
             ITransactionRepository transactionRepository, IWishListRepository wishListRepository,
             IRoleRepository roleRepository, IRefreshTokenRepository refreshTokenRepository,ISkinConditionRepository skinConditionRepository
-            ,IMethodMakeUpRepository methodMakeUpRepository,ICalendarDetailRepository calendarDetailRepository)
+            ,IMethodMakeUpRepository methodMakeUpRepository,ICalendarDetailRepository calendarDetailRepository, ISkincareRoutineRepository skincareRoutineRepository)
+            
         {
             _dbContext = appDbContext;
             _calendarDetailRepository = calendarDetailRepository;
@@ -76,52 +77,35 @@ namespace CavisProject.Infrastructures
             _roleRepository = roleRepository;
             _refreshTokenRepository = refreshTokenRepository;
             _methodMakeUpRepository = methodMakeUpRepository;
+            _skincareRoutineRepository = skincareRoutineRepository;
         }
 
         public IAppointmentRepository AppointmentRepository => _appointmentRepository;
 
         public IAppointmentDetailRepository AppointmentDetailRepository => _appointmentDetailRepository;
-
         public ICalendarRepository CalendarRepository => _calendarRepository;
-
         public IMethodDetailRepository MethodDetailRepository => _methodDetailRepository;
-
         public IMethodSkinCareRepository MethodSkinCareRepository => _methodSkinCareRepository;
-
         public IPackageDetailRepository PackageDetailRepository => _packageDetailRepository;
-
         public IPackagePremiumRepository PackagePremiumRepository => _packagePremiumRepository;
-
         public IPersonalAnalystRepository PersonalAnalystRepository => _personalAnalystRepository;
-
         public IPersonalAnalystDetailRepository PersonalAnalystDetailRepository => _personalAnalystDetailRepository;
         public IPersonalImageRepository PersonalImageRepository => _personalImageRepository;
-
         public IPersonalMethodDetailRepository PersonalMethodDetailRepository => _personalMethodDetailRepository;
-
         public IProductRepository ProductRepository => _productRepository;
-
         public IProductCategoryRepository ProductCategoryRepository => _productCategoryRepository;
-
         public IProductDetailRepository ProductDetailRepository => _productDetailRepository;
-
         public ISkinTypeRepository SkinTypeRepository => _skinTypeRepository;
-
         public IUserRepository UserRepository => _userRepository;
-
         public ISupplierRepository SupplierRepository => _supplierRepository;
-
         public ITransactionRepository TransactionRepository => _transactionRepository;
-
         public IWishListRepository WishListRepository => _wishListRepository;
-
         public IRoleRepository RoleRepository => _roleRepository;
-
         public IRefreshTokenRepository RefreshTokenRepository => _refreshTokenRepository;
-
         public ISkinConditionRepository SkinConditionRepository =>_skinConditionRepository;
         public IMethodMakeUpRepository MethodMakeUpRepository=>_methodMakeUpRepository;
         public ICalendarDetailRepository CalendarDetailRepository => _calendarDetailRepository;
+        public ISkincareRoutineRepository SkincareRoutineRepository => _skincareRoutineRepository;
         public async Task<int> SaveChangeAsync()
         {
             return await _dbContext.SaveChangesAsync();

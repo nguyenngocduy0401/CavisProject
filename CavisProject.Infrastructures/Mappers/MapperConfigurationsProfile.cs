@@ -18,6 +18,8 @@ using CavisProject.Application.ViewModels.MethodViewModels;
 using CavisProject.Application.ViewModels.Calendar;
 using CavisProject.Application.ViewModels.AppointmentViewModel;
 using CavisProject.Application.ViewModels.CalendarViewModel;
+using CavisProject.Application.ViewModels.SkincareRoutineViewModels;
+using CavisProject.Application.ViewModels.PersonalImageViewModels;
 
 namespace CavisProject.Infrastructures.Mappers
 {
@@ -38,6 +40,8 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<UserViewModel, PackagePremium>();
             CreateMap<User, UserViewModel>().ReverseMap();
 
+            CreateMap<User, UserViewModel>();
+             
 
 
             #endregion
@@ -95,9 +99,10 @@ namespace CavisProject.Infrastructures.Mappers
             .ForMember(dest => dest.MethodName, opt => opt.MapFrom(src => src.MethodName))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.URLImage, opt => opt.MapFrom(src => src.URLImage))
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
-            .ForMember(dest => dest.UserAvatar, opt => opt.MapFrom(src => src.User.URLImage));
+            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.User.FullName))
+            .ForMember(dest => dest.UserAvatar, opt => opt.MapFrom(src => src.User.URLImage))
+            .ForMember(dest => dest.CreationDate, opt => opt.MapFrom(src => src.CreationDate));
             CreateMap<Pagination<Method>, Pagination<MethodViewModel>>().ReverseMap();
             CreateMap<string, bool>().ConvertUsing(str => str == "true" || str == "1");
             #endregion
@@ -120,6 +125,15 @@ namespace CavisProject.Infrastructures.Mappers
             // CreateMap<List<CalendarDetailViewModel>,List<CalendarDetail>>().ReverseMap();
             CreateMap<AppointmentViewModel, Appointment>()
                 .ReverseMap();
+            #region SkincareRoutine
+            CreateMap<UpdateSkincareRoutineModel, SkincareRoutine>();
+            CreateMap<SkincareRoutine, SkincareRoutineViewModel>();
+            #endregion
+            #region PersonalImage
+            CreateMap<CreatePersonalImageViewModel, PersonalImage>();
+            CreateMap<Pagination<PersonalImage>, Pagination<PersonalImageViewModel>>().ReverseMap();
+            CreateMap<PersonalImage, PersonalImageViewModel>();
+
             #endregion
         }
     }

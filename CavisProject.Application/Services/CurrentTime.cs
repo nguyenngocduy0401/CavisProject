@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.Services
 {
-    public class CurrentTime :ICurrentTime
+    public class CurrentTime : ICurrentTime
     {
         public DateTime GetCurrentTime() => DateTime.UtcNow;
     }

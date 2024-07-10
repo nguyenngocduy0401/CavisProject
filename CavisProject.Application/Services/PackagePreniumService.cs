@@ -156,8 +156,8 @@ namespace CavisProject.Application.Services
                         {
                             throw new Exception("Khởi tạo lỗi!");
                         }
-                        response.isSuccess = true;
                         response.Data= true;
+                        response.isSuccess = true;
                         response.Message = "Tạo Thành Công !";
 
                     }
@@ -232,17 +232,17 @@ namespace CavisProject.Application.Services
                 if (exist == null)
                 {
                     
+                    response.Data = false;
                     response.Message = "gói không tồn tại";
                     response.isSuccess = true;
-                    response.Data = false;
                     return response;
                 }
                 if (exist.IsDeleted)
                 {
 
+                    response.Data = false;
                     response.Message = "gói đã được xóa";
                     response.isSuccess = true;
-                    response.Data = false;
                     return response;
 
                 }
@@ -252,9 +252,8 @@ namespace CavisProject.Application.Services
                 {
                     throw new Exception("Xóa thất bại!");
                 }
-                response.Data = _mapper.Map<bool>(id);
-                response.isSuccess = true;
                 response.Data = true;
+                response.isSuccess = true;
                 response.Message = "Xóa Thành Công!";
             }
             catch (DbException ex)
@@ -298,9 +297,9 @@ namespace CavisProject.Application.Services
                 var isNameExist = skinTypeList.Any();
                 if (isNameExist)
                 {
+                    response.Data = false;
                     response.Message = "Tên này đã tồn tại!";
                     response.isSuccess = false;
-                    response.Data = false;
                     return response;
                 }
 
@@ -347,7 +346,6 @@ namespace CavisProject.Application.Services
                 var packagePremiumViewModel = _mapper.Map<PackagePremiumViewModel>(packagePremium);
 
                 response.isSuccess = true;
-                
                 response.Data = packagePremiumViewModel;
             }
             catch (DbException ex)

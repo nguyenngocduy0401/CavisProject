@@ -25,6 +25,9 @@ using CavisProject.API.Validator.ProductCategoryValidator;
 using CavisProject.API.Validator.SupplierValidator;
 using CavisProject.Application.ViewModels.AppointmentViewModel;
 using CavisProject.API.Validator.AppointmentValidator;
+using CavisProject.API.Middlewares;
+using CavisProject.Application.ViewModels.PersonalImageViewModels;
+using CavisProject.API.Validator.PersonalImageValidator;
 
 namespace CavisProject.API
 {
@@ -65,7 +68,8 @@ namespace CavisProject.API
                     }
                 });
             });
-
+            services.AddSingleton<PerformanceMiddleware>();
+            services.AddSingleton<Stopwatch>();
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>
@@ -105,6 +109,7 @@ namespace CavisProject.API
             services.AddTransient<IValidator<CreateProductViewModel>, CreateProductViewModelValidator>();
             services.AddTransient<IValidator<CreateMethodViewModel>,CreateMethodValidator>();
             services.AddTransient<IValidator<CreateAppointmentViewModel>, CreateAppointmentValidator>();
+            services.AddTransient<IValidator<CreatePersonalImageViewModel>, CreatePersonalImageValidator>();
             #endregion
 
             return services;

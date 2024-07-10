@@ -69,7 +69,8 @@ namespace CavisProject.Application.Services
                     SupplierId = createProductViewModel.SupplierId,
                     ProductCategoryId = createProductViewModel.ProductCategoryId,
                     Price = createProductViewModel.Price,
-                    Status = (ProductStatusEnum)createProductViewModel.Status
+                    Status = (ProductStatusEnum)createProductViewModel.Status,
+                    URLImage = createProductViewModel.URLImage,
                 };
 
                 var supplierExists = await _unitOfWork.SupplierRepository.GetByIdAsync(createProductViewModel.SupplierId.Value);
@@ -161,9 +162,6 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-
-
-
         public async Task<ApiResponse<bool>> DeleteProductAsync(string id)
         {
             var response = new ApiResponse<bool>();
@@ -179,7 +177,7 @@ namespace CavisProject.Application.Services
                 if (exist == null)
                 {
                     response.isSuccess = true;
-                    response.Data=false;
+                    response.Data = false;
                     response.Message = "Sản phẩm không tồn tại";
                 }
                 if (exist.IsDeleted)
@@ -226,7 +224,7 @@ namespace CavisProject.Application.Services
                 (!filterProductViewModel.SupplierId.HasValue || s.SupplierId == filterProductViewModel.SupplierId.Value) &&
             (!filterProductViewModel.ProductCategoryId.HasValue || s.ProductCategoryId == filterProductViewModel.ProductCategoryId.Value) &&
                  (!filterProductViewModel.Status.HasValue || s.Status == filterProductViewModel.Status.Value) &&
-            (filterProductViewModel.SkinId == null || !filterProductViewModel.SkinId.Any() || s.ProductDetails.Any(pd => filterProductViewModel.SkinId.Contains(pd.SkinId.Value)))&&
+            (filterProductViewModel.SkinId == null || !filterProductViewModel.SkinId.Any() || s.ProductDetails.Any(pd => filterProductViewModel.SkinId.Contains(pd.SkinId.Value))) &&
                 (!filterProductViewModel.IsDeleted.HasValue || s.IsDeleted == filterProductViewModel.IsDeleted);
                 var products = await _unitOfWork.ProductRepository.GetFilterAsync(
                     filter: filter,
@@ -241,7 +239,7 @@ namespace CavisProject.Application.Services
                     response.Message = "Không tìm thấy sản phẩm phù hợp!";
                     return response;
                 }
-             var result = _mapper.Map<Pagination<ProductViewModel>>(products);
+                var result = _mapper.Map<Pagination<ProductViewModel>>(products);
 
                 response.Data = result;
                 response.isSuccess = true;
@@ -255,15 +253,11 @@ namespace CavisProject.Application.Services
             }
             return response;
         }
-        public Task<ApiResponse<CreateProductViewModel>> GetProductDetail(string id)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<ApiResponse<ProductViewModel>> GetProductDetailByIdAsync(string productId)
         {
             var response = new ApiResponse<ProductViewModel>();
-            try 
+            try
             {
                 var product = await _unitOfWork.ProductRepository.GetByIdAsync(Guid.Parse(productId));
                 if (product == null) throw new Exception("Not found product!");
@@ -328,7 +322,7 @@ namespace CavisProject.Application.Services
                     }
                     product.ProductName = updateProductViewModel.ProductName;
                 }
-                if(updateProductViewModel.Price != 0)
+                if (updateProductViewModel.Price != 0)
                 {
                     product.Price = updateProductViewModel.Price;
                 }
@@ -343,6 +337,10 @@ namespace CavisProject.Application.Services
                 if (updateProductViewModel.Status != null)
                 {
                     product.Status = (ProductStatusEnum)updateProductViewModel.Status;
+                }
+                if(updateProductViewModel.URLImage != null)
+                {
+                    product.URLImage = updateProductViewModel.URLImage;
                 }
                 if (updateProductViewModel.SupplierId.HasValue)
                 {

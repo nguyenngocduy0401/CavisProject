@@ -1,7 +1,9 @@
 using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.ViewModels.PackagePremiumViewModels;
+using CavisProject.Application.ViewModels.PersonalImageViewModels;
 using CavisProject.Application.ViewModels.RegistPreniumViewModel;
+using CavisProject.Application.ViewModels.SkincareRoutineViewModels;
 using CavisProject.Application.ViewModels.UserViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,9 +18,14 @@ namespace CavisProject.API.Controllers
     public class UserController : ControllerBase
     {
         public readonly IUserService _userService;
-        public UserController(IUserService userService)
+        public readonly ISkincareRoutineService _skincareRoutineService;
+        public readonly IPersonalImageService _personalImageService;    
+        public UserController(IUserService userService, ISkincareRoutineService skincareRoutineService,
+            IPersonalImageService personalImageService)
         {
             _userService = userService;
+            _skincareRoutineService = skincareRoutineService;
+            _personalImageService = personalImageService;
         }
         [HttpPost("mine/package-premium/{id}")]
         [SwaggerOperation(Summary = "người dùng Đăng Kí Premium  {Authorize = Customer}")]
@@ -29,7 +36,6 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremium(string id) => await _userService.UpgradeToPremiumAsync(id);
         [SwaggerOperation(Summary = "tìm kiếm User {Authorize = Admin}")]
         [HttpGet("")]
-        //[Authorize]
         public async Task<ApiResponse<Pagination<UserViewModel>>> FilterUserAsync([FromQuery]FilterUserModel filterUserModel)
             => await _userService.FilterUserAsync(filterUserModel);
         [SwaggerOperation(Summary = "lấy thông tin User bằng đăng nhập")]
@@ -66,5 +72,21 @@ namespace CavisProject.API.Controllers
         [HttpPut("mine/method/{id}")]
         [Authorize(AppRole.Admin)]
         public async Task<ApiResponse<bool>> ApproveMethodAsync(string id)=> await _userService.ApproveMethodAsync(id);
+
+        [SwaggerOperation(Summary = "lấy thông tin dưỡng da hàng ngày")]
+        [HttpGet("mine/skincare-routines")]
+        [Authorize]
+        public async Task<ApiResponse<SkincareRoutineViewModel>> GetSkincareRoutineByLoginAsync() => await _skincareRoutineService.GetSkincareRoutineByLogin();
+
+        [SwaggerOperation(Summary = "tìm kiếm hình ảnh chụp của bản thân")]
+        [HttpGet("mine/personal-images")]
+        [Authorize]
+        public async Task<ApiResponse<Pagination<PersonalImageViewModel>>> FilterPersonalImageByLoginAsync([FromQuery]FilterPersonalImageViewModel filterPersonalImageViewModel) 
+            => await _personalImageService.FilterPersonalImageByLoginAsync(filterPersonalImageViewModel);
+        [SwaggerOperation(Summary = "tạo hình ảnh chụp của bản thân")]
+        [HttpPut("mine/personal-images")]
+        [Authorize]
+        public async Task<ApiResponse<bool>> CreatePersonalImageByLoginAsync(CreatePersonalImageViewModel createPersonalImageViewModel)
+            => await _personalImageService.CreatePersonalImageByLoginAsync(createPersonalImageViewModel);
     }
 }

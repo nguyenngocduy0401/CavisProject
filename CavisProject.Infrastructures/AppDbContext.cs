@@ -42,6 +42,7 @@ namespace CavisProject.Infrastructures
         public DbSet<User> Users { get; set; }
         public DbSet<WishList> WishLists { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<SkincareRoutine> SkincareRoutines { get; set; }
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -54,9 +55,9 @@ namespace CavisProject.Infrastructures
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductDetailConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(WishListConfiguration).Assembly);
             #region User
-            /*modelBuilder.Entity<User>().HasData
+            modelBuilder.Entity<User>().HasData
                 (
-                new User 
+                new User
                 {
                     Id = "da8a7be0-e888-4201-8500-3c5b2dba7776",
                     UserName = "Cavis",
@@ -64,11 +65,11 @@ namespace CavisProject.Infrastructures
                     Email = "cavis@gmail.com",
                     FullName = "Cavis",
                     URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/cavis-logo.png?alt=media&token=ec5a2f56-7adc-4abb-b5a8-b478b9d9cb78",
-                    DateOfBirth =  DateTime.Now,
+                    DateOfBirth = DateTime.Now,
                     Status = true,
                     Wallet = 0,
                 }
-                );*/
+                );
             #endregion
             #region SeedSkin
             modelBuilder.Entity<Skin>().HasData(
@@ -207,6 +208,27 @@ namespace CavisProject.Infrastructures
                  {
                      Id = Guid.Parse("005EB795-D06E-4A1A-B828-87FB00B9E919"),
                      ProductCategoryName = "Kem dưỡng đêm",
+                 },
+
+                 new ProductCategory
+                 {
+                     Id = Guid.Parse("9dba7949-edd0-469a-9ee2-225a864ede5b"),
+                     ProductCategoryName = "Kem lót",
+                 }, 
+                 new ProductCategory
+                 {
+                     Id = Guid.Parse("786b79fb-576a-4999-bf57-ce5ff3792ef6"),
+                     ProductCategoryName = "Cushion",
+                 },
+                 new ProductCategory
+                 {
+                     Id = Guid.Parse("d7114e75-445e-411f-85cc-c2ad4b0ca65c"),
+                     ProductCategoryName = "Kem nền",
+                 },
+                 new ProductCategory
+                 {
+                     Id = Guid.Parse("f301d7ab-8c96-4f4b-8b34-5bd8bd2f3798"),
+                     ProductCategoryName = "Phấn má",
                  }
                 );
             #endregion
@@ -564,14 +586,24 @@ namespace CavisProject.Infrastructures
                 new ProductDetail
                 {
                     ProductId = Guid.Parse("179F7F08-41A7-48C4-A389-0584AAA49ED9"),
-                    SkinId = Guid.Parse("550EE872-EA09-42A0-B9AC-809890DEBAFB"),
+                    SkinId = Guid.Parse("550EE872-EA09-42A0-B9AC-809890DEBAFB"),//Da thường
                 },
                 new ProductDetail
                 {
                     ProductId = Guid.Parse("179F7F08-41A7-48C4-A389-0584AAA49ED9"),
-                    SkinId = Guid.Parse("8D9526B4-4532-4AFF-8F69-379DBAC8A55F"),
+                    SkinId = Guid.Parse("8D9526B4-4532-4AFF-8F69-379DBAC8A55F"),//Nám da
                 },
-                //83AFF4AC-C495-4582-8877-1D2FC83EB9CB
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("179F7F08-41A7-48C4-A389-0584AAA49ED9"),
+                    SkinId = Guid.Parse("4678f8d2-5648-4521-9608-8e981dee9103"),//Nếp nhăn
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("179F7F08-41A7-48C4-A389-0584AAA49ED9"),
+                    SkinId = Guid.Parse("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"),//Mụn viêm đỏ
+                },
+                #region 8383AFF4AC-C495-4582-8877-1D2FC83EB9CB
                 new ProductDetail
                 {
                     ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
@@ -580,9 +612,50 @@ namespace CavisProject.Infrastructures
                 new ProductDetail
                 {
                     ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
-                    SkinId = Guid.Parse("8D9526B4-4532-4AFF-8F69-379DBAC8A55F"),
+                    SkinId = Guid.Parse("8D9526B4-4532-4AFF-8F69-379DBAC8A55F"),//Nám da
                 },
-                //21653406-6211-4F18-B661-A360B581B397
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("4678f8d2-5648-4521-9608-8e981dee9103"),//Nếp nhăn
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("5AB57D24-20AD-4B15-8427-C951419DA3BA"),//Mụn bọc
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"),//Mụn viêm đỏ
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("BD287628-2EB7-458A-B202-D89D63FAAEBF"),//Mụn mũ
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("E8685143-0F2E-42FA-8025-DA53E1707461"),//Mụn đầu đen
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("F49B6287-8F31-4FD5-9899-ED1EB6D0564A"),//Mụn đầu đinh
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("A9035561-1399-464F-9F09-38C164A40A63"),//Mụn thâm
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("83AFF4AC-C495-4582-8877-1D2FC83EB9CB"),
+                    SkinId = Guid.Parse("73766FF0-D528-4262-A1E8-656B33F58603"),//Mụn đầu trắng
+                },
+            #endregion
+#region 21653406-6211-4F18-B661-A360B581B397
                 new ProductDetail
                 {
                     ProductId = Guid.Parse("21653406-6211-4F18-B661-A360B581B397"),
@@ -591,8 +664,19 @@ namespace CavisProject.Infrastructures
                 new ProductDetail
                 {
                     ProductId = Guid.Parse("21653406-6211-4F18-B661-A360B581B397"),
-                    SkinId = Guid.Parse("8D9526B4-4532-4AFF-8F69-379DBAC8A55F"),
+                    SkinId = Guid.Parse("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"),//Mụn viêm đỏ
                 },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("21653406-6211-4F18-B661-A360B581B397"),
+                    SkinId = Guid.Parse("5AB57D24-20AD-4B15-8427-C951419DA3BA"),//Mụn bọc
+                },
+                new ProductDetail
+                {
+                    ProductId = Guid.Parse("21653406-6211-4F18-B661-A360B581B397"),
+                    SkinId = Guid.Parse("BD287628-2EB7-458A-B202-D89D63FAAEBF"),//Mụn mủ
+                },
+            #endregion
                 //EF3342B3-E716-4028-B508-F29A1EC87865
                 new ProductDetail
                 {
@@ -911,6 +995,28 @@ namespace CavisProject.Infrastructures
                    }
 
                    );
+            modelBuilder.Entity<Method>().HasData(
+                 new Method
+                 {
+                     Id = Guid.Parse("550EE872-EA09-42A0-B9AC-809890DEBAFB"),
+                     MethodName = "Chăm sóc da thường",
+                     URLImage = "https://firebasestorage.googleapis.com/v0/b/cavisproject.appspot.com/o/da-thuong-3.jpg?alt=media&token=96cece83-4aaa-426d-ae5f-6d37c061a8f2",
+                     Category = 0,
+                     Description = "<h4><strong><span style=\"font-size:18pt;\">1. Chăm sóc da thường</span></strong></h4>\r\n<p><span style=\"font-size:12pt;\">Da thường là loại da lý tưởng mà nhiều người mong muốn có được. Đây là loại da không nhờn, không khô, ít mụn và thường có độ ẩm cân bằng. Tuy nhiên, để duy trì làn da khỏe đẹp này, bạn vẫn cần có một quy trình chăm sóc da đúng cách.</span></p>\r\n<p><strong><span style=\"font-size:18pt;\">Phương pháp chăm sóc:</span></strong></p>\r\n<ol>\r\n    <li style=\"list-style-type:decimal;font-size:12pt;\">\r\n        <p><strong><span style=\"font-size:12pt;\">Làm sạch da:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:12pt;\">\r\n                <p><strong><span style=\"font-size:12pt;\">Tẩy trang:</span></strong><span style=\"font-size:12pt;\"> Sử dụng sản phẩm tẩy trang không chứa cồn để loại bỏ mỹ phẩm và bụi bẩn.</span></p>\r\n            </li>\r\n            <li style=\"list-style-type:circle;font-size:12pt;\">\r\n                <p><strong><span style=\"font-size:12pt;\">Rửa mặt:</span></strong><span style=\"font-size:12pt;\"> Rửa mặt buổi sáng và tối bằng sữa rửa mặt có độ pH từ 4.5-5.5 để duy trì độ cân bằng tự nhiên của da.</span></p>\r\n            </li>\r\n            <li style=\"list-style-type:circle;font-size:12pt;\">\r\n                <p><strong><span style=\"font-size:12pt;\">Tẩy tế bào chết:</span></strong><span style=\"font-size:12pt;\"> Tẩy tế bào chết 2 lần/tuần để loại bỏ da chết, giúp da mịn màng hơn.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n    <li style=\"list-style-type:decimal;font-size:12pt;\">\r\n        <p><strong><span style=\"font-size:12pt;\">Toner:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:12pt;\">\r\n                <p><span style=\"font-size:12pt;\"> Sử dụng toner không chứa cồn để cân bằng độ pH và cấp ẩm cho da sau khi rửa mặt.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n    <li style=\"list-style-type:decimal;font-size:12pt;\">\r\n        <p><strong><span style=\"font-size:12pt;\">Dưỡng ẩm:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:12pt;\">\r\n                <p><span style=\"font-size:12pt;\"> Sử dụng kem dưỡng ẩm ban ngày và ban đêm để duy trì độ ẩm cho da.</span></p>\r\n            </li>\r\n            <li style=\"list-style-type:circle;font-size:12pt;\">\r\n                <p><span style=\"font-size:12pt;\"> Đắp mặt nạ 2 lần/tuần, ưu tiên các nguyên liệu tự nhiên như yến mạch, bơ để cung cấp thêm dưỡng chất cho da.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n    <li style=\"list-style-type:decimal;font-size:12pt;\">\r\n        <p><strong><span style=\"font-size:12pt;\">Chống nắng:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:12pt;\">\r\n                <p><span style=\"font-size:12pt;\"> Thoa kem chống nắng hàng ngày để bảo vệ da khỏi tác hại của tia UV.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n</ol>",
+                     Status = 0,
+                     UserId = "da8a7be0-e888-4201-8500-3c5b2dba7776",
+                     CreationDate = DateTime.Now
+                 }
+                 );
+            #endregion
+            #region SeedMethodDetail
+            modelBuilder.Entity<MethodDetail>().HasData(
+                 new MethodDetail
+                 {
+                     MethodId = Guid.Parse("550EE872-EA09-42A0-B9AC-809890DEBAFB"),
+                     SkinId = Guid.Parse("550EE872-EA09-42A0-B9AC-809890DEBAFB"),// Da thuong
+                 }
+                 );
             #endregion
         }
     }

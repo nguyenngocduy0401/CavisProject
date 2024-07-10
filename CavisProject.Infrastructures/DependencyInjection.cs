@@ -48,6 +48,7 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPersonalAnalystDetailService, PersonalAnalystDetailService>();
             services.AddScoped<IMethodMakeUpService,MethodMakeUpService>();
+            services.AddScoped<ISkincareRoutineService, SkincareRoutineService>();
             #endregion
 
             #region Repository DI
@@ -75,6 +76,7 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IWishListRepository, WishListRepository>();
             services.AddScoped<ISkinConditionRepository , SkinConditionRepository>();
             services.AddScoped<IMethodMakeUpRepository, MethodMakeUpRepository>();
+            services.AddScoped<ISkincareRoutineRepository, SkincareRoutineRepository>();
 
 
 
