@@ -4,6 +4,7 @@ using CavisProject.Infrastructures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CavisProject.Infrastructures.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240627153644_updateDataV4")]
+    partial class updateDataV4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,6 +104,9 @@ namespace CavisProject.Infrastructures.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CalendarId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
@@ -131,69 +137,14 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Property<DateTime?>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Calendars");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("701137f8-1506-4ca6-ad2a-0e4fc753529f"),
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Duration = 2.0,
-                            EndTime = new DateTime(2024, 6, 30, 21, 0, 0, 0, DateTimeKind.Local),
-                            IsDeleted = false,
-                            StartTime = new DateTime(2024, 6, 30, 19, 0, 0, 0, DateTimeKind.Local),
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("1692abc1-2b8b-48b5-8c86-aaeb70339cf0"),
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Duration = 2.0,
-                            EndTime = new DateTime(2024, 6, 30, 11, 0, 0, 0, DateTimeKind.Local),
-                            IsDeleted = false,
-                            StartTime = new DateTime(2024, 6, 30, 9, 0, 0, 0, DateTimeKind.Local),
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("3b4e855c-07dd-4009-99a6-34e2a01f6c77"),
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Duration = 2.0,
-                            EndTime = new DateTime(2024, 6, 30, 15, 0, 0, 0, DateTimeKind.Local),
-                            IsDeleted = false,
-                            StartTime = new DateTime(2024, 6, 30, 13, 0, 0, 0, DateTimeKind.Local),
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("b0a8d897-1d36-41af-9184-86e646b7c2d5"),
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Duration = 2.0,
-                            EndTime = new DateTime(2024, 6, 30, 18, 0, 0, 0, DateTimeKind.Local),
-                            IsDeleted = false,
-                            StartTime = new DateTime(2024, 6, 30, 16, 0, 0, 0, DateTimeKind.Local),
-                            Type = 0
-                        });
-                });
-
-            modelBuilder.Entity("CavisProject.Domain.Entity.CalendarDetail", b =>
-                {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("CalendarId")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("Id");
 
-                    b.HasKey("UserId", "CalendarId");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("CalendarId");
-
-                    b.ToTable("CalendarDetail");
+                    b.ToTable("Calendars");
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.Method", b =>
@@ -235,9 +186,6 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Property<int?>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("URLImage")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
@@ -249,6 +197,19 @@ namespace CavisProject.Infrastructures.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Methods");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
+                            Category = 0,
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4807),
+                            Description = "<h4><strong><span style=\"font-size:11pt;\">1. Chăm sóc da thường</span></strong></h4>\r\n<p><span style=\"font-size:11pt;\">Da thường là loại da lý tưởng mà nhiều người mong muốn có được. Đây là loại da không nhờn, không khô, ít mụn và thường có độ ẩm cân bằng. Tuy nhiên, để duy trì làn da khỏe đẹp này, bạn vẫn cần có một quy trình chăm sóc da đúng cách.</span></p>\r\n<p><strong><span style=\"font-size:11pt;\">Phương pháp chăm sóc:</span></strong></p>\r\n<ol>\r\n    <li style=\"list-style-type:decimal;font-size:11pt;\">\r\n        <p><strong><span style=\"font-size:11pt;\">Làm sạch da:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><strong><span style=\"font-size:11pt;\">Tẩy trang:</span></strong><span style=\"font-size:11pt;\">Sử dụng sản phẩm tẩy trang không chứa cồn để loại bỏ mỹ phẩm và bụi bẩn.</span></p>\r\n            </li>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><strong><span style=\"font-size:11pt;\">Rửa mặt:</span></strong><span style=\"font-size:11pt;\">Rửa mặt buổi sáng và tối bằng sữa rửa mặt có độ pH từ 4.5-5.5 để duy trì độ cân bằng tự nhiên của da.</span></p>\r\n            </li>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><strong><span style=\"font-size:11pt;\">Tẩy tế bào chết:</span></strong><span style=\"font-size:11pt;\">Tẩy tế bào chết 2 lần/tuần để loại bỏ da chết, giúp da mịn màng hơn.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n    <li style=\"list-style-type:decimal;font-size:11pt;\">\r\n        <p><strong><span style=\"font-size:11pt;\">Toner:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><span style=\"font-size:11pt;\">Sử dụng toner không chứa cồn để cân bằng độ pH và cấp ẩm cho da sau khi rửa mặt.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n    <li style=\"list-style-type:decimal;font-size:11pt;\">\r\n        <p><strong><span style=\"font-size:11pt;\">Dưỡng ẩm:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><span style=\"font-size:11pt;\">Sử dụng kem dưỡng ẩm ban ngày và ban đêm để duy trì độ ẩm cho da.</span></p>\r\n            </li>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><span style=\"font-size:11pt;\">Đắp mặt nạ 2 lần/tuần, ưu tiên các nguyên liệu tự nhiên như yến mạch, bơ để cung cấp thêm dưỡng chất cho da.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n    <li style=\"list-style-type:decimal;font-size:11pt;\">\r\n        <p><strong><span style=\"font-size:11pt;\">Chống nắng:</span></strong></p>\r\n        <ul>\r\n            <li style=\"list-style-type:circle;font-size:11pt;\">\r\n                <p><span style=\"font-size:11pt;\">Thoa kem chống nắng hàng ngày để bảo vệ da khỏi tác hại của tia UV.</span></p>\r\n            </li>\r\n        </ul>\r\n    </li>\r\n</ol>\r\n<div id=\"gtx-trans\" style=\"position: absolute; left: -58px; top: 43.5312px;\">\r\n    <div class=\"gtx-trans-icon\"><br></div>\r\n</div>\r\n",
+                            IsDeleted = false,
+                            MethodName = "Chăm sóc da thường",
+                            Status = 0,
+                            UserId = "da8a7be0-e888-4201-8500-3c5b2dba7776"
+                        });
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.MethodDetail", b =>
@@ -264,13 +225,6 @@ namespace CavisProject.Infrastructures.Migrations
                     b.HasIndex("SkinId");
 
                     b.ToTable("MethodDetails");
-
-                    b.HasData(
-                        new
-                        {
-                            MethodId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
-                            SkinId = new Guid("550ee872-ea09-42a0-b9ac-809890debafb")
-                        });
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.PackageDetail", b =>
@@ -1052,34 +1006,6 @@ namespace CavisProject.Infrastructures.Migrations
                             CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             ProductCategoryName = "Kem dưỡng đêm"
-                        },
-                        new
-                        {
-                            Id = new Guid("9dba7949-edd0-469a-9ee2-225a864ede5b"),
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDeleted = false,
-                            ProductCategoryName = "Kem lót"
-                        },
-                        new
-                        {
-                            Id = new Guid("786b79fb-576a-4999-bf57-ce5ff3792ef6"),
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDeleted = false,
-                            ProductCategoryName = "Cushion"
-                        },
-                        new
-                        {
-                            Id = new Guid("d7114e75-445e-411f-85cc-c2ad4b0ca65c"),
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDeleted = false,
-                            ProductCategoryName = "Kem nền"
-                        },
-                        new
-                        {
-                            Id = new Guid("f301d7ab-8c96-4f4b-8b34-5bd8bd2f3798"),
-                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDeleted = false,
-                            ProductCategoryName = "Phấn má"
                         });
                 });
 
@@ -1519,7 +1445,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("550ee872-ea09-42a0-b9ac-809890debafb"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8717),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4347),
                             Description = "Da cân bằng với vẻ ngoài khỏe mạnh, không quá nhờn cũng không quá khô, và ít khuyết điểm.",
                             IsDeleted = false,
                             SkinsName = "Da thường"
@@ -1528,7 +1454,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("be37023d-6a58-4b4b-92e5-39dcece45473"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8733),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4365),
                             Description = "Sự kết hợp của các loại da; thường thì vùng chữ T (trán, mũi, và cằm) là da nhờn trong khi má là da khô hoặc bình thường.",
                             IsDeleted = false,
                             SkinsName = "Da hỗn hợp"
@@ -1537,7 +1463,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("a960d28f-2807-4d58-8248-91eec518d415"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8736),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4369),
                             Description = "Da dễ phản ứng với các sản phẩm và yếu tố môi trường, thường dẫn đến đỏ, ngứa, hoặc kích ứng.",
                             IsDeleted = false,
                             SkinsName = "Da nhạy cảm"
@@ -1546,7 +1472,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("05ab75d8-622b-4bab-9543-ad10e441d7d6"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8738),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4371),
                             Description = "Da thiếu độ ẩm, thường cảm thấy căng, thô ráp, hoặc bong tróc, và có thể trông xỉn màu.",
                             IsDeleted = false,
                             SkinsName = "Da khô"
@@ -1555,7 +1481,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("90a11b66-e89f-45ab-bfc4-b31101d0dd81"),
                             Category = true,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8740),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4374),
                             Description = "Da sản xuất quá nhiều bã nhờn, dẫn đến vẻ ngoài bóng và có khả năng cao bị mụn và lỗ chân lông to.",
                             IsDeleted = false,
                             SkinsName = "Da nhờn"
@@ -1564,7 +1490,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("e8685143-0f2e-42fa-8025-da53e1707461"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8743),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4377),
                             Description = "Mụn đầu đen là loại mụn mà lỗ chân lông bị tắc bởi bã nhờn và tế bào da chết. Chúng thường màu đen hoặc vàng nâu.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu đen"
@@ -1573,7 +1499,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("73766ff0-d528-4262-a1e8-656b33f58603"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8746),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4380),
                             Description = "Mụn đầu trắng cũng là lỗ chân lông bị tắc, nhưng bề mặt của chúng bị phủ bởi một lớp da sạch. Chúng thường xuất hiện màu trắng hoặc da, thường nhỏ hơn mụn đầu đen.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu trắng"
@@ -1582,7 +1508,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("5ab57d24-20ad-4b15-8427-c951419da3ba"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8791),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4382),
                             Description = "Mụn bọc là các nốt sưng và đỏ trên da mà không có đầu trắng hoặc đen ở phần trên. Chúng có thể gây đau và khó chịu.",
                             IsDeleted = false,
                             SkinsName = "Mụn bọc"
@@ -1591,7 +1517,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("bd287628-2eb7-458a-b202-d89d63faaebf"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8794),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4386),
                             Description = "Mụn mủ là các nốt sưng và đỏ có chứa mủ ở phần trên. Chúng thường là dấu hiệu của một nhiễm trùng nặng hơn trong lỗ chân lông.",
                             IsDeleted = false,
                             SkinsName = "Mụn mủ"
@@ -1600,7 +1526,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("12774b27-0e13-4f82-87d0-bfd6bd23e6e5"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8796),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4388),
                             Description = "Mụn viêm đỏ là các nốt sưng lớn và đau nhức dưới da. Chúng thường không có mủ ở phần trên như mụn mủ.",
                             IsDeleted = false,
                             SkinsName = "Mụn viêm đỏ"
@@ -1609,7 +1535,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("f49b6287-8f31-4fd5-9899-ed1eb6d0564a"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8798),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4392),
                             Description = "Mụn đầu đinh là các nốt sưng lớn và đau nhức có mủ ở phần trên. Chúng có thể gây ra tổn thương và vết sẹo nếu không được điều trị đúng cách.",
                             IsDeleted = false,
                             SkinsName = "Mụn đầu đinh"
@@ -1618,7 +1544,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("a9035561-1399-464f-9f09-38c164a40a63"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8801),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4395),
                             Description = "Mụn thâm là các vết sẹo hoặc vết đỏ hoặc nâu trên da sau khi mụn đã lành. Chúng có thể gây ra tự ti và không tự tin về da mặt.",
                             IsDeleted = false,
                             SkinsName = "Mụn thâm"
@@ -1627,7 +1553,7 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("8d9526b4-4532-4aff-8f69-379dbac8a55f"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8804),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4397),
                             Description = "Nám da là sự xuất hiện của các vùng sạm màu trên da, thường là do tác động của tia UV từ ánh nắng mặt trời.",
                             IsDeleted = false,
                             SkinsName = "Nám da"
@@ -1636,54 +1562,11 @@ namespace CavisProject.Infrastructures.Migrations
                         {
                             Id = new Guid("4678f8d2-5648-4521-9608-8e981dee9103"),
                             Category = false,
-                            CreationDate = new DateTime(2024, 6, 30, 3, 1, 29, 254, DateTimeKind.Local).AddTicks(8807),
+                            CreationDate = new DateTime(2024, 6, 27, 22, 36, 44, 32, DateTimeKind.Local).AddTicks(4400),
                             Description = "Sự xuất hiện của nếp nhăn trên da thường là kết quả của quá trình lão hóa tự nhiên, nhưng cũng có thể được tăng cường bởi tác động từ môi trường, chế độ ăn uống và lối sống.",
                             IsDeleted = false,
                             SkinsName = "Nếp nhăn"
                         });
-                });
-
-            modelBuilder.Entity("CavisProject.Domain.Entity.SkincareRoutine", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DeleteBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("ModificationBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModificationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Morning")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Night")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("SkincareRoutines");
                 });
 
             modelBuilder.Entity("CavisProject.Domain.Entity.Supplier", b =>
@@ -2037,21 +1920,11 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CavisProject.Domain.Entity.CalendarDetail", b =>
+            modelBuilder.Entity("CavisProject.Domain.Entity.Calendar", b =>
                 {
-                    b.HasOne("CavisProject.Domain.Entity.Calendar", "Calendar")
-                        .WithMany("CalendarDetails")
-                        .HasForeignKey("CalendarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CavisProject.Domain.Entity.User", "User")
-                        .WithMany("CalendarDetails")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Calendar");
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
@@ -2204,15 +2077,6 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CavisProject.Domain.Entity.SkincareRoutine", b =>
-                {
-                    b.HasOne("CavisProject.Domain.Entity.User", "User")
-                        .WithMany("SkincareRoutines")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("CavisProject.Domain.Entity.Transaction", b =>
                 {
                     b.HasOne("CavisProject.Domain.Entity.Appointment", "Appointment")
@@ -2313,11 +2177,6 @@ namespace CavisProject.Infrastructures.Migrations
                     b.Navigation("Transaction");
                 });
 
-            modelBuilder.Entity("CavisProject.Domain.Entity.Calendar", b =>
-                {
-                    b.Navigation("CalendarDetails");
-                });
-
             modelBuilder.Entity("CavisProject.Domain.Entity.Method", b =>
                 {
                     b.Navigation("MethodDetails");
@@ -2369,15 +2228,11 @@ namespace CavisProject.Infrastructures.Migrations
                 {
                     b.Navigation("AppointmentDetails");
 
-                    b.Navigation("CalendarDetails");
-
                     b.Navigation("PackageDetails");
 
                     b.Navigation("PersonalAnalysts");
 
                     b.Navigation("RefreshToken");
-
-                    b.Navigation("SkincareRoutines");
 
                     b.Navigation("Transactions");
 
