@@ -8,10 +8,10 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace CavisProject.API.Controllers
 {
     [Route("api/v1/makeup-methods")]
-    public class MethodMakeUpController
+    public class MakeupMethodController
     {
         private readonly IMethodMakeUpService _methodMakeUpService;
-        public MethodMakeUpController(IMethodMakeUpService methodMakeUpService) { _methodMakeUpService = methodMakeUpService; }
+        public MakeupMethodController(IMethodMakeUpService methodMakeUpService) { _methodMakeUpService = methodMakeUpService; }
         [SwaggerOperation(Summary = "tạo thông tin phương pháp MakeUp {Authorize = Admin, Staff}")]
         [HttpPost("")]
         [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]

@@ -9,11 +9,11 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace CavisProject.API.Controllers
 {
     [Route("api/v1/skincare-methods")]
-    public class MethodSkinCareController : ControllerBase
+    public class SkincareMethodController : ControllerBase
     {
        
         private readonly IMethodSkinCareService _methodSkinCareService;
-        public MethodSkinCareController(IMethodSkinCareService methodSkinCareService) { _methodSkinCareService = methodSkinCareService; }
+        public SkincareMethodController(IMethodSkinCareService methodSkinCareService) { _methodSkinCareService = methodSkinCareService; }
         [SwaggerOperation(Summary = "tạo thông tin phương pháp Skincare {Authorize = Admin, Staff}")]
         [HttpPost("")]
         [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
