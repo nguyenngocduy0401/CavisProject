@@ -15,13 +15,7 @@ namespace CavisProject.API.Validator.AppointmentValidator
                 .NotEmpty().WithMessage("Date is required.")
                 .GreaterThan(DateTime.Today).WithMessage("Date must be in the future.");
 
-            RuleFor(x => x.StartTime)
-                .NotEmpty().WithMessage("Start Time is required.")
-                .LessThan(x => x.EndTime).WithMessage("Start Time must be before End Time.");
-
-            RuleFor(x => x.EndTime)
-                .NotEmpty().WithMessage("End Time is required.")
-                .GreaterThan(x => x.StartTime).WithMessage("End Time must be after Start Time.");
+           
 
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty().WithMessage("Phone Number is required.")
@@ -31,8 +25,7 @@ namespace CavisProject.API.Validator.AppointmentValidator
                 .NotEmpty().WithMessage("Email is required.")
                 .EmailAddress().WithMessage("Email is not valid.");
 
-            RuleFor(x => x.Status)
-                .InclusiveBetween(0, 1).WithMessage("Status must be either 0 or 1.");
+            
         }
     }
 }

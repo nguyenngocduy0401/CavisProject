@@ -13,6 +13,6 @@ namespace CavisProject.Application.Interfaces
     {
         Task<ApiResponse<Pagination<CalendarViewModel>>> FilterCalendarAsync(CalendarFilterModel filterModel);
         Task<ApiResponse<CalendarViewModel>> GetCalendarByIdAsync(string id);
-        Task<ApiResponse<bool>> SetAvailabilityAsync(string userId, List<CalendarDetailViewModel> availabilities);
+        Task<ApiResponse<bool>> SetAvailabilityAsync( List<CalendarDetailViewModel> availabilities);
     }
 }

@@ -10,5 +10,7 @@ namespace CavisProject.Application.Repositories
     public interface IAppointmentRepository :IGenericRepository<Appointment>
     {
         Task<List<Appointment>> GetAppointmentsByDateRangeAsync(DateTime startDate, DateTime endDate, string userId);
+       
+        Task<List<Appointment>> GetAppointmentsForUserAsync(string userId, DateTime? date, TimeSpan? startTime, TimeSpan? endTime, int pageIndex, int pageSize);
     }
 }

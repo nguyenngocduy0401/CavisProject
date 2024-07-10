@@ -54,6 +54,7 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IAppointmentDetailRepository, AppointmentDetailRepository>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<ICalendarRepository,CalendarRepository>();
+            services.AddScoped<ICalendarDetailRepository, CalendarDetailRepository>();
             services.AddScoped<IMethodDetailRepository, MethodDetailRepository>();
             services.AddScoped<IMethodSkinCareRepository, MethodSkinCareRepository>();
             services.AddScoped<IPackageDetailRepository, PackageDetailRepository>();

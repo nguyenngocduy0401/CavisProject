@@ -12,6 +12,9 @@ namespace CavisProject.Application.ViewModels.AppointmentViewModel
         public string? ExpertName { get; set; }
         public string? Email { get; set; }
         public string? URLImage { get; set; }
+        public DateTime Date { get; set; } 
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; } 
     }
 }
 

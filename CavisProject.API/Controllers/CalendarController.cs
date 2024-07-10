@@ -22,7 +22,7 @@ namespace CavisProject.API.Controllers
         [HttpGet("{id}")]
         public async Task<ApiResponse<CalendarViewModel>> GetCalendarByIdAsync(string id)=> await _calendarService.GetCalendarByIdAsync(id);
         [SwaggerOperation(Summary = "chuyên gia chọn lịch có thể nhận tu vấn {Authorize = Expert}")]
-        [HttpPost("{id}/set-availability")]
-        public async Task<ApiResponse<bool>> SetAvailabilityAsync(string userId, List<CalendarDetailViewModel> availabilities)=> await _calendarService.SetAvailabilityAsync(userId, availabilities);
+        [HttpPost()]
+        public async Task<ApiResponse<bool>> SetAvailabilityAsync([FromBody] List<CalendarDetailViewModel> availabilities)=> await _calendarService.SetAvailabilityAsync( availabilities);
     }
 }

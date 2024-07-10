@@ -8,7 +8,7 @@ namespace CavisProject.Application.ViewModels.CalendarViewModel
 {
     public class CalendarDetailViewModel
     {
-        public Guid CalendarId { get; set; }
+        public List<Guid>? CalendarId { get; set; }
         public DateTime AvailabilityDate { get; set; }
     }
 }

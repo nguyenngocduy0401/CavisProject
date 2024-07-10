@@ -32,6 +32,7 @@ namespace CavisProject.Application.Services
 
             try
             {
+
                 var paginationResult = await _unitOfWork.CalendarRepository.GetFilterAsync(
             filter: c =>
                 (!filterModel.StartTime.HasValue || c.StartTime >= filterModel.StartTime.Value) &&
@@ -92,41 +93,49 @@ namespace CavisProject.Application.Services
             return response;
         }
 
-        public async Task<ApiResponse<bool>> SetAvailabilityAsync(string userId, List<CalendarDetailViewModel> availabilities)
+        public async Task<ApiResponse<bool>> SetAvailabilityAsync(List<CalendarDetailViewModel> availabilities)
         {
+
             var response = new ApiResponse<bool>();
 
             try
             {
-        
-                var existingAvailabilities = await _unitOfWork.CalendarDetailRepository.GetByUserIdAsync(userId);
-                await _unitOfWork.CalendarDetailRepository.DeleteRangeAsync(existingAvailabilities);
+                var userId = _claimsService.GetCurrentUserId.ToString();
 
-                
-                var calendarDetails = availabilities.Select(a => new CalendarDetail
+                foreach (var availability in availabilities)
                 {
-                    UserId = userId,
-                    CalendarId = a.CalendarId,
-                    AvailabilityDate = a.AvailabilityDate
-                }).ToList();
+                    foreach (var calendarId in availability.CalendarId)
+                    {
+                        var exists = await _unitOfWork.CalendarDetailRepository.ExistsAsync(userId, calendarId, availability.AvailabilityDate);
+                        if (!exists)
+                        {
+                            var calendarDetail = new CalendarDetail
+                            {
+                                Id = Guid.NewGuid(),
+                                UserId = userId,
+                                CalendarId = calendarId,
+                                AvailabilityDate = availability.AvailabilityDate
+                            };
 
-                await _unitOfWork.CalendarDetailRepository.AddRangeAsync(calendarDetails);
-                await _unitOfWork.SaveChangeAsync();
+                            await _unitOfWork.CalendarDetailRepository.AddAsync(calendarDetail);
+                        }
+                    }
+                }
+
+
+               await _unitOfWork.SaveChangeAsync();
 
                 response.Data = true;
                 response.isSuccess = true;
-                response.Message = "Availability set successfully";
-            }
-            catch (DbException ex)
-            {
-                response.isSuccess = false;
-                response.Message = ex.Message;
+                response.Message = "Availability updated successfully";
             }
             catch (Exception ex)
             {
+                response.Data = false;
                 response.isSuccess = false;
-                response.Message = ex.Message;
+                response.Message = "Error occurred while updating availability: " + ex.Message;
             }
+
             return response;
         }
     }

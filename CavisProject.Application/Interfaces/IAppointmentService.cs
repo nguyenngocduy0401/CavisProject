@@ -10,7 +10,8 @@ namespace CavisProject.Application.Interfaces
 {
     public interface IAppointmentService
     {
-        Task<ApiResponse<List<ExpertAvailabilityViewModel>>> GetAvailableExpertsAsync(DateTime Date, TimeSpan StartTime, TimeSpan EndTime);
-        Task<ApiResponse<List<AppointmentViewModel>>> GetWeeklyScheduleAsync(DateTime StartDate, DateTime EndDate);
+        Task<ApiResponse<Pagination<ExpertAvailabilityViewModel>>> GetAvailableExpertsAsync(AvailableExpertSkincareFilterViewModel filter);
+        Task<ApiResponse<Pagination<AppointmentViewModel>>> GetWeeklyScheduleAsync(AvailableExpertSkincareFilterViewModel filter);
+        Task<ApiResponse<bool>> BookAppointmentAsync(CreateAppointmentViewModel create);
     }
 }

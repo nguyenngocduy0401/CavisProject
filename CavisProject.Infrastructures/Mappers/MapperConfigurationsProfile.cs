@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using CavisProject.Application.ViewModels.MethodViewModels;
 using CavisProject.Application.ViewModels.Calendar;
 using CavisProject.Application.ViewModels.AppointmentViewModel;
+using CavisProject.Application.ViewModels.CalendarViewModel;
 
 namespace CavisProject.Infrastructures.Mappers
 {
@@ -36,7 +37,7 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<UserViewModel, User>();
             CreateMap<UserViewModel, PackagePremium>();
             CreateMap<User, UserViewModel>().ReverseMap();
-             
+
 
 
             #endregion
@@ -57,12 +58,12 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<Supplier, SupplierViewModel>();
             CreateMap<ProductCategory, ProductCategoryViewModel>()
            .ForMember(dest => dest.ProductCategoryName, opt => opt.MapFrom(src => src.ProductCategoryName));
-         
+
             CreateMap<UserRegisterModel, User>()
                 .ForMember(dest => dest.PasswordHash, src => src.MapFrom(x => x.Password));
             #endregion
             #region Premium
-            CreateMap<RegistPremiumViewModel,PackagePremium>();
+            CreateMap<RegistPremiumViewModel, PackagePremium>();
             CreateMap<UpgradeToPremiumViewModel, User>();
             CreateMap<Pagination<User>, Pagination<UserViewModel>>()
            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
@@ -105,9 +106,20 @@ namespace CavisProject.Infrastructures.Mappers
             CreateMap<Appointment, CreateAppointmentViewModel>().ReverseMap();
             CreateMap<CalendarDetail, ExpertAvailabilityViewModel>()
            .ForMember(dest => dest.ExpertId, opt => opt.MapFrom(src => src.UserId))
-           .ForMember(dest => dest.ExpertName, opt => opt.MapFrom(src => src.User.FullName)) 
+           .ForMember(dest => dest.ExpertName, opt => opt.MapFrom(src => src.User.FullName))
            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
-            .ForMember(dest => dest.AvatarURL, opt => opt.MapFrom(src => src.User.URLImage));
+            .ForMember(dest => dest.URLImage, opt => opt.MapFrom(src => src.User.URLImage));
+            CreateMap<CalendarDetail, ExpertAvailabilityViewModel>()
+                 .ForMember(dest => dest.ExpertId, opt => opt.MapFrom(src => src.User.Id))
+                 .ForMember(dest => dest.ExpertName, opt => opt.MapFrom(src => src.User.FullName))
+                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
+                 .ForMember(dest => dest.URLImage, opt => opt.MapFrom(src => src.User.URLImage))
+             .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => src.Calendar.StartTime))
+            .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.Calendar.EndTime))
+            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.AvailabilityDate));
+            // CreateMap<List<CalendarDetailViewModel>,List<CalendarDetail>>().ReverseMap();
+            CreateMap<AppointmentViewModel, Appointment>()
+                .ReverseMap();
             #endregion
         }
     }

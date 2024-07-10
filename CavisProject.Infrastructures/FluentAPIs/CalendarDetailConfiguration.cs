@@ -13,7 +13,7 @@ namespace CavisProject.Infrastructures.FluentAPIs
     {
         public void Configure(EntityTypeBuilder<CalendarDetail> builder)
         {
-            builder.HasKey(x => new { x.UserId, x.CalendarId});
+            builder.HasKey(x => new { x.Id});
             builder.HasOne(a => a.User)
                 .WithMany(a => a.CalendarDetails)
                 .HasForeignKey(a => a.UserId);

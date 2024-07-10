@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CavisProject.Domain.Enums;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,8 @@ namespace CavisProject.Domain.Entity
 {
     public class CalendarDetail
     {
+        [Key]
+        public Guid Id { get; set; }
         public string? UserId { get; set; }
         [ForeignKey("UserId")]
         public User? User { get; set; }
@@ -16,5 +20,6 @@ namespace CavisProject.Domain.Entity
         [ForeignKey("CalendarId")]
         public Calendar? Calendar { get; set; }
         public DateTime? AvailabilityDate{ get; set; }
+        public CalendarStatusEnum Status { get; set; }
     }
 }
