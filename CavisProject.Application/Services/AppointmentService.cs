@@ -28,9 +28,10 @@ namespace CavisProject.Application.Services
         private readonly IClaimsService _claimsService;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IValidator<CreateAppointmentViewModel> _validator;
         private readonly IValidator<CreateMakeUpAppointmentViewModel> _validatorMakeup;
-        public AppointmentService(IValidator<CreateMakeUpAppointmentViewModel> validatorMakeup, UserManager<User> userManager, IValidator<CreateAppointmentViewModel> validator, IUnitOfWork unitOfWork, IClaimsService claimsService, IMapper mapper)
+        public AppointmentService(RoleManager<Role> roleManager,IValidator<CreateMakeUpAppointmentViewModel> validatorMakeup, UserManager<User> userManager, IValidator<CreateAppointmentViewModel> validator, IUnitOfWork unitOfWork, IClaimsService claimsService, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _claimsService = claimsService;
@@ -38,6 +39,7 @@ namespace CavisProject.Application.Services
             _validator = validator;
             _userManager = userManager;
             _validatorMakeup = validatorMakeup;
+            _roleManager = roleManager;
         }
         public async Task<ApiResponse<Pagination<ExpertAvailabilityViewModel>>> GetAvailableExpertsAsync(AvailableExpertSkincareFilterViewModel filter)
         {
@@ -115,17 +117,47 @@ namespace CavisProject.Application.Services
                 var appointments = await _unitOfWork.AppointmentRepository.GetAppointmentsForUserAsync(userId, availabilityDate, start, end, filter.PageIndex, filter.PageSize);
 
 
-                var appointmentViewModels = appointments.Select(a => new AppointmentViewModel
-                {
-                    AppointmentId = a.Id,
-                    Title = a.Title,
-                    Date = a.Date,
-                    StartTime = a.StartTime.Value.TimeOfDay,
-                    EndTime = a.EndTime.Value.TimeOfDay,
-                    PhoneNumber = a.PhoneNumber,
-                    Email = a.Email,
+                var appointmentViewModels = new List<AppointmentViewModel>();
 
-                }).ToList();
+                foreach (var appointment in appointments)
+                {
+                    var appointmentViewModel = new AppointmentViewModel
+                    {
+                        AppointmentId = appointment.Id,
+                        Title = appointment.Title,
+                        Date = appointment.Date,
+                        StartTime = appointment.StartTime?.TimeOfDay,
+                        EndTime = appointment.EndTime?.TimeOfDay,
+                        PhoneNumber = appointment.PhoneNumber,
+                        Email = appointment.Email,
+                        UserId = userId
+                    };
+
+                    var appointmentDetails = appointment.AppointmentDetails
+                        .Where(ad => ad.AppointmentId == appointment.Id)
+                        .ToList();
+
+                    foreach (var appointmentDetail in appointmentDetails)
+                    {
+                        var user = await _userManager.FindByIdAsync(appointmentDetail.UserId);
+                        
+                        if (user != null)
+                        {
+                            var userRoleId = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+                            var role = await _roleManager.FindByNameAsync(userRoleId);
+                            var roleId = role?.Id;
+                            var expertSkincareRoleId = (await _roleManager.FindByNameAsync("ExpertSkincare"))?.Id;
+                            var expertMakeupRoleId = (await _roleManager.FindByNameAsync("ExpertMakeup"))?.Id;
+
+                            if (roleId == expertSkincareRoleId || roleId == expertMakeupRoleId)
+                            {
+                                appointmentViewModel.ExpertId = appointmentDetail.UserId;
+                            }
+                        }
+                    }
+
+                    appointmentViewModels.Add(appointmentViewModel);
+                }
 
                 var totalCount = appointmentViewModels.Count;
 
@@ -134,8 +166,7 @@ namespace CavisProject.Application.Services
                     Items = appointmentViewModels,
                     PageIndex = filter.PageIndex,
                     PageSize = filter.PageSize,
-                    TotalItemsCount = totalCount,
-
+                    TotalItemsCount = totalCount
                 };
 
                 response.Data = pagination;
@@ -207,7 +238,7 @@ namespace CavisProject.Application.Services
 
                 var appointment = new Appointment
                 {
-                    Title = create.Title,
+                    Title = "Tư vấn Skincare",
                     Date =date.Value.Date,
                     StartTime = date.Value.Date + calendar.StartTime,
                     EndTime = date.Value.Date + calendar.EndTime,
@@ -225,7 +256,7 @@ namespace CavisProject.Application.Services
                 {
                     AppointmentId = appointment.Id,
                     PackagePremiumId = null,
-                    Title = create.Title,
+                    Title = "Tư vấn Skincare",
                     UserId = userId,
                     PurchaseTime = DateTime.UtcNow.ToLongDateString(),
                     TotalPaid = totalPaid,
@@ -248,21 +279,17 @@ namespace CavisProject.Application.Services
                     UserId = create.ExpertId
                 };
                 await _unitOfWork.AppointmentDetailRepository.AddAsync(appointmentDetails);
-                var calendarDetail = await _unitOfWork.CalendarDetailRepository
-            .GetByCalendarIdAndAvailabilityDateAsync(calendarId, date.Value.Date);
-                if (calendarDetail != null)
+                var calendarDetails = new CalendarDetail
                 {
-                    calendarDetail.Status = CalendarStatusEnum.Booked;
-                    await _unitOfWork.CalendarDetailRepository.UpdateAsync(calendarDetail);
-                    await _unitOfWork.SaveChangeAsync();
-                }
-                else
-                {
-                    response.isSuccess = false;
-                    response.Data = false;
-                    response.Message = "Error occurred while booking appointment: ";
-                    return response;
-                }
+                    Id = Guid.NewGuid(),
+                    CalendarId = calendarId,
+                    AvailabilityDate = date.Value.Date,
+                    UserId = create.ExpertId,
+                    Status = CalendarStatusEnum.Booked
+
+                };
+                await _unitOfWork.CalendarDetailRepository.AddAsync(calendarDetails);
+                           
                 await _unitOfWork.SaveChangeAsync();
 
                 response.isSuccess = true;
@@ -327,7 +354,7 @@ namespace CavisProject.Application.Services
                 }
                 var appointment = new Appointment
                 {
-                    Title = create.Title,
+                    Title = "Tư vấn MakeUp",
                     Date =date.Value.Date,
                     StartTime = date.Value.Date + start,
                     EndTime = date.Value.Date + end,
@@ -346,7 +373,7 @@ namespace CavisProject.Application.Services
                 var transaction = new Transaction
                 {
                     AppointmentId = appointment.Id,
-                    Title = appointment.Title,
+                    Title = "Tư vấn MakeUp",
                     UserId = userId,
                     PurchaseTime = DateTime.UtcNow.ToLongDateString(),
                     TotalPaid = totalPaid,

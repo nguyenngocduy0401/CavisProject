@@ -23,3 +23,4 @@ namespace CavisProject.Domain.Entity
         public CalendarStatusEnum Status { get; set; }
     }
 }
+

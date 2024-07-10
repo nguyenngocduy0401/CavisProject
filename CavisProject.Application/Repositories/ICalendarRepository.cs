@@ -9,5 +9,8 @@ namespace CavisProject.Application.Repositories
 {
     public interface ICalendarRepository :IGenericRepository<Calendar>
     {
+     
+        Task<List<Guid>> GetUnAvailableCalendarAsync(DateTime? date);
+
     }
 }

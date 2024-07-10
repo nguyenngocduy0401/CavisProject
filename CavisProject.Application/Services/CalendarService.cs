@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
+using CavisProject.Application.Repositories;
+using CavisProject.Application.ViewModels.AppointmentViewModel;
 using CavisProject.Application.ViewModels.Calendar;
 using CavisProject.Application.ViewModels.CalendarViewModel;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
@@ -12,6 +14,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CavisProject.Application.Services
 {
@@ -29,29 +32,33 @@ namespace CavisProject.Application.Services
         public async Task<ApiResponse<Pagination<CalendarViewModel>>> FilterCalendarAsync(CalendarFilterModel filterModel)
         {
             var response = new ApiResponse<Pagination<CalendarViewModel>>();
-
             try
             {
+                DateTime? date = null;
+                date = DateTime.Parse(filterModel.Date);
+                var allSlots = await _unitOfWork.CalendarRepository.GetAllAsync();
+                var unavailableSlotIds = await _unitOfWork.CalendarRepository.GetUnAvailableCalendarAsync(date);
 
-                var paginationResult = await _unitOfWork.CalendarRepository.GetFilterAsync(
-            filter: c =>
-                (!filterModel.StartTime.HasValue || c.StartTime >= filterModel.StartTime.Value) &&
-                (!filterModel.EndTime.HasValue || c.EndTime <= filterModel.EndTime.Value) &&
-                (!filterModel.Duration.HasValue || c.Duration == filterModel.Duration.Value),
-            pageIndex: filterModel.PageIndex,
-            pageSize: filterModel.PageSize
-         );
+                var availableSlots = allSlots
+                   .Where(calendar => !unavailableSlotIds.Contains(calendar.Id))
+                   .Select(calendar => new CalendarViewModel
+                   {
+                       Id = calendar.Id,
+                       StartTime = calendar.StartTime ?? TimeSpan.Zero,
+                       EndTime = calendar.EndTime ?? TimeSpan.Zero
+                   })
+                   .ToList();
+                var totalCount = availableSlots.Count;
 
-                var viewModels = _mapper.Map<List<CalendarViewModel>>(paginationResult.Items);
-
-                var paginationViewModel = new Pagination<CalendarViewModel>
+                var pagination = new Pagination<CalendarViewModel>
                 {
-                    PageIndex = paginationResult.PageIndex,
-                    PageSize = paginationResult.PageSize,
-                    TotalItemsCount = paginationResult.TotalItemsCount,
-                    Items = viewModels
+                    Items = availableSlots,
+                    PageIndex = filterModel.PageIndex,
+                    PageSize = filterModel.PageSize,
+                    TotalItemsCount = totalCount,
+
                 };
-                response.Data = paginationViewModel;
+                response.Data = pagination;
                 response.isSuccess = true;
                 response.Message = "Filtered  calendar retrieved successfully";
             }
@@ -123,7 +130,7 @@ namespace CavisProject.Application.Services
                 }
 
 
-               await _unitOfWork.SaveChangeAsync();
+                await _unitOfWork.SaveChangeAsync();
 
                 response.Data = true;
                 response.isSuccess = true;

@@ -10,10 +10,7 @@ namespace CavisProject.Application.ViewModels.AppointmentViewModel
     public class CreateAppointmentViewModel
     {
 
-        public string Title { get; set; }
-
-
-
+        
         public string? Date { get; set; }
        public string CalendarId { get; set; }
 

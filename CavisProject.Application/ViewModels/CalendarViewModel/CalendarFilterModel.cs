@@ -8,10 +8,8 @@ namespace CavisProject.Application.ViewModels.Calendar
 {
     public class CalendarFilterModel
     {
-        public TimeSpan? StartTime { get; set; }
-        public TimeSpan? EndTime { get; set; }
-        public double? Duration { get; set; }
-        public int PageIndex { get; set; } = 1;
+        public string? Date { get; set; }
+        public int PageIndex { get; set; } = 0;
         public int PageSize { get; set; } = 10;
     }
 }

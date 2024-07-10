@@ -1,6 +1,7 @@
 ﻿using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using CavisProject.Domain.Entity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,13 @@ namespace CavisProject.Infrastructures.Repositories
             _dbContext = context;
             _timeService = timeService;
             _claimsService = claimsService;
+        }
+      
+        public async Task<List<Guid>> GetUnAvailableCalendarAsync(DateTime? date)
+        {
+            return await _dbContext.CalendarDetails
+                .Where(c => c.AvailabilityDate.Value.Date == date.Value.Date).Select(cd=>cd.CalendarId)
+                .ToListAsync();
         }
     }
 }

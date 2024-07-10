@@ -15,7 +15,7 @@ namespace CavisProject.API.Controllers
         {
             _calendarService = calendarService;
         }
-        [SwaggerOperation(Summary = "tìm kiếm thông tin lịch vấn ")]
+        [SwaggerOperation(Summary = "tìm kiếm thông tin lịch tư vấn theo ngày ")]
         [HttpGet("")]
         public async Task<ApiResponse<Pagination<CalendarViewModel>>> FilterCalendarAsync(CalendarFilterModel filterModel)=> await _calendarService.FilterCalendarAsync(filterModel);
         [SwaggerOperation(Summary = "tìm kiếm thông tin lịch tư vấn bằng id ")]
