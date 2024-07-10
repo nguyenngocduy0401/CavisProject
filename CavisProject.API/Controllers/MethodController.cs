@@ -19,4 +19,4 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<MethodViewModel>> GetMethodByIdAsync(string id) => await _methodMakeUpService.GetMethodByIdAsync(id);
     }
 }
-}
+

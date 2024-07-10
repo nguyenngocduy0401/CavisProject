@@ -13,7 +13,7 @@ namespace CavisProject.API.Controllers
         public AppointmentController(IAppointmentService appointmentService)
         { _appointmentService = appointmentService; }
         [SwaggerOperation(Summary = "lấy thông tin các chuyên gia phù hợp")]
-        [HttpGet("")]
+        [HttpGet("users")]
          public async  Task<ApiResponse<Pagination<ExpertAvailabilityViewModel>>> GetAvailableExpertsAsync(AvailableExpertSkincareFilterViewModel filter)=> await _appointmentService.GetAvailableExpertsAsync(filter);
         [SwaggerOperation(Summary = "lấy danh sách các cuộc hẹn")]
         [HttpGet("")]

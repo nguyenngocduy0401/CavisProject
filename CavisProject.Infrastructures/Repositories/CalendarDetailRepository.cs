@@ -89,6 +89,7 @@ namespace CavisProject.Infrastructures.Repositories
 
             return availableCalendarDetails;
         }
+       
         public async Task<bool> ExistsAsync(string userId, Guid calendarId, DateTime availabilityDate)
         {
             return await _dbContext.CalendarDetails.AnyAsync(cd => cd.UserId == userId && cd.CalendarId == calendarId && cd.AvailabilityDate == availabilityDate);

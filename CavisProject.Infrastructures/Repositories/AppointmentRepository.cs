@@ -94,6 +94,11 @@ namespace CavisProject.Infrastructures.Repositories
             return true;
 
         }
+        public async Task<List<User>> GetAllExpertMakeUpAsync()
+        {
+            var experts = await _userManager.GetUsersInRoleAsync("EXPERTMAKEUP");
+            return experts.ToList();
+        }
         private bool IsTimeOverlap(TimeSpan? start1, TimeSpan? end1, TimeSpan? start2, TimeSpan? end2)
         {
             return start1 < end2 && end1 > start2;

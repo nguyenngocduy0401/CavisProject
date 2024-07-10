@@ -30,9 +30,6 @@ namespace CavisProject.API.Controllers
         [HttpPut("{id}")]
         [Authorize(Roles = AppRole.Admin + "," + AppRole.Staff)]
         public async Task<ApiResponse<bool>> UpdateMethodMakeUpAsync([FromBody] CreateMethodViewModel model, string id) => await _methodMakeUpService.UpdateMethodMakeUpAsync(model, id);
-        [SwaggerOperation(Summary = "tìm kiếm thông tin phương pháp ( bao gồm cả skincare và makeup) với id ")]
-        [HttpGet("~/api/v1/methods/{id}")]
-        [Authorize]
-        public async Task<ApiResponse<MethodViewModel>> GetMethodByIdAsync(string id) => await _methodMakeUpService.GetMethodByIdAsync(id);
+
     }
 }
