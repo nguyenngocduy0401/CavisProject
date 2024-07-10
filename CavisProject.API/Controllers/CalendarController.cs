@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace CavisProject.API.Controllers
 {
-    [Route("api/v1/calendar")]
+    [Route("api/v1/calendars")]
     public class CalendarController
     {
         private readonly ICalendarService _calendarService;
@@ -21,8 +21,6 @@ namespace CavisProject.API.Controllers
         [SwaggerOperation(Summary = "tìm kiếm thông tin lịch tư vấn bằng id ")]
         [HttpGet("{id}")]
         public async Task<ApiResponse<CalendarViewModel>> GetCalendarByIdAsync(string id)=> await _calendarService.GetCalendarByIdAsync(id);
-        [SwaggerOperation(Summary = "chuyên gia chọn lịch có thể nhận tu vấn {Authorize = Expert}")]
-        [HttpPost()]
-        public async Task<ApiResponse<bool>> SetAvailabilityAsync([FromBody] List<CalendarDetailViewModel> availabilities)=> await _calendarService.SetAvailabilityAsync( availabilities);
+        
     }
 }
