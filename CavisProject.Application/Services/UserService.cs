@@ -100,7 +100,6 @@ namespace CavisProject.Application.Services
                     await _unitOfWork.PackageDetailRepository.AddAsync(packageDetail);
                 }
 
-
                 var transaction = new Transaction
                 {
                     Id = Guid.NewGuid(),

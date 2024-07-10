@@ -55,7 +55,7 @@ namespace CavisProject.Infrastructures
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductDetailConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(WishListConfiguration).Assembly);
             #region User
-            modelBuilder.Entity<User>().HasData
+            /*modelBuilder.Entity<User>().HasData
                 (
                 new User
                 {
@@ -69,7 +69,7 @@ namespace CavisProject.Infrastructures
                     Status = true,
                     Wallet = 0,
                 }
-                );
+                );*/
             #endregion
             #region SeedSkin
             modelBuilder.Entity<Skin>().HasData(
