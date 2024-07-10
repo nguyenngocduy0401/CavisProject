@@ -6,14 +6,14 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace CavisProject.API.Controllers
 {
-    [Route("api/v1/appointment")]
+    [Route("api/v1/appointments")]
     public class AppointmentController:ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
         public AppointmentController(IAppointmentService appointmentService)
         { _appointmentService = appointmentService; }
         [SwaggerOperation(Summary = "lấy thông tin các chuyên gia phù hợp")]
-        [HttpGet("users")]
+        [HttpGet("")]
          public async  Task<ApiResponse<Pagination<ExpertAvailabilityViewModel>>> GetAvailableExpertsAsync(AvailableExpertSkincareFilterViewModel filter)=> await _appointmentService.GetAvailableExpertsAsync(filter);
         [SwaggerOperation(Summary = "lấy danh sách các cuộc hẹn")]
         [HttpGet("")]

@@ -97,13 +97,13 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<bool>> CreatePersonalImageByLoginAsync(CreatePersonalImageViewModel createPersonalImageViewModel)
             => await _personalImageService.CreatePersonalImageByLoginAsync(createPersonalImageViewModel);
         [SwaggerOperation(Summary = "đặt lịch tư vấn với chuyên gia skin care")]
-        [HttpPost("mine/appointment-skincare")]
+        [HttpPost("mine/appointments-skincare")]
         public async Task<ApiResponse<bool>> BookAppointmentAsync([FromBody] CreateAppointmentViewModel create) => await _appointmentService.BookAppointmentAsync(create);
         [SwaggerOperation(Summary = "đặt lịch tư vấn với chuyên gia make up")]
-        [HttpPost("mine/appointment-makeup")]
+        [HttpPost("mine/appointments-makeup")]
         public async Task<ApiResponse<bool>> BookMakeUpAppointment([FromBody] CreateMakeUpAppointmentViewModel create) => await _appointmentService.BookMakeUpAppointment(create);
         [SwaggerOperation(Summary = "chuyên gia chọn lịch có thể nhận tư vấn {Authorize = Expert}")]
-        [HttpPost("mine/calendar")]
+        [HttpPost("mine/calendars")]
         public async Task<ApiResponse<bool>> SetAvailabilityAsync([FromBody] List<CalendarDetailViewModel> availabilities) => await _calendarService.SetAvailabilityAsync(availabilities);
     }
 }
