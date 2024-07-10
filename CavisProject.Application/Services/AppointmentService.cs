@@ -127,7 +127,7 @@ namespace CavisProject.Application.Services
 
                 }).ToList();
 
-                var totalCount = appointmentViewModels.Count; // Assuming this is the total count of appointments based on the filter
+                var totalCount = appointmentViewModels.Count;
 
                 var pagination = new Pagination<AppointmentViewModel>
                 {
@@ -350,7 +350,7 @@ namespace CavisProject.Application.Services
                     UserId = userId,
                     PurchaseTime = DateTime.UtcNow.ToLongDateString(),
                     TotalPaid = totalPaid,
-                    Status = TransactionStatusEnum.Pending // Example status
+                    Status = TransactionStatusEnum.Pending 
                 };
                 var appointmentDetail = new AppointmentDetail
                 {
