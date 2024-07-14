@@ -3,6 +3,7 @@ using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
 using CavisProject.Application.ViewModels.AppointmentViewModel;
+using CavisProject.Application.ViewModels.AppointmentViewModel.UserInfoViewModel;
 using CavisProject.Application.ViewModels.SkinTypeViewModel;
 using CavisProject.Domain.Entity;
 using CavisProject.Domain.Enums;
@@ -47,48 +48,53 @@ namespace CavisProject.Application.Services
 
             try
             {
+                DateTime? filterDate = null;
+                TimeSpan? filterStartTime = null;
+                TimeSpan? filterEndTime = null;
 
-                List<CalendarDetail> availableExperts;
-
-                if (!string.IsNullOrEmpty(filter.Date) || !string.IsNullOrEmpty(filter.StartTime) || !string.IsNullOrEmpty(filter.EndTime))
-
+            
+                if (!string.IsNullOrEmpty(filter.Date))
                 {
-                    availableExperts = await _unitOfWork.CalendarDetailRepository.GetAvailableExpertsAsync(filter.Date, filter.StartTime, filter.EndTime);
-                }
-                else
-                {
-                    availableExperts = await _unitOfWork.CalendarDetailRepository.GetAllCalendarDetailsAsync();
+                    filterDate = DateTime.Parse(filter.Date);
                 }
 
-                var expertViewModels = _mapper.Map<List<ExpertAvailabilityViewModel>>(availableExperts);
-
-                var paginatedExperts = expertViewModels
-                    .Skip(filter.PageIndex - 1 * filter.PageSize)
-                    .Take(filter.PageSize)
-                    .ToList();
-
-                var pagination = new Pagination<ExpertAvailabilityViewModel>
+                if (!string.IsNullOrEmpty(filter.StartTime))
                 {
-                    TotalItemsCount = expertViewModels.Count,
-                    PageSize = filter.PageSize,
-                    PageIndex = filter.PageIndex,
-                    Items = paginatedExperts
+                    filterStartTime = TimeSpan.Parse(filter.StartTime);
+                }
+
+                if (!string.IsNullOrEmpty(filter.EndTime))
+                {
+                    filterEndTime = TimeSpan.Parse(filter.EndTime);
+                }
+
+       
+                var experts = await _unitOfWork.UserRepository.GetAvailableSkincareExpertsAsync(filter);
+
+             
+                var expertViewModels = _mapper.Map<List<ExpertAvailabilityViewModel>>(experts.Items);
+                var totalCount = expertViewModels.Count;
+                // Populate response
+                response.Data = new Pagination<ExpertAvailabilityViewModel>
+                {
+                    Items = expertViewModels,
+                    PageIndex = experts.PageIndex,
+                    PageSize = experts.PageSize,
+                    TotalItemsCount = totalCount,
+
                 };
-
-                response.Data = pagination;
                 response.isSuccess = true;
-                response.Message = "Available experts retrieved successfully";
             }
             catch (Exception ex)
             {
-                response.Data = null;
                 response.isSuccess = false;
-                response.Message = "Error occurred while retrieving available experts: " + ex.Message;
+                response.Message = "Error retrieving available experts: " + ex.Message;
             }
 
             return response;
-
         }
+
+    
 
         public async Task<ApiResponse<Pagination<AppointmentViewModel>>> GetWeeklyScheduleAsync(AvailableExpertSkincareFilterViewModel filter)
         {
@@ -113,9 +119,9 @@ namespace CavisProject.Application.Services
                 {
                     end = TimeSpan.Parse(filter.EndTime);
                 }
+
                 var userId = _claimsService.GetCurrentUserId.ToString();
                 var appointments = await _unitOfWork.AppointmentRepository.GetAppointmentsForUserAsync(userId, availabilityDate, start, end, filter.PageIndex, filter.PageSize);
-
 
                 var appointmentViewModels = new List<AppointmentViewModel>();
 
@@ -126,11 +132,10 @@ namespace CavisProject.Application.Services
                         AppointmentId = appointment.Id,
                         Title = appointment.Title,
                         Date = appointment.Date,
-                        StartTime = appointment.StartTime?.TimeOfDay,
-                        EndTime = appointment.EndTime?.TimeOfDay,
+                        StartTime = appointment.StartTime.HasValue ? appointment.StartTime.Value.ToString("hh\\:mm") : null,
+                        EndTime = appointment.EndTime.HasValue ? appointment.EndTime.Value.ToString("hh\\:mm") : null,
                         PhoneNumber = appointment.PhoneNumber,
-                        Email = appointment.Email,
-                        UserId = userId
+                        Email = appointment.Email
                     };
 
                     var appointmentDetails = appointment.AppointmentDetails
@@ -140,7 +145,7 @@ namespace CavisProject.Application.Services
                     foreach (var appointmentDetail in appointmentDetails)
                     {
                         var user = await _userManager.FindByIdAsync(appointmentDetail.UserId);
-                        
+
                         if (user != null)
                         {
                             var userRoleId = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
@@ -151,7 +156,25 @@ namespace CavisProject.Application.Services
 
                             if (roleId == expertSkincareRoleId || roleId == expertMakeupRoleId)
                             {
-                                appointmentViewModel.ExpertId = appointmentDetail.UserId;
+                                appointmentViewModel.ExpertInfo = new ExpertInfoViewModel
+                                {
+                                    ExpertId = user.Id,
+                                    ExpertName = user.FullName,
+                                    PhoneNumber = user.PhoneNumber,
+                                    Email = user.Email,
+                                    URLImage = user.URLImage
+                                };
+                            }
+                            else
+                            {
+                                appointmentViewModel.UserInfo = new UserInfoViewModel
+                                {
+                                    UserId = user.Id,
+                                    UserName = user.FullName,
+                                    PhoneNumber = user.PhoneNumber,
+                                    Email = user.Email,
+                                    URLImage = user.URLImage
+                                };
                             }
                         }
                     }

@@ -160,7 +160,7 @@ namespace CavisProject.Infrastructures.Repositories
             var startDateTime = date.Date + startTime;
             var endDateTime = date.Date + endTime;
 
-            // Check if there is any overlapping appointment in AppointmentDetail
+     
             var hasConflict = await _dbContext.Set<AppointmentDetail>()
                 .Include(ad => ad.Appointment)
                 .AnyAsync(ad => ad.UserId == expertId &&

@@ -1,4 +1,5 @@
 ﻿using CavisProject.Application.Commons;
+using CavisProject.Application.ViewModels.AppointmentViewModel;
 using CavisProject.Domain.Entity;
 using CavisProject.Domain.Enums;
 using System;
@@ -31,5 +32,6 @@ namespace CavisProject.Application.Repositories
         Task<string> GetUserByUserId(string userId);
         Task<string> GetCurrentUserRoleAsync(string userId);
         Task<string?> GetPackagePremiumIdAsync(string userId);
+        Task<Pagination<User>> GetAvailableSkincareExpertsAsync(AvailableExpertSkincareFilterViewModel filter);
     }
 }

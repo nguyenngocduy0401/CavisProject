@@ -122,6 +122,11 @@ namespace CavisProject.Infrastructures.Mappers
              .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => src.Calendar.StartTime))
             .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.Calendar.EndTime))
             .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.AvailabilityDate));
+            CreateMap<User, ExpertAvailabilityViewModel>()
+            .ForMember(dest => dest.ExpertId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.ExpertName, opt => opt.MapFrom(src => src.FullName))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.URLImage, opt => opt.MapFrom(src => src.URLImage));
             // CreateMap<List<CalendarDetailViewModel>,List<CalendarDetail>>().ReverseMap();
             CreateMap<Appointment, AppointmentViewModel>()
            .ForMember(dest => dest.AppointmentId, opt => opt.MapFrom(src => src.Id))
@@ -129,9 +134,8 @@ namespace CavisProject.Infrastructures.Mappers
            .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.EndTime.Value.TimeOfDay))
            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.Value.Date))
            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-            .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
-             .ForMember(dest => dest.ExpertId, opt => opt.Ignore())
-            .ForMember(dest => dest.UserId, opt => opt.Ignore());
+            .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title));
+           
             #endregion
             #region SkincareRoutine
             CreateMap<UpdateSkincareRoutineModel, SkincareRoutine>();

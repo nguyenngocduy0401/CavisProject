@@ -1,6 +1,7 @@
 ﻿using CavisProject.Application.Commons;
 using CavisProject.Application.Interfaces;
 using CavisProject.Application.Repositories;
+using CavisProject.Application.ViewModels.AppointmentViewModel;
 using CavisProject.Domain.Entity;
 using CavisProject.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
@@ -228,6 +229,37 @@ namespace CavisProject.Infrastructures.Repositories
             var currentRole = roles.First();
 
             return currentRole;
+        }
+        public async Task<Pagination<User>> GetAvailableSkincareExpertsAsync(AvailableExpertSkincareFilterViewModel filter)
+            {
+            DateTime? availabilityDate = !string.IsNullOrEmpty(filter.Date) ? DateTime.Parse(filter.Date) : (DateTime?)null;
+            TimeSpan? start = !string.IsNullOrEmpty(filter.StartTime) ? TimeSpan.Parse(filter.StartTime) : (TimeSpan?)null;
+            TimeSpan? end = !string.IsNullOrEmpty(filter.EndTime) ? TimeSpan.Parse(filter.EndTime) : (TimeSpan?)null;
+
+            var expertsInRole = await _userManager.GetUsersInRoleAsync("ExpertSkinCare");
+
+            var usersWithAppointments = await _dbContext.Users
+                .Include(u => u.AppointmentDetails)
+                .Where(u => u.AppointmentDetails.Any(ad =>
+                    ad.Appointment.Date.Value.Date == availabilityDate &&
+                    ad.Appointment.StartTime.Value.TimeOfDay >= start &&
+                    ad.Appointment.EndTime.Value.TimeOfDay <= end
+                    ))
+                .Select(u => u.Id)
+                .ToListAsync();
+
+            var availableExperts = expertsInRole.Where(u => !usersWithAppointments.Contains(u.Id)).ToList();
+
+   
+            var pagination = new Pagination<User>
+            {
+                Items = availableExperts,
+                PageIndex = filter.PageIndex,
+                PageSize = filter.PageSize,
+                TotalItemsCount = availableExperts.Count()
+            };
+
+            return pagination;
         }
     }
 }

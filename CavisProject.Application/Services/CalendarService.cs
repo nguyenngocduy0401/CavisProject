@@ -37,15 +37,19 @@ namespace CavisProject.Application.Services
                 DateTime? date = null;
                 date = DateTime.Parse(filterModel.Date);
                 var allSlots = await _unitOfWork.CalendarRepository.GetAllAsync();
-                var unavailableSlotIds = await _unitOfWork.CalendarRepository.GetUnAvailableCalendarAsync(date);
+               // var unavailableSlotIds = await _unitOfWork.CalendarRepository.GetUnAvailableCalendarAsync(date);
 
                 var availableSlots = allSlots
-                   .Where(calendar => !unavailableSlotIds.Contains(calendar.Id))
+                 //  .Where(calendar => !unavailableSlotIds.Contains(calendar.Id))
                    .Select(calendar => new CalendarViewModel
                    {
                        Id = calendar.Id,
-                       StartTime = calendar.StartTime ?? TimeSpan.Zero,
-                       EndTime = calendar.EndTime ?? TimeSpan.Zero
+                       StartTime = calendar.StartTime.HasValue
+            ? $"{calendar.StartTime.Value.Hours:D2}:{calendar.StartTime.Value.Minutes:D2}"
+            : null,
+                       EndTime = calendar.EndTime.HasValue
+            ? $"{calendar.EndTime.Value.Hours:D2}:{calendar.EndTime.Value.Minutes:D2}"
+            : null,
                    })
                    .ToList();
                 var totalCount = availableSlots.Count;
