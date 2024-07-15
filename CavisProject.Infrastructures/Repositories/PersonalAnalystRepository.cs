@@ -125,11 +125,6 @@ namespace CavisProject.Infrastructures.Repositories
                     query = query.Where(p => selectedProductIds.Contains(p.Id));
                     break;
                 default:
-                    query = query.Include(e => e.ProductDetails)
-                        .ThenInclude(e => e.Skins)
-                        .Where(e =>
-                            e.ProductDetails.Any(pd => skinIds.Contains(pd.SkinId) && pd.Skins.Category)
-                        );
                     break;
             }
 

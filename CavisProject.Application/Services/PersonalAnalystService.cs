@@ -121,10 +121,11 @@ namespace CavisProject.Application.Services
             {
                 var personalAnalyst = await _unitOfWork.PersonalAnalystRepository.GetLastPersonalAnalystAsync();
                 if (personalAnalyst == null) throw new Exception("Fail in GetLastPersonalAnalyst!");
+                var statusProduct = filterSuggestProductModel.Category == ProductStatusEnum.Skincare ? ProductStatusEnum.Skincare : ProductStatusEnum.Makeup;
                 var filter = (Expression<Func<Product, bool>>)(e =>
                 (!filterSuggestProductModel.MinPrice.HasValue || e.Price <= filterSuggestProductModel.MinPrice) &&
-                (!filterSuggestProductModel.MaxPrice.HasValue || e.Price >= filterSuggestProductModel.MaxPrice) 
-                );
+                (!filterSuggestProductModel.MaxPrice.HasValue || e.Price >= filterSuggestProductModel.MaxPrice)
+                && (e.Status == statusProduct));
                 var products = await _unitOfWork.PersonalAnalystRepository.SuggestProductAsync(
                     personalAnalyst.Id,
                     foreignKey: "ProductCategory",
