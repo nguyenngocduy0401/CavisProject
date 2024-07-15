@@ -118,10 +118,8 @@ namespace CavisProject.Infrastructures.Mappers
                  .ForMember(dest => dest.ExpertId, opt => opt.MapFrom(src => src.User.Id))
                  .ForMember(dest => dest.ExpertName, opt => opt.MapFrom(src => src.User.FullName))
                  .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
-                 .ForMember(dest => dest.URLImage, opt => opt.MapFrom(src => src.User.URLImage))
-             .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => src.Calendar.StartTime))
-            .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.Calendar.EndTime))
-            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.AvailabilityDate));
+                 .ForMember(dest => dest.URLImage, opt => opt.MapFrom(src => src.User.URLImage));
+           
             CreateMap<User, ExpertAvailabilityViewModel>()
             .ForMember(dest => dest.ExpertId, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.ExpertName, opt => opt.MapFrom(src => src.FullName))

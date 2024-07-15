@@ -235,9 +235,20 @@ namespace CavisProject.Infrastructures.Repositories
             DateTime? availabilityDate = !string.IsNullOrEmpty(filter.Date) ? DateTime.Parse(filter.Date) : (DateTime?)null;
             TimeSpan? start = !string.IsNullOrEmpty(filter.StartTime) ? TimeSpan.Parse(filter.StartTime) : (TimeSpan?)null;
             TimeSpan? end = !string.IsNullOrEmpty(filter.EndTime) ? TimeSpan.Parse(filter.EndTime) : (TimeSpan?)null;
+            IList<User> expertsInRole;
 
-            var expertsInRole = await _userManager.GetUsersInRoleAsync("ExpertSkinCare");
-
+            if (filter.Role == RoleExpertEnum.ExpertSkinCare)
+            {
+                expertsInRole = await _userManager.GetUsersInRoleAsync("ExpertSkinCare");
+            }
+            else if (filter.Role == RoleExpertEnum.ExpertMakeup)
+            {
+                expertsInRole = await _userManager.GetUsersInRoleAsync("ExpertMakeup");
+            }
+            else
+            {
+                expertsInRole = new List<User>();
+            }
             var usersWithAppointments = await _dbContext.Users
                 .Include(u => u.AppointmentDetails)
                 .Where(u => u.AppointmentDetails.Any(ad =>
