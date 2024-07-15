@@ -17,7 +17,7 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<Pagination<ExpertAvailabilityViewModel>>> GetAvailableExpertsAsync(AvailableExpertSkincareFilterViewModel filter)=> await _appointmentService.GetAvailableExpertsAsync(filter);
         [SwaggerOperation(Summary = "lấy danh sách các cuộc hẹn")]
         [HttpGet("")]
-        public async Task<ApiResponse<Pagination<AppointmentViewModel>>> GetWeeklyScheduleAsync( AvailableExpertSkincareFilterViewModel filter) => await _appointmentService.GetWeeklyScheduleAsync(filter);
+        public async Task<ApiResponse<Pagination<AppointmentViewModel>>> GetWeeklyScheduleAsync( FilterAppointmentByLoginViewModel filter) => await _appointmentService.GetWeeklyScheduleAsync(filter);
         
     }
 }

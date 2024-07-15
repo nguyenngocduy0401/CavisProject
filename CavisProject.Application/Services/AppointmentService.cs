@@ -96,32 +96,29 @@ namespace CavisProject.Application.Services
 
     
 
-        public async Task<ApiResponse<Pagination<AppointmentViewModel>>> GetWeeklyScheduleAsync(AvailableExpertSkincareFilterViewModel filter)
+        public async Task<ApiResponse<Pagination<AppointmentViewModel>>> GetWeeklyScheduleAsync(FilterAppointmentByLoginViewModel filter)
         {
             var response = new ApiResponse<Pagination<AppointmentViewModel>>();
 
             try
             {
-                DateTime? availabilityDate = null;
-                TimeSpan? start = null;
-                TimeSpan? end = null;
-                if (!string.IsNullOrEmpty(filter.Date))
+                
+                DateTime? start = null;
+                DateTime? end = null;
+               
+
+                if (!string.IsNullOrEmpty(filter.StartDate))
                 {
-                    availabilityDate = DateTime.Parse(filter.Date);
+                    start = DateTime.Parse(filter.StartDate);
                 }
 
-                if (!string.IsNullOrEmpty(filter.StartTime))
+                if (!string.IsNullOrEmpty(filter.EndDate))
                 {
-                    start = TimeSpan.Parse(filter.StartTime);
-                }
-
-                if (!string.IsNullOrEmpty(filter.EndTime))
-                {
-                    end = TimeSpan.Parse(filter.EndTime);
+                    end = DateTime.Parse(filter.EndDate);
                 }
 
                 var userId = _claimsService.GetCurrentUserId.ToString();
-                var appointments = await _unitOfWork.AppointmentRepository.GetAppointmentsForUserAsync(userId, availabilityDate, start, end, filter.PageIndex, filter.PageSize);
+                var appointments = await _unitOfWork.AppointmentRepository.GetAppointmentsForUserAsync(userId, start, end, filter.PageIndex, filter.PageSize);
 
                 var appointmentViewModels = new List<AppointmentViewModel>();
 

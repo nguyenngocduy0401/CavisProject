@@ -11,7 +11,7 @@ namespace CavisProject.Application.Interfaces
     public interface IAppointmentService
     {
         Task<ApiResponse<Pagination<ExpertAvailabilityViewModel>>> GetAvailableExpertsAsync(AvailableExpertSkincareFilterViewModel filter);
-        Task<ApiResponse<Pagination<AppointmentViewModel>>> GetWeeklyScheduleAsync(AvailableExpertSkincareFilterViewModel filter);
+        Task<ApiResponse<Pagination<AppointmentViewModel>>> GetWeeklyScheduleAsync(FilterAppointmentByLoginViewModel filter);
         Task<ApiResponse<bool>> BookAppointmentAsync(CreateAppointmentViewModel create);
         Task<ApiResponse<bool>> BookMakeUpAppointment(CreateMakeUpAppointmentViewModel create);
     }

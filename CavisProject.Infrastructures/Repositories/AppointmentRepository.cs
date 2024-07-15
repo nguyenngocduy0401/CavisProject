@@ -34,7 +34,7 @@ namespace CavisProject.Infrastructures.Repositories
            .Include(a => a.AppointmentDetails)
            .ToListAsync();
         }
-       public async Task<List<Appointment>> GetAppointmentsForUserAsync(string userId, DateTime? date, TimeSpan? startTime, TimeSpan? endTime, int pageIndex, int pageSize)
+       public async Task<List<Appointment>> GetAppointmentsForUserAsync(string userId, DateTime? startTime, DateTime? endTime, int pageIndex, int pageSize)
         {
             var query = _dbContext.Appointments               
                 .Include(a => a.AppointmentDetails)
@@ -42,22 +42,18 @@ namespace CavisProject.Infrastructures.Repositories
                 .Where(a => a.AppointmentDetails.Any(ad => ad.UserId == userId))
                 .AsQueryable();
 
-            if (date.HasValue)
-            {
-                query = query.Where(a => a.Date == date.Value.Date);
-            }
 
             if (startTime.HasValue && endTime.HasValue)
             {
-                query = query.Where(a => a.StartTime.Value.TimeOfDay >= startTime.Value && a.EndTime.Value.TimeOfDay <= endTime.Value);
+                query = query.Where(a => a.StartTime.Value.Date >= startTime.Value && a.EndTime.Value.Date <= endTime.Value);
             }
             else if (startTime.HasValue)
             {
-                query = query.Where(a => a.StartTime.Value.TimeOfDay >= startTime.Value);
+                query = query.Where(a => a.StartTime.Value.Date >= startTime.Value);
             }
             else if (endTime.HasValue)
             {
-                query = query.Where(a => a.EndTime.Value.TimeOfDay <= endTime.Value);
+                query = query.Where(a => a.EndTime.Value.Date <= endTime.Value);
             }
 
             int totalCount = await query.CountAsync();
