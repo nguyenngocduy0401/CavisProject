@@ -252,7 +252,7 @@ namespace CavisProject.Infrastructures.Repositories
             var usersWithAppointments = await _dbContext.Users
                 .Include(u => u.AppointmentDetails)
                 .Where(u => u.AppointmentDetails.Any(ad =>
-                    ad.Appointment.Date.Value.Date == availabilityDate &&
+                    ad.Appointment.Date.Value.Date == availabilityDate.Value.Date &&
                     ad.Appointment.StartTime.Value.TimeOfDay >= start &&
                     ad.Appointment.EndTime.Value.TimeOfDay <= end
                     ))
