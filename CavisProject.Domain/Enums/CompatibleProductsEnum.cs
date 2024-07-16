@@ -11,6 +11,7 @@ namespace CavisProject.Domain.Enums
         Low,
         Medium,
         High,
-        Extremely
+        Extremely,
+        Default
     }
 }
