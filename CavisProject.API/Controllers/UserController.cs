@@ -35,10 +35,10 @@ namespace CavisProject.API.Controllers
 
             _calendarService= calendarService;
         }
-        [HttpPost("mine/package-premium/{id}")]
+        [HttpPost("mine/premium-packages/{id}")]
         [SwaggerOperation(Summary = "người dùng Đăng Kí Premium  {Authorize = Customer}")]
         public async Task<ApiResponse<PackagePremiumViewModel>> RegisterPremium(string id) => await _userService.RegisterPremiumAsync(id);
-        [HttpPut("~/admin/api/v1/users/{id}/package-premium")]
+        [HttpPut("~/admin/api/v1/users/{id}/premium-packages")]
         [Authorize(Roles = AppRole.Admin)]
         [SwaggerOperation(Summary = "admin Upgrade người dùng  lên premium{Authorize = Admin}")]
         public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremium(string id) => await _userService.UpgradeToPremiumAsync(id);
