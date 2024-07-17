@@ -38,7 +38,7 @@ namespace CavisProject.API.Controllers
         [HttpPost("mine/premium-packages/{id}")]
         [SwaggerOperation(Summary = "người dùng Đăng Kí Premium  {Authorize = Customer}")]
         public async Task<ApiResponse<PackagePremiumViewModel>> RegisterPremium(string id) => await _userService.RegisterPremiumAsync(id);
-        [HttpPut("~/admin/api/v1/users/{id}/premium-packages")]
+        [HttpPut("{id}/premium-packages")]
         [Authorize(Roles = AppRole.Admin)]
         [SwaggerOperation(Summary = "admin Upgrade người dùng  lên premium{Authorize = Admin}")]
         public async Task<ApiResponse<UserPackageViewModel>> UpgradeToPremium(string id) => await _userService.UpgradeToPremiumAsync(id);
