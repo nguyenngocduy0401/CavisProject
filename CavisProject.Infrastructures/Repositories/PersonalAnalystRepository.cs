@@ -68,6 +68,7 @@ namespace CavisProject.Infrastructures.Repositories
                     throw new ArgumentException("Unsupported foreign key type");
                 }
             }
+
             switch (compatibleProductsEnum)
             {
                 case CompatibleProductsEnum.Low:
@@ -123,6 +124,8 @@ namespace CavisProject.Infrastructures.Repositories
                     }
 
                     query = query.Where(p => selectedProductIds.Contains(p.Id));
+                    break;
+                case CompatibleProductsEnum.Default:
                     break;
                 default:
                     break;
