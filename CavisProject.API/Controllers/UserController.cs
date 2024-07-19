@@ -104,6 +104,7 @@ namespace CavisProject.API.Controllers
         public async Task<ApiResponse<bool>> BookMakeUpAppointment([FromBody] CreateMakeUpAppointmentViewModel create) => await _appointmentService.BookMakeUpAppointment(create);
         [SwaggerOperation(Summary = "chuyên gia chọn lịch có thể nhận tư vấn {Authorize = Expert}")]
         [HttpPost("mine/calendars")]
+        [Authorize(Roles = AppRole.ExpertSkinCare)]
         public async Task<ApiResponse<bool>> SetAvailabilityAsync([FromBody] List<CalendarDetailViewModel> availabilities) => await _calendarService.SetAvailabilityAsync(availabilities);
     }
 }

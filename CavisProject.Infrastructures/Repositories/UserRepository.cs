@@ -246,7 +246,7 @@ namespace CavisProject.Infrastructures.Repositories
                 expertsInRole = await _userManager.GetUsersInRoleAsync("ExpertMakeup");
             }
             else
-            {
+            { 
                 expertsInRole = new List<User>();
             }
             var usersWithAppointments = await _dbContext.Users
