@@ -125,7 +125,7 @@ namespace CavisProject.Application.Services
                 var filter = (Expression<Func<Product, bool>>)(e =>
                 (!filterSuggestProductModel.MinPrice.HasValue || e.Price <= filterSuggestProductModel.MinPrice) &&
                 (!filterSuggestProductModel.MaxPrice.HasValue || e.Price >= filterSuggestProductModel.MaxPrice)
-                && (e.Status == statusProduct));
+                && (e.Status == statusProduct) && (e.IsDeleted == false));
                 var products = await _unitOfWork.PersonalAnalystRepository.SuggestProductAsync(
                     personalAnalyst.Id,
                     foreignKey: "ProductCategory",
