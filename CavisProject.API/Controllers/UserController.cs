@@ -3,10 +3,14 @@ using CavisProject.Application.Interfaces;
 using CavisProject.Application.Services;
 using CavisProject.Application.ViewModels.AppointmentViewModel;
 using CavisProject.Application.ViewModels.CalendarViewModel;
+using CavisProject.Application.ViewModels.MethodViewModels;
 using CavisProject.Application.ViewModels.PackagePremiumViewModels;
+using CavisProject.Application.ViewModels.PersonalAnalystViewModels;
 using CavisProject.Application.ViewModels.PersonalImageViewModels;
+using CavisProject.Application.ViewModels.ProductViewModel;
 using CavisProject.Application.ViewModels.RegistPreniumViewModel;
 using CavisProject.Application.ViewModels.SkincareRoutineViewModels;
+using CavisProject.Application.ViewModels.SkinTypeViewModels;
 using CavisProject.Application.ViewModels.UserViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -25,15 +29,16 @@ namespace CavisProject.API.Controllers
         public readonly IPersonalImageService _personalImageService;    
         private readonly IAppointmentService _appointmentService;
         private readonly ICalendarService _calendarService;
+        private readonly IPersonalAnalystService _personalAnalystService;
         public UserController(ICalendarService calendarService, IUserService userService, ISkincareRoutineService skincareRoutineService,
-            IPersonalImageService personalImageService, IAppointmentService appointmentService)
+            IPersonalImageService personalImageService, IAppointmentService appointmentService, IPersonalAnalystService personalAnalystService)
         {
             _userService = userService;
             _skincareRoutineService = skincareRoutineService;
             _personalImageService = personalImageService;
             _appointmentService = appointmentService;
-
-            _calendarService= calendarService;
+            _calendarService = calendarService;
+            _personalAnalystService = personalAnalystService;
         }
         [HttpPost("mine/premium-packages/{id}")]
         [SwaggerOperation(Summary = "người dùng Đăng Kí Premium  {Authorize = Customer}")]
@@ -106,5 +111,27 @@ namespace CavisProject.API.Controllers
         [HttpPost("mine/calendars")]
         [Authorize(Roles = AppRole.ExpertSkinCare)]
         public async Task<ApiResponse<bool>> SetAvailabilityAsync([FromBody] List<CalendarDetailViewModel> availabilities) => await _calendarService.SetAvailabilityAsync(availabilities);
+        [SwaggerOperation(Summary = "gợi ý sản phẩm")]
+        [HttpGet("mine/personal-analysts/products")]
+        [Authorize]
+        public async Task<ApiResponse<Pagination<ProductViewModel>>> SuggestProductAsync([FromQuery] FilterSuggestProductModel filterSuggestProductModel) => await _personalAnalystService.SuggestProductAsync(filterSuggestProductModel);
+        [SwaggerOperation(Summary = "tìm kiếm các phân tích da của cá nhân")]
+        [HttpGet("mine/personal-analysts")]
+        [Authorize]
+        public async Task<ApiResponse<Pagination<PersonalAnalystViewModel>>> FilterPersonalAnalystAsync([FromQuery] FilterPersonalAnalystModel filterPersonalAnalystModel) =>
+            await _personalAnalystService.FilterPersonalAnalystAsync(filterPersonalAnalystModel);
+        [SwaggerOperation(Summary = "thêm các triệu chứng về da")]
+        [HttpPost("mine/personal-analysts")]
+        [Authorize]
+        public async Task<ApiResponse<bool>> CreatePersonalAnalystByLoginAsync([FromBody] ListSkinPersonalModel listSkinPersonalModel) =>
+            await _personalAnalystService.CreatePersonalAnalystByLoginAsync(listSkinPersonalModel);
+        [SwaggerOperation(Summary = "gợi ý phương pháp (phương pháp skincare và phương pháp makeup)")]
+        [HttpGet("mine/personal-analysts/methods")]
+        [Authorize]
+        public async Task<ApiResponse<Pagination<MethodViewModel>>> SuggestMethodAsync([FromQuery] FilterSuggestMethodModel filterSuggestMethodModel) => await _personalAnalystService.SuggestMethodMakeUpAsync(filterSuggestMethodModel);
+        [SwaggerOperation(Summary = "lấy skin của người dùng khi đăng nhập")]
+        [HttpGet("mine/personal-analysts/skins")]
+        [Authorize]
+        public async Task<ApiResponse<SkinListViewModel>> SkinListAsync() => await _personalAnalystService.SkinListByLoginAsync();
     }
 }

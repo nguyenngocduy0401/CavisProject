@@ -262,7 +262,13 @@ namespace CavisProject.Application.Services
                     ExpiredAt = DateTime.UtcNow.AddMonths(1)
                 };
                 _unitOfWork.RefreshTokenRepository.UpdateRefreshToken(refreshTokenEntity);
-                await _unitOfWork.SaveChangeAsync();
+                var isSuccess = await _unitOfWork.SaveChangeAsync() > 0;
+
+                if (!isSuccess)
+                {
+                    response.isSuccess = false;
+                    response.Message = "fail!";
+                }
                 response.Data = token;
                 response.isSuccess = true;
                 response.Message = "Refresh Successful!";
