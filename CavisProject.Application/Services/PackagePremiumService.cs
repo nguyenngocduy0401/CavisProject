@@ -17,14 +17,14 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.Services
 {
-    public class PackagePreniumService : IPackagePreniumService
+    public class PackagePremiumService : IPackagePremiumService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IClaimsService _claimsService;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IValidator<CreatePackagePremiumViewModel> _validator;
-        public PackagePreniumService(IValidator<CreatePackagePremiumViewModel> validator,UserManager<User> userManager,IUnitOfWork unitOfWork, IClaimsService claimsService, IMapper mapper)
+        public PackagePremiumService(IValidator<CreatePackagePremiumViewModel> validator,UserManager<User> userManager,IUnitOfWork unitOfWork, IClaimsService claimsService, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _claimsService = claimsService;

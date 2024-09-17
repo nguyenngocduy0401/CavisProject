@@ -29,7 +29,7 @@ namespace CavisProject.Infrastructures
             services.AddScoped<IMethodDetailService, MethodDetailService>();
             services.AddScoped<IMethodSkinCareService, MethodSkinCareService>();
             services.AddScoped<IPackageDetailService, PackageDetailService>();
-            services.AddScoped<IPackagePreniumService, PackagePreniumService>();
+            services.AddScoped<IPackagePremiumService, PackagePremiumService>();
             services.AddScoped<IPersonalAnalystDetailService, PersonalAnalystDetailService>();
             services.AddScoped<IPersonalAnalystService, PersonalAnalystService>();
             services.AddScoped<IPersonalImageService, PersonalImageService>();

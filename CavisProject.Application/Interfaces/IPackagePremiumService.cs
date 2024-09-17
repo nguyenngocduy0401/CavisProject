@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.Interfaces
 {
-    public interface IPackagePreniumService
+    public interface IPackagePremiumService
     {
         Task<ApiResponse<Pagination<UserViewModel>>> GetPremiumUsersAsync(int pageIndex, int pageSize);
         Task<ApiResponse<Pagination<PackagePremiumViewModel>>> GetPackagePremiumsAsync(int pageIndex, int pageSize);

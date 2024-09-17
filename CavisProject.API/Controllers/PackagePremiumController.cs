@@ -12,8 +12,8 @@ namespace CavisProject.API.Controllers
     [ApiController]
     public class PackagePremiumController : ControllerBase
     {
-        private IPackagePreniumService _packagePremiumService;
-        public PackagePremiumController(IPackagePreniumService packagePremiumService)
+        private IPackagePremiumService _packagePremiumService;
+        public PackagePremiumController(IPackagePremiumService packagePremiumService)
         {
             _packagePremiumService = packagePremiumService;
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CavisProject.Application.ViewModels.RegistPreniumViewModel
 {
-    public class RegistPremiumViewModel
+    public class RegisterPremiumViewModel
     {
         public Guid Id {  get; set; }
        

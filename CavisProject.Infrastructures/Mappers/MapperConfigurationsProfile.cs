@@ -67,7 +67,7 @@ namespace CavisProject.Infrastructures.Mappers
                 .ForMember(dest => dest.PasswordHash, src => src.MapFrom(x => x.Password));
             #endregion
             #region Premium
-            CreateMap<RegistPremiumViewModel, PackagePremium>();
+            CreateMap<RegisterPremiumViewModel, PackagePremium>();
             CreateMap<UpgradeToPremiumViewModel, User>();
             CreateMap<Pagination<User>, Pagination<UserViewModel>>()
            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
