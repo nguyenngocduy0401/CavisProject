@@ -60,8 +60,6 @@ namespace CavisProject.Application.Services
 
                     var refreshToken = GenerateJsonWebTokenString.GenerateRefreshToken();
 
-                    await _userManager.UpdateAsync(user);
-
                     var token = user.GenerateJsonWebToken(
                         _appConfiguration,
                         _appConfiguration.JwtOptions.Secret,

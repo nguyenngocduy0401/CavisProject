@@ -114,7 +114,7 @@ namespace CavisProject.Infrastructures.Repositories
         }
         public void RestoreSoftRemove(TEntity entity)
         {
-            entity.IsDeleted = true;
+            entity.IsDeleted = false;
             entity.DeletionDate = _timeService.GetCurrentTime();
             entity.DeleteBy = _claimsService.GetCurrentUserId;
             _dbSet.Update(entity);
