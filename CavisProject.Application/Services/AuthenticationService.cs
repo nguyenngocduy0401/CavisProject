@@ -63,7 +63,7 @@ namespace CavisProject.Application.Services
                     var token = user.GenerateJsonWebToken(
                         _appConfiguration,
                         _appConfiguration.JwtOptions.Secret,
-                        _currentTime.GetCurrentTime(),
+                        DateTime.UtcNow,
                         userRole,
                         refreshToken
                         );
